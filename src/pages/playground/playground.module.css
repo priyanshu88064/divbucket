@@ -1,0 +1,28 @@
+.playground{
+  position: relative;
+}
+.container {
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+.bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200%;
+  height: 200%;
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.res {
+  background-color: rgb(245, 181, 181);
+}
