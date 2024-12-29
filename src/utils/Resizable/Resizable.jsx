@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 
-export default ({ children, className, c_width, c_height }) => {
+export default ({ children, className, c_width, c_height, onDrop }) => {
 
     const [dim, setDim] = useState({ width: c_width || '100px', height: c_height || '100px' });
     const isResizingRef = useRef(false);
@@ -75,12 +75,12 @@ export default ({ children, className, c_width, c_height }) => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
     }
-    const handleDrop = (e)=>{
+    const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("dropped")
+        onDrop(e.dataTransfer.getData("data"));
     }
-    const handleDrag = (e)=>{
+    const handleDrag = (e) => {
         e.preventDefault();
     }
 

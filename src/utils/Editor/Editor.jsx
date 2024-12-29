@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
 
-export default ({ children, e_width, e_height, stopScrollRef }) => {
+export default ({ children, e_width, e_height, stopScrollRef, handleDrop }) => {
 
     const [dim, setDim] = useState({ width: null, height: null });
     const isResizingRef = useRef(false);
@@ -65,6 +65,9 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
     }
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    }
 
     return (
         <>
@@ -75,6 +78,8 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
                     width: dim.width,
                     height: dim.height
                 }}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
             >
                 <div onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}><TbMinusVertical className={styles.lines} /></div>
                 <div onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}><TbMinusVertical className={styles.lines} /></div>

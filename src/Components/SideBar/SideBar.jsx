@@ -3,7 +3,7 @@ import styles from './sidebar.module.css';
 export default ()=>{
 
     const handleDragStart = (e)=>{
-        e.dataTransfer.setData("text/plain","helloDrag");
+        e.dataTransfer.setData("data",0);
         console.log("drag started")
     }
     
