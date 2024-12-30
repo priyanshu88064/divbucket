@@ -96,15 +96,21 @@ export default ({ children, className, c_width, c_height, onDrop }) => {
                 onDrop={handleDrop}
                 onDragOver={handleDrag}
             >
-                <div onMouseDown={() => handleMouseDown(0)} className={`${styles.resizable} ${styles.top}`}></div>
-                <div onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}></div>
-                <div onMouseDown={() => handleMouseDown(2)} className={`${styles.resizable} ${styles.bottom}`}></div>
-                <div onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}></div>
+                <div draggable={false} onMouseDown={() => handleMouseDown(0)} className={`${styles.resizable} ${styles.top}`}></div>
+                <div draggable={false} onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}></div>
+                <div draggable={false} onMouseDown={() => handleMouseDown(2)} className={`${styles.resizable} ${styles.bottom}`}></div>
+                <div draggable={false} onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}></div>
                 <div onMouseDown={() => handleMouseDown(0)} className={`${styles.circle} ${styles.ctop}`}></div>
                 <div onMouseDown={() => handleMouseDown(1)} className={`${styles.circle} ${styles.cright}`}></div>
                 <div onMouseDown={() => handleMouseDown(2)} className={`${styles.circle} ${styles.cbottom}`}></div>
                 <div onMouseDown={() => handleMouseDown(3)} className={`${styles.circle} ${styles.cleft}`}></div>
-                {children}
+                <div
+                    draggable
+                    className={styles.draggable}
+                >
+                    {children}
+                </div>
+
             </div>
         </>
     );

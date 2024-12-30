@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
 import Editor from '../../utils/Editor/Editor';
-import Highlight from '../../utils/Highlight/Highlight';
-import Resizable from '../../utils/Resizable/Resizable';
 import styles from './playground.module.css';
 import SideBar from '../../Components/SideBar/SideBar';
 import TreeManager from '../../utils/TreeManager';
+import { addNode } from '../../utils/treeFunctions';
 
 export default () => {
 
@@ -14,10 +13,10 @@ export default () => {
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        setTree(prev => [...prev, { id: Date.now(), childrens: [] }]);
+        setTree(prev => [...prev,{id:Date.now(),childrens:[]}]);
     }
     const handleNodeDrop = (parentId, droppedId) => {
-        // setTree(prev=>);
+        setTree(prev=>addNode(prev,parentId,{id:Date.now(),childrens:[]}));
     }
 
     return (
