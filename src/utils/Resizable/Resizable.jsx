@@ -1,13 +1,17 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateActiveNode } from '../../store/reducers/treeReducer';
 
-export default ({ children, className, c_width, c_height, onDrop }) => {
+export default ({ id, children, className, c_width, c_height, onDrop }) => {
 
     const [dim, setDim] = useState({ width: c_width || '100px', height: c_height || '100px' });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
     const divRef = useRef();
+    const dispatch = useDispatch();
+    const { activeNodeId } = useSelector(state => state.treeReducer);
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -60,7 +64,9 @@ export default ({ children, className, c_width, c_height, onDrop }) => {
         }
 
     }
-    const handleMouseDown = (direction) => {
+    const handleMouseDown = (e,direction) => {
+        e.preventDefault();
+        e.stopPropagation();
         isResizingRef.current = true;
         dirRef.current = direction;
         initVirtualPosition();
@@ -95,17 +101,28 @@ export default ({ children, className, c_width, c_height, onDrop }) => {
                 }}
                 onDrop={handleDrop}
                 onDragOver={handleDrag}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dispatch(updateActiveNode({ nodeId: id }))
+                }}
             >
-                <div draggable={false} onMouseDown={() => handleMouseDown(0)} className={`${styles.resizable} ${styles.top}`}></div>
-                <div draggable={false} onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}></div>
-                <div draggable={false} onMouseDown={() => handleMouseDown(2)} className={`${styles.resizable} ${styles.bottom}`}></div>
-                <div draggable={false} onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}></div>
-                <div onMouseDown={() => handleMouseDown(0)} className={`${styles.circle} ${styles.ctop}`}></div>
-                <div onMouseDown={() => handleMouseDown(1)} className={`${styles.circle} ${styles.cright}`}></div>
-                <div onMouseDown={() => handleMouseDown(2)} className={`${styles.circle} ${styles.cbottom}`}></div>
-                <div onMouseDown={() => handleMouseDown(3)} className={`${styles.circle} ${styles.cleft}`}></div>
+                {
+                    id === activeNodeId &&
+                    <>
+                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
+                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
+                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>
+                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.resizable} ${styles.left}`}></div>
+                        <div onMouseDown={(e) => handleMouseDown(e,0)} className={`${styles.circle} ${styles.ctop}`}></div>
+                        <div onMouseDown={(e) => handleMouseDown(e,1)} className={`${styles.circle} ${styles.cright}`}></div>
+                        <div onMouseDown={(e) => handleMouseDown(e,2)} className={`${styles.circle} ${styles.cbottom}`}></div>
+                        <div onMouseDown={(e) => handleMouseDown(e,3)} className={`${styles.circle} ${styles.cleft}`}></div>
+                    </>
+                }
                 <div
-                    draggable
+                    draggable={true}
+                    // draggable={id === activeNodeId}
                     className={styles.draggable}
                 >
                     {children}
