@@ -76,7 +76,7 @@ export default ({ children, e_width, e_height, stopScrollRef, handleDrop, onClic
                 className={styles.editor}
                 style={{
                     width: dim.width,
-                    height: dim.height
+                    minHeight: dim.height
                 }}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}

@@ -5,7 +5,7 @@ import { updateActiveNode } from '../../store/reducers/treeReducer';
 
 export default ({ id, children, className, c_width, c_height, onDrop }) => {
 
-    const [dim, setDim] = useState({ width: c_width || '100px', height: c_height || '100px' });
+    const [dim, setDim] = useState({ width: c_width || '400px', height: c_height || '300px' });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
@@ -89,12 +89,16 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
     const handleDrag = (e) => {
         e.preventDefault();
     }
+    const handleDragStart = (e) => {
+        e.stopPropagation();
+        e.dataTransfer.setData("data",id);
+    }
 
     return (
         <>
             <div
                 ref={divRef}
-                className={`${className} ${styles.a}`}
+                className={`${styles.a}`}
                 style={{
                     height: dim.height,
                     width: dim.width
@@ -121,9 +125,9 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
                     </>
                 }
                 <div
-                    draggable={true}
-                    // draggable={id === activeNodeId}
-                    className={styles.draggable}
+                    draggable
+                    onDragStart={handleDragStart}
+                    className={`${className} ${styles.draggable}`}
                 >
                     {children}
                 </div>

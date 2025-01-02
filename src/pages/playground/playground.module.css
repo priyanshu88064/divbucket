@@ -13,7 +13,8 @@
   align-items: center;
   justify-content: center;
   width: 200%;
-  height: 200%;
+  padding: 300px;
+  padding-inline: 0;
 }
 .container::-webkit-scrollbar {
   display: none;
