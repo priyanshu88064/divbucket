@@ -6,14 +6,7 @@ import TreeManager from '../../utils/TreeManager';
 import { addNode } from '../../utils/treeFunctions';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode } from '../../store/reducers/treeReducer';
-
-/*
-Elements to create 
-- Block
-- Row and Row item
-- Column and item
-*/
-
+import Cssbar from '../../Components/Cssbar/Cssbar';
 
 export default () => {
 
@@ -35,6 +28,7 @@ export default () => {
         <div className={styles.playground} onClick={() => dispatch(updateActiveNode({ nodeId: null }))}>
             <div ref={stopScrollRef} className={styles.container}>
                 <SideBar />
+                <Cssbar/>
                 <div className={styles.bg}>
                     <Editor
                         e_width={'1200px'}
