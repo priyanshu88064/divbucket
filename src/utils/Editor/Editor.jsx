@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateTree } from '../../store/reducers/treeReducer';
 
-export default ({ children, e_width, e_height, stopScrollRef, handleDrop, onClick }) => {
+export default ({ children, e_width, e_height, stopScrollRef }) => {
 
     const [dim, setDim] = useState({ width: null, height: null });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
     const divRef = useRef();
+    const dispatch = useDispatch();
+    const { tree } = useSelector(state => state.treeReducer);
 
     useEffect(() => {
         setDim({ width: e_width, height: e_height });
@@ -68,6 +72,11 @@ export default ({ children, e_width, e_height, stopScrollRef, handleDrop, onClic
     const handleDragOver = (e) => {
         e.preventDefault();
     }
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dispatch(updateTree({ tree: [...tree, { id: Date.now(), type: e.dataTransfer.getData("type"), childrens: [] }] }))
+    }
 
     return (
         <>
@@ -80,7 +89,6 @@ export default ({ children, e_width, e_height, stopScrollRef, handleDrop, onClic
                 }}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                onClick={onClick}
             >
                 <div onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}><TbMinusVertical className={styles.lines} /></div>
                 <div onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}><TbMinusVertical className={styles.lines} /></div>

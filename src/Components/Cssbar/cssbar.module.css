@@ -1,9 +1,45 @@
-.cssbar{
-    background-color: var(--bg_gray);
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    z-index: 2;
+.cssbar {
+  background-color: var(--bg_gray);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  z-index: 3;
+  color: white;
+}
+
+.c1 {
+  font-size: 12px;
+}
+.c10 {
+  color: var(--text_0);
+  cursor: default;
+  border-bottom: 1px solid var(--gray_border);
+}
+.c100 {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+.arrow {
+  cursor: pointer;
+  font-size: 13px;
+}
+.c110 {
+  color: var(--text_2);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.c1100{
+  background-color: var(--pg_bg);
+  padding: 6px;
+  border-radius: 3px;
+}
+.gapleft{
+  margin-left: 10px;
 }

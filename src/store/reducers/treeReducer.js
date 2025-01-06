@@ -2,13 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const treeSlice = createSlice({
   name: "tree",
-  initialState: { activeNodeId: null },
+  initialState: { tree: [], activeNodeId: null },
   reducers: {
     updateActiveNode: (state, { payload }) => {
       state.activeNodeId = payload.nodeId;
     },
+    updateTree: (state, { payload }) => {
+      state.tree = payload.tree;
+    },
   },
 });
 
-export const { updateActiveNode } = treeSlice.actions;
+export const { updateActiveNode, updateTree } = treeSlice.actions;
 export default treeSlice.reducer;

@@ -1,10 +1,26 @@
-.sidebar{
-    position: fixed;
-    background-color: var(--bg_gray);
-    width: 50px;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    color: white;
+.sidebar {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  color: white;
+  display: flex;
+}
+.cont {
+  width: 40px;
+  border: 1px solid red;
+  height: 100%;
+  background-color: var(--bg_gray);
+}
+.it {
+  text-align: center;
+  padding: 7px 0;
+  cursor: pointer;
+}
+.it0 {
+  color: var(--text_0);
+}
+.it:hover .it0 {
+  color: white;
 }

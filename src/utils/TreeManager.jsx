@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux";
 import Block from "./Block/Block";
 import Resizable from "./Resizable/Resizable";
 import Row from "./Row/Row";
 
-export default ({ tree, handleNodeDrop }) => {
+export default ({}) => {
+
+  const { tree } = useSelector(state => state.treeReducer);
+
   const renderTree = (tree) => {
 
     let ele;
@@ -11,8 +15,8 @@ export default ({ tree, handleNodeDrop }) => {
       case "BLOCK":
         ele = (
           <Block
+            key={tree.id}
             tree={tree}
-            handleNodeDrop={handleNodeDrop}
             renderTree={renderTree}
           />
         );
@@ -21,8 +25,8 @@ export default ({ tree, handleNodeDrop }) => {
       case "ROW":
         ele = (
           <Row
+            key={tree.id}
             tree={tree}
-            handleNodeDrop={handleNodeDrop}
             renderTree={renderTree}
           />
         );
@@ -33,9 +37,8 @@ export default ({ tree, handleNodeDrop }) => {
           <Resizable
             id={tree.id}
             key={tree.id}
-            onDrop={(droppeId, type) => handleNodeDrop(tree.id, droppeId, type)}
           >
-            {tree.id}
+            {tree.id} resizable
             {
               tree.childrens.map(node => renderTree(node))
             }

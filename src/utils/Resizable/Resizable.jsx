@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateActiveNode } from '../../store/reducers/treeReducer';
+import { updateActiveNode, updateTree } from '../../store/reducers/treeReducer';
+import { addNode } from '../treeFunctions';
 
-export default ({ id, children, className, c_width, c_height, onDrop }) => {
+export default ({ id, children, className, c_width, c_height }) => {
 
     const [dim, setDim] = useState({ width: c_width || '400px', height: c_height || '300px' });
     const isResizingRef = useRef(false);
@@ -11,7 +12,7 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
     const dirRef = useRef();
     const divRef = useRef();
     const dispatch = useDispatch();
-    const { activeNodeId } = useSelector(state => state.treeReducer);
+    const { tree, activeNodeId } = useSelector(state => state.treeReducer);
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -64,7 +65,7 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
         }
 
     }
-    const handleMouseDown = (e,direction) => {
+    const handleMouseDown = (e, direction) => {
         e.preventDefault();
         e.stopPropagation();
         isResizingRef.current = true;
@@ -84,14 +85,17 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        onDrop(e.dataTransfer.getData("data"));
+        const droppedId = e.dataTransfer.getData("data");
+
+        if (id == droppedId) return;
+        dispatch(updateTree({ tree: addNode(tree, id, { id: Date.now(), childrens: [] }) }))
     }
     const handleDrag = (e) => {
         e.preventDefault();
     }
     const handleDragStart = (e) => {
         e.stopPropagation();
-        e.dataTransfer.setData("data",id);
+        e.dataTransfer.setData("data", id);
     }
 
     return (
@@ -112,17 +116,18 @@ export default ({ id, children, className, c_width, c_height, onDrop }) => {
                 }}
             >
                 {
-                    id === activeNodeId &&
-                    <>
-                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
-                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
-                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>
-                        <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.resizable} ${styles.left}`}></div>
-                        <div onMouseDown={(e) => handleMouseDown(e,0)} className={`${styles.circle} ${styles.ctop}`}></div>
-                        <div onMouseDown={(e) => handleMouseDown(e,1)} className={`${styles.circle} ${styles.cright}`}></div>
-                        <div onMouseDown={(e) => handleMouseDown(e,2)} className={`${styles.circle} ${styles.cbottom}`}></div>
-                        <div onMouseDown={(e) => handleMouseDown(e,3)} className={`${styles.circle} ${styles.cleft}`}></div>
-                    </>
+                    id === activeNodeId ?
+                        <>
+                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
+                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
+                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>
+                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.resizable} ${styles.left}`}></div>
+                            <div onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.circle} ${styles.ctop}`}></div>
+                            <div onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.circle} ${styles.cright}`}></div>
+                            <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
+                            <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
+                        </> :
+                        <div className={`${styles.resizable} ${styles.hov}`}></div>
                 }
                 <div
                     draggable
