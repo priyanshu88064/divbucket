@@ -12,22 +12,42 @@ export default () => {
                 <Wrap title={"Size"}>
                     <div className={styles.c11}>
                         <div className={styles.c110}>
-                            <div>Width:</div>
-                            <div className={styles.c1100}>230px</div>
-                            <div className={styles.gapleft}>Height:</div>
-                            <div className={styles.c1100}>1200px</div>
+                            <div className={styles.c1101}>Width:</div>
+                            <div className={styles.c1101}>Min W:</div>
+                            <div className={styles.c1101}>Max W:</div>
                         </div>
                         <div className={styles.c110}>
-                            <div>Width:</div>
-                            <div className={styles.c1100}>230px</div>
-                            <div className={styles.gapleft}>Height:</div>
-                            <div className={styles.c1100}>1200px</div>
+                            <div className={styles.c1100}>
+                                <div>100</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
+                            <div className={styles.c1100}>
+                                <div>100</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
+                            <div className={styles.c1100}>
+                                <div>1200</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
                         </div>
                         <div className={styles.c110}>
-                            <div>Width:</div>
-                            <div className={styles.c1100}>230px</div>
-                            <div className={styles.gapleft}>Height:</div>
-                            <div className={styles.c1100}>1200px</div>
+                            <div className={styles.c1101}>Height:</div>
+                            <div className={styles.c1101}>Min H:</div>
+                            <div className={styles.c1101}>Max H:</div>
+                        </div>
+                        <div className={styles.c110}>
+                            <div className={styles.c1100}>
+                                <div>100</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
+                            <div className={styles.c1100}>
+                                <div>100</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
+                            <div className={styles.c1100}>
+                                <div>100</div>
+                                <div className={styles.unit}>px</div>
+                            </div>
                         </div>
                     </div>
                 </Wrap>
@@ -54,12 +74,12 @@ const Wrap = ({ children, title }) => {
 
     return (
         <div className={styles.c10}>
-            <div onClick={()=>setIsActive(f=>!f)} className={styles.c100}>
+            <div onClick={() => setIsActive(f => !f)} className={styles.c100}>
                 {title}
                 {
                     isActive ?
-                    <MdKeyboardArrowDown className={styles.arrow} />:
-                    <MdKeyboardArrowRight className={styles.arrow} />
+                        <MdKeyboardArrowDown className={styles.arrow} /> :
+                        <MdKeyboardArrowRight className={styles.arrow} />
                 }
             </div>
             {isActive && children}

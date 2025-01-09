@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTree } from '../../store/reducers/treeReducer';
+import { updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
 
 export default ({ children, e_width, e_height, stopScrollRef }) => {
@@ -76,7 +76,9 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dispatch(updateTree({ tree: [...tree, { id: Date.now(), type: e.dataTransfer.getData("type"), style:initCSS(e.dataTransfer.getData("type")), childrens: [] }] }))
+        const newNode = { id: Date.now(), type: e.dataTransfer.getData("type"), childrens: [] };
+        dispatch(updateStyleMap({id:newNode.id,style:initCSS(newNode.type)}));
+        dispatch(updateTree({ tree: [...tree, newNode] }));
     }
 
     return (

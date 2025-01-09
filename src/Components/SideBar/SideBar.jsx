@@ -50,7 +50,7 @@ export default () => {
                             <>
                                 <div className={styles.head}>Nodes</div>
                                 <div className={styles.a1}>
-                                    <div className={styles.a10}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "BLOCK")}>
                                         <div><GiSquare size={40} /></div>
                                         <div>Div</div>
                                     </div>

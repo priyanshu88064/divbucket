@@ -5,7 +5,6 @@ export default ({ tree, renderTree }) => {
     return (
         <Resizable
             id={tree.id}
-            style={tree.style}
         >
             {tree.id} h-flex/row
             {

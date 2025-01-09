@@ -1,18 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateActiveNode, updateTree } from '../../store/reducers/treeReducer';
+import { updateActiveNode, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
+import initCSS from '../initCSS';
 
-export default ({ id, children, className, style }) => {
+export default ({ id, children, className }) => {
 
-    const [dim, setDim] = useState({ width: style.width, height: style.height });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
     const divRef = useRef();
     const dispatch = useDispatch();
-    const { tree, activeNodeId } = useSelector(state => state.treeReducer);
+    const { tree, activeNodeId, styleMap } = useSelector(state => state.treeReducer);
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -28,42 +28,26 @@ export default ({ id, children, className, style }) => {
 
     const handleMouseMove = (e) => {
         if (!isResizingRef.current || !divRef.current) return;
-
+        let newDim = { ...styleMap[id] };
         switch (dirRef.current) {
             case 0:
-                setDim(prev => {
-                    let newDim = { ...prev };
-                    virtualPos.current.top = e.clientY;
-                    newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
-                    return newDim;
-                });
+                virtualPos.current.top = e.clientY;
+                newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
                 break;
             case 1:
-                setDim(prev => {
-                    let newDim = { ...prev };
-                    virtualPos.current.right = e.clientX;
-                    newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
-                    return newDim;
-                });
+                virtualPos.current.right = e.clientX;
+                newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
                 break;
             case 2:
-                setDim(prev => {
-                    let newDim = { ...prev };
-                    virtualPos.current.bottom = e.clientY;
-                    newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
-                    return newDim;
-                });
+                virtualPos.current.bottom = e.clientY;
+                newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
                 break;
             case 3:
-                setDim(prev => {
-                    let newDim = { ...prev };
-                    virtualPos.current.left = e.clientX;
-                    newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
-                    return newDim;
-                });
+                virtualPos.current.left = e.clientX;
+                newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
                 break;
         }
-
+        dispatch(updateStyleMap({ id, style: newDim }));
     }
     const handleMouseDown = (e, direction) => {
         e.preventDefault();
@@ -88,7 +72,9 @@ export default ({ id, children, className, style }) => {
         const droppedId = e.dataTransfer.getData("data");
 
         if (id == droppedId) return;
-        dispatch(updateTree({ tree: addNode(tree, id, { id: Date.now(), childrens: [] }) }))
+        const newNode = { id: Date.now(), childrens: [] };
+        dispatch(updateStyleMap({id:newNode.id,style:initCSS(newNode.type)}));
+        dispatch(updateTree({ tree: addNode(tree, id, newNode) }))
     }
     const handleDrag = (e) => {
         e.preventDefault();
@@ -106,9 +92,13 @@ export default ({ id, children, className, style }) => {
                 onDrop={handleDrop}
                 onDragOver={handleDrag}
                 style={{
-                    height: dim.height,
-                    width: dim.width
+                    height: styleMap[id].height,
+                    width: styleMap[id].width
                 }}
+                // style={{
+                //     height: dim.height,
+                //     width: dim.width
+                // }}
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -132,9 +122,7 @@ export default ({ id, children, className, style }) => {
                 <div
                     draggable
                     onDragStart={handleDragStart}
-                    style={{
-                        ...style,
-                    }}
+                    style={styleMap[id]}
                     className={`${className} ${styles.draggable}`}
                 >
                     {children}

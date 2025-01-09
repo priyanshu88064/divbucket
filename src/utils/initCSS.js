@@ -9,9 +9,11 @@ export default function initCSS(type){
 
     switch(type){
         case "ROW":
-            style.width = "auto";
             style.height = "50px";
             style.display = "flex";
+            break;
+        case "BLOCK":
+            style.height = "20px";
             break;
     }
 
