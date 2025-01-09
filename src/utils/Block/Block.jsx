@@ -6,7 +6,7 @@ export default ({ tree, renderTree }) => {
         <Resizable
             id={tree.id}
         >
-            {tree.id} block
+            {tree.id} div/BLOCK
             {
                 tree.childrens.map(node => renderTree(node))
             }

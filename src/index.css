@@ -9,8 +9,9 @@
 
 :root {
   --bg_gray: #353a3c;
+  --bg_gray0: #555b61;
   --text_0:#d9d9d9;
   --text_2:#b5b5b5;
   --pg_bg:#1C1E1F;
-  --gray_border:rgb(100, 100, 100)
+  --gray_border:rgb(100, 100, 100);
 }

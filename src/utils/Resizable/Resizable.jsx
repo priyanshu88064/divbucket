@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
 
-export default ({ id, children, className, c_width, c_height }) => {
+export default ({ id, children, className, style }) => {
 
-    const [dim, setDim] = useState({ width: c_width || '400px', height: c_height || '300px' });
+    const [dim, setDim] = useState({ width: style.width, height: style.height });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
@@ -103,12 +103,12 @@ export default ({ id, children, className, c_width, c_height }) => {
             <div
                 ref={divRef}
                 className={`${styles.a}`}
+                onDrop={handleDrop}
+                onDragOver={handleDrag}
                 style={{
                     height: dim.height,
                     width: dim.width
                 }}
-                onDrop={handleDrop}
-                onDragOver={handleDrag}
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -132,6 +132,9 @@ export default ({ id, children, className, c_width, c_height }) => {
                 <div
                     draggable
                     onDragStart={handleDragStart}
+                    style={{
+                        ...style,
+                    }}
                     className={`${className} ${styles.draggable}`}
                 >
                     {children}

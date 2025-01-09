@@ -5,9 +5,9 @@ export default ({ tree, renderTree }) => {
     return (
         <Resizable
             id={tree.id}
-            className={styles.row}
+            style={tree.style}
         >
-            {tree.id} row
+            {tree.id} h-flex/row
             {
                 tree.childrens.map(node => renderTree(node))
             }

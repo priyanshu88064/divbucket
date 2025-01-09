@@ -6,10 +6,10 @@
   z-index: 3;
   color: white;
   display: flex;
+  user-select: none;
 }
 .cont {
-  width: 40px;
-  border: 1px solid red;
+  width: 35px;
   height: 100%;
   background-color: var(--bg_gray);
 }
@@ -21,6 +21,35 @@
 .it0 {
   color: var(--text_0);
 }
-.it:hover .it0 {
-  color: white;
+.activetab {
+  background-color: var(--bg_gray0);
+  border-left: 1px solid white;
+  .it0 {
+    color: white;
+  }
+}
+.a {
+  width: 250px;
+  background-color: var(--bg_gray0);
+  font-size: 14px;
+}
+.head {
+  padding: 12px 0;
+  margin-inline: 20px;
+}
+.a1{
+  display: flex;
+  flex-wrap: wrap;
+}
+.a10{
+  width: 50%;
+  border: 1px solid gray;
+  padding: 20px;
+  color: var(--text_0);
+  font-size: 12px;
+  text-align: center;
+  cursor: grab;
+}
+.a10 svg{
+  stroke-width: 1;
 }
