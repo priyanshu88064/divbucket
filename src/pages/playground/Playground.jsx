@@ -13,11 +13,11 @@ export default () => {
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.playground} onClick={() => dispatch(updateActiveNode({ nodeId: null }))}>
+        <div className={styles.playground}>
             <div ref={stopScrollRef} className={styles.container}>
                 <SideBar />
                 <Cssbar />
-                <div className={styles.bg}>
+                <div className={styles.bg} onClick={() => dispatch(updateActiveNode({ nodeId: null }))}>
                     <Editor
                         e_width={'1200px'}
                         e_height={'800px'}

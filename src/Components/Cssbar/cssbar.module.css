@@ -28,30 +28,69 @@
   cursor: pointer;
   font-size: 13px;
 }
-.c11{
+.c11 {
   display: flex;
   justify-content: space-between;
-  padding:0 10px 15px 10px;
+  padding: 0 10px 15px 10px;
 }
-.c110{
+.c110 {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.c1100{
+.c1100 {
+  position: relative;
   background-color: var(--pg_bg);
   padding: 6px;
   border-radius: 3px;
   display: flex;
+  gap: 5px;
   justify-content: space-between;
   text-align: right;
   width: 60px;
+  .in {
+    all: unset;
+    width: 100%;
+    text-align: left;
+  }
 }
-.c1101{
+.c1101 {
   padding: 6px 0;
   text-wrap: nowrap;
 }
-.unit{
-  text-transform: uppercase;
-  cursor: pointer;
+.dropdown {
+  position: absolute;
+  height: 150px;
+  bottom: -152px;
+  right: 0;
+  background-color: var(--bg_gray0);
+  z-index: 1;
+  display: none;
+  width: max-content;
+  overflow-y: scroll;
+  border-radius: 3px;
+  box-shadow: 0 0 6px var(--pg_bg);
+}
+.d0 {
+  text-align: left;
+  border-right: 1px solid var(--bg_gray);
+}
+.d1 {
+  text-align: center;
+}
+.d0,
+.d1 {
+  display: flex;
+  flex-direction: column;
+
+  div {
+    padding: 5px;
+    cursor: pointer;
+  }
+  div:hover {
+    background-color: var(--bg_gray);
+  }
+}
+.in:focus ~ .dropdown {
+  display: flex;
 }
