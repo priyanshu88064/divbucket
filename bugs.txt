@@ -1,5 +1,6 @@
 - getting click outside (hence losing focus) of the resizable box while dragging resizable border
 - another resizable gets hover while resizing
+- child nodes(resizable) are not dragging
 
 TO-DO
 1 - SIDEBAR
