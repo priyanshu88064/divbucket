@@ -32,19 +32,19 @@ export default ({ id, children, className }) => {
         switch (dirRef.current) {
             case 0:
                 virtualPos.current.top = e.clientY;
-                newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
+                newDim.height = Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
                 break;
             case 1:
                 virtualPos.current.right = e.clientX;
-                newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
+                newDim.width = Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
                 break;
             case 2:
                 virtualPos.current.bottom = e.clientY;
-                newDim.height = (virtualPos.current.bottom - virtualPos.current.top) + "px";
+                newDim.height = Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
                 break;
             case 3:
                 virtualPos.current.left = e.clientX;
-                newDim.width = (virtualPos.current.right - virtualPos.current.left) + "px";
+                newDim.width = Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
                 break;
         }
         dispatch(updateStyleMap({ id, style: newDim }));
@@ -73,7 +73,7 @@ export default ({ id, children, className }) => {
 
         if (id == droppedId) return;
         const newNode = { id: Date.now(), childrens: [] };
-        dispatch(updateStyleMap({id:newNode.id,style:initCSS(newNode.type)}));
+        dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
         dispatch(updateTree({ tree: addNode(tree, id, newNode) }))
     }
     const handleDrag = (e) => {
@@ -95,10 +95,6 @@ export default ({ id, children, className }) => {
                     height: styleMap[id].height,
                     width: styleMap[id].width
                 }}
-                // style={{
-                //     height: dim.height,
-                //     width: dim.width
-                // }}
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

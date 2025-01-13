@@ -6,8 +6,11 @@ export default function initCSS(type) {
     height: "auto",
     minHeight:"0px",
     maxHeight:"none",
-    display: "auto",
+    display: "block",
     flexDirection: "row",
+    justifyContent:"flex-start",
+    alignItems:"stretch",
+    gap:"0px"
   };
 
   switch (type) {

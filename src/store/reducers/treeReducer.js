@@ -12,6 +12,7 @@ const treeSlice = createSlice({
     },
     updateStyleMap: (state, { payload }) => {
       state.styleMap[payload.id] = payload.style;
+      console.log(payload)
     },
   },
 });
