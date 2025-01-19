@@ -17,9 +17,9 @@
 }
 
 ::-webkit-scrollbar{
-  width: 2px;
-  background-color: var(--pg_bg);
+  width: 4px;
+  background-color: var(--bg_gray);
 }
 ::-webkit-scrollbar-thumb{
-    background-color: white;
+    background-color: var(--gray_border);
 }

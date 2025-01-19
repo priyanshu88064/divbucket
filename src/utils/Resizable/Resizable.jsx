@@ -5,7 +5,7 @@ import { updateActiveNode, updateStyleMap, updateTree } from '../../store/reduce
 import { addNode } from '../treeFunctions';
 import initCSS from '../initCSS';
 
-export default ({ id, children, className }) => {
+export default ({ id, children }) => {
 
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
@@ -88,13 +88,12 @@ export default ({ id, children, className }) => {
         <>
             <div
                 ref={divRef}
-                className={`${styles.a}`}
+                className={styles.a}
                 onDrop={handleDrop}
                 onDragOver={handleDrag}
-                style={{
-                    height: styleMap[id].height,
-                    width: styleMap[id].width
-                }}
+                draggable
+                onDragStart={handleDragStart}
+                style={styleMap[id]}
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -115,15 +114,7 @@ export default ({ id, children, className }) => {
                         </> :
                         <div className={`${styles.resizable} ${styles.hov}`}></div>
                 }
-                <div
-                    draggable
-                    onDragStart={handleDragStart}
-                    style={styleMap[id]}
-                    className={`${className} ${styles.draggable}`}
-                >
-                    {children}
-                </div>
-
+                {children}
             </div>
         </>
     );

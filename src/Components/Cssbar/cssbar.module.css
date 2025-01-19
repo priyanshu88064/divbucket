@@ -1,3 +1,39 @@
+/* reusable starts */
+.padwrap {
+  padding: 0 10px 15px 10px;
+  color: var(--text_2);
+}
+.makedrop {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--bg_gray0);
+  z-index: 1;
+  border-radius: 3px;
+  box-shadow: 0 0 6px var(--pg_bg);
+  transform: translateY(100%);
+}
+.beffect {
+  background-color: var(--pg_bg);
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 1px 1px 7px 0px #6c6c6c inset;
+  padding: 8px 13px;
+  color: var(--text_2);
+
+  div {
+    border-radius: 3px;
+    flex: 1;
+    padding: 4px;
+  }
+}
+.beffectactivediv {
+  color: var(--text_0) !important;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+/* reusable ends */
+
 .cssbar {
   background-color: var(--bg_gray);
   position: fixed;
@@ -7,6 +43,7 @@
   height: 100%;
   z-index: 3;
   color: white;
+  overflow-y: scroll;
 }
 
 .c1 {
@@ -31,7 +68,6 @@
 .c11 {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px 15px 10px;
 }
 .c110 {
   display: flex;
@@ -48,6 +84,7 @@
   justify-content: space-between;
   text-align: right;
   width: 60px;
+  color: var(--text_0);
   .in {
     all: unset;
     width: 100%;
@@ -59,16 +96,8 @@
   text-wrap: nowrap;
 }
 .dropdown {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: var(--bg_gray0);
-  z-index: 1;
   display: none;
-  width: max-content;
-  border-radius: 3px;
-  box-shadow: 0 0 6px var(--pg_bg);
-  transform: translateY(100%);
+  text-wrap: nowrap;
 }
 .d0 {
   text-align: left;
@@ -93,37 +122,19 @@
 .in:focus ~ .dropdown {
   display: flex;
 }
-
 .dicont {
-  padding: 0 10px 15px 10px;
-  color: var(--text_2);
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 .dic0 {
-  background-color: var(--pg_bg);
-  display: flex;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 1px 1px 7px 0px #6c6c6c inset;
-  padding: 8px 13px;
-  color: var(--text_2);
-
   div {
-    border-radius: 3px;
     cursor: pointer;
-    flex: 1;
     text-align: center;
-    padding: 4px;
   }
   div:hover {
     color: white;
   }
-}
-.activedic0 {
-  color: var(--text_0);
-  background-color: rgba(255, 255, 255, 0.15);
 }
 .dic1 {
   position: relative;
@@ -139,8 +150,6 @@
 }
 .dic10 {
   position: relative;
-  color: var(--text_0) !important;
-  background-color: rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -149,21 +158,13 @@
 }
 .dic11 {
   border: 1px solid gray;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background-color: var(--bg_gray0);
-  width: max-content;
-  transform: translateY(100%);
-  border-radius: 3px;
-  box-shadow: 0 0 6px var(--pg_bg);
   display: none;
   padding: 0 !important;
 }
 .dic110 {
   color: white !important;
 }
+/*reusable*/
 .dic111 {
   text-wrap: nowrap;
   border-left: 1px solid var(--bg_gray);
@@ -189,18 +190,18 @@
 }
 .dic10:has(.iforhover:focus) + .dic11 {
   display: flex;
-  align-items: nor;
+  flex-direction: column;
 }
 
-.dicdemoflex{
-  all:unset;
+.dicdemoflex {
+  all: unset;
   display: flex;
   width: 120px;
   height: 120px;
   background-color: var(--pg_bg);
   gap: 2px;
-  
-  div{
+
+  div {
     all: unset;
     background-color: var(--bg_gray);
     padding: 5px;
@@ -210,8 +211,129 @@
     justify-content: center;
   }
 }
-.dic2{
-  display: flex;
+.dic2 {
   color: var(--text_0);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.dic20 {
+  display: flex;
   gap: 10px;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--pg_bg);
+  padding: 6px;
+  border-radius: 3px;
+  user-select: none;
+  transition: all 200ms;
+  width: 70px;
+}
+.mpout {
+  position: relative;
+  border: 1px dotted rgba(128, 128, 128, 0.25);
+  padding: 40px 70px;
+  margin: 10px 0;
+}
+.mpin {
+  height: 40px;
+}
+.mpcut {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms;
+}
+.mpcut:hover {
+  background: rgba(0, 0, 0, 0.02);
+  box-shadow: inset 1px 1px 2px #00000070;
+}
+.mpout > .top {
+  top: 0;
+  left: 0;
+  height: 41px;
+  width: 100%;
+}
+.mpout > .right {
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 71px;
+}
+.mpout > .bottom {
+  bottom: 0;
+  left: 0;
+  height: 41px;
+  width: 100%;
+}
+.mpout > .left {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 71px;
+}
+.mpcut0 {
+  all: unset;
+  text-align: center;
+  width: 50px;
+  border-bottom: 1px solid transparent;
+  color: var(--text_0);
+}
+.mpcut0:focus {
+  border-bottom: 1px solid var(--gray_border);
+}
+.p00 {
+  position: relative;
+  background-color: var(--pg_bg);
+  height: 100px;
+  overflow-y: scroll;
+}
+.pdefault {
+  width: fit-content;
+  min-width: 50px;
+  background-color: var(--bg_gray);
+  font-size: 10px;
+  padding: 5px 10px !important;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p00:has(.pscroll) {
+  overflow: hidden;
+}
+.pscroll {
+  padding: 0 !important;
+  height: 100%;
+  animation: scroll 5s linear infinite;
+}
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.ppscroll {
+  padding: 0 !important;
+  overflow: hidden;
+}
+.p01 {
+  overflow: hidden;
+  padding: 10px 0 !important;
+  height: 100px;
+  color: var(--text_0) !important;
+}
+.positioninputs {
+  padding-top: 20px;
+  padding-inline: 0;
 }

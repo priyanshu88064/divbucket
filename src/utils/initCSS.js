@@ -10,7 +10,21 @@ export default function initCSS(type) {
     flexDirection: "row",
     justifyContent:"flex-start",
     alignItems:"stretch",
-    gap:"0px"
+    gap:"0px",
+    flexWrap:"nowrap",
+    marginTop:"0",
+    marginRight:"0",
+    marginBottom:"0",
+    marginLeft:"0",
+    paddingTop:"0",
+    paddingRight:"0",
+    paddingBottom:"0",
+    paddingLeft:"0",
+    // position:'static',
+    top:'0px',
+    bottom:"0px",
+    right:"0px",
+    left:"0px"
   };
 
   switch (type) {
