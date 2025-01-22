@@ -72,24 +72,27 @@ export default () => {
                 {id && <Wrap title={"Position"}>
                     <div className={styles.padwrap}>
                         <Position />
-                        <div className={`${styles.c11} ${styles.padwrap} ${styles.positioninputs}`}>
-                            <div className={styles.c110}>
-                                <div className={styles.c1101}>Top</div>
-                                <div className={styles.c1101}>Left</div>
+                        {
+                            styleMap[id].position !== "static" &&
+                            <div className={`${styles.c11} ${styles.padwrap} ${styles.positioninputs}`}>
+                                <div className={styles.c110}>
+                                    <div className={styles.c1101}>Top</div>
+                                    <div className={styles.c1101}>Left</div>
+                                </div>
+                                <div className={styles.c110}>
+                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"top"} data={styleMap[id].top} />
+                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"left"} data={styleMap[id].left} />
+                                </div>
+                                <div className={styles.c110}>
+                                    <div className={styles.c1101}>Bottom</div>
+                                    <div className={styles.c1101}>Right</div>
+                                </div>
+                                <div className={styles.c110}>
+                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"bottom"} data={styleMap[id].bottom} />
+                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"right"} data={styleMap[id].right} />
+                                </div>
                             </div>
-                            <div className={styles.c110}>
-                                <Size_Input defaultValue={"0px"} property={"top"} data={styleMap[id].top} />
-                                <Size_Input defaultValue={"0px"} property={"left"} data={styleMap[id].left} />
-                            </div>
-                            <div className={styles.c110}>
-                                <div className={styles.c1101}>Bottom</div>
-                                <div className={styles.c1101}>Right</div>
-                            </div>
-                            <div className={styles.c110}>
-                                <Size_Input defaultValue={"0px"} property={"bottom"} data={styleMap[id].bottom} />
-                                <Size_Input defaultValue={"0px"} property={"right"} data={styleMap[id].right} />
-                            </div>
-                        </div>
+                        }
                     </div>
                 </Wrap>}
             </div>
@@ -103,7 +106,7 @@ const Position = ({ }) => {
     const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
     const dispatch = useDispatch();
 
-    const block = (e, style) => (<div className={styles.pdefault} style={style}>{e}</div>)
+    const block = (e, style,key) => (<div key={key} className={styles.pdefault} style={style}>{e}</div>)
     const defaultE = block("Default");
     const relativeE = (
         <>
@@ -123,7 +126,7 @@ const Position = ({ }) => {
         <>
             {block("1 : Fixed", { position: 'absolute', top: '5px', left: '80px' })}
             <div className={styles.pscroll}>
-                {["2", "3", "4", "5", "6", "7", "8"].map(d => block(d))}
+                {["2", "3", "4", "5", "6", "7", "8"].map((d,i) => block(d,{},i))}
             </div>
         </>
     );
@@ -132,20 +135,24 @@ const Position = ({ }) => {
             {block("1 : Sticky")}
             <div className={styles.ppscroll}>
                 <div className={styles.pscroll}>
-                    {["2", "3", "4", "5", "6", "7", "8"].map(d => block(d))}
+                    {["2", "3", "4", "5", "6", "7", "8"].map((d,i) => block(d,{},i))}
                 </div>
             </div>
         </>
     );
 
+    const handleMouseDown = () => {
+        dispatch(updateStyleMap({ id, style: { ...styleMap[id], position: mouseOn } }));
+    }
+
     return (
-        <InputDropDown name={"Position"} value={"default"}>
+        <InputDropDown name={"Position"} value={styleMap[id].position === "static" ? "Default" : styleMap[id].position}>
             <div className={styles.dic111}>
-                <div onMouseEnter={() => setMouseOn("static")}>Default</div>
-                <div onMouseEnter={() => setMouseOn("relative")}>Relative</div>
-                <div onMouseEnter={() => setMouseOn("absolute")}>Absolute</div>
-                <div onMouseEnter={() => setMouseOn("fixed")}>Fixed</div>
-                <div onMouseEnter={() => setMouseOn("sticky")}>Sticky</div>
+                <div onMouseDown={handleMouseDown} onMouseEnter={() => setMouseOn("static")}>Default</div>
+                <div onMouseDown={handleMouseDown} onMouseEnter={() => setMouseOn("relative")}>Relative</div>
+                <div onMouseDown={handleMouseDown} onMouseEnter={() => setMouseOn("absolute")}>Absolute</div>
+                <div onMouseDown={handleMouseDown} onMouseEnter={() => setMouseOn("fixed")}>Fixed</div>
+                <div onMouseDown={handleMouseDown} onMouseEnter={() => setMouseOn("sticky")}>Sticky</div>
             </div>
             <div className={styles.p0}>
                 <div className={styles.p00}>
@@ -271,7 +278,7 @@ const FlexProperties = ({ data }) => {
     );
 }
 
-const Size_Input = ({ data, property, defaultValue, extraOff }) => {
+const Size_Input = ({ data, property, defaultValue, extraOff, extraProp }) => {
 
     const [value, setValue] = useState({ x: "" });
     const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
@@ -308,9 +315,9 @@ const Size_Input = ({ data, property, defaultValue, extraOff }) => {
             <div className={`${styles.dropdown} ${styles.makedrop}`}>
                 {!extraOff && <div className={styles.d0}>
                     <div onMouseDown={() => setValue({ y: null, x: "auto" })}>auto</div>
-                    <div onMouseDown={() => setValue({ y: null, x: "fit-content" })}>fit-content</div>
-                    <div onMouseDown={() => setValue({ y: null, x: "max-content" })}>max-content</div>
-                    <div onMouseDown={() => setValue({ y: null, x: "min-content" })}>min-content</div>
+                    {!extraProp && <><div onMouseDown={() => setValue({ y: null, x: "fit-content" })}>fit-content</div>
+                        <div onMouseDown={() => setValue({ y: null, x: "max-content" })}>max-content</div>
+                        <div onMouseDown={() => setValue({ y: null, x: "min-content" })}>min-content</div></>}
                 </div>}
                 {
                     value.y &&

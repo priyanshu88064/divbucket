@@ -20,11 +20,11 @@ export default function initCSS(type) {
     paddingRight:"0",
     paddingBottom:"0",
     paddingLeft:"0",
-    // position:'static',
-    top:'0px',
-    bottom:"0px",
-    right:"0px",
-    left:"0px"
+    position:'static',
+    top:'auto',
+    bottom:"auto",
+    right:"auto",
+    left:"auto"
   };
 
   switch (type) {

@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateActiveNode, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
+import { updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
 import initCSS from '../initCSS';
+import { FaLock, FaUnlock } from 'react-icons/fa';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaDeleteLeft } from 'react-icons/fa6';
+import { MdDelete, MdOutlineMore, MdOutlineMoreHoriz } from 'react-icons/md';
+import { IoMdMore } from 'react-icons/io';
 
 export default ({ id, children }) => {
 
@@ -12,7 +17,8 @@ export default ({ id, children }) => {
     const dirRef = useRef();
     const divRef = useRef();
     const dispatch = useDispatch();
-    const { tree, activeNodeId, styleMap } = useSelector(state => state.treeReducer);
+    const { tree, activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
+    const [isLock, setIsLock] = useState(false);
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -73,6 +79,7 @@ export default ({ id, children }) => {
 
         if (id == droppedId) return;
         const newNode = { id: Date.now(), childrens: [] };
+        dispatch(updateDataMap({ id: newNode.id, data: { name: "Changethis" } }));
         dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
         dispatch(updateTree({ tree: addNode(tree, id, newNode) }))
     }
@@ -81,41 +88,64 @@ export default ({ id, children }) => {
     }
     const handleDragStart = (e) => {
         e.stopPropagation();
+        var img = document.createElement("img");
+        img.src = "";
+        e.dataTransfer.setDragImage(img, 0, 0);
         e.dataTransfer.setData("data", id);
     }
 
     return (
         <>
-            <div
-                ref={divRef}
-                className={styles.a}
-                onDrop={handleDrop}
-                onDragOver={handleDrag}
-                draggable
-                onDragStart={handleDragStart}
-                style={styleMap[id]}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dispatch(updateActiveNode({ nodeId: id }))
-                }}
-            >
-                {
-                    id === activeNodeId ?
-                        <>
-                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
-                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
-                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>
-                            <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.resizable} ${styles.left}`}></div>
-                            <div onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.circle} ${styles.ctop}`}></div>
-                            <div onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.circle} ${styles.cright}`}></div>
-                            <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
-                            <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
-                        </> :
-                        <div className={`${styles.resizable} ${styles.hov}`}></div>
-                }
-                {children}
+            <div style={{
+                position: styleMap[id].position,
+                top: styleMap[id].top,
+                bottom: styleMap[id].bottom,
+                right: styleMap[id].right,
+                left: styleMap[id].left,
+            }}>
+                <div
+                    ref={divRef}
+                    className={styles.a}
+                    onDrop={handleDrop}
+                    onDragOver={handleDrag}
+                    style={styleMap[id]}
+                    draggable
+                    onDragStart={handleDragStart}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dispatch(updateActiveNode({ nodeId: id }))
+                    }}
+                >
+                    {
+                        id === activeNodeId ?
+                            <>
+                                <div className={styles.infobar}>
+                                    <div style={{ cursor: 'text', textTransform: 'lowercase' }}>{dataMap[id].name}</div>
+                                    {
+                                        isLock ?
+                                            <div onClick={() => setIsLock(false)}><FaLock /></div> :
+                                            <div onClick={() => setIsLock(true)}><FaUnlock color='rgba(255, 255, 255, 0.71)' /></div>
+
+                                    }
+                                    <div ><MdDelete size={17} /></div>
+                                    <div style={{ borderRight: 'none' }}><MdOutlineMoreHoriz /></div>
+                                </div>
+                                <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
+                                <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
+                                <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>
+                                <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.resizable} ${styles.left}`}></div>
+                                <div onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.circle} ${styles.ctop}`}></div>
+                                <div onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.circle} ${styles.cright}`}></div>
+                                <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
+                                <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
+                            </> :
+                            <div className={`${styles.resizable} ${styles.hov}`}></div>
+                    }
+                    {children}
+                </div>
             </div>
+
         </>
     );
 }

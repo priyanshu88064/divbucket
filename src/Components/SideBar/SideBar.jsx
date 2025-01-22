@@ -38,9 +38,6 @@ export default () => {
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(2)} className={`${tab === 2 && styles.activetab} ${styles.it}`}><CiSearch className={styles.it0} size={23} /></div>
-                {/* <div draggable onDragStart={(e) => handleDragStart(e, 0)}>Resizable</div>
-                <div draggable onDragStart={(e) => handleDragStart(e, "BLOCK")}>Block</div>
-                <div draggable onDragStart={(e) => handleDragStart(e, "ROW")}>Row</div> */}
             </div>
             {
                 tab !== null &&

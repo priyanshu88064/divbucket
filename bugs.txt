@@ -5,6 +5,7 @@
 - in cssbar>size> input boxes, values like "auto" should not be editable means "auto" can't be backspaced to "aut". Backspacing it causing problem currently.
 - dropping elements not working in more than 2nd or 3rd level
 - CSSBAR>display>flex> the dropdown is being hidden when overflow from left side
+- hovering in a Active child element makes the parent element highlight
 
 TO-DO
 1 - SIDEBAR

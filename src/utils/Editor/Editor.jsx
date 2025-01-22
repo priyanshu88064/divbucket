@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
+import { updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
 
 export default ({ children, e_width, e_height, stopScrollRef }) => {
@@ -77,9 +77,18 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
         e.preventDefault();
         e.stopPropagation();
         const newNode = { id: Date.now(), type: e.dataTransfer.getData("type"), childrens: [] };
-        dispatch(updateStyleMap({id:newNode.id,style:initCSS(newNode.type)}));
+        dispatch(updateDataMap({ id: newNode.id, data: { name: newNode.type } }));
+        dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
         dispatch(updateTree({ tree: [...tree, newNode] }));
     }
+
+    useEffect(() => {
+        const newNode = { id: Date.now(), type: "ROW", childrens: [] };
+        dispatch(updateDataMap({ id: newNode.id, data: { name: newNode.type } }));
+        dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
+        dispatch(updateTree({ tree: [...tree, newNode] }));
+        dispatch(updateActiveNode({ nodeId: newNode.id }));
+    }, []);
 
     return (
         <>
