@@ -1,24 +1,11 @@
 import { CiSearch } from 'react-icons/ci';
 import styles from './sidebar.module.css';
-import { IoAddOutline, IoLayers, IoSquareOutline } from 'react-icons/io5';
+import { IoAddOutline, IoLayers } from 'react-icons/io5';
 import { useState } from 'react';
 import { GiSquare } from 'react-icons/gi';
-import { LuHeading1, LuLetterText, LuSquareArrowDown, LuSquareArrowRight } from 'react-icons/lu';
+import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
 import { PiImageLight, PiVideoLight } from 'react-icons/pi';
-
-/*
-div
-H-Flex
-v-Flex
-
-typography-
-Headings
-Paragraph/Text
-
-media-
-images,
-videos,
-*/
+import { RiText } from 'react-icons/ri';
 
 export default () => {
 
@@ -47,27 +34,31 @@ export default () => {
                             <>
                                 <div className={styles.head}>Nodes</div>
                                 <div className={styles.a1}>
-                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "BLOCK")}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Block")}>
                                         <div><GiSquare size={40} /></div>
                                         <div>Div</div>
                                     </div>
-                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "ROW")} title='horizontal flex box'>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Row")} title='horizontal flex box'>
                                         <div><LuSquareArrowRight size={40} /></div>
                                         <div>H-Flex</div>
                                     </div>
-                                    <div className={styles.a10}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Heading")}>
                                         <div><LuHeading1 size={40} /></div>
                                         <div>Heading</div>
                                     </div>
-                                    <div className={styles.a10}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Text")}>
+                                        <div><RiText size={30} style={{ margin: '7px 0' }} /></div>
+                                        <div>Text</div>
+                                    </div>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Paragraph")}>
                                         <div><LuLetterText size={40} /></div>
                                         <div>Paragraph</div>
                                     </div>
-                                    <div className={styles.a10}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Image")}>
                                         <div><PiImageLight size={40} /></div>
                                         <div>Image</div>
                                     </div>
-                                    <div className={styles.a10}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Video")}>
                                         <div><PiVideoLight size={40} /></div>
                                         <div>Video</div>
                                     </div>

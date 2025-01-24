@@ -99,20 +99,20 @@
   right: -5px;
   cursor: inherit;
 }
-.infobar{
+.infobar {
   background-color: var(--resizeblue);
   position: absolute;
   top: 0;
   left: 0;
   transform: translateY(-100%);
   color: white;
-  font-size: 14px;
   display: flex;
   border-radius: 5px;
   cursor: pointer;
   z-index: 1;
+  font-weight: normal;
 }
-.infobar > div{
+.infobar > div {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,0 +1,15 @@
+import { FaVideo } from "react-icons/fa";
+import Resizable from "../Resizable/Resizable";
+import styles from "./video.module.css";
+
+export default ({ tree, renderTree }) => {
+    return (
+        <Resizable
+            id={tree.id}
+        >
+            <div className={styles.video}>
+                <FaVideo size={40} color="gray"/>
+            </div>
+        </Resizable>
+    );
+}

@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
 import initCSS from '../initCSS';
 import { FaLock, FaUnlock } from 'react-icons/fa';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FaDeleteLeft } from 'react-icons/fa6';
-import { MdDelete, MdOutlineMore, MdOutlineMoreHoriz } from 'react-icons/md';
-import { IoMdMore } from 'react-icons/io';
+import { MdDelete, MdOutlineMoreHoriz } from 'react-icons/md';
 
 export default ({ id, children }) => {
 
@@ -121,15 +118,15 @@ export default ({ id, children }) => {
                         id === activeNodeId ?
                             <>
                                 <div className={styles.infobar}>
-                                    <div style={{ cursor: 'text', textTransform: 'lowercase' }}>{dataMap[id].name}</div>
+                                    <div style={{ cursor: 'text', fontSize: '13px' }}>{dataMap[id].name}</div>
                                     {
                                         isLock ?
-                                            <div onClick={() => setIsLock(false)}><FaLock /></div> :
-                                            <div onClick={() => setIsLock(true)}><FaUnlock color='rgba(255, 255, 255, 0.71)' /></div>
+                                            <div onClick={() => setIsLock(false)}><FaLock size={14} /></div> :
+                                            <div onClick={() => setIsLock(true)}><FaUnlock size={14} color='rgba(255, 255, 255, 0.71)' /></div>
 
                                     }
                                     <div ><MdDelete size={17} /></div>
-                                    <div style={{ borderRight: 'none' }}><MdOutlineMoreHoriz /></div>
+                                    <div style={{ borderRight: 'none', fontSize: '16px' }}><MdOutlineMoreHoriz /></div>
                                 </div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>

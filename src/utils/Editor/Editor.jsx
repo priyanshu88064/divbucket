@@ -83,7 +83,7 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
     }
 
     useEffect(() => {
-        const newNode = { id: Date.now(), type: "ROW", childrens: [] };
+        const newNode = { id: Date.now(), type: "Row", childrens: [] };
         dispatch(updateDataMap({ id: newNode.id, data: { name: newNode.type } }));
         dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
         dispatch(updateTree({ tree: [...tree, newNode] }));

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown } from 'react-icons/io';
-import { BsGripVertical } from 'react-icons/bs';
 
 export default () => {
 
