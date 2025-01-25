@@ -1,11 +1,12 @@
 .a {
   position: relative !important;
-  min-height: 5px;
-  min-width: 5px;
+  width: 100%;
+  height: 100%;
   top: auto !important;
   left: auto !important;
   right: auto !important;
   bottom: auto !important;
+  z-index: 1;
 }
 
 .resizable {
@@ -19,6 +20,14 @@
   left: 0;
 }
 .hov:hover {
+  border: 2px solid var(--resizeblue);
+}
+
+.highlight {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   border: 2px solid var(--resizeblue);
 }
 

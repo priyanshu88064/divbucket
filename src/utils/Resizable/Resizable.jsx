@@ -14,7 +14,7 @@ export default ({ id, children }) => {
     const dirRef = useRef();
     const divRef = useRef();
     const dispatch = useDispatch();
-    const { tree, activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
+    const { tree, activeNodeId, hoverNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
     const [isLock, setIsLock] = useState(false);
 
     const initVirtualPosition = () => {
@@ -74,6 +74,8 @@ export default ({ id, children }) => {
         e.stopPropagation();
         const droppedId = e.dataTransfer.getData("data");
 
+        console.log(">>", id, droppedId)
+
         if (id == droppedId) return;
         const newNode = { id: Date.now(), childrens: [] };
         dispatch(updateDataMap({ id: newNode.id, data: { name: "Changethis" } }));
@@ -82,6 +84,8 @@ export default ({ id, children }) => {
     }
     const handleDrag = (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        console.log("dragging", id)
     }
     const handleDragStart = (e) => {
         e.stopPropagation();
@@ -93,19 +97,21 @@ export default ({ id, children }) => {
 
     return (
         <>
-            <div style={{
-                position: styleMap[id].position,
-                top: styleMap[id].top,
-                bottom: styleMap[id].bottom,
-                right: styleMap[id].right,
-                left: styleMap[id].left,
-            }}>
+            <div
+                style={{
+                    position: styleMap[id].position,
+                    top: styleMap[id].top,
+                    bottom: styleMap[id].bottom,
+                    right: styleMap[id].right,
+                    left: styleMap[id].left,
+                }}
+            >
                 <div
                     ref={divRef}
                     className={styles.a}
+                    style={styleMap[id]}
                     onDrop={handleDrop}
                     onDragOver={handleDrag}
-                    style={styleMap[id]}
                     draggable
                     onDragStart={handleDragStart}
                     onClick={(e) => {
@@ -137,7 +143,9 @@ export default ({ id, children }) => {
                                 <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
                                 <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
                             </> :
-                            <div className={`${styles.resizable} ${styles.hov}`}></div>
+                            id === hoverNodeId ?
+                                <div className={`${styles.resizable} ${styles.highlight}`}></div> :
+                                <div className={`${styles.resizable} ${styles.hov}`}></div>
                     }
                     {children}
                 </div>
