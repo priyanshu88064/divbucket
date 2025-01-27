@@ -10,6 +10,8 @@ export default () => {
     const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
     const disptach = useDispatch();
 
+    console.log("csbar",styleMap);
+
     return (
         <div className={styles.cssbar}>
             <div className={styles.c1}>

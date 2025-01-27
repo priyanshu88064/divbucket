@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
+import { deleteNode, updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
 import initCSS from '../initCSS';
 import { FaLock, FaUnlock } from 'react-icons/fa';
@@ -74,8 +74,6 @@ export default ({ id, children }) => {
         e.stopPropagation();
         const droppedId = e.dataTransfer.getData("data");
 
-        console.log(">>", id, droppedId)
-
         if (id == droppedId) return;
         const newNode = { id: Date.now(), childrens: [] };
         dispatch(updateDataMap({ id: newNode.id, data: { name: "Changethis" } }));
@@ -85,7 +83,6 @@ export default ({ id, children }) => {
     const handleDrag = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("dragging", id)
     }
     const handleDragStart = (e) => {
         e.stopPropagation();
@@ -131,7 +128,12 @@ export default ({ id, children }) => {
                                             <div onClick={() => setIsLock(true)}><FaUnlock size={14} color='rgba(255, 255, 255, 0.71)' /></div>
 
                                     }
-                                    <div ><MdDelete size={17} /></div>
+                                    <div onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        dispatch(deleteNode({ id }));
+                                    }}><MdDelete size={17} /></div>
+                                    {/* <div onClick={() => dispatch(deleteNode({ id }))}><MdDelete size={17} /></div> */}
                                     <div style={{ borderRight: 'none', fontSize: '16px' }}><MdOutlineMoreHoriz /></div>
                                 </div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>

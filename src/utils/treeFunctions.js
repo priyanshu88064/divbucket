@@ -15,3 +15,10 @@ export function GetNodeById(tree, id) {
   }
   return null;
 }
+
+export function DeleteNode(tree, id) {
+  let tempTree = [...tree];
+  tempTree = tempTree.map((node) => ({...node,childrens:DeleteNode(node.childrens,id)}));
+  const result = tempTree.filter((node) => node.id !== id);
+  return result;
+}
