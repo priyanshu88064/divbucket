@@ -4,8 +4,11 @@ import { TbMinusVertical } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
+import TreeManager from '../TreeManager';
+import { useContextMenu } from '../hooks/useContextMenu';
+import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 
-export default ({ children, e_width, e_height, stopScrollRef }) => {
+export default ({ e_width, e_height, stopScrollRef }) => {
 
     const [dim, setDim] = useState({ width: null, height: null });
     const isResizingRef = useRef(false);
@@ -14,6 +17,7 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
     const divRef = useRef();
     const dispatch = useDispatch();
     const { tree } = useSelector(state => state.treeReducer);
+    const { clicked, setClicked, points, setPoints } = useContextMenu();
 
     useEffect(() => {
         setDim({ width: e_width, height: e_height });
@@ -101,10 +105,65 @@ export default ({ children, e_width, e_height, stopScrollRef }) => {
                 }}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    setClicked(true);
+                    setPoints({ x: e.pageX, y: e.pageY });
+                }}
             >
                 <div onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}><TbMinusVertical className={styles.lines} /></div>
                 <div onMouseDown={() => handleMouseDown(1)} className={`${styles.resizable} ${styles.right}`}><TbMinusVertical className={styles.lines} /></div>
-                {children}
+                {
+                    clicked &&
+                    <ContextMenu
+                        points={points}
+                        list={[
+                            [
+                                {
+                                    name: "Cut",
+                                    command: "Ctrl + X"
+                                },
+                                {
+                                    name: "Copy",
+                                    command: "Ctrl + C"
+                                },
+                                {
+                                    name: "Paste",
+                                    command: "Ctrl + V"
+                                }
+                            ],
+                            [
+                                {
+                                    name: "Duplicate",
+                                    command: "Ctrl + D"
+                                },
+                                {
+                                    name: "Lock",
+                                    command: "Ctrl + D"
+                                },
+                                {
+                                    name: "Rename",
+                                    command: "Ctrl + R"
+                                },
+                                {
+                                    name: "Delete",
+                                    command: "Backspace"
+                                }
+                            ],
+                            [
+                                {
+                                    name: "Select Parent",
+                                    command: ""
+                                },
+                                {
+                                    name: "Reveal in Explorer",
+                                    command: ""
+                                }
+                            ]
+                        ]}
+                    />
+                }
+                <TreeManager />
             </div>
         </>
     );

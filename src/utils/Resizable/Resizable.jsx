@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteNode, updateActiveNode, updateDataMap, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
+import { deleteNode, updateActiveNode, updateDataMap, updateHoverNode, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
 import { addNode } from '../treeFunctions';
 import initCSS from '../initCSS';
 import { FaLock, FaUnlock } from 'react-icons/fa';
@@ -116,6 +116,8 @@ export default ({ id, children }) => {
                         e.stopPropagation();
                         dispatch(updateActiveNode({ nodeId: id }))
                     }}
+                    onMouseEnter={() => dispatch(updateHoverNode({ nodeId: id }))}
+                    onMouseLeave={() => dispatch(updateHoverNode({ nodeId: null }))}
                 >
                     {
                         id === activeNodeId ?
@@ -126,14 +128,12 @@ export default ({ id, children }) => {
                                         isLock ?
                                             <div onClick={() => setIsLock(false)}><FaLock size={14} /></div> :
                                             <div onClick={() => setIsLock(true)}><FaUnlock size={14} color='rgba(255, 255, 255, 0.71)' /></div>
-
                                     }
                                     <div onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                         dispatch(deleteNode({ id }));
                                     }}><MdDelete size={17} /></div>
-                                    {/* <div onClick={() => dispatch(deleteNode({ id }))}><MdDelete size={17} /></div> */}
                                     <div style={{ borderRight: 'none', fontSize: '16px' }}><MdOutlineMoreHoriz /></div>
                                 </div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
@@ -147,7 +147,7 @@ export default ({ id, children }) => {
                             </> :
                             id === hoverNodeId ?
                                 <div className={`${styles.resizable} ${styles.highlight}`}></div> :
-                                <div className={`${styles.resizable} ${styles.hov}`}></div>
+                                <></>
                     }
                     {children}
                 </div>

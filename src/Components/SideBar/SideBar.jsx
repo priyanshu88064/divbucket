@@ -9,11 +9,14 @@ import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import { updateActiveNode, updateHoverNode } from '../../store/reducers/treeReducer';
+import { useContextMenu } from '../../utils/hooks/useContextMenu';
+import ContextMenu from '../ContextMenu/ContextMenu';
 
 export default () => {
 
     const [tab, setTab] = useState(1);
     const { tree } = useSelector(state => state.treeReducer);
+    const { clicked, setClicked, points, setPoints } = useContextMenu();
 
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("type", type);
@@ -71,8 +74,51 @@ export default () => {
                             tab == 1 ?
                                 <>
                                     <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
-                                    <div className={styles.rlist}>
+                                    <div
+                                        className={styles.rlist}
+                                        onContextMenu={e => {
+                                            e.preventDefault();
+                                            setClicked(true);
+                                            setPoints({ x: e.pageX, y: e.pageY });
+                                        }}
+                                    >
                                         <RecursiveList tree={tree} />
+                                        {
+                                            clicked &&
+                                            <ContextMenu
+                                                points={points}
+                                                list={[
+                                                    [
+                                                        {
+                                                            name: "Cut",
+                                                            command: "Ctrl + X"
+                                                        },
+                                                        {
+                                                            name: "Copy",
+                                                            command: "Ctrl + C"
+                                                        },
+                                                        {
+                                                            name: "Paste",
+                                                            command: "Ctrl + V"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            name: "Duplicate",
+                                                            command: "Ctrl + D"
+                                                        },
+                                                        {
+                                                            name: "Rename",
+                                                            command: "Ctrl + R"
+                                                        },
+                                                        {
+                                                            name: "Delete",
+                                                            command: "Backspace"
+                                                        }
+                                                    ],
+                                                ]}
+                                            />
+                                        }
                                     </div>
                                 </> :
                                 <>

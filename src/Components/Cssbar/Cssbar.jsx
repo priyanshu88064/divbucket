@@ -1,6 +1,6 @@
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import styles from './cssbar.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -9,8 +9,6 @@ export default () => {
 
     const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
     const disptach = useDispatch();
-
-    console.log("csbar",styleMap);
 
     return (
         <div className={styles.cssbar}>
@@ -107,7 +105,7 @@ const Position = ({ }) => {
     const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
     const dispatch = useDispatch();
 
-    const block = (e, style,key) => (<div key={key} className={styles.pdefault} style={style}>{e}</div>)
+    const block = (e, style, key) => (<div key={key} className={styles.pdefault} style={style}>{e}</div>)
     const defaultE = block("Default");
     const relativeE = (
         <>
@@ -127,7 +125,7 @@ const Position = ({ }) => {
         <>
             {block("1 : Fixed", { position: 'absolute', top: '5px', left: '80px' })}
             <div className={styles.pscroll}>
-                {["2", "3", "4", "5", "6", "7", "8"].map((d,i) => block(d,{},i))}
+                {["2", "3", "4", "5", "6", "7", "8"].map((d, i) => block(d, {}, i))}
             </div>
         </>
     );
@@ -136,7 +134,7 @@ const Position = ({ }) => {
             {block("1 : Sticky")}
             <div className={styles.ppscroll}>
                 <div className={styles.pscroll}>
-                    {["2", "3", "4", "5", "6", "7", "8"].map((d,i) => block(d,{},i))}
+                    {["2", "3", "4", "5", "6", "7", "8"].map((d, i) => block(d, {}, i))}
                 </div>
             </div>
         </>
