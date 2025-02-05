@@ -27,6 +27,7 @@ export default function initCSS(type) {
     left: "auto",
     fontWeight: "400",
     fontSize: "16px",
+    background:"transparent",
   };
 
   switch (type) {

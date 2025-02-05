@@ -1,13 +1,12 @@
 import Resizable from "../Resizable/Resizable";
 
-export default ({ tree, renderTree }) => {
+export default ({ node,tree, renderTree }) => {
     return (
         <Resizable
-            id={tree.id}
+            id={node}
         >
-            {tree.id} BLOCK
             {
-                tree.childrens.map(node => renderTree(node))
+                tree[node].map(node => renderTree(node))
             }
         </Resizable>
     );

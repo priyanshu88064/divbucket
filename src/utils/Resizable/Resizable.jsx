@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteNode, updateActiveNode, updateDataMap, updateHoverNode, updateStyleMap, updateTree } from '../../store/reducers/treeReducer';
-import { addNode } from '../treeFunctions';
+import { deleteNode, updateActiveNode, updateDataMap, updateHoverNode, updateStyleMap } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { MdDelete, MdOutlineMoreHoriz } from 'react-icons/md';
+import { useDrag } from '../hooks/useDrag';
 
 export default ({ id, children }) => {
 
@@ -15,7 +15,10 @@ export default ({ id, children }) => {
     const divRef = useRef();
     const dispatch = useDispatch();
     const { tree, activeNodeId, hoverNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
+    const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
     const [isLock, setIsLock] = useState(false);
+
+    console.log(styleMap,dataMap)
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -69,28 +72,6 @@ export default ({ id, children }) => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
     }
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const droppedId = e.dataTransfer.getData("data");
-
-        if (id == droppedId) return;
-        const newNode = { id: Date.now(), childrens: [] };
-        dispatch(updateDataMap({ id: newNode.id, data: { name: "Changethis" } }));
-        dispatch(updateStyleMap({ id: newNode.id, style: initCSS(newNode.type) }));
-        dispatch(updateTree({ tree: addNode(tree, id, newNode) }))
-    }
-    const handleDrag = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    const handleDragStart = (e) => {
-        e.stopPropagation();
-        var img = document.createElement("img");
-        img.src = "";
-        e.dataTransfer.setDragImage(img, 0, 0);
-        e.dataTransfer.setData("data", id);
-    }
 
     return (
         <>
@@ -108,9 +89,11 @@ export default ({ id, children }) => {
                     className={styles.a}
                     style={styleMap[id]}
                     onDrop={handleDrop}
-                    onDragOver={handleDrag}
-                    draggable
+                    onDragOver={handleDragOver}
+                    onDragEnter={handleDragEnter}
                     onDragStart={handleDragStart}
+                    onDragLeave={handleDragLeave}
+                    draggable
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();

@@ -14,7 +14,7 @@ import ContextMenu from '../ContextMenu/ContextMenu';
 
 export default () => {
 
-    const [tab, setTab] = useState(1);
+    const [tab, setTab] = useState(0);
     const { tree } = useSelector(state => state.treeReducer);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 

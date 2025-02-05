@@ -10,17 +10,18 @@ import Video from "./Video/Video";
 
 export default ({ }) => {
 
-  const { tree } = useSelector(state => state.treeReducer);
+  const { tree,dataMap } = useSelector(state => state.treeReducer);
 
-  const renderTree = (tree) => {
+  const renderTree = (node) => {
 
     let ele;
 
-    switch (tree.type) {
+    switch (dataMap[node].type) {
       case "Block":
         ele = (
           <Block
-            key={tree.id}
+            key={node}
+            node={node}
             tree={tree}
             renderTree={renderTree}
           />
@@ -29,7 +30,8 @@ export default ({ }) => {
       case "Row":
         ele = (
           <Row
-            key={tree.id}
+            key={node}
+            node={node}
             tree={tree}
             renderTree={renderTree}
           />
@@ -38,52 +40,47 @@ export default ({ }) => {
       case "Heading":
         ele = (
           <Heading
-            key={tree.id}
-            tree={tree}
+            key={node}
           />
         );
         break;
       case "Text":
         ele = (
           <Text
-            key={tree.id}
-            tree={tree}
+            key={node}
           />
         );
         break;
       case "Paragraph":
         ele = (
           <Paragraph
-            key={tree.id}
-            tree={tree}
+            key={node}
           />
         );
         break;
       case "Image":
         ele = (
           <Image
-            key={tree.id}
-            tree={tree}
+            key={node}
           />
         );
         break;
       case "Video":
         ele = (
           <Video
-            key={tree.id}
-            tree={tree}
+            key={node}
           />
         );
         break;
       default:
         ele = (
           <Resizable
-            id={tree.id}
-            key={tree.id}
+            id={node}
+            key={node}
           >
-            {tree.id} resizable
+            {node} resizable
             {
-              tree.childrens.map(node => renderTree(node))
+              tree[node].map(node => renderTree(node))
             }
           </Resizable>
         );
@@ -94,5 +91,5 @@ export default ({ }) => {
 
   }
 
-  return (<>{tree.map(tree => renderTree(tree))}</>);
+  return (<>{tree["root"].map(tree => renderTree(tree))}</>);
 }

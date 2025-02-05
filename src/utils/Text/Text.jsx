@@ -1,9 +1,9 @@
 import Resizable from "../Resizable/Resizable";
 
-export default ({ tree }) => {
+export default ({ key }) => {
     return (
         <Resizable
-            id={tree.id}
+            id={key}
         >
             Text
         </Resizable>

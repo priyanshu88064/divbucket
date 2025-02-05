@@ -2,10 +2,10 @@ import { FaImage } from "react-icons/fa";
 import Resizable from "../Resizable/Resizable";
 import styles from "./image.module.css";
 
-export default ({ tree }) => {
+export default ({ key }) => {
     return (
         <Resizable
-            id={tree.id}
+            id={key}
         >
             <div className={styles.image}>
                 <FaImage size={40} color="gray"/>

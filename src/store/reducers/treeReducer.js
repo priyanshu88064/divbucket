@@ -1,36 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DeleteNode } from "../../utils/treeFunctions";
 
 const treeSlice = createSlice({
   name: "tree",
   initialState: {
-    tree: [],
+    tree: { root: [] },
     activeNodeId: null,
     hoverNodeId: null,
     styleMap: {},
     dataMap: {},
   },
   reducers: {
+    updateTree: (state, { payload }) => {
+      state.tree = payload.tree;
+    },
     updateActiveNode: (state, { payload }) => {
       state.activeNodeId = payload.nodeId;
     },
     updateHoverNode: (state, { payload }) => {
       state.hoverNodeId = payload.nodeId;
     },
-    updateTree: (state, { payload }) => {
-      state.tree = payload.tree;
-    },
     updateStyleMap: (state, { payload }) => {
-      state.styleMap[payload.id] = payload.style;
+      state.styleMap = payload.styleMap;
     },
     updateDataMap: (state, { payload }) => {
-      state.dataMap[payload.id] = payload.data;
+      state.dataMap = payload.dataMap;
     },
     deleteNode: (state, { payload }) => {
       state.activeNodeId = null;
-      delete state.dataMap[payload.id];
-      delete state.styleMap[payload.id];
-      state.tree = DeleteNode(state.tree, payload.id);
+      if (!payload.dontDeleteData) {
+        const { [payload.id]: _, ...newDataMap } = state.dataMap;
+        const { [payload.id]: __, ...newStyleMap } = state.styleMap;
+        state.dataMap = newDataMap;
+        state.styleMap = newStyleMap;
+      }
+      const { [payload.id]: ___, ...newTree } = state.tree;
+      state.tree = Object.keys(newTree).reduce((acc, key) => {
+        acc[key] = newTree[key].filter((id) => id !== payload.id);
+        return acc;
+      }, {});
     },
   },
 });
