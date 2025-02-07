@@ -1,77 +1,18 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteNode, updateActiveNode, updateDataMap, updateHoverNode, updateStyleMap } from '../../store/reducers/treeReducer';
-import initCSS from '../initCSS';
+import { updateActiveNode } from '../../store/reducers/treeReducer';
 import { FaLock, FaUnlock } from 'react-icons/fa';
-import { MdDelete, MdOutlineMoreHoriz } from 'react-icons/md';
 import { useDrag } from '../hooks/useDrag';
+import { useResizer } from '../hooks/useResizer';
 
 export default ({ id, children }) => {
 
-    const isResizingRef = useRef(false);
-    const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
-    const dirRef = useRef();
-    const divRef = useRef();
     const dispatch = useDispatch();
-    const { tree, activeNodeId, hoverNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
+    const { activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
     const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
+    const { divRef, dim, handleMouseDown } = useResizer({ id });
     const [isLock, setIsLock] = useState(false);
-
-    console.log(styleMap,dataMap)
-
-    const initVirtualPosition = () => {
-        if (divRef.current) {
-            const rect = divRef.current.getBoundingClientRect();
-            virtualPos.current = {
-                top: rect.top,
-                left: rect.left,
-                right: rect.right,
-                bottom: rect.bottom
-            }
-        }
-    }
-
-    const handleMouseMove = (e) => {
-        if (!isResizingRef.current || !divRef.current) return;
-        let newDim = { ...styleMap[id] };
-        switch (dirRef.current) {
-            case 0:
-                virtualPos.current.top = e.clientY;
-                newDim.height = Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
-                break;
-            case 1:
-                virtualPos.current.right = e.clientX;
-                newDim.width = Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
-                break;
-            case 2:
-                virtualPos.current.bottom = e.clientY;
-                newDim.height = Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
-                break;
-            case 3:
-                virtualPos.current.left = e.clientX;
-                newDim.width = Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
-                break;
-        }
-        dispatch(updateStyleMap({ id, style: newDim }));
-    }
-    const handleMouseDown = (e, direction) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isResizingRef.current = true;
-        dirRef.current = direction;
-        initVirtualPosition();
-        divRef.current.style.userSelect = "none";
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    }
-    const handleMouseUp = () => {
-        divRef.current.style.userSelect = "";
-        isResizingRef.current = false;
-        dirRef.current = null;
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-    }
 
     return (
         <>
@@ -87,11 +28,11 @@ export default ({ id, children }) => {
                 <div
                     ref={divRef}
                     className={styles.a}
-                    style={styleMap[id]}
+                    style={{ ...styleMap[id], ...dim }}
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
-                    onDragEnter={handleDragEnter}
                     onDragStart={handleDragStart}
+                    onDragEnter={handleDragEnter}
                     onDragLeave={handleDragLeave}
                     draggable
                     onClick={(e) => {
@@ -99,8 +40,6 @@ export default ({ id, children }) => {
                         e.stopPropagation();
                         dispatch(updateActiveNode({ nodeId: id }))
                     }}
-                    onMouseEnter={() => dispatch(updateHoverNode({ nodeId: id }))}
-                    onMouseLeave={() => dispatch(updateHoverNode({ nodeId: null }))}
                 >
                     {
                         id === activeNodeId ?
@@ -109,15 +48,9 @@ export default ({ id, children }) => {
                                     <div style={{ cursor: 'text', fontSize: '13px' }}>{dataMap[id].name}</div>
                                     {
                                         isLock ?
-                                            <div onClick={() => setIsLock(false)}><FaLock size={14} /></div> :
-                                            <div onClick={() => setIsLock(true)}><FaUnlock size={14} color='rgba(255, 255, 255, 0.71)' /></div>
+                                            <div style={{ borderRight: 'none' }} onClick={() => setIsLock(false)}><FaLock size={12} /></div> :
+                                            <div style={{ borderRight: 'none' }} onClick={() => setIsLock(true)}><FaUnlock size={12} color='rgba(255, 255, 255, 0.71)' /></div>
                                     }
-                                    <div onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        dispatch(deleteNode({ id }));
-                                    }}><MdDelete size={17} /></div>
-                                    <div style={{ borderRight: 'none', fontSize: '16px' }}><MdOutlineMoreHoriz /></div>
                                 </div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
@@ -128,9 +61,12 @@ export default ({ id, children }) => {
                                 <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
                                 <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
                             </> :
-                            id === hoverNodeId ?
-                                <div className={`${styles.resizable} ${styles.highlight}`}></div> :
-                                <></>
+                            <>
+                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.top}`}></div>
+                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.right}`}></div>
+                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.bottom}`}></div>
+                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.left}`}></div>
+                            </>
                     }
                     {children}
                 </div>

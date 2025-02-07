@@ -10,8 +10,21 @@ const treeSlice = createSlice({
     dataMap: {},
   },
   reducers: {
-    updateTree: (state, { payload }) => {
-      state.tree = payload.tree;
+    addNode: (state, { payload }) => {
+      state.tree[payload.parent].push(payload.child);
+      state.tree[payload.child] = [];
+    },
+    deleteNode: (state, { payload }) => {
+      state.activeNodeId = null;
+      if (!payload.dontDeleteData) {
+        delete state.dataMap[payload.id];
+        delete state.styleMap[payload.id];
+      }
+      const { [payload.id]: ___, ...newTree } = state.tree;
+      state.tree = Object.keys(newTree).reduce((acc, key) => {
+        acc[key] = newTree[key].filter((id) => id !== payload.id);
+        return acc;
+      }, {});
     },
     updateActiveNode: (state, { payload }) => {
       state.activeNodeId = payload.nodeId;
@@ -20,24 +33,11 @@ const treeSlice = createSlice({
       state.hoverNodeId = payload.nodeId;
     },
     updateStyleMap: (state, { payload }) => {
-      state.styleMap = payload.styleMap;
+      console.log(payload.style)
+      state.styleMap[payload.id] = payload.style;
     },
     updateDataMap: (state, { payload }) => {
-      state.dataMap = payload.dataMap;
-    },
-    deleteNode: (state, { payload }) => {
-      state.activeNodeId = null;
-      if (!payload.dontDeleteData) {
-        const { [payload.id]: _, ...newDataMap } = state.dataMap;
-        const { [payload.id]: __, ...newStyleMap } = state.styleMap;
-        state.dataMap = newDataMap;
-        state.styleMap = newStyleMap;
-      }
-      const { [payload.id]: ___, ...newTree } = state.tree;
-      state.tree = Object.keys(newTree).reduce((acc, key) => {
-        acc[key] = newTree[key].filter((id) => id !== payload.id);
-        return acc;
-      }, {});
+      state.dataMap[payload.id] = payload.data;
     },
   },
 });
@@ -45,7 +45,7 @@ const treeSlice = createSlice({
 export const {
   updateActiveNode,
   updateHoverNode,
-  updateTree,
+  addNode,
   updateStyleMap,
   updateDataMap,
   deleteNode,

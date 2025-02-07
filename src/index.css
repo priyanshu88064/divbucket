@@ -10,17 +10,18 @@
 :root {
   --bg_gray: #353a3c;
   --bg_gray0: #555b61;
-  --text_0:#d9d9d9;
-  --text_2:#b5b5b5;
-  --pg_bg:#1C1E1F;
-  --gray_border:rgb(100, 100, 100);
-  --resizeblue:#316fff;
+  --text_0: #d9d9d9;
+  --text_2: #b5b5b5;
+  --pg_bg: #1c1e1f;
+  --gray_border: rgb(100, 100, 100);
+  --resizeblue: #c800ff;
+  /* --resizeblue:#316fff; */
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 4px;
   background-color: var(--bg_gray);
 }
-::-webkit-scrollbar-thumb{
-    background-color: var(--gray_border);
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray_border);
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTree, updateActiveNode, updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
+import { addNode, updateActiveNode, updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
 import TreeManager from '../TreeManager';
 import { useContextMenu } from '../hooks/useContextMenu';
@@ -11,7 +11,8 @@ import { useDrag } from '../hooks/useDrag';
 
 export default ({ e_width, e_height, stopScrollRef }) => {
 
-    const [dim, setDim] = useState({ width: null, height: null });
+    const id = "root";
+    const [dim, setDim] = useState({ width: e_width, height: e_height });
     const isResizingRef = useRef(false);
     const virtualPos = useRef({ top: null, bottom: null, left: null, right: null });
     const dirRef = useRef();
@@ -19,11 +20,9 @@ export default ({ e_width, e_height, stopScrollRef }) => {
     const dispatch = useDispatch();
     const { tree } = useSelector(state => state.treeReducer);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
-    const { handleDragOver, handleDrop } = useDrag({id:"root"});
+    const { handleDragOver, handleDrop } = useDrag({ id });
 
-    useEffect(() => {
-        setDim({ width: e_width, height: e_height });
-    }, [e_width, e_height]);
+    console.log(tree)
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -79,11 +78,11 @@ export default ({ e_width, e_height, stopScrollRef }) => {
 
     useEffect(() => {
         const child = Date.now();
-        dispatch(updateDataMap({ id: child, data: { name: "Row",type:"Row" } }));
+        dispatch(updateDataMap({ id: child, data: { name: "Row", type: "Row" } }));
         dispatch(updateStyleMap({ id: child, style: initCSS("Row") }));
-        dispatch(updateTree({tree:{...tree,"root":[...tree["root"],child],[child]:[]}}));
+        dispatch(addNode({ parent: id, child }));
         dispatch(updateActiveNode({ nodeId: child }));
-    }, []);
+    },[]);
 
     return (
         <>
