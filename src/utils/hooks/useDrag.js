@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addNode,
   deleteNode,
-  updateDataMap,
-  updateStyleMap,
 } from "../../store/reducers/treeReducer";
-import initCSS from "../initCSS";
 import { useState } from "react";
 
 export function useDrag({ id }) {

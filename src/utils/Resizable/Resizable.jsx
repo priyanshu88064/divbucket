@@ -11,7 +11,7 @@ export default ({ id, children }) => {
     const dispatch = useDispatch();
     const { activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
     const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
-    const { divRef, dim, handleMouseDown } = useResizer({ id });
+    const { dim, divRef, handleMouseDown } = useResizer({ id });
     const [isLock, setIsLock] = useState(false);
 
     return (
@@ -61,12 +61,7 @@ export default ({ id, children }) => {
                                 <div onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.circle} ${styles.cbottom}`}></div>
                                 <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
                             </> :
-                            <>
-                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.top}`}></div>
-                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.right}`}></div>
-                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.bottom}`}></div>
-                                <div draggable={false} className={`${styles.resizable} ${styles.hov} ${styles.left}`}></div>
-                            </>
+                            <div className={`${styles.resizable} ${styles.hov}`}></div>
                     }
                     {children}
                 </div>

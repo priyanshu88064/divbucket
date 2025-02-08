@@ -22,8 +22,6 @@ export default ({ e_width, e_height, stopScrollRef }) => {
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const { handleDragOver, handleDrop } = useDrag({ id });
 
-    console.log(tree)
-
     const initVirtualPosition = () => {
         if (divRef.current) {
             const rect = divRef.current.getBoundingClientRect();

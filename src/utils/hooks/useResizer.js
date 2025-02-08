@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStyleMap } from "../../store/reducers/treeReducer";
 
@@ -11,13 +11,25 @@ export function useResizer({ id }) {
     right: null,
   });
   const [dim, setDim] = useState({
-    height: styleMap[id].height,
     width: styleMap[id].width,
+    height: styleMap[id].height,
   });
   const divRef = useRef();
   const dirRef = useRef();
   const isResizingRef = useRef(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setDim({
+      width: styleMap[id].width,
+      height: styleMap[id].height,
+    });
+  }, [styleMap, id]);
+
+  const calWidth = () =>
+    Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
+  const calHeight = () =>
+    Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
 
   const initVirtualPosition = () => {
     if (divRef.current) {
@@ -36,26 +48,40 @@ export function useResizer({ id }) {
     switch (dirRef.current) {
       case 0:
         virtualPos.current.top = e.clientY;
-        newDim.height =
-          Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
+        newDim.height = calHeight();
         break;
       case 1:
         virtualPos.current.right = e.clientX;
-        newDim.width =
-          Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
+        newDim.width = calWidth();
         break;
       case 2:
         virtualPos.current.bottom = e.clientY;
-        newDim.height =
-          Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
+        newDim.height = calHeight();
         break;
       case 3:
         virtualPos.current.left = e.clientX;
-        newDim.width =
-          Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
+        newDim.width = calWidth();
         break;
     }
     setDim(newDim);
+  };
+  const handleMouseUp = () => {
+    divRef.current.style.userSelect = "";
+    isResizingRef.current = false;
+    dispatch(
+      updateStyleMap({
+        id,
+        style: {
+          ...styleMap[id],
+          width: Number(dirRef.current) % 2 ? calWidth() : styleMap[id].width,
+          height:
+            Number(dirRef.current) % 2 ? styleMap[id].height : calHeight(),
+        },
+      })
+    );
+    dirRef.current = null;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
   };
   const handleMouseDown = (e, direction) => {
     e.preventDefault();
@@ -67,14 +93,6 @@ export function useResizer({ id }) {
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
-  const handleMouseUp = useCallback(() => {
-    divRef.current.style.userSelect = "";
-    isResizingRef.current = false;
-    dirRef.current = null;
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-    dispatch(updateStyleMap({ id, style: { ...styleMap[id], ...dim } }));
-  }, [dim, id]);
 
   return {
     divRef,
