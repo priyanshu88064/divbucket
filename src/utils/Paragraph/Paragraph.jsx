@@ -1,9 +1,9 @@
 import Resizable from "../Resizable/Resizable";
 
-export default ({ key }) => {
+export default ({ node }) => {
     return (
         <Resizable
-            id={key}
+            id={node}
         >
             Lorem ipsum dolor sit amet, consectetur
             adipisicing elit. Hic ipsa, illum optio

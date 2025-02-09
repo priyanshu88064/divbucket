@@ -5,6 +5,8 @@ import { updateActiveNode } from '../../store/reducers/treeReducer';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { useDrag } from '../hooks/useDrag';
 import { useResizer } from '../hooks/useResizer';
+import { useContextMenu } from '../hooks/useContextMenu';
+import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 
 export default ({ id, children }) => {
 
@@ -12,6 +14,7 @@ export default ({ id, children }) => {
     const { activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
     const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
     const { dim, divRef, handleMouseDown } = useResizer({ id });
+    const { clicked, setClicked, points, setPoints } = useContextMenu();
     const [isLock, setIsLock] = useState(false);
 
     return (
@@ -25,6 +28,14 @@ export default ({ id, children }) => {
                     left: styleMap[id].left,
                 }}
             >
+                {
+                    clicked &&
+                    <ContextMenu
+                        id={id}
+                        points={points}
+                        setClicked={setClicked}
+                    />
+                }
                 <div
                     ref={divRef}
                     className={styles.a}
@@ -39,6 +50,12 @@ export default ({ id, children }) => {
                         e.preventDefault();
                         e.stopPropagation();
                         dispatch(updateActiveNode({ nodeId: id }))
+                    }}
+                    onContextMenu={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setClicked(true);
+                        setPoints({ x: e.pageX, y: e.pageY });
                     }}
                 >
                     {

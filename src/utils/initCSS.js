@@ -40,8 +40,6 @@ export default function initCSS(type) {
       break;
     case "Heading":
       style.fontSize = "2em";
-      style.marginTop = "0.67em";
-      style.marginBottom = "0.67em";
       style.fontWeight = "bold";
       break;
     case "Text":

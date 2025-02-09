@@ -18,8 +18,10 @@ export default () => {
     const { tree } = useSelector(state => state.treeReducer);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
+
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("type", type);
+        e.dataTransfer.setData("id", Date.now());
     }
     const handleTabClick = (ind) => {
         if (tab === ind) setTab(null);
@@ -87,36 +89,7 @@ export default () => {
                                             clicked &&
                                             <ContextMenu
                                                 points={points}
-                                                list={[
-                                                    [
-                                                        {
-                                                            name: "Cut",
-                                                            command: "Ctrl + X"
-                                                        },
-                                                        {
-                                                            name: "Copy",
-                                                            command: "Ctrl + C"
-                                                        },
-                                                        {
-                                                            name: "Paste",
-                                                            command: "Ctrl + V"
-                                                        }
-                                                    ],
-                                                    [
-                                                        {
-                                                            name: "Duplicate",
-                                                            command: "Ctrl + D"
-                                                        },
-                                                        {
-                                                            name: "Rename",
-                                                            command: "Ctrl + R"
-                                                        },
-                                                        {
-                                                            name: "Delete",
-                                                            command: "Backspace"
-                                                        }
-                                                    ],
-                                                ]}
+                                                sidebar={true}
                                             />
                                         }
                                     </div>

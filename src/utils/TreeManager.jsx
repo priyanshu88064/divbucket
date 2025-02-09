@@ -41,6 +41,7 @@ export default ({ }) => {
         ele = (
           <Heading
             key={node}
+            node={node}
           />
         );
         break;
@@ -48,6 +49,7 @@ export default ({ }) => {
         ele = (
           <Text
             key={node}
+            node={node}
           />
         );
         break;
@@ -55,6 +57,7 @@ export default ({ }) => {
         ele = (
           <Paragraph
             key={node}
+            node={node}
           />
         );
         break;
@@ -62,6 +65,7 @@ export default ({ }) => {
         ele = (
           <Image
             key={node}
+            node={node}
           />
         );
         break;
@@ -69,6 +73,7 @@ export default ({ }) => {
         ele = (
           <Video
             key={node}
+            node={node}
           />
         );
         break;

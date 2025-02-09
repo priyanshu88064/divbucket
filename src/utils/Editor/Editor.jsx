@@ -22,6 +22,8 @@ export default ({ e_width, e_height, stopScrollRef }) => {
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const { handleDragOver, handleDrop } = useDrag({ id });
 
+    console.log(tree)
+
     const initVirtualPosition = () => {
         if (divRef.current) {
             const rect = divRef.current.getBoundingClientRect();
@@ -80,7 +82,7 @@ export default ({ e_width, e_height, stopScrollRef }) => {
         dispatch(updateStyleMap({ id: child, style: initCSS("Row") }));
         dispatch(addNode({ parent: id, child }));
         dispatch(updateActiveNode({ nodeId: child }));
-    },[]);
+    }, []);
 
     return (
         <>
@@ -95,6 +97,7 @@ export default ({ e_width, e_height, stopScrollRef }) => {
                 onDragOver={handleDragOver}
                 onContextMenu={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     setClicked(true);
                     setPoints({ x: e.pageX, y: e.pageY });
                 }}
@@ -104,51 +107,9 @@ export default ({ e_width, e_height, stopScrollRef }) => {
                 {
                     clicked &&
                     <ContextMenu
+                        id={id}
                         points={points}
-                        list={[
-                            [
-                                {
-                                    name: "Cut",
-                                    command: "Ctrl + X"
-                                },
-                                {
-                                    name: "Copy",
-                                    command: "Ctrl + C"
-                                },
-                                {
-                                    name: "Paste",
-                                    command: "Ctrl + V"
-                                }
-                            ],
-                            [
-                                {
-                                    name: "Duplicate",
-                                    command: "Ctrl + D"
-                                },
-                                {
-                                    name: "Lock",
-                                    command: "Ctrl + D"
-                                },
-                                {
-                                    name: "Rename",
-                                    command: "Ctrl + R"
-                                },
-                                {
-                                    name: "Delete",
-                                    command: "Backspace"
-                                }
-                            ],
-                            [
-                                {
-                                    name: "Select Parent",
-                                    command: ""
-                                },
-                                {
-                                    name: "Reveal in Explorer",
-                                    command: ""
-                                }
-                            ]
-                        ]}
+                        setClicked={setClicked}
                     />
                 }
                 <TreeManager />

@@ -2,23 +2,31 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addNode,
   deleteNode,
+  updateDataMap,
+  updateStyleMap,
 } from "../../store/reducers/treeReducer";
 import { useState } from "react";
+import initCSS from "../initCSS";
 
 export function useDrag({ id }) {
   const { tree } = useSelector((state) => state.treeReducer);
-  const [isPlaceholder,setIsPlaceholder] = useState(false);
   const dispatch = useDispatch();
 
   const handleDrop = (e) => {
     // when any element drops here
     e.preventDefault();
     e.stopPropagation();
-    setIsPlaceholder(false);
 
     const droppedId = e.dataTransfer.getData("id");
+    const type = e.dataTransfer.getData("type");
+
     if (id == droppedId) return;
-    dispatch(deleteNode({ id: Number(droppedId), dontDeleteData: true }));
+    if (type.length) {
+      dispatch(updateStyleMap({ id:Number(droppedId), style: initCSS(type) }));
+      dispatch(updateDataMap({ id:Number(droppedId), data: { name: type, type } }));
+    } else {
+      dispatch(deleteNode({ id: Number(droppedId), dontDeleteData: true }));
+    }
     dispatch(addNode({ parent: id, child: Number(droppedId) }));
   };
   const handleDragOver = (e) => {
@@ -47,6 +55,5 @@ export function useDrag({ id }) {
     handleDragStart,
     handleDragEnter,
     handleDragLeave,
-    isPlaceholder
   };
 }

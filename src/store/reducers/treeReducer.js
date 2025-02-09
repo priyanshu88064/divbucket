@@ -15,14 +15,18 @@ const treeSlice = createSlice({
       state.tree[payload.child] = [];
     },
     deleteNode: (state, { payload }) => {
+      if (payload.id === "root") return;
       state.activeNodeId = null;
-      if (!payload.dontDeleteData) {
-        delete state.dataMap[payload.id];
-        delete state.styleMap[payload.id];
-      }
-      const { [payload.id]: ___, ...newTree } = state.tree;
-      state.tree = Object.keys(newTree).reduce((acc, key) => {
-        acc[key] = newTree[key].filter((id) => id !== payload.id);
+      const deleteWork = (id) => {
+        state.tree[id].map((child) => deleteWork(child));
+        delete state.dataMap[id];
+        delete state.styleMap[id];
+        const { [id]: ___, ...newTree } = state.tree;
+        state.tree = newTree;
+      };
+      deleteWork(payload.id);
+      state.tree = Object.keys(state.tree).reduce((acc, key) => {
+        acc[key] = state.tree[key].filter((_id) => _id !== payload.id);
         return acc;
       }, {});
     },
@@ -33,7 +37,6 @@ const treeSlice = createSlice({
       state.hoverNodeId = payload.nodeId;
     },
     updateStyleMap: (state, { payload }) => {
-      console.log(payload.style)
       state.styleMap[payload.id] = payload.style;
     },
     updateDataMap: (state, { payload }) => {
