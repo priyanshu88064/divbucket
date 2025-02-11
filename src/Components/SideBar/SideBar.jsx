@@ -15,7 +15,7 @@ import ContextMenu from '../ContextMenu/ContextMenu';
 export default () => {
 
     const [tab, setTab] = useState(0);
-    const { tree } = useSelector(state => state.treeReducer);
+    const tree = useSelector(state => state.treeReducer.tree);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
 
@@ -107,7 +107,8 @@ export default () => {
 
 const RecursiveList = ({ tree }) => {
 
-    const { dataMap, activeNodeId: id } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const dataMap = useSelector(state => state.treeReducer.dataMap);
     const dispatch = useDispatch();
 
     return (
@@ -118,7 +119,7 @@ const RecursiveList = ({ tree }) => {
                         key={node.id}
                         name={dataMap[node.id].name}
                         tree={node.childrens}
-                        onClick={() => { dispatch(updateActiveNode({ nodeId: node.id })) }}
+                        onClick={() => { dispatch(updateActiveNode({ id: node.id })) }}
                         onMouseEnter={() => dispatch(updateHoverNode({ nodeId: node.id }))}
                         onMouseLeave={() => dispatch(updateHoverNode({ nodeId: null }))}
                         activeItemClass={node.id === id ? styles.activeItemClass : ""}

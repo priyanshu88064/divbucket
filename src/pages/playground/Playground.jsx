@@ -16,7 +16,7 @@ export default () => {
             <div ref={stopScrollRef} className={styles.container}>
                 <SideBar />
                 <Cssbar />
-                <div className={styles.bg} onClick={() => dispatch(updateActiveNode({ nodeId: null }))}>
+                <div className={styles.bg}>
                     <Editor
                         e_width={'1200px'}
                         e_height={'800px'}

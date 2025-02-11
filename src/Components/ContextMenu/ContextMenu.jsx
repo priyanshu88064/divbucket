@@ -69,7 +69,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Backspace",
                 func: () => {
                     dispatch(deleteNode({ id }))
-                    setClicked(false);
+                    // setClicked(false);
                 }
             }
         ],
@@ -87,34 +87,50 @@ export default ({ id, points, sidebar, setClicked }) => {
 
     return (
         <div
-            className={styles.contextmenu}
-            style={{ left: points.x, top: points.y }}
-            onMouseDown={e => {
-                e.stopPropagation();
-            }}
-            onContextMenu={e => {
+            className={styles.cover}
+            onContextMenu={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setClicked(false);
+            }}
+            onClick={(e) => {
+                e.stopPropagation();
+                setClicked(false);
             }}
         >
-            {
-                list.map((item, ind) => (
-                    <React.Fragment key={ind}>
-                        {
-                            item.map((subItem, sind) => (
-                                <div onClick={() => { subItem.func() }} key={"" + ind + sind} className={styles.cmitem}>
-                                    <div className={styles.cmitem0}>{subItem.name}</div>
-                                    <div className={styles.cmitem1}>{subItem.command}</div>
-                                </div>
-                            ))
-                        }
-                        {
-                            ind < list.length - 1 &&
-                            <div className={styles.br}></div>
-                        }
-                    </React.Fragment>
-                ))
-            }
+            <div
+                className={styles.contextmenu}
+                style={{ left: points.x, top: points.y }}
+                onMouseDown={e => {
+                    e.stopPropagation();
+                }}
+                onContextMenu={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+                onClick={(e)=>{
+                    e.stopPropagation();
+                }}
+            >
+                {
+                    list.map((item, ind) => (
+                        <React.Fragment key={ind}>
+                            {
+                                item.map((subItem, sind) => (
+                                    <div onClick={() => { subItem.func() }} key={"" + ind + sind} className={styles.cmitem}>
+                                        <div className={styles.cmitem0}>{subItem.name}</div>
+                                        <div className={styles.cmitem1}>{subItem.command}</div>
+                                    </div>
+                                ))
+                            }
+                            {
+                                ind < list.length - 1 &&
+                                <div className={styles.br}></div>
+                            }
+                        </React.Fragment>
+                    ))
+                }
+            </div>
         </div>
     );
 }

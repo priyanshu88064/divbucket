@@ -11,4 +11,9 @@ createRoot(document.getElementById('root')).render(
       <App />
     </Provider>
   </StrictMode>,
+  // <>
+  //   <Provider store={store}>
+  //     <App />
+  //   </Provider>
+  // </>,
 )

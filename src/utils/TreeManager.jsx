@@ -10,7 +10,10 @@ import Video from "./Video/Video";
 
 export default ({ }) => {
 
-  const { tree,dataMap } = useSelector(state => state.treeReducer);
+  const tree = useSelector(state => state.treeReducer.tree);
+  const dataMap = useSelector(state => state.treeReducer.dataMap);
+
+  console.log("treemanager", tree)
 
   const renderTree = (node) => {
 

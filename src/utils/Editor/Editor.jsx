@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './editor.module.css';
 import { TbMinusVertical } from 'react-icons/tb';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addNode, updateActiveNode, updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
 import initCSS from '../initCSS';
 import TreeManager from '../TreeManager';
@@ -18,11 +18,8 @@ export default ({ e_width, e_height, stopScrollRef }) => {
     const dirRef = useRef();
     const divRef = useRef();
     const dispatch = useDispatch();
-    const { tree } = useSelector(state => state.treeReducer);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const { handleDragOver, handleDrop } = useDrag({ id });
-
-    console.log(tree)
 
     const initVirtualPosition = () => {
         if (divRef.current) {
@@ -81,7 +78,7 @@ export default ({ e_width, e_height, stopScrollRef }) => {
         dispatch(updateDataMap({ id: child, data: { name: "Row", type: "Row" } }));
         dispatch(updateStyleMap({ id: child, style: initCSS("Row") }));
         dispatch(addNode({ parent: id, child }));
-        dispatch(updateActiveNode({ nodeId: child }));
+        dispatch(updateActiveNode({ id: child }));
     }, []);
 
     return (
@@ -100,6 +97,9 @@ export default ({ e_width, e_height, stopScrollRef }) => {
                     e.stopPropagation();
                     setClicked(true);
                     setPoints({ x: e.pageX, y: e.pageY });
+                }}
+                onClick={() => {
+                    dispatch(updateActiveNode({ id: null }))
                 }}
             >
                 <div onMouseDown={() => handleMouseDown(3)} className={`${styles.resizable} ${styles.left}`}><TbMinusVertical className={styles.lines} /></div>

@@ -1,7 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addNode,
+  deleteFromParent,
   deleteNode,
+  updateActiveNode,
   updateDataMap,
   updateStyleMap,
 } from "../../store/reducers/treeReducer";
@@ -9,7 +11,6 @@ import { useState } from "react";
 import initCSS from "../initCSS";
 
 export function useDrag({ id }) {
-  const { tree } = useSelector((state) => state.treeReducer);
   const dispatch = useDispatch();
 
   const handleDrop = (e) => {
@@ -22,12 +23,13 @@ export function useDrag({ id }) {
 
     if (id == droppedId) return;
     if (type.length) {
-      dispatch(updateStyleMap({ id:Number(droppedId), style: initCSS(type) }));
-      dispatch(updateDataMap({ id:Number(droppedId), data: { name: type, type } }));
+      dispatch(updateStyleMap({ id: Number(droppedId), style: initCSS(type) }));
+      dispatch(updateDataMap({ id: Number(droppedId), data: { name: type, type } }));
     } else {
-      dispatch(deleteNode({ id: Number(droppedId), dontDeleteData: true }));
+      dispatch(deleteFromParent({ id: Number(droppedId) }));
     }
     dispatch(addNode({ parent: id, child: Number(droppedId) }));
+    dispatch(updateActiveNode({ id: Number(droppedId) }));
   };
   const handleDragOver = (e) => {
     // when any elements drag on this resizable

@@ -12,7 +12,7 @@ const treeSlice = createSlice({
   reducers: {
     addNode: (state, { payload }) => {
       state.tree[payload.parent].push(payload.child);
-      state.tree[payload.child] = [];
+      state.tree[payload.child] = state.tree[payload.child] || [];
     },
     deleteNode: (state, { payload }) => {
       if (payload.id === "root") return;
@@ -25,13 +25,16 @@ const treeSlice = createSlice({
         state.tree = newTree;
       };
       deleteWork(payload.id);
+      treeSlice.caseReducers.deleteFromParent(state, { payload });
+    },
+    deleteFromParent: (state, { payload }) => {
       state.tree = Object.keys(state.tree).reduce((acc, key) => {
         acc[key] = state.tree[key].filter((_id) => _id !== payload.id);
         return acc;
       }, {});
     },
     updateActiveNode: (state, { payload }) => {
-      state.activeNodeId = payload.nodeId;
+      state.activeNodeId = payload.id;
     },
     updateHoverNode: (state, { payload }) => {
       state.hoverNodeId = payload.nodeId;
@@ -52,5 +55,6 @@ export const {
   updateStyleMap,
   updateDataMap,
   deleteNode,
+  deleteFromParent,
 } = treeSlice.actions;
 export default treeSlice.reducer;

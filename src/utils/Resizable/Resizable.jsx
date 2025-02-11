@@ -11,11 +11,15 @@ import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 export default ({ id, children }) => {
 
     const dispatch = useDispatch();
-    const { activeNodeId, styleMap, dataMap } = useSelector(state => state.treeReducer);
+    const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
+    const dataMap = useSelector(state => state.treeReducer.dataMap);
     const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const [isLock, setIsLock] = useState(false);
+
+    console.log("resizable", id)
 
     return (
         <>
@@ -49,13 +53,15 @@ export default ({ id, children }) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        dispatch(updateActiveNode({ nodeId: id }))
+                        if (id !== activeNodeId)
+                            dispatch(updateActiveNode({ id }))
                     }}
                     onContextMenu={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         setClicked(true);
                         setPoints({ x: e.pageX, y: e.pageY });
+                        dispatch(updateActiveNode({ id }))
                     }}
                 >
                     {
@@ -79,6 +85,7 @@ export default ({ id, children }) => {
                                 <div onMouseDown={(e) => handleMouseDown(e, 3)} className={`${styles.circle} ${styles.cleft}`}></div>
                             </> :
                             <div className={`${styles.resizable} ${styles.hov}`}></div>
+                        // <></>
                     }
                     {children}
                 </div>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateStyleMap } from "../../store/reducers/treeReducer";
 
 export function useResizer({ id }) {
-  const { styleMap } = useSelector((state) => state.treeReducer);
+  const styleMap = useSelector((state) => state.treeReducer.styleMap);
   const virtualPos = useRef({
     top: null,
     bottom: null,

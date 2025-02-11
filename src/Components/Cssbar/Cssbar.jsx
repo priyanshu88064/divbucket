@@ -7,7 +7,8 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 export default () => {
 
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const disptach = useDispatch();
 
     return (
@@ -102,7 +103,8 @@ export default () => {
 const Position = ({ }) => {
 
     const [mouseOn, setMouseOn] = useState("static");
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const dispatch = useDispatch();
 
     const block = (e, style, key) => (<div key={key} className={styles.pdefault} style={style}>{e}</div>)
@@ -179,7 +181,8 @@ const Position = ({ }) => {
 
 const MPbox = ({ prefix }) => {
 
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const disptach = useDispatch();
     const [value, setValue] = useState({ Top: "0", Right: "0", Bottom: "0", Left: "0" });
 
@@ -228,7 +231,8 @@ const MPbox = ({ prefix }) => {
 
 const CheckBox = ({ name, prop, values }) => {
 
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const dispatch = useDispatch();
 
     return (
@@ -247,7 +251,8 @@ const CheckBox = ({ name, prop, values }) => {
 
 const FlexProperties = ({ data }) => {
 
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const dispatch = useDispatch();
     const [demoStyle, setDemoStyle] = useState({});
 
@@ -280,7 +285,8 @@ const FlexProperties = ({ data }) => {
 const Size_Input = ({ data, property, defaultValue, extraOff, extraProp }) => {
 
     const [value, setValue] = useState({ x: "" });
-    const { activeNodeId: id, styleMap } = useSelector(state => state.treeReducer);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap);
     const dispatch = useDispatch();
 
     useEffect(() => {
