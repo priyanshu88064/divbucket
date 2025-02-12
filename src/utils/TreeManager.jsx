@@ -7,13 +7,12 @@ import Text from "./Text/Text";
 import Paragraph from "./Paragraph/Paragraph";
 import Image from "./Image/Image";
 import Video from "./Video/Video";
+import Editor from "./Editor/Editor";
 
 export default ({ }) => {
 
   const tree = useSelector(state => state.treeReducer.tree);
   const dataMap = useSelector(state => state.treeReducer.dataMap);
-
-  console.log("treemanager", tree)
 
   const renderTree = (node) => {
 
@@ -99,5 +98,12 @@ export default ({ }) => {
 
   }
 
-  return (<>{tree["root"].map(tree => renderTree(tree))}</>);
+  return (
+    <Editor
+      e_width={'1200px'}
+      e_height={'800px'}
+    >
+      {tree["root"].map(tree => renderTree(tree))}
+    </Editor>
+  );
 }

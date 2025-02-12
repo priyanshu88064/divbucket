@@ -18,10 +18,9 @@ export default () => {
     const tree = useSelector(state => state.treeReducer.tree);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
-
     const handleDragStart = (e, type) => {
-        e.dataTransfer.setData("type", type);
         e.dataTransfer.setData("id", Date.now());
+        e.dataTransfer.setData("type", type);
     }
     const handleTabClick = (ind) => {
         if (tab === ind) setTab(null);

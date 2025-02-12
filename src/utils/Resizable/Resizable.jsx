@@ -12,24 +12,24 @@ export default ({ id, children }) => {
 
     const dispatch = useDispatch();
     const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
+    const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const dataMap = useSelector(state => state.treeReducer.dataMap);
-    const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
+    const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id,_type:dataMap[id].type });
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const [isLock, setIsLock] = useState(false);
 
-    console.log("resizable", id)
+    console.log("resizable",id)
 
     return (
         <>
             <div
                 style={{
-                    position: styleMap[id].position,
-                    top: styleMap[id].top,
-                    bottom: styleMap[id].bottom,
-                    right: styleMap[id].right,
-                    left: styleMap[id].left,
+                    position: styleMap.position,
+                    top: styleMap.top,
+                    bottom: styleMap.bottom,
+                    right: styleMap.right,
+                    left: styleMap.left,
                 }}
             >
                 {
@@ -43,7 +43,7 @@ export default ({ id, children }) => {
                 <div
                     ref={divRef}
                     className={styles.a}
-                    style={{ ...styleMap[id], ...dim }}
+                    style={{ ...styleMap, ...dim }}
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onDragStart={handleDragStart}

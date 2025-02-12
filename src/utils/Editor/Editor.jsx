@@ -9,7 +9,7 @@ import { useContextMenu } from '../hooks/useContextMenu';
 import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 import { useDrag } from '../hooks/useDrag';
 
-export default ({ e_width, e_height, stopScrollRef }) => {
+export default ({ e_width, e_height, stopScrollRef,children }) => {
 
     const id = "root";
     const [dim, setDim] = useState({ width: e_width, height: e_height });
@@ -59,16 +59,16 @@ export default ({ e_width, e_height, stopScrollRef }) => {
         isResizingRef.current = true;
         dirRef.current = direction;
         initVirtualPosition();
-        stopScrollRef.current.style.overflow = "hidden";
-        stopScrollRef.current.style.userSelect = "none";
+        // stopScrollRef.current.style.overflow = "hidden";
+        // stopScrollRef.current.style.userSelect = "none";
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     }
     const handleMouseUp = () => {
         isResizingRef.current = false;
         dirRef.current = null;
-        stopScrollRef.current.style.overflow = "scroll";
-        stopScrollRef.current.style.userSelect = "";
+        // stopScrollRef.current.style.overflow = "scroll";
+        // stopScrollRef.current.style.userSelect = "";
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
     }
@@ -112,7 +112,7 @@ export default ({ e_width, e_height, stopScrollRef }) => {
                         setClicked={setClicked}
                     />
                 }
-                <TreeManager />
+                {children}
             </div>
         </>
     );

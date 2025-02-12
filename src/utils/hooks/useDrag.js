@@ -2,15 +2,13 @@ import { useDispatch } from "react-redux";
 import {
   addNode,
   deleteFromParent,
-  deleteNode,
   updateActiveNode,
   updateDataMap,
   updateStyleMap,
 } from "../../store/reducers/treeReducer";
-import { useState } from "react";
 import initCSS from "../initCSS";
 
-export function useDrag({ id }) {
+export function useDrag({ id, _type }) {
   const dispatch = useDispatch();
 
   const handleDrop = (e) => {
@@ -18,18 +16,24 @@ export function useDrag({ id }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const droppedId = e.dataTransfer.getData("id");
+    let droppedId = Number(e.dataTransfer.getData("id"));
     const type = e.dataTransfer.getData("type");
 
-    if (id == droppedId) return;
-    if (type.length) {
-      dispatch(updateStyleMap({ id: Number(droppedId), style: initCSS(type) }));
-      dispatch(updateDataMap({ id: Number(droppedId), data: { name: type, type } }));
-    } else {
-      dispatch(deleteFromParent({ id: Number(droppedId) }));
+    if (
+      id === Number(droppedId) ||
+      ["Heading", "Text", "Paragraph", "Image", "Video"].includes(_type)
+    ) {
+      return;
     }
-    dispatch(addNode({ parent: id, child: Number(droppedId) }));
-    dispatch(updateActiveNode({ id: Number(droppedId) }));
+
+    if (type.length) {
+      dispatch(updateStyleMap({ id: droppedId, style: initCSS(type) }));
+      dispatch(updateDataMap({ id: droppedId, data: { name: type, type } }));
+    } else {
+      dispatch(deleteFromParent({ id: droppedId }));
+    }
+    dispatch(addNode({ parent: id, child: droppedId }));
+    dispatch(updateActiveNode({ id: droppedId }));
   };
   const handleDragOver = (e) => {
     // when any elements drag on this resizable

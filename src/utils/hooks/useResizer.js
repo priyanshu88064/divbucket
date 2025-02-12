@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateStyleMap } from "../../store/reducers/treeReducer";
 
 export function useResizer({ id }) {
-  const styleMap = useSelector((state) => state.treeReducer.styleMap);
+  const styleMap = useSelector((state) => state.treeReducer.styleMap[id]);
   const virtualPos = useRef({
     top: null,
     bottom: null,
@@ -11,8 +11,8 @@ export function useResizer({ id }) {
     right: null,
   });
   const [dim, setDim] = useState({
-    width: styleMap[id].width,
-    height: styleMap[id].height,
+    width: styleMap.width,
+    height: styleMap.height,
   });
   const divRef = useRef();
   const dirRef = useRef();
@@ -21,8 +21,8 @@ export function useResizer({ id }) {
 
   useEffect(() => {
     setDim({
-      width: styleMap[id].width,
-      height: styleMap[id].height,
+      width: styleMap.width,
+      height: styleMap.height,
     });
   }, [styleMap, id]);
 
@@ -72,10 +72,10 @@ export function useResizer({ id }) {
       updateStyleMap({
         id,
         style: {
-          ...styleMap[id],
-          width: Number(dirRef.current) % 2 ? calWidth() : styleMap[id].width,
+          ...styleMap,
+          width: Number(dirRef.current) % 2 ? calWidth() : styleMap.width,
           height:
-            Number(dirRef.current) % 2 ? styleMap[id].height : calHeight(),
+            Number(dirRef.current) % 2 ? styleMap.height : calHeight(),
         },
       })
     );
