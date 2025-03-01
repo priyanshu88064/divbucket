@@ -1,0 +1,5 @@
+#TODO
+- hover resizable when hover in rlistitems in Explorer
+- play with background behing Editor 
+
+#DONE

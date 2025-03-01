@@ -1,12 +1,15 @@
+#BUGS/ISSUES
 - getting click outside (hence losing focus) of the resizable box while dragging resizable border
 - another resizable gets hover while resizing
-- child nodes(resizable) are not dragging
 - width/height going negative
 - in cssbar>size> input boxes, values like "auto" should not be editable means "auto" can't be backspaced to "aut". Backspacing it causing problem currently.
 - optimize the Layout Utility>Components (currently they all have different components though they are same)
-- currently I am not rendering more childs of Non-Layout components but their whole structure should be fixed to not support a drop
-- MAXIMUM DEPTH LIMIT REACHED message in console from resizable dispatch in handlemousemove.
+- Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
-- dropping elements not working in more than 2nd or 3rd level [SEEMS FIXED]
-- hovering in a Active child element makes the parent element highlight [SEEMS FIXED]
+#FIXED
+- child nodes(resizable) are not dragging
+- currently I am not rendering more childs of Non-Layout components but their whole structure should be fixed to not support a drop.[FIXED]
+- MAXIMUM DEPTH LIMIT REACHED message in console from resizable dispatch in handlemousemove.[FIXED]
+- dropping elements not working in more than 2nd or 3rd level [FIXED]
+- hovering in a Active child element makes the parent element highlight [FIXED]
 - CSSBAR>display>flex> the dropdown is being hidden when overflow from left side [SOLVED by making that div horizontal ;)]

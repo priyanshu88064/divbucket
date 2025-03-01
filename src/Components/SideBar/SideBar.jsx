@@ -15,8 +15,6 @@ import ContextMenu from '../ContextMenu/ContextMenu';
 export default () => {
 
     const [tab, setTab] = useState(0);
-    const tree = useSelector(state => state.treeReducer.tree);
-    const { clicked, setClicked, points, setPoints } = useContextMenu();
 
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("id", Date.now());
@@ -75,22 +73,8 @@ export default () => {
                             tab == 1 ?
                                 <>
                                     <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
-                                    <div
-                                        className={styles.rlist}
-                                        onContextMenu={e => {
-                                            e.preventDefault();
-                                            setClicked(true);
-                                            setPoints({ x: e.pageX, y: e.pageY });
-                                        }}
-                                    >
-                                        <RecursiveList tree={tree} />
-                                        {
-                                            clicked &&
-                                            <ContextMenu
-                                                points={points}
-                                                sidebar={true}
-                                            />
-                                        }
+                                    <div className={styles.rlist}>
+                                        <RecursiveList start={"root"} />
                                     </div>
                                 </> :
                                 <>
@@ -104,24 +88,17 @@ export default () => {
     );
 }
 
-const RecursiveList = ({ tree }) => {
+const RecursiveList = ({ start }) => {
 
-    const id = useSelector(state => state.treeReducer.activeNodeId);
-    const dataMap = useSelector(state => state.treeReducer.dataMap);
-    const dispatch = useDispatch();
+    const tree = useSelector(state => state.treeReducer.tree);
 
     return (
         <>
             {
-                tree.map(node => (
+                tree[start].map(node => (
                     <RLItem
-                        key={node.id}
-                        name={dataMap[node.id].name}
-                        tree={node.childrens}
-                        onClick={() => { dispatch(updateActiveNode({ id: node.id })) }}
-                        onMouseEnter={() => dispatch(updateHoverNode({ nodeId: node.id }))}
-                        onMouseLeave={() => dispatch(updateHoverNode({ nodeId: null }))}
-                        activeItemClass={node.id === id ? styles.activeItemClass : ""}
+                        key={node}
+                        node={node}
                     />
                 ))
             }
@@ -129,22 +106,34 @@ const RecursiveList = ({ tree }) => {
     );
 }
 
-const RLItem = ({ name, tree, onClick, activeItemClass, onMouseEnter, onMouseLeave }) => {
+const RLItem = ({ node }) => {
 
     const [active, setActive] = useState(false);
+    const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
+    const name = useSelector(state => state.treeReducer.dataMap[node].name);
+    const { clicked, setClicked, points, setPoints } = useContextMenu();
+    const dispatch = useDispatch();
 
     return (
         <div className={styles.rlistitem}>
             <div
-                className={`${styles.rliwrap} ${activeItemClass}`}
+                className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''}`}
                 onClick={() => {
                     setActive(f => !f)
-                    onClick();
+                    if (activeNodeId !== node)
+                        dispatch(updateActiveNode({ id: node }))
                 }}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
+                onContextMenu={e => {
+                    e.preventDefault();
+                    setClicked(true);
+                    setPoints({ x: e.pageX, y: e.pageY });
+                }}
+
             >
-                <div className={styles.rli0} onClick={e => { e.preventDefault(); e.stopPropagation(); setActive(f => !f) }}>
+                <div
+                    className={styles.rli0}
+                    onClick={e => { e.preventDefault(); e.stopPropagation(); setActive(f => !f) }}
+                >
                     {
                         active ?
                             <MdKeyboardArrowDown size={17} color='var(--text_0)' /> :
@@ -154,11 +143,20 @@ const RLItem = ({ name, tree, onClick, activeItemClass, onMouseEnter, onMouseLea
                 <div className={styles.rli0}>
                     {name}
                 </div>
+                {
+                    clicked &&
+                    <ContextMenu
+                        id={node}
+                        points={points}
+                        sidebar={true}
+                        setClicked={setClicked}
+                    />
+                }
             </div>
             {
                 active &&
                 <div className={styles.rlicollapse}>
-                    <RecursiveList tree={tree} />
+                    <RecursiveList start={node} />
                 </div>
             }
         </div>

@@ -1,102 +1,226 @@
-import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit, MdOutlineLink } from 'react-icons/md';
 import styles from './cssbar.module.css';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStyleMap } from '../../store/reducers/treeReducer';
-import { IoIosArrowDown } from 'react-icons/io';
+import { updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
+import { IoIosArrowDown, IoMdLink } from 'react-icons/io';
+import { FaCss3, FaLink } from 'react-icons/fa';
 
 export default () => {
 
+    const [tab, setTab] = useState(0);
     const id = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
-    const disptach = useDispatch();
+    console.log("cssbar")
 
     return (
-        <div className={styles.cssbar}>
-            <div className={styles.c1}>
-                {id && <Wrap title={"Size"}>
-                    <div className={`${styles.c11} ${styles.padwrap}`}>
-                        <div className={styles.c110}>
-                            <div className={styles.c1101}>Width</div>
-                            <div className={styles.c1101}>Min W</div>
-                            <div className={styles.c1101}>Max W</div>
-                        </div>
-                        <div className={styles.c110}>
-                            <Size_Input defaultValue={"auto"} property={"width"} data={styleMap[id].width} />
-                            <Size_Input defaultValue={"0px"} property={"minWidth"} data={styleMap[id].minWidth} />
-                            <Size_Input defaultValue={"none"} property={"maxWidth"} data={styleMap[id].maxWidth} />
-                        </div>
-                        <div className={styles.c110}>
-                            <div className={styles.c1101}>Height</div>
-                            <div className={styles.c1101}>Min H</div>
-                            <div className={styles.c1101}>Max H</div>
-                        </div>
-                        <div className={styles.c110}>
-                            <Size_Input defaultValue={"auto"} property={"height"} data={styleMap[id].height} />
-                            <Size_Input defaultValue={"0px"} property={"minHeight"} data={styleMap[id].minHeight} />
-                            <Size_Input defaultValue={"none"} property={"maxHeight"} data={styleMap[id].maxHeight} />
-                        </div>
+        <div className={styles.cssbarwrapper}>
+            <div className={styles.cssbar}>
+                <div className={styles.c0}>
+                    <div>Paragraph</div>
+                    <div
+                        style={{ marginLeft: 'auto', }}
+                        className={`${tab === 0 ? styles.c0icon : ''}`}
+                        onClick={() => setTab(0)}
+                        title='css'
+                    >
+                        <FaCss3 />
                     </div>
-                </Wrap>}
-                {id && <Wrap title={"Display"}>
-                    <div className={`${styles.dicont} ${styles.padwrap}`}>
-                        <div className={`${styles.dic0} ${styles.beffect}`}>
-                            <div className={`${styleMap[id].display === "block" && styles.beffectactivediv}`} onClick={() => disptach(updateStyleMap({ id, style: { ...styleMap[id], display: "block" } }))}  >Block</div>
-                            <div className={`${styleMap[id].display === "flex" && styles.beffectactivediv}`} onClick={() => disptach(updateStyleMap({ id, style: { ...styleMap[id], display: "flex" } }))} >Flex</div>
-                            <div className={`${styleMap[id].display === "none" && styles.beffectactivediv}`} onClick={() => disptach(updateStyleMap({ id, style: { ...styleMap[id], display: "none" } }))} >None</div>
-                            <div className={`${styleMap[id].display === "temp" && styles.beffectactivediv}`} onClick={() => disptach(updateStyleMap({ id, style: { ...styleMap[id], display: "block" } }))} >_Temp</div>
-                        </div>
-                        {
-                            styleMap[id].display === "flex" &&
-                            <>
-                                <FlexProperties data={{ name: "Direction", prop: "flexDirection", values: ["row", "row-reverse", "column", "column-reverse"] }} />
-                                <FlexProperties data={{ name: "Justify", prop: "justifyContent", values: ["flex-start", "flex-end", "center", "space-around", "space-between", "space-evenly"] }} />
-                                <FlexProperties data={{ name: "Align", prop: "alignItems", values: ["stretch", "center", "flex-start", "flex-end", "start", "end", "baseline"] }} />
-                                <div className={styles.dic2}>
-                                    <div className={styles.dic20}>
-                                        <div style={{ color: 'var(--text_0)' }} className={styles.c1101}>Gap:</div>
-                                        <Size_Input defaultValue={"0px"} property={"gap"} data={styleMap[id].gap} extraOff={true} />
-                                    </div>
-                                    <CheckBox name={"Flex-Wrap"} prop={"flexWrap"} values={["wrap", "nowrap"]} />
-                                </div>
-                            </>
-                        }
+                    <div
+                        className={`${tab === 1 ? styles.c0icon : ''}`}
+                        onClick={() => setTab(1)}
+                        title='edit'
+                    >
+                        <MdOutlineEdit />
                     </div>
-                </Wrap>}
-                {id && <Wrap title={"Margin"}>
-                    <MPbox prefix={"margin"} />
-                </Wrap>}
-                {id && <Wrap title={"Padding"}>
-                    <MPbox prefix={"padding"} />
-                </Wrap>}
-                {id && <Wrap title={"Position"}>
-                    <div className={styles.padwrap}>
-                        <Position />
-                        {
-                            styleMap[id].position !== "static" &&
-                            <div className={`${styles.c11} ${styles.padwrap} ${styles.positioninputs}`}>
-                                <div className={styles.c110}>
-                                    <div className={styles.c1101}>Top</div>
-                                    <div className={styles.c1101}>Left</div>
-                                </div>
-                                <div className={styles.c110}>
-                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"top"} data={styleMap[id].top} />
-                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"left"} data={styleMap[id].left} />
-                                </div>
-                                <div className={styles.c110}>
-                                    <div className={styles.c1101}>Bottom</div>
-                                    <div className={styles.c1101}>Right</div>
-                                </div>
-                                <div className={styles.c110}>
-                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"bottom"} data={styleMap[id].bottom} />
-                                    <Size_Input extraProp={true} defaultValue={"0px"} property={"right"} data={styleMap[id].right} />
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </Wrap>}
+                </div>
+                <div className={styles.c1}>
+                    {
+                        id ?
+                            tab ?
+                                <EditTab /> :
+                                <CssTab /> :
+                            "Please select an element"
+                    }
+                </div>
             </div>
         </div>
+    );
+}
+
+const CssTab = () => {
+
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
+    const dispatch = useDispatch();
+    console.log("csstab")
+
+    return (
+        <>
+            <Wrap title={"Styles"} heading={true}></Wrap>
+            <Wrap title={"Size"}>
+                <div className={`${styles.c11} ${styles.padwrap}`}>
+                    <div className={styles.c110}>
+                        <div className={styles.c1101}>Width</div>
+                        <div className={styles.c1101}>Min W</div>
+                        <div className={styles.c1101}>Max W</div>
+                    </div>
+                    <div className={styles.c110}>
+                        <Size_Input defaultValue={"auto"} property={"width"} data={styleMap.width} />
+                        <Size_Input defaultValue={"0px"} property={"minWidth"} data={styleMap.minWidth} />
+                        <Size_Input defaultValue={"none"} property={"maxWidth"} data={styleMap.maxWidth} />
+                    </div>
+                    <div className={styles.c110}>
+                        <div className={styles.c1101}>Height</div>
+                        <div className={styles.c1101}>Min H</div>
+                        <div className={styles.c1101}>Max H</div>
+                    </div>
+                    <div className={styles.c110}>
+                        <Size_Input defaultValue={"auto"} property={"height"} data={styleMap.height} />
+                        <Size_Input defaultValue={"0px"} property={"minHeight"} data={styleMap.minHeight} />
+                        <Size_Input defaultValue={"none"} property={"maxHeight"} data={styleMap.maxHeight} />
+                    </div>
+                </div>
+            </Wrap>
+            <Wrap title={"Display"}>
+                <div className={`${styles.dicont} ${styles.padwrap}`}>
+                    <div className={`${styles.dic0} ${styles.beffect}`}>
+                        <div className={`${styleMap.display === "block" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "block" } }))}  >Block</div>
+                        <div className={`${styleMap.display === "flex" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "flex" } }))} >Flex</div>
+                        <div className={`${styleMap.display === "none" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "none" } }))} >None</div>
+                        <div className={`${styleMap.display === "temp" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "block" } }))} >_Temp</div>
+                    </div>
+                    {
+                        styleMap.display === "flex" &&
+                        <>
+                            <FlexProperties data={{ name: "Direction", prop: "flexDirection", values: ["row", "row-reverse", "column", "column-reverse"] }} />
+                            <FlexProperties data={{ name: "Justify", prop: "justifyContent", values: ["flex-start", "flex-end", "center", "space-around", "space-between", "space-evenly"] }} />
+                            <FlexProperties data={{ name: "Align", prop: "alignItems", values: ["stretch", "center", "flex-start", "flex-end", "start", "end", "baseline"] }} />
+                            <div className={styles.dic2}>
+                                <div className={styles.dic20}>
+                                    <div style={{ color: 'var(--text_0)' }} className={styles.c1101}>Gap:</div>
+                                    <Size_Input defaultValue={"0px"} property={"gap"} data={styleMap.gap} extraOff={true} />
+                                </div>
+                                <CheckBox name={"Flex-Wrap"} prop={"flexWrap"} values={["wrap", "nowrap"]} />
+                            </div>
+                        </>
+                    }
+                </div>
+            </Wrap>
+            <Wrap title={"Margin"}>
+                <MPbox prefix={"margin"} />
+            </Wrap>
+            <Wrap title={"Padding"}>
+                <MPbox prefix={"padding"} />
+            </Wrap>
+            {/* <Wrap title={"Position"}>
+                <div className={styles.padwrap}>
+                    <Position />
+                    {
+                        styleMap[id].position !== "static" &&
+                        <div className={`${styles.c11} ${styles.padwrap} ${styles.positioninputs}`}>
+                            <div className={styles.c110}>
+                                <div className={styles.c1101}>Top</div>
+                                <div className={styles.c1101}>Left</div>
+                            </div>
+                            <div className={styles.c110}>
+                                <Size_Input extraProp={true} defaultValue={"0px"} property={"top"} data={styleMap[id].top} />
+                                <Size_Input extraProp={true} defaultValue={"0px"} property={"left"} data={styleMap[id].left} />
+                            </div>
+                            <div className={styles.c110}>
+                                <div className={styles.c1101}>Bottom</div>
+                                <div className={styles.c1101}>Right</div>
+                            </div>
+                            <div className={styles.c110}>
+                                <Size_Input extraProp={true} defaultValue={"0px"} property={"bottom"} data={styleMap[id].bottom} />
+                                <Size_Input extraProp={true} defaultValue={"0px"} property={"right"} data={styleMap[id].right} />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </Wrap> */}
+        </>
+    );
+}
+
+const EditTab = () => {
+
+    const id = useSelector(state => state.treeReducer.activeNodeId);
+    const dataMap = useSelector(state => state.treeReducer.dataMap[id])
+    const dispatch = useDispatch();
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        setData({
+            name: dataMap.name,
+            content: dataMap.content,
+            hyperlink: dataMap.hyperlink,
+        });
+    }, [dataMap]);
+
+    const handleText = (key, data) => {
+        if (dataMap[key] !== data)
+            dispatch(updateDataMap({ id, data: { ...dataMap, [key]: data } }))
+    }
+
+    return (
+        <>
+            <Wrap title={"Options"} heading={true}>
+            </Wrap>
+            <div className={`${styles.e0} ${styles.e0flex}`} style={{ marginTop: '10px' }}>
+                <input
+                    value={data.name}
+                    className={styles.e0i}
+                    onBlur={() => handleText("name", data.name)}
+                    onChange={e => {
+                        setData(f => ({ ...f, name: e.target.value }))
+                    }}
+                    onKeyUp={e => {
+                        if (e.key === "Enter") handleText("name", data.name)
+                    }}
+                />
+            </div>
+            {
+                ["Paragraph", "Text"].includes(dataMap.type) &&
+                <div className={`${styles.e0} ${styles.e0flexcol}`}>
+                    <div className={styles.e00}>Content</div>
+                    <textarea
+                        value={data.content}
+                        className={`${styles.e0i} ${styles.e0tarea}`}
+                        onBlur={() => handleText("content", data.content)}
+                        onKeyUp={e => {
+                            if (e.key === "Enter") handleText("content", e.target.value)
+                        }}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") e.preventDefault();
+                        }}
+                        onChange={e => {
+                            setData(f => ({ ...f, content: e.target.value }))
+                        }}
+                    />
+                </div>
+            }
+            <div className={`${styles.e0} ${styles.e0flexcol}`}>
+                <div className={styles.e00}>
+                    Hyperlink
+                    <FaLink size={10} />
+                </div>
+                <input
+                    placeholder='www.google.com'
+                    className={styles.e0i}
+                    value={data.hyperlink}
+                    onBlur={() => handleText("hyperlink", data.hyperlink)}
+                    onKeyUp={e => {
+                        if (e.key === "Enter") handleText("hyperlink", data.hyperlink);
+                    }}
+                    onChange={e => setData(f => ({ ...f, hyperlink: e.target.value }))}
+                />
+                <CheckBox1
+                    name={"Open in a new tab"}
+                    checked={dataMap.newTab}
+                    onChange={e => handleText("newTab",e.target.checked)}
+                />
+            </div>
+        </>
     );
 }
 
@@ -182,16 +306,16 @@ const Position = ({ }) => {
 const MPbox = ({ prefix }) => {
 
     const id = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
+    const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const disptach = useDispatch();
     const [value, setValue] = useState({ Top: "0", Right: "0", Bottom: "0", Left: "0" });
 
     useEffect(() => {
         setValue({
-            Top: styleMap[id][prefix + "Top"],
-            Right: styleMap[id][prefix + "Right"],
-            Bottom: styleMap[id][prefix + "Bottom"],
-            Left: styleMap[id][prefix + "Left"],
+            Top: styleMap[prefix + "Top"],
+            Right: styleMap[prefix + "Right"],
+            Bottom: styleMap[prefix + "Bottom"],
+            Left: styleMap[prefix + "Left"],
         });
     }, [id, styleMap]);
 
@@ -200,7 +324,7 @@ const MPbox = ({ prefix }) => {
     }
     const onFocus = e => e.target.select();
     const onBlur = (dir) => {
-        let style = { ...styleMap[id] };
+        let style = { ...styleMap };
         if (value[dir] === "" || value[dir] === "0") style[prefix + dir] = "0";
         else style[prefix + dir] = value[dir] + (isNaN(value[dir]) ? "" : "px");
         disptach(updateStyleMap({ id, style }));
@@ -246,6 +370,18 @@ const CheckBox = ({ name, prop, values }) => {
             />
             <div className={styles.checkboxname}>{styleMap[id][prop]}</div>
         </div>
+    );
+}
+const CheckBox1 = ({ name, checked, onChange }) => {
+    return (
+        <label className={styles.checkbox}>
+            <input
+                type='checkbox'
+                checked={checked}
+                onChange={onChange}
+            />
+            {name}
+        </label>
     );
 }
 
@@ -340,7 +476,7 @@ const Size_Input = ({ data, property, defaultValue, extraOff, extraProp }) => {
     );
 }
 
-const Wrap = ({ children, title }) => {
+const Wrap = ({ children, title, heading }) => {
 
     const [isActive, setIsActive] = useState(true);
 
@@ -349,9 +485,10 @@ const Wrap = ({ children, title }) => {
             <div onClick={() => setIsActive(f => !f)} className={styles.c100}>
                 {title}
                 {
-                    isActive ?
-                        <MdKeyboardArrowDown className={styles.arrow} /> :
-                        <MdKeyboardArrowRight className={styles.arrow} />
+                    !heading ?
+                        isActive ?
+                            <MdKeyboardArrowDown className={styles.arrow} /> :
+                            <MdKeyboardArrowRight className={styles.arrow} /> : ''
                 }
             </div>
             {isActive && children}

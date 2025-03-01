@@ -1,8 +1,6 @@
-import { useRef, useState } from 'react';
-import Editor from '../../utils/Editor/Editor';
+import { useRef } from 'react';
 import styles from './playground.module.css';
 import SideBar from '../../Components/SideBar/SideBar';
-import { useDispatch } from 'react-redux';
 import Cssbar from '../../Components/Cssbar/Cssbar';
 import TreeManager from '../../utils/TreeManager';
 

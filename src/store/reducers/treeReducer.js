@@ -5,9 +5,8 @@ const treeSlice = createSlice({
   initialState: {
     tree: { root: [] },
     activeNodeId: null,
-    hoverNodeId: null,
     styleMap: {},
-    dataMap: {},
+    dataMap: { root: { name: "root", type: "root" } },
   },
   reducers: {
     addNode: (state, { payload }) => {
@@ -35,9 +34,6 @@ const treeSlice = createSlice({
     },
     updateActiveNode: (state, { payload }) => {
       state.activeNodeId = payload.id;
-    },
-    updateHoverNode: (state, { payload }) => {
-      state.hoverNodeId = payload.nodeId;
     },
     updateStyleMap: (state, { payload }) => {
       state.styleMap[payload.id] = payload.style;

@@ -34,20 +34,40 @@
 }
 /* reusable ends */
 
-.cssbar {
-  background-color: var(--bg_gray);
+.cssbarwrapper {
   position: fixed;
   top: 0;
   right: 0;
   width: 250px;
   height: 100%;
   z-index: 3;
-  color: white;
-  overflow-y: scroll;
+  background-color: var(--bg_gray);
 }
 
-.c1 {
+.cssbar {
+  color: white;
+  display: flex;
+  flex-direction: column;
   font-size: 12px;
+  height: 100%;
+}
+
+.c0 {
+  background-color: var(--pg_bg);
+  display: flex;
+  cursor: default;
+  /* border-bottom: 7px solid var(--bg_gray); */
+}
+.c0 > div {
+  padding: 7px 15px;
+}
+.c0icon {
+  background-color: var(--bg_gray);
+  height: 100%;
+}
+.c1 {
+  overflow-y: scroll;
+  height: 100%;
 }
 .c10 {
   color: var(--text_0);
@@ -55,7 +75,7 @@
   border-bottom: 1px solid var(--gray_border);
 }
 .c100 {
-  padding: 15px 10px;
+  padding: 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -226,13 +246,12 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: var(--pg_bg);
-  padding: 6px;
   border-radius: 3px;
   user-select: none;
-  transition: all 200ms;
-  width: 70px;
+  width: 100%;
+  /* color: var(--text_0); */
 }
+
 .mpout {
   position: relative;
   border: 1px dotted rgba(128, 128, 128, 0.25);
@@ -336,4 +355,38 @@
 .positioninputs {
   padding-top: 20px;
   padding-inline: 0;
+}
+.e0 {
+  padding: 10px 10px;
+  color: var(--text_2);
+  display: flex;
+  gap: 10px;
+}
+.e00{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+.e0flex {
+  align-items:center;
+}
+.e0flexcol{
+  flex-direction: column;
+}
+.e0i {
+  all: unset;
+  flex: 1;
+  background-color: #272727;
+  padding: 7px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text_0);
+}
+.e0i:focus {
+  border: 1px solid darkblue;
+  border-radius: 5px;
+}
+.e0tarea {
+  word-wrap: break-word;
 }

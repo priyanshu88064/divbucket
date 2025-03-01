@@ -34,6 +34,9 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Delete",
                 command: "Backspace",
+                func: () => {
+                    dispatch(deleteNode({ id }))
+                }
             }
         ],
     ] : [
@@ -69,7 +72,6 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Backspace",
                 func: () => {
                     dispatch(deleteNode({ id }))
-                    // setClicked(false);
                 }
             }
         ],
@@ -108,7 +110,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                     e.preventDefault();
                     e.stopPropagation();
                 }}
-                onClick={(e)=>{
+                onClick={(e) => {
                     e.stopPropagation();
                 }}
             >
@@ -117,7 +119,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                         <React.Fragment key={ind}>
                             {
                                 item.map((subItem, sind) => (
-                                    <div onClick={() => { subItem.func() }} key={"" + ind + sind} className={styles.cmitem}>
+                                    <div onClick={() => { subItem.func();setClicked(false) }} key={"" + ind + sind} className={styles.cmitem}>
                                         <div className={styles.cmitem0}>{subItem.name}</div>
                                         <div className={styles.cmitem1}>{subItem.command}</div>
                                     </div>

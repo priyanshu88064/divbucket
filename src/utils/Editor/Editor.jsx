@@ -8,6 +8,7 @@ import TreeManager from '../TreeManager';
 import { useContextMenu } from '../hooks/useContextMenu';
 import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 import { useDrag } from '../hooks/useDrag';
+import initData from '../initData';
 
 export default ({ e_width, e_height, stopScrollRef,children }) => {
 
@@ -75,8 +76,8 @@ export default ({ e_width, e_height, stopScrollRef,children }) => {
 
     useEffect(() => {
         const child = Date.now();
-        dispatch(updateDataMap({ id: child, data: { name: "Row", type: "Row" } }));
-        dispatch(updateStyleMap({ id: child, style: initCSS("Row") }));
+        dispatch(updateDataMap({ id: child, data: initData("Paragraph") }));
+        dispatch(updateStyleMap({ id: child, style: initCSS("Paragraph") }));
         dispatch(addNode({ parent: id, child }));
         dispatch(updateActiveNode({ id: child }));
     }, []);

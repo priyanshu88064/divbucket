@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import Block from "./Block/Block";
 import Resizable from "./Resizable/Resizable";
 import Row from "./Row/Row";
@@ -12,13 +12,17 @@ import Editor from "./Editor/Editor";
 export default ({ }) => {
 
   const tree = useSelector(state => state.treeReducer.tree);
-  const dataMap = useSelector(state => state.treeReducer.dataMap);
+  const dataMap = useSelector(state => Object.fromEntries(
+    Object.entries(state.treeReducer.dataMap).map(([key, value]) => ([key, value.type]))
+  ), shallowEqual);
+
+  console.log("treemanager",dataMap)
 
   const renderTree = (node) => {
 
     let ele;
 
-    switch (dataMap[node].type) {
+    switch (dataMap[node]) {
       case "Block":
         ele = (
           <Block
