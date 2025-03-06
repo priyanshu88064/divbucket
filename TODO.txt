@@ -1,5 +1,7 @@
 #TODO
 - hover resizable when hover in rlistitems in Explorer
-- play with background behing Editor 
+- fix entire theme
 
 #DONE
+- play with background behind Editor [decided black color for now]
+- put the infobar back inside resizable 

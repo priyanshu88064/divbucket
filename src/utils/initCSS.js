@@ -25,9 +25,12 @@ export default function initCSS(type) {
     bottom: "auto",
     right: "auto",
     left: "auto",
-    fontWeight: "400",
+    fontWeight: "normal",
     fontSize: "16px",
     background:"transparent",
+    fontFamily:"system-ui",
+    fontStyle:"normal",
+    textDecoration:"none"
   };
 
   switch (type) {

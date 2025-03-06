@@ -1,0 +1,19 @@
+.picker{
+    display: flex;
+    color: var(--text_0);
+    background-color: var(--pg_bg);
+    border-radius: 5px;
+    width: fit-content;
+}
+.picker > div{
+    border: 1px solid;
+}
+.su{
+    all: unset;
+    padding: 6px;
+}
+.si{
+    background-color: var(--bg_gray0);
+    border: none;
+    padding-inline: 2px;
+}

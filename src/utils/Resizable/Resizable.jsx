@@ -6,8 +6,10 @@ import { useDrag } from '../hooks/useDrag';
 import { useResizer } from '../hooks/useResizer';
 import { useContextMenu } from '../hooks/useContextMenu';
 import ContextMenu from '../../Components/ContextMenu/ContextMenu';
+import { changeTab } from '../../store/reducers/focusReducer';
+import { MdOutlineEdit } from 'react-icons/md';
 
-export default ({ id, children, InfoBar }) => {
+export default ({ id, children }) => {
 
     const dispatch = useDispatch();
     const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
@@ -65,7 +67,16 @@ export default ({ id, children, InfoBar }) => {
                     {
                         id === activeNodeId ?
                             <>
-                                {InfoBar}
+                                <div className={styles.infobar}>
+                                    <div style={{ cursor: 'text', fontSize: '13px' }}>{dataMap.name}</div>
+                                    <div
+                                        style={{ borderRight: 'none' }}
+                                        title='edit'
+                                        onClick={() => dispatch(changeTab({ tab: "11" }))}
+                                    >
+                                        <MdOutlineEdit size={15} />
+                                    </div>
+                                </div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
                                 <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 2)} className={`${styles.resizable} ${styles.bottom}`}></div>

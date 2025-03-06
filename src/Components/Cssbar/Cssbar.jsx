@@ -1,16 +1,24 @@
-import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit, MdOutlineLink } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit, MdOutlineLink, MdTextDecrease, MdTextIncrease } from 'react-icons/md';
 import styles from './cssbar.module.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown, IoMdLink } from 'react-icons/io';
-import { FaCss3, FaLink } from 'react-icons/fa';
+import { FaBold, FaCss3, FaItalic, FaLink, FaMinus, FaPlus, FaStrikethrough, FaUnderline } from 'react-icons/fa';
+import { changeTab } from '../../store/reducers/focusReducer';
+import { FaParagraph } from 'react-icons/fa6';
+import TextInput from '../../utils/inputs/TextInput/TextInput';
+import CheckBox from '../../utils/inputs/CheckBox/CheckBox';
+import Colorpicker from '../../utils/inputs/Colorpicker/Colorpicker';
+import Select from '../../utils/inputs/Select/Select';
+import { CgFormatBold } from 'react-icons/cg';
+import { ImBold } from 'react-icons/im';
 
 export default () => {
 
-    const [tab, setTab] = useState(0);
+    const tab = useSelector(state => state.focusReducer.tab);
     const id = useSelector(state => state.treeReducer.activeNodeId);
-    console.log("cssbar")
+    const dispatch = useDispatch();
 
     return (
         <div className={styles.cssbarwrapper}>
@@ -19,15 +27,15 @@ export default () => {
                     <div>Paragraph</div>
                     <div
                         style={{ marginLeft: 'auto', }}
-                        className={`${tab === 0 ? styles.c0icon : ''}`}
-                        onClick={() => setTab(0)}
+                        className={`${tab[0] === "0" ? styles.c0icon : ''}`}
+                        onClick={() => dispatch(changeTab({ tab: "00" }))}
                         title='css'
                     >
                         <FaCss3 />
                     </div>
                     <div
-                        className={`${tab === 1 ? styles.c0icon : ''}`}
-                        onClick={() => setTab(1)}
+                        className={`${tab[0] === "1" ? styles.c0icon : ''}`}
+                        onClick={() => dispatch(changeTab({ tab: "10" }))}
                         title='edit'
                     >
                         <MdOutlineEdit />
@@ -36,9 +44,9 @@ export default () => {
                 <div className={styles.c1}>
                     {
                         id ?
-                            tab ?
-                                <EditTab /> :
+                            tab[0] === "0" ?
                                 <CssTab /> :
+                                <EditTab focus={tab[1]} /> :
                             "Please select an element"
                     }
                 </div>
@@ -52,11 +60,124 @@ const CssTab = () => {
     const id = useSelector(state => state.treeReducer.activeNodeId);
     const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const dispatch = useDispatch();
-    console.log("csstab")
+
+    const UpdateStyle = (prop, value) => {
+        dispatch(updateStyleMap({ id, style: { ...styleMap, [prop]: value } }))
+    }
 
     return (
         <>
             <Wrap title={"Styles"} heading={true}></Wrap>
+            <Wrap title={"Typography"}>
+                <div className={styles.padwrap}>
+                    <div className={styles.bgwrap}>
+                        <div className={styles.bg0}>
+                            <div className={styles.holder}>
+                                <div
+                                    title='bold'
+                                    className={`${styles.holder0} ${styleMap.fontWeight === "bold" ? styles.holderactive : ''}`}
+                                    onClick={() => {
+                                        if (styleMap.fontWeight === "bold") UpdateStyle("fontWeight", "normal");
+                                        else UpdateStyle("fontWeight", "bold");
+                                    }}
+                                >
+                                    <FaBold />
+                                </div>
+                                <div
+                                    title='italic'
+                                    className={`${styles.holder0} ${styleMap.fontStyle === "italic" ? styles.holderactive : ''}`}
+                                    onClick={() => {
+                                        if (styleMap.fontStyle === "italic") UpdateStyle("fontStyle", "normal");
+                                        else UpdateStyle("fontStyle", "italic")
+                                    }}
+                                >
+                                    <FaItalic />
+                                </div>
+                                <div
+                                    title='underline'
+                                    className={`${styles.holder0} ${styleMap.textDecoration === "underline" ? styles.holderactive : ''}`}
+                                    onClick={() => {
+                                        if (styleMap.textDecoration === "underline") UpdateStyle("textDecoration", "none");
+                                        else UpdateStyle("textDecoration", "underline");
+                                    }}
+                                >
+                                    <FaUnderline />
+                                </div>
+                                <div
+                                    title='strikethrough'
+                                    className={`${styles.holder0} ${styleMap.textDecoration === "line-through" ? styles.holderactive : ''}`}
+                                    onClick={() => {
+                                        if (styleMap.textDecoration === "line-through") UpdateStyle("textDecoration", "none");
+                                        else UpdateStyle("textDecoration", "line-through");
+                                    }}
+                                >
+                                    <FaStrikethrough />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.bg0}>
+                            <div className={styles.bg0name}>Family</div>
+                            <div className={styles.fontselect}>
+                                <input
+                                    type='text'
+                                    className={`${styles.fontsi} ${styleMap.fontFamily === "system-ui" ? styles.fontdefault : ''}`}
+                                    value={styleMap.fontFamily}
+                                    readOnly
+                                />
+                                <div className={styles.fontdrop}>
+                                    {
+                                        [
+                                            "serif",
+                                            "sans-serif",
+                                            "monospace",
+                                            "cursive",
+                                            "fantasy",
+                                            "system-ui",
+                                            "ui-serif",
+                                            "ui-sans-serif",
+                                            "ui-monospace",
+                                            "ui-rounded",
+                                            "emoji",
+                                            "math",
+                                            "fangsong"
+                                        ].map(font => (
+                                            <div
+                                                key={font}
+                                                style={{ fontFamily: font }}
+                                                onMouseDown={() => UpdateStyle("fontFamily", font)}
+                                            >
+                                                {font}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.bg0}>
+                            <div className={styles.bg0name}>Font-Size</div>
+                            <div className={styles.sizesiwrap}>
+                                <TextInput
+                                    auto={"16px"}
+                                    value={styleMap.fontSize}
+                                    units={["auto", "8px", "10px", "12px", "14px", "16px", "20px", "24px"]}
+                                    onChange={value => UpdateStyle("fontSize", value)}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.bg0}>
+                            <div className={styles.bg0name}>Font-Weight</div>
+                            <div className={styles.boldwrap}>
+                                <TextInput
+                                    auto={"normal"}
+                                    value={styleMap.fontWeight}
+                                    units={["auto", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600"]}
+                                    onChange={value => UpdateStyle("fontWeight", value)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Wrap>
             <Wrap title={"Size"}>
                 <div className={`${styles.c11} ${styles.padwrap}`}>
                     <div className={styles.c110}>
@@ -65,19 +186,49 @@ const CssTab = () => {
                         <div className={styles.c1101}>Max W</div>
                     </div>
                     <div className={styles.c110}>
-                        <Size_Input defaultValue={"auto"} property={"width"} data={styleMap.width} />
-                        <Size_Input defaultValue={"0px"} property={"minWidth"} data={styleMap.minWidth} />
-                        <Size_Input defaultValue={"none"} property={"maxWidth"} data={styleMap.maxWidth} />
+                        <TextInput
+                            auto={"auto"}
+                            value={styleMap.width}
+                            units={["auto", "50px", "100px", "200px", "400px", "800px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, width: value } }))}
+                        />
+                        <TextInput
+                            auto={"0px"}
+                            value={styleMap.minWidth}
+                            units={["auto", "50px", "100px", "200px", "400px", "800px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minWidth: value } }))}
+                        />
+                        <TextInput
+                            auto={"none"}
+                            value={styleMap.maxWidth}
+                            units={["auto", "50px", "100px", "200px", "400px", "800px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
+                        />
                     </div>
-                    <div className={styles.c110}>
+                    <div className={styles.c110} style={{ marginLeft: '10px' }}>
                         <div className={styles.c1101}>Height</div>
                         <div className={styles.c1101}>Min H</div>
                         <div className={styles.c1101}>Max H</div>
                     </div>
                     <div className={styles.c110}>
-                        <Size_Input defaultValue={"auto"} property={"height"} data={styleMap.height} />
-                        <Size_Input defaultValue={"0px"} property={"minHeight"} data={styleMap.minHeight} />
-                        <Size_Input defaultValue={"none"} property={"maxHeight"} data={styleMap.maxHeight} />
+                        <TextInput
+                            auto={"auto"}
+                            value={styleMap.height}
+                            units={["auto", "20px", "40px", "80px", "100px", "200px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, height: value } }))}
+                        />
+                        <TextInput
+                            auto={"0px"}
+                            value={styleMap.minHeight}
+                            units={["auto", "20px", "40px", "80px", "100px", "200px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minHeight: value } }))}
+                        />
+                        <TextInput
+                            auto={"none"}
+                            value={styleMap.maxHeight}
+                            units={["auto", "20px", "40px", "80px", "100px", "200px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
+                        />
                     </div>
                 </div>
             </Wrap>
@@ -86,8 +237,6 @@ const CssTab = () => {
                     <div className={`${styles.dic0} ${styles.beffect}`}>
                         <div className={`${styleMap.display === "block" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "block" } }))}  >Block</div>
                         <div className={`${styleMap.display === "flex" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "flex" } }))} >Flex</div>
-                        <div className={`${styleMap.display === "none" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "none" } }))} >None</div>
-                        <div className={`${styleMap.display === "temp" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "block" } }))} >_Temp</div>
                     </div>
                     {
                         styleMap.display === "flex" &&
@@ -98,9 +247,17 @@ const CssTab = () => {
                             <div className={styles.dic2}>
                                 <div className={styles.dic20}>
                                     <div style={{ color: 'var(--text_0)' }} className={styles.c1101}>Gap:</div>
-                                    <Size_Input defaultValue={"0px"} property={"gap"} data={styleMap.gap} extraOff={true} />
+                                    <TextInput
+                                        auto={"0px"}
+                                        value={styleMap.gap}
+                                        onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, gap: value } }))}
+                                    />
                                 </div>
-                                <CheckBox name={"Flex-Wrap"} prop={"flexWrap"} values={["wrap", "nowrap"]} />
+                                <CheckBox
+                                    name={"flexwrap"}
+                                    checked={styleMap.flexWrap === "wrap"}
+                                    onChange={e => dispatch(updateStyleMap({ id, style: { ...styleMap, flexWrap: e.target.checked ? "wrap" : "nowrap" } }))}
+                                />
                             </div>
                         </>
                     }
@@ -111,6 +268,28 @@ const CssTab = () => {
             </Wrap>
             <Wrap title={"Padding"}>
                 <MPbox prefix={"padding"} />
+            </Wrap>
+            <Wrap title={"Background"}>
+                <div className={styles.padwrap}>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Color:</div>
+                        <div className={styles.bg01}>
+                            <Select
+                                options={["Auto", "Solid"]}
+                                values={["transparent", "#ffffff"]}
+                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
+                                value={styleMap.background === "transparent" ? "Auto" : "Solid"}
+                            />
+                            {
+                                styleMap.background !== 'transparent' &&
+                                <Colorpicker
+                                    value={styleMap.background}
+                                    onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
+                                />
+                            }
+                        </div>
+                    </div>
+                </div>
             </Wrap>
             {/* <Wrap title={"Position"}>
                 <div className={styles.padwrap}>
@@ -142,12 +321,16 @@ const CssTab = () => {
     );
 }
 
-const EditTab = () => {
+const EditTab = ({ focus }) => {
 
     const id = useSelector(state => state.treeReducer.activeNodeId);
     const dataMap = useSelector(state => state.treeReducer.dataMap[id])
     const dispatch = useDispatch();
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        name: "",
+        content: "",
+        hyperlink: ""
+    });
 
     useEffect(() => {
         setData({
@@ -163,11 +346,15 @@ const EditTab = () => {
     }
 
     return (
-        <>
+        <div className={`${focus === "1" ? styles.edittab : ''}`}>
             <Wrap title={"Options"} heading={true}>
             </Wrap>
-            <div className={`${styles.e0} ${styles.e0flex}`} style={{ marginTop: '10px' }}>
+            <div
+                className={`${styles.e0} ${styles.e0flex} ${focus === "2" ? styles.edittab : ''}`}
+                style={{ marginTop: '10px' }}
+            >
                 <input
+                    autoFocus={focus === "2"}
                     value={data.name}
                     className={styles.e0i}
                     onBlur={() => handleText("name", data.name)}
@@ -177,12 +364,13 @@ const EditTab = () => {
                     onKeyUp={e => {
                         if (e.key === "Enter") handleText("name", data.name)
                     }}
+                    onFocus={e => e.target.select()}
                 />
             </div>
             {
                 ["Paragraph", "Text"].includes(dataMap.type) &&
                 <div className={`${styles.e0} ${styles.e0flexcol}`}>
-                    <div className={styles.e00}>Content</div>
+                    <div className={styles.e00}>Content <FaParagraph /></div>
                     <textarea
                         value={data.content}
                         className={`${styles.e0i} ${styles.e0tarea}`}
@@ -196,6 +384,7 @@ const EditTab = () => {
                         onChange={e => {
                             setData(f => ({ ...f, content: e.target.value }))
                         }}
+                        onFocus={e => e.target.select()}
                     />
                 </div>
             }
@@ -214,13 +403,13 @@ const EditTab = () => {
                     }}
                     onChange={e => setData(f => ({ ...f, hyperlink: e.target.value }))}
                 />
-                <CheckBox1
+                <CheckBox
                     name={"Open in a new tab"}
                     checked={dataMap.newTab}
-                    onChange={e => handleText("newTab",e.target.checked)}
+                    onChange={e => handleText("newTab", e.target.checked)}
                 />
             </div>
-        </>
+        </div>
     );
 }
 
@@ -353,38 +542,6 @@ const MPbox = ({ prefix }) => {
     );
 }
 
-const CheckBox = ({ name, prop, values }) => {
-
-    const id = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
-    const dispatch = useDispatch();
-
-    return (
-        <div className={styles.checkbox} title={name}>
-            <input
-                type='checkbox'
-                checked={styleMap[id][prop] === values[0]}
-                onChange={e => {
-                    dispatch(updateStyleMap({ id, style: { ...styleMap[id], [prop]: (e.target.checked ? values[0] : values[1]) } }));
-                }}
-            />
-            <div className={styles.checkboxname}>{styleMap[id][prop]}</div>
-        </div>
-    );
-}
-const CheckBox1 = ({ name, checked, onChange }) => {
-    return (
-        <label className={styles.checkbox}>
-            <input
-                type='checkbox'
-                checked={checked}
-                onChange={onChange}
-            />
-            {name}
-        </label>
-    );
-}
-
 const FlexProperties = ({ data }) => {
 
     const id = useSelector(state => state.treeReducer.activeNodeId);
@@ -482,14 +639,16 @@ const Wrap = ({ children, title, heading }) => {
 
     return (
         <div className={styles.c10}>
-            <div onClick={() => setIsActive(f => !f)} className={styles.c100}>
-                {title}
-                {
-                    !heading ?
-                        isActive ?
-                            <MdKeyboardArrowDown className={styles.arrow} /> :
-                            <MdKeyboardArrowRight className={styles.arrow} /> : ''
-                }
+            <div className={styles.c100}>
+                <div className={styles.c1000}>{title}</div>
+                <div className={styles.c1000} onClick={() => setIsActive(f => !f)}>
+                    {
+                        !heading ?
+                            isActive ?
+                                <MdKeyboardArrowDown className={styles.arrow} /> :
+                                <MdKeyboardArrowRight className={styles.arrow} /> : ''
+                    }
+                </div>
             </div>
             {isActive && children}
         </div>

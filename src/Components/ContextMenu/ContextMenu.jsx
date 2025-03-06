@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './contextmenu.module.css';
 import { useDispatch } from 'react-redux';
 import { deleteNode } from '../../store/reducers/treeReducer';
+import { changeTab } from '../../store/reducers/focusReducer';
 
 export default ({ id, points, sidebar, setClicked }) => {
 
@@ -29,7 +30,10 @@ export default ({ id, points, sidebar, setClicked }) => {
             },
             {
                 name: "Rename",
-                command: "Ctrl + R"
+                command: "Ctrl + R",
+                func: () => {
+                    dispatch(changeTab({ tab: "12" }))
+                }
             },
             {
                 name: "Delete",
@@ -60,12 +64,11 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Ctrl + D"
             },
             {
-                name: "Lock",
-                command: "Ctrl + D"
-            },
-            {
                 name: "Rename",
-                command: "Ctrl + R"
+                command: "Ctrl + R",
+                func: () => {
+                    dispatch(changeTab({ tab: "12" }))
+                }
             },
             {
                 name: "Delete",
@@ -119,7 +122,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                         <React.Fragment key={ind}>
                             {
                                 item.map((subItem, sind) => (
-                                    <div onClick={() => { subItem.func();setClicked(false) }} key={"" + ind + sind} className={styles.cmitem}>
+                                    <div onClick={() => { subItem.func(); setClicked(false) }} key={"" + ind + sind} className={styles.cmitem}>
                                         <div className={styles.cmitem0}>{subItem.name}</div>
                                         <div className={styles.cmitem1}>{subItem.command}</div>
                                     </div>
