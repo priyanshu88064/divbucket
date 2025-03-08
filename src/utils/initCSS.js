@@ -30,7 +30,12 @@ export default function initCSS(type) {
     background:"transparent",
     fontFamily:"system-ui",
     fontStyle:"normal",
-    textDecoration:"none"
+    textDecoration:"none",
+    fontVariant:"normal",
+    borderWidth:"1px",
+    borderStyle:"none",
+    borderColor:"#000000",
+    color:"#000000"
   };
 
   switch (type) {

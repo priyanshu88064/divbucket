@@ -9,14 +9,14 @@ import Image from "./Image/Image";
 import Video from "./Video/Video";
 import Editor from "./Editor/Editor";
 
-export default ({ }) => {
+export default () => {
 
   const tree = useSelector(state => state.treeReducer.tree);
   const dataMap = useSelector(state => Object.fromEntries(
     Object.entries(state.treeReducer.dataMap).map(([key, value]) => ([key, value.type]))
   ), shallowEqual);
 
-  console.log("treemanager",dataMap)
+  console.log("treemanager", dataMap)
 
   const renderTree = (node) => {
 
@@ -103,11 +103,8 @@ export default ({ }) => {
   }
 
   return (
-    <Editor
-      e_width={'1200px'}
-      e_height={'800px'}
-    >
+    <Resizable id={"root"}>
       {tree["root"].map(tree => renderTree(tree))}
-    </Editor>
+    </Resizable>
   );
 }

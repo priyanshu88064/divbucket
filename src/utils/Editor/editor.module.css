@@ -2,8 +2,13 @@
   background-color: white;
   position: relative;
   padding: 10px;
+  border: 3px solid transparent;
+  z-index: 1;
 }
-.resizable{
+.editor:hover{
+  border-color: red;
+}
+.resizablebar{
   position: absolute;
   z-index: 1;
   top: 0;
@@ -17,15 +22,15 @@
   justify-content: center;
   align-items: center;
 }
-.resizable:hover{
+.resizablebar:hover{
   background-color: rgb(75, 75, 75);
 }
-.left{
+.leftbar{
   left: -13px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
-.right{
+.rightbar{
   right:-13px;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;

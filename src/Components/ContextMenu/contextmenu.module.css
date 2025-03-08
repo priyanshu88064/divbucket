@@ -12,12 +12,12 @@
   color: white;
   font-size: 13px;
   padding: 5px;
-  z-index: 10;
   border-radius: 5px;
   cursor: default;
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   background-color: #000000c7;
+  z-index: 10;
 }
 .cmitem {
   display: flex;

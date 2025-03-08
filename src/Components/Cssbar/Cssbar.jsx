@@ -13,6 +13,8 @@ import Colorpicker from '../../utils/inputs/Colorpicker/Colorpicker';
 import Select from '../../utils/inputs/Select/Select';
 import { CgFormatBold } from 'react-icons/cg';
 import { ImBold } from 'react-icons/im';
+import { LuALargeSmall } from 'react-icons/lu';
+import { AiOutlineFontSize } from 'react-icons/ai';
 
 export default () => {
 
@@ -68,122 +70,12 @@ const CssTab = () => {
     return (
         <>
             <Wrap title={"Styles"} heading={true}></Wrap>
-            <Wrap title={"Typography"}>
-                <div className={styles.padwrap}>
-                    <div className={styles.bgwrap}>
-                        <div className={styles.bg0}>
-                            <div className={styles.holder}>
-                                <div
-                                    title='bold'
-                                    className={`${styles.holder0} ${styleMap.fontWeight === "bold" ? styles.holderactive : ''}`}
-                                    onClick={() => {
-                                        if (styleMap.fontWeight === "bold") UpdateStyle("fontWeight", "normal");
-                                        else UpdateStyle("fontWeight", "bold");
-                                    }}
-                                >
-                                    <FaBold />
-                                </div>
-                                <div
-                                    title='italic'
-                                    className={`${styles.holder0} ${styleMap.fontStyle === "italic" ? styles.holderactive : ''}`}
-                                    onClick={() => {
-                                        if (styleMap.fontStyle === "italic") UpdateStyle("fontStyle", "normal");
-                                        else UpdateStyle("fontStyle", "italic")
-                                    }}
-                                >
-                                    <FaItalic />
-                                </div>
-                                <div
-                                    title='underline'
-                                    className={`${styles.holder0} ${styleMap.textDecoration === "underline" ? styles.holderactive : ''}`}
-                                    onClick={() => {
-                                        if (styleMap.textDecoration === "underline") UpdateStyle("textDecoration", "none");
-                                        else UpdateStyle("textDecoration", "underline");
-                                    }}
-                                >
-                                    <FaUnderline />
-                                </div>
-                                <div
-                                    title='strikethrough'
-                                    className={`${styles.holder0} ${styleMap.textDecoration === "line-through" ? styles.holderactive : ''}`}
-                                    onClick={() => {
-                                        if (styleMap.textDecoration === "line-through") UpdateStyle("textDecoration", "none");
-                                        else UpdateStyle("textDecoration", "line-through");
-                                    }}
-                                >
-                                    <FaStrikethrough />
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.bg0}>
-                            <div className={styles.bg0name}>Family</div>
-                            <div className={styles.fontselect}>
-                                <input
-                                    type='text'
-                                    className={`${styles.fontsi} ${styleMap.fontFamily === "system-ui" ? styles.fontdefault : ''}`}
-                                    value={styleMap.fontFamily}
-                                    readOnly
-                                />
-                                <div className={styles.fontdrop}>
-                                    {
-                                        [
-                                            "serif",
-                                            "sans-serif",
-                                            "monospace",
-                                            "cursive",
-                                            "fantasy",
-                                            "system-ui",
-                                            "ui-serif",
-                                            "ui-sans-serif",
-                                            "ui-monospace",
-                                            "ui-rounded",
-                                            "emoji",
-                                            "math",
-                                            "fangsong"
-                                        ].map(font => (
-                                            <div
-                                                key={font}
-                                                style={{ fontFamily: font }}
-                                                onMouseDown={() => UpdateStyle("fontFamily", font)}
-                                            >
-                                                {font}
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.bg0}>
-                            <div className={styles.bg0name}>Font-Size</div>
-                            <div className={styles.sizesiwrap}>
-                                <TextInput
-                                    auto={"16px"}
-                                    value={styleMap.fontSize}
-                                    units={["auto", "8px", "10px", "12px", "14px", "16px", "20px", "24px"]}
-                                    onChange={value => UpdateStyle("fontSize", value)}
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.bg0}>
-                            <div className={styles.bg0name}>Font-Weight</div>
-                            <div className={styles.boldwrap}>
-                                <TextInput
-                                    auto={"normal"}
-                                    value={styleMap.fontWeight}
-                                    units={["auto", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600"]}
-                                    onChange={value => UpdateStyle("fontWeight", value)}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Wrap>
             <Wrap title={"Size"}>
                 <div className={`${styles.c11} ${styles.padwrap}`}>
                     <div className={styles.c110}>
                         <div className={styles.c1101}>Width</div>
-                        <div className={styles.c1101}>Min W</div>
-                        <div className={styles.c1101}>Max W</div>
+                        {id !== "root" && <><div className={styles.c1101}>Min W</div>
+                            <div className={styles.c1101}>Max W</div></>}
                     </div>
                     <div className={styles.c110}>
                         <TextInput
@@ -192,23 +84,23 @@ const CssTab = () => {
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, width: value } }))}
                         />
-                        <TextInput
+                        {id !== "root" && <><TextInput
                             auto={"0px"}
                             value={styleMap.minWidth}
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minWidth: value } }))}
                         />
-                        <TextInput
-                            auto={"none"}
-                            value={styleMap.maxWidth}
-                            units={["auto", "50px", "100px", "200px", "400px", "800px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
-                        />
+                            <TextInput
+                                auto={"none"}
+                                value={styleMap.maxWidth}
+                                units={["auto", "50px", "100px", "200px", "400px", "800px"]}
+                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
+                            /></>}
                     </div>
                     <div className={styles.c110} style={{ marginLeft: '10px' }}>
                         <div className={styles.c1101}>Height</div>
-                        <div className={styles.c1101}>Min H</div>
-                        <div className={styles.c1101}>Max H</div>
+                        {id !== "root" && <><div className={styles.c1101}>Min H</div>
+                            <div className={styles.c1101}>Max H</div></>}
                     </div>
                     <div className={styles.c110}>
                         <TextInput
@@ -217,18 +109,18 @@ const CssTab = () => {
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, height: value } }))}
                         />
-                        <TextInput
+                        {id !== "root" && <><TextInput
                             auto={"0px"}
                             value={styleMap.minHeight}
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minHeight: value } }))}
                         />
-                        <TextInput
-                            auto={"none"}
-                            value={styleMap.maxHeight}
-                            units={["auto", "20px", "40px", "80px", "100px", "200px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
-                        />
+                            <TextInput
+                                auto={"none"}
+                                value={styleMap.maxHeight}
+                                units={["auto", "20px", "40px", "80px", "100px", "200px"]}
+                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
+                            /></>}
                     </div>
                 </div>
             </Wrap>
@@ -287,6 +179,170 @@ const CssTab = () => {
                                     onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
                                 />
                             }
+                        </div>
+                    </div>
+                </div>
+            </Wrap>
+            <Wrap title={"Typography"}>
+                <div className={`${styles.padwrap} ${styles.bgwrap}`}>
+                    <div className={styles.bg0}>
+                        <div className={styles.holder}>
+                            <div
+                                title='bold'
+                                className={`${styles.holder0} ${styleMap.fontWeight === "bold" ? styles.holderactive : ''}`}
+                                onClick={() => {
+                                    if (styleMap.fontWeight === "bold") UpdateStyle("fontWeight", "normal");
+                                    else UpdateStyle("fontWeight", "bold");
+                                }}
+                            >
+                                <FaBold />
+                            </div>
+                            <div
+                                title='italic'
+                                className={`${styles.holder0} ${styleMap.fontStyle === "italic" ? styles.holderactive : ''}`}
+                                onClick={() => {
+                                    if (styleMap.fontStyle === "italic") UpdateStyle("fontStyle", "normal");
+                                    else UpdateStyle("fontStyle", "italic")
+                                }}
+                            >
+                                <FaItalic />
+                            </div>
+                            <div
+                                title='underline'
+                                className={`${styles.holder0} ${styleMap.textDecoration === "underline" ? styles.holderactive : ''}`}
+                                onClick={() => {
+                                    if (styleMap.textDecoration === "underline") UpdateStyle("textDecoration", "none");
+                                    else UpdateStyle("textDecoration", "underline");
+                                }}
+                            >
+                                <FaUnderline />
+                            </div>
+                            <div
+                                title='strikethrough'
+                                className={`${styles.holder0} ${styleMap.textDecoration === "line-through" ? styles.holderactive : ''}`}
+                                onClick={() => {
+                                    if (styleMap.textDecoration === "line-through") UpdateStyle("textDecoration", "none");
+                                    else UpdateStyle("textDecoration", "line-through");
+                                }}
+                            >
+                                <FaStrikethrough />
+                            </div>
+                            <div
+                                title='small-caps'
+                                className={`${styles.holder0} ${styleMap.fontVariant === "small-caps" ? styles.holderactive : ''}`}
+                                onClick={() => {
+                                    if (styleMap.fontVariant === "small-caps") UpdateStyle("fontVariant", "normal");
+                                    else UpdateStyle("fontVariant", "small-caps");
+                                }}
+                            >
+                                <AiOutlineFontSize size={15} color='var(--text_0)' />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.br}></div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Family</div>
+                        <div className={styles.fontselect}>
+                            <input
+                                type='text'
+                                className={`${styles.fontsi} ${styleMap.fontFamily === "system-ui" ? styles.fontdefault : ''}`}
+                                value={styleMap.fontFamily}
+                                readOnly
+                            />
+                            <div className={styles.fontdrop}>
+                                {
+                                    [
+                                        "serif",
+                                        "sans-serif",
+                                        "monospace",
+                                        "cursive",
+                                        "fantasy",
+                                        "system-ui",
+                                        "ui-serif",
+                                        "ui-sans-serif",
+                                        "ui-monospace",
+                                        "ui-rounded",
+                                        "emoji",
+                                        "math",
+                                        "fangsong"
+                                    ].map(font => (
+                                        <div
+                                            key={font}
+                                            style={{ fontFamily: font }}
+                                            onMouseDown={() => UpdateStyle("fontFamily", font)}
+                                        >
+                                            {font}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Font-Size</div>
+                        <div className={styles.sizesiwrap}>
+                            <TextInput
+                                auto={"16px"}
+                                value={styleMap.fontSize}
+                                units={["auto", "8px", "10px", "12px", "14px", "16px", "20px", "24px"]}
+                                onChange={value => UpdateStyle("fontSize", value)}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Font-Weight</div>
+                        <div className={styles.sizesiwrap}>
+                            <TextInput
+                                auto={"normal"}
+                                value={styleMap.fontWeight}
+                                units={["auto", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600"]}
+                                onChange={value => UpdateStyle("fontWeight", value)}
+                            />
+                        </div>
+                        {/* </div> */}
+                    </div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Text-Color</div>
+                        <div className={styles.bg01}>
+                            <Colorpicker
+                                value={styleMap.color}
+                                onChange={value => UpdateStyle("color", value)}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </Wrap>
+            <Wrap title={"Border"}>
+                <div className={`${styles.padwrap} ${styles.bgwrap}`}>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Border-Style</div>
+                        <div className={styles.sizesiwrap}>
+                            <TextInput
+                                auto={"none"}
+                                value={styleMap.borderStyle}
+                                units={["auto", "solid", "dotted", "dashed", "double", "groove", "hidden"]}
+                                onChange={value => UpdateStyle("borderStyle", value)}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Border-Width</div>
+                        <div className={styles.sizesiwrap}>
+                            <TextInput
+                                auto={"1px"}
+                                value={styleMap.borderWidth}
+                                units={["auto", "1px", "2px", "3px", "4px"]}
+                                onChange={value => UpdateStyle("borderWidth", value)}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.bg0}>
+                        <div className={styles.bg0name}>Border-Color</div>
+                        <div className={styles.bg01}>
+                            <Colorpicker
+                                value={styleMap.borderColor}
+                                onChange={value => UpdateStyle("borderColor", value)}
+                            />
                         </div>
                     </div>
                 </div>
@@ -575,83 +631,31 @@ const FlexProperties = ({ data }) => {
     );
 }
 
-const Size_Input = ({ data, property, defaultValue, extraOff, extraProp }) => {
-
-    const [value, setValue] = useState({ x: "" });
-    const id = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        const match = String(data).match(/^(\d+)(\D+)$/);
-        if (match) setValue({ x: match[1], y: match[2] });
-        else setValue({ x: data });
-    }, [data]);
-
-
-    const handleBlur = () => {
-        let newStyle = { ...styleMap[id] };
-        if (value.x.length) newStyle[property] = value.x + (value.y || "");
-        else newStyle[property] = defaultValue;
-        dispatch(updateStyleMap({ id, style: newStyle }))
-    }
-
-    return (
-        <div className={styles.c1100}>
-            <input
-                className={styles.in}
-                maxLength={4}
-                value={value.x}
-                onFocus={e => e.target.select()}
-                onKeyDown={e => {
-                    if (isNaN(e.key) && e.key !== "Backspace") e.preventDefault();
-                }}
-                onChange={e => setValue(f => ({ x: e.target.value, y: f.y || "px" }))}
-                onBlur={handleBlur}
-            />
-            {value.y !== null && <div>{value.y}</div>}
-            <div className={`${styles.dropdown} ${styles.makedrop}`}>
-                {!extraOff && <div className={styles.d0}>
-                    <div onMouseDown={() => setValue({ y: null, x: "auto" })}>auto</div>
-                    {!extraProp && <><div onMouseDown={() => setValue({ y: null, x: "fit-content" })}>fit-content</div>
-                        <div onMouseDown={() => setValue({ y: null, x: "max-content" })}>max-content</div>
-                        <div onMouseDown={() => setValue({ y: null, x: "min-content" })}>min-content</div></>}
-                </div>}
-                {
-                    value.y &&
-                    <div className={styles.d1}>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "%" }))}>%</div>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "px" }))}>px</div>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "em" }))}>em</div>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "rem" }))}>rem</div>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "vw" }))}>vw</div>
-                        <div onMouseDown={() => setValue(f => ({ ...f, y: "vh" }))}>vh</div>
-                    </div>
-                }
-            </div>
-        </div>
-    );
-}
-
 const Wrap = ({ children, title, heading }) => {
 
     const [isActive, setIsActive] = useState(true);
+    const id = useSelector(state => state.treeReducer.activeNodeId);
 
     return (
-        <div className={styles.c10}>
-            <div className={styles.c100}>
-                <div className={styles.c1000}>{title}</div>
-                <div className={styles.c1000} onClick={() => setIsActive(f => !f)}>
-                    {
-                        !heading ?
-                            isActive ?
-                                <MdKeyboardArrowDown className={styles.arrow} /> :
-                                <MdKeyboardArrowRight className={styles.arrow} /> : ''
-                    }
+        <>
+            {
+                (id !== "root" || ["Size", "Padding", "Background","Styles","Options"].includes(title)) &&
+                <div className={styles.c10}>
+                    <div className={styles.c100}>
+                        <div className={styles.c1000}>{title}</div>
+                        <div className={styles.c1000} onClick={() => setIsActive(f => !f)}>
+                            {
+                                !heading ?
+                                    isActive ?
+                                        <MdKeyboardArrowDown className={styles.arrow} /> :
+                                        <MdKeyboardArrowRight className={styles.arrow} /> : ''
+                            }
+                        </div>
+                    </div>
+                    {isActive && children}
                 </div>
-            </div>
-            {isActive && children}
-        </div>
+            }
+        </>
     );
 
 }

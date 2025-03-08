@@ -5,8 +5,25 @@ const treeSlice = createSlice({
   initialState: {
     tree: { root: [] },
     activeNodeId: null,
-    styleMap: {},
-    dataMap: { root: { name: "root", type: "root" } },
+    styleMap: {
+      root: {
+        width: "1200px",
+        height: "800px",
+        minWidth:"350px",
+        minHeight:"800px",
+        background: "white",
+        paddingTop: "0",
+        paddingRight: "0",
+        paddingBottom: "0",
+        paddingLeft: "0",
+      },
+    },
+    dataMap: {
+      root: {
+        name: "root",
+        type: "root",
+      },
+    },
   },
   reducers: {
     addNode: (state, { payload }) => {

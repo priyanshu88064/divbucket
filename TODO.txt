@@ -1,6 +1,7 @@
 #TODO
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
+- colorpicker should also support colors string ('red','blue' etc)
 
 #DONE
 - play with background behind Editor [decided black color for now]

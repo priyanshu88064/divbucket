@@ -1,4 +1,6 @@
 #BUGS/ISSUES
+- major bug in contextmenu - z-index stacking context issue
+- Cssbar>borders of resizable interfaring with activebar/infobar
 - getting click outside (hence losing focus) of the resizable box while dragging resizable border
 - another resizable gets hover while resizing
 - width/height going negative
