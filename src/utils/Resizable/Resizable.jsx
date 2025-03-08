@@ -67,13 +67,13 @@ export default ({ id, children }) => {
                 {
                     id === "root" &&
                     <>
-                        <div onMouseDown={e => handleMouseDown(e, 3)} className={`${styles.resizablebar} ${styles.left}`}><TbMinusVertical className={styles.lines} /></div>
-                        <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.right}`}><TbMinusVertical className={styles.lines} /></div>
+                        <div onMouseDown={e => handleMouseDown(e, 3)} className={`${styles.resizablebar} ${styles.leftbar}`}><TbMinusVertical className={styles.lines} /></div>
+                        <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.rightbar}`}><TbMinusVertical className={styles.lines} /></div>
 
                     </>
                 }
                 {
-                    id === activeNodeId ?
+                    id === activeNodeId && id !== "root" ?
                         <>
                             <div className={styles.infobar}>
                                 <div style={{ cursor: 'text', fontSize: '13px' }}>{dataMap.name}</div>

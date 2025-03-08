@@ -20,7 +20,7 @@
   left: 0;
 }
 .hov:hover {
-  border: 5px solid var(--resizeblue);
+  border: 2px solid var(--resizeblue);
 }
 
 .top {
@@ -135,7 +135,7 @@
   z-index: 2;
   top: 0;
 
-  background-color: rgb(27, 27, 27);
+  background-color: rgb(41, 41, 41);
   height: 100%;
   width: 13px;
   transition: background-color 150ms;
@@ -143,7 +143,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
 }
 .resizablebar:hover{
   background-color: rgb(75, 75, 75);
