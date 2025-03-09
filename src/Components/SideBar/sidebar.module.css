@@ -1,8 +1,5 @@
 .sidebar {
-  position: fixed;
   height: 100%;
-  top: 0;
-  left: 0;
   z-index: 3;
   color: white;
   display: flex;
@@ -71,6 +68,8 @@
 .rli0 {
   display: flex;
   align-items: center;
+  gap: 5px;
+  color: var(--text_0);
 }
 .rlicollapse {
   padding-left: 8px;
@@ -80,4 +79,7 @@
 }
 .activeItemClass {
   background: var(--bg_gray);
+  .rli0{
+    color: white;
+  }
 }

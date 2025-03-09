@@ -1,5 +1,8 @@
 .playground {
-  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 .container {
   background-color: var(--pg_bg);
@@ -9,12 +12,9 @@
   overflow: scroll;
 }
 .bg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200%;
-  padding: 300px;
-  padding-inline: 0;
+  background-color: var(--pg_bg);
+  flex: 1;
+  overflow: hidden;
 }
 .container::-webkit-scrollbar {
   display: none;

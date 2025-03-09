@@ -1,6 +1,6 @@
 import { CiSearch } from 'react-icons/ci';
 import styles from './sidebar.module.css';
-import { IoAddOutline, IoLayers } from 'react-icons/io5';
+import { IoAddOutline, IoLayers, IoText } from 'react-icons/io5';
 import { useState } from 'react';
 import { GiSquare } from 'react-icons/gi';
 import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
@@ -8,9 +8,11 @@ import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { updateActiveNode, updateHoverNode } from '../../store/reducers/treeReducer';
+import { updateActiveNode } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
+import { FaHome, FaImage, FaRegSquare, FaVideo } from 'react-icons/fa';
+import { BsTextParagraph } from 'react-icons/bs';
 
 export default () => {
 
@@ -74,7 +76,10 @@ export default () => {
                                 <>
                                     <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
                                     <div className={styles.rlist}>
-                                        <RecursiveList start={"root"} />
+                                        <RLItem
+                                            key={"root"}
+                                            node={"root"}
+                                        />
                                     </div>
                                 </> :
                                 <>
@@ -108,7 +113,8 @@ const RecursiveList = ({ start }) => {
 
 const RLItem = ({ node }) => {
 
-    const [active, setActive] = useState(false);
+    const type = useSelector(state => state.treeReducer.dataMap[node].type);
+    const [active, setActive] = useState(true);
     const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
     const name = useSelector(state => state.treeReducer.dataMap[node].name);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
@@ -135,12 +141,32 @@ const RLItem = ({ node }) => {
                     onClick={e => { e.preventDefault(); e.stopPropagation(); setActive(f => !f) }}
                 >
                     {
-                        active ?
-                            <MdKeyboardArrowDown size={17} color='var(--text_0)' /> :
-                            <MdKeyboardArrowRight size={17} color='var(--text_0)' />
+                        ["root", "Row", "Block"].includes(type) ?
+                            active ?
+                                <MdKeyboardArrowDown size={17} color='var(--text_0)' /> :
+                                <MdKeyboardArrowRight size={17} color='var(--text_0)' /> :
+                            <MdKeyboardArrowRight size={17} color='transparent' />
+
                     }
                 </div>
                 <div className={styles.rli0}>
+                    {
+                        type === "root" ?
+                            <FaHome size={12} /> :
+                            type === "Block" ?
+                                <FaRegSquare size={12} /> :
+                                type === "Row" ?
+                                    <FaRegSquare size={12} /> :
+                                    type === "Heading" ?
+                                        <LuHeading1 size={12} /> :
+                                        type === "Text" ?
+                                            <IoText size={12} /> :
+                                            type === "Paragraph" ?
+                                                <BsTextParagraph size={12} /> :
+                                                type === "Image" ?
+                                                    <FaImage size={12} /> :
+                                                    type === "Video" && <FaVideo size={12} />
+                    }
                     {name}
                 </div>
                 {

@@ -23,35 +23,33 @@ export default () => {
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.cssbarwrapper}>
-            <div className={styles.cssbar}>
-                <div className={styles.c0}>
-                    <div>Paragraph</div>
-                    <div
-                        style={{ marginLeft: 'auto', }}
-                        className={`${tab[0] === "0" ? styles.c0icon : ''}`}
-                        onClick={() => dispatch(changeTab({ tab: "00" }))}
-                        title='css'
-                    >
-                        <FaCss3 />
-                    </div>
-                    <div
-                        className={`${tab[0] === "1" ? styles.c0icon : ''}`}
-                        onClick={() => dispatch(changeTab({ tab: "10" }))}
-                        title='edit'
-                    >
-                        <MdOutlineEdit />
-                    </div>
+        <div className={styles.cssbar}>
+            <div className={styles.c0}>
+                <div>Paragraph</div>
+                <div
+                    style={{ marginLeft: 'auto', }}
+                    className={`${tab[0] === "0" ? styles.c0icon : ''}`}
+                    onClick={() => dispatch(changeTab({ tab: "00" }))}
+                    title='css'
+                >
+                    <FaCss3 />
                 </div>
-                <div className={styles.c1}>
-                    {
-                        id ?
-                            tab[0] === "0" ?
-                                <CssTab /> :
-                                <EditTab focus={tab[1]} /> :
-                            "Please select an element"
-                    }
+                <div
+                    className={`${tab[0] === "1" ? styles.c0icon : ''}`}
+                    onClick={() => dispatch(changeTab({ tab: "10" }))}
+                    title='edit'
+                >
+                    <MdOutlineEdit />
                 </div>
+            </div>
+            <div className={styles.c1}>
+                {
+                    id ?
+                        tab[0] === "0" ?
+                            <CssTab /> :
+                            <EditTab focus={tab[1]} /> :
+                        "Please select an element"
+                }
             </div>
         </div>
     );
@@ -639,7 +637,7 @@ const Wrap = ({ children, title, heading }) => {
     return (
         <>
             {
-                (id !== "root" || ["Size", "Padding", "Background","Styles","Options"].includes(title)) &&
+                (id !== "root" || ["Size", "Padding", "Background", "Styles", "Options"].includes(title)) &&
                 <div className={styles.c10}>
                     <div className={styles.c100}>
                         <div className={styles.c1000}>{title}</div>

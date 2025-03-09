@@ -1,0 +1,13 @@
+.playwrap{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.head{
+    background-color: var(--bg_gray);
+    color: white;
+    height: 40px;
+    border-bottom: 1px solid var(--gray_border);
+}

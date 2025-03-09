@@ -59,7 +59,7 @@
 .circle {
   position: absolute;
   background-color: white;
-  z-index: 2;
+  z-index: 30;
   width: 8px;
   height: 8px;
   border: 1px solid blue;
@@ -111,9 +111,13 @@
   display: flex;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  cursor: pointer;
   z-index: 1;
   font-weight: normal;
+}
+.ib0{
+  font-size: 13px;
+  display: flex;
+  gap: 5px;
 }
 .infobar > div {
   display: flex;
@@ -148,12 +152,12 @@
   background-color: rgb(75, 75, 75);
 }
 .leftbar{
-  left: -13px;
+  left: -0px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
 .rightbar{
-  right:-13px;
+  right:-0px;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
