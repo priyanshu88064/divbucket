@@ -3,12 +3,12 @@
 - Cssbar>borders of resizable interfaring with activebar/infobar
 - getting click outside (hence losing focus) of the resizable box while dragging resizable border
 - another resizable gets hover while resizing
-- width/height going negative
 - in cssbar>size> input boxes, values like "auto" should not be editable means "auto" can't be backspaced to "aut". Backspacing it causing problem currently.
 - optimize the Layout Utility>Components (currently they all have different components though they are same)
 - Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
 #FIXED
+- width/height going negative
 - child nodes(resizable) are not dragging
 - currently I am not rendering more childs of Non-Layout components but their whole structure should be fixed to not support a drop.[FIXED]
 - MAXIMUM DEPTH LIMIT REACHED message in console from resizable dispatch in handlemousemove.[FIXED]

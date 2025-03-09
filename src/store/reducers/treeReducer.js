@@ -7,17 +7,20 @@ const treeSlice = createSlice({
     activeNodeId: "root",
     styleMap: {
       root: {
-        // width: "1200px",
-        // height: "800px",
-        width: "200px",
-        height: "200px",
-        // minWidth:"350px",
-        // minHeight:"800px",
+        width: "100%",
+        height: "100%",
+        minWidth: "350px",
         background: "white",
         paddingTop: "5px",
         paddingRight: "5px",
         paddingBottom: "5px",
         paddingLeft: "5px",
+        display: "block",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        gap: "0px",
+        flexWrap: "nowrap",
       },
     },
     dataMap: {
@@ -26,6 +29,11 @@ const treeSlice = createSlice({
         type: "root",
       },
     },
+    maxRootWidth:{
+      left:0,
+      right:0,
+      diff:0
+    }
   },
   reducers: {
     addNode: (state, { payload }) => {
@@ -60,6 +68,13 @@ const treeSlice = createSlice({
     updateDataMap: (state, { payload }) => {
       state.dataMap[payload.id] = payload.data;
     },
+    updateRootWidth:(state,{payload})=>{
+      state.styleMap.root.width = payload.width;
+    },
+    updateMaxRootWidth:(state,{payload})=>{
+      state.maxRootWidth[payload.key] = payload.value;
+      state.maxRootWidth.diff = Math.floor(state.maxRootWidth.right - state.maxRootWidth.left - 10); // -10 for the resizablebar
+    },
   },
 });
 
@@ -71,5 +86,7 @@ export const {
   updateDataMap,
   deleteNode,
   deleteFromParent,
+  updateRootWidth,
+  updateMaxRootWidth
 } = treeSlice.actions;
 export default treeSlice.reducer;

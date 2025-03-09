@@ -1,3 +1,25 @@
+.awrap{
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
+}
+.root{
+  height: 100%;
+  width: 100%;
+}
+.root > .a {
+  overflow-y: scroll;
+}
+
+.a {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.a::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
 .a {
   position: relative !important;
   width: 100%;
@@ -135,13 +157,9 @@
 }
 
 .resizablebar{
-  position: absolute;
   z-index: 2;
-  top: 0;
-
   background-color: rgb(41, 41, 41);
-  height: 100%;
-  width: 13px;
+  width: 10px;
   transition: background-color 150ms;
   cursor: ew-resize;
   display: flex;
@@ -152,16 +170,14 @@
   background-color: rgb(75, 75, 75);
 }
 .leftbar{
-  left: -0px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
 .rightbar{
-  right:-0px;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 .lines{
   color: darkgray;
-  transform: scale(2,6);
+  transform: scale(2,10);
 }

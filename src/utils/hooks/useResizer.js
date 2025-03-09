@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStyleMap } from "../../store/reducers/treeReducer";
 
@@ -27,9 +27,13 @@ export function useResizer({ id }) {
   }, [styleMap, id]);
 
   const calWidth = () =>
-    Math.floor(virtualPos.current.right - virtualPos.current.left) + "px";
+    Math.floor(
+      Math.max(0, virtualPos.current.right - virtualPos.current.left)
+    ) + "px";
   const calHeight = () =>
-    Math.floor(virtualPos.current.bottom - virtualPos.current.top) + "px";
+    Math.floor(
+      Math.max(0, virtualPos.current.bottom - virtualPos.current.top)
+    ) + "px";
 
   const initVirtualPosition = () => {
     if (divRef.current) {
@@ -74,8 +78,7 @@ export function useResizer({ id }) {
         style: {
           ...styleMap,
           width: Number(dirRef.current) % 2 ? calWidth() : styleMap.width,
-          height:
-            Number(dirRef.current) % 2 ? styleMap.height : calHeight(),
+          height: Number(dirRef.current) % 2 ? styleMap.height : calHeight(),
         },
       })
     );

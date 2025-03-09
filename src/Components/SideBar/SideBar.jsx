@@ -1,22 +1,22 @@
 import { CiSearch } from 'react-icons/ci';
 import styles from './sidebar.module.css';
 import { IoAddOutline, IoLayers, IoText } from 'react-icons/io5';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GiSquare } from 'react-icons/gi';
 import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
 import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { updateActiveNode } from '../../store/reducers/treeReducer';
+import { updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
-import { FaHome, FaImage, FaRegSquare, FaVideo } from 'react-icons/fa';
-import { BsTextParagraph } from 'react-icons/bs';
+import { GetIconOfType } from '../Cssbar/Cssbar';
 
 export default () => {
 
     const [tab, setTab] = useState(0);
+    const dispatch = useDispatch();
 
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("id", Date.now());
@@ -28,7 +28,10 @@ export default () => {
     }
 
     return (
-        <div className={styles.sidebar}>
+        <div
+            className={styles.sidebar}
+            ref={e => dispatch(updateMaxRootWidth({ key: "left", value: e?.getBoundingClientRect()?.right }))}
+        >
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>
@@ -150,23 +153,7 @@ const RLItem = ({ node }) => {
                     }
                 </div>
                 <div className={styles.rli0}>
-                    {
-                        type === "root" ?
-                            <FaHome size={12} /> :
-                            type === "Block" ?
-                                <FaRegSquare size={12} /> :
-                                type === "Row" ?
-                                    <FaRegSquare size={12} /> :
-                                    type === "Heading" ?
-                                        <LuHeading1 size={12} /> :
-                                        type === "Text" ?
-                                            <IoText size={12} /> :
-                                            type === "Paragraph" ?
-                                                <BsTextParagraph size={12} /> :
-                                                type === "Image" ?
-                                                    <FaImage size={12} /> :
-                                                    type === "Video" && <FaVideo size={12} />
-                    }
+                    {GetIconOfType(type)}
                     {name}
                 </div>
                 {

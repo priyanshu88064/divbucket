@@ -57,6 +57,11 @@
   background-color: var(--bg_gray);
   height: 100%;
 }
+.c00 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .c1 {
   overflow-y: scroll;
   height: 100%;
@@ -73,7 +78,7 @@
   justify-content: space-between;
   user-select: none;
 }
-.c1000{
+.c1000 {
   padding: 10px;
 }
 .arrow {
@@ -349,16 +354,16 @@
   display: flex;
   gap: 10px;
 }
-.e00{
+.e00 {
   display: flex;
   align-items: center;
   gap: 5px;
   width: 100%;
 }
 .e0flex {
-  align-items:center;
+  align-items: center;
 }
-.e0flexcol{
+.e0flexcol {
   flex-direction: column;
 }
 .e0i {
@@ -377,41 +382,41 @@
 .e0tarea {
   word-wrap: break-word;
 }
-.edittab{
+.edittab {
   animation: focus 1000ms ease-in-out;
 }
 @keyframes focus {
-  0%{
+  0% {
     background: inherit;
   }
-  50%{
-    background:white;
+  50% {
+    background: white;
   }
-  100%{
+  100% {
     background: inherit;
   }
 }
-.bg0{
+.bg0 {
   display: flex;
   justify-content: space-between;
   gap: 40px;
 }
-.bg0name{
+.bg0name {
   padding: 6px;
   padding-left: 0;
   white-space: nowrap;
 }
-.bg01{
+.bg01 {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.fontselect{
+.fontselect {
   width: 100%;
   display: flex;
   position: relative;
 }
-.fontsi{
+.fontsi {
   all: unset;
   border-radius: 5px;
   width: 100%;
@@ -420,7 +425,7 @@
   background-color: var(--pg_bg);
   cursor: default;
 }
-.fontdrop{
+.fontdrop {
   display: none;
   color: white;
   position: absolute;
@@ -433,40 +438,40 @@
   height: 150px;
   overflow-y: scroll;
 }
-.fontsi:focus ~ .fontdrop{
+.fontsi:focus ~ .fontdrop {
   display: block;
 }
-.fontdrop > div{
+.fontdrop > div {
   padding: 5px;
 }
-.fontdrop > div:hover{
+.fontdrop > div:hover {
   background-color: var(--hoverblue);
 }
-.fontdefault{
+.fontdefault {
   color: gray;
 }
-.bgwrap{
+.bgwrap {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.sizesiwrap{
+.sizesiwrap {
   border-radius: 5px;
   width: 100px;
 }
-.boldtoggle{
+.boldtoggle {
   border: 1px solid var(--gray_border);
   cursor: pointer;
   border-radius: 4px;
 }
-.boldtoggle:hover{
+.boldtoggle:hover {
   border: 1px solid white;
 }
-.boldactive{
-  background:var(--pg_bg);
+.boldactive {
+  background: var(--pg_bg);
   color: white;
 }
-.holder{
+.holder {
   padding: 5px;
   display: flex;
   background-color: var(--pg_bg);
@@ -474,17 +479,17 @@
   gap: 5px;
   border-radius: 3px;
 }
-.holder0{
+.holder0 {
   border-radius: 3px;
   display: flex;
   align-items: center;
   padding: 3px 7px;
 }
-.holderactive{
+.holderactive {
   background-color: var(--hoverblue);
   color: white;
 }
-.br{
+.br {
   height: 1px;
   background-color: rgb(72, 72, 72);
 }

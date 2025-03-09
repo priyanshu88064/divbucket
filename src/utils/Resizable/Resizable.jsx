@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode } from '../../store/reducers/treeReducer';
@@ -9,10 +8,7 @@ import ContextMenu from '../../Components/ContextMenu/ContextMenu';
 import { changeTab } from '../../store/reducers/focusReducer';
 import { MdOutlineEdit } from 'react-icons/md';
 import { TbMinusVertical } from 'react-icons/tb';
-import { FaHome, FaImage, FaRegSquare, FaSquare, FaVideo } from 'react-icons/fa';
-import { LuHeading1 } from 'react-icons/lu';
-import { IoText } from 'react-icons/io5';
-import { BsTextParagraph } from 'react-icons/bs';
+import { GetIconOfType } from '../../Components/Cssbar/Cssbar';
 
 export default ({ id, children }) => {
 
@@ -25,18 +21,8 @@ export default ({ id, children }) => {
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
-    console.log("resizable", id)
-
     return (
-        <div
-            style={{
-                position: styleMap.position,
-                top: styleMap.top,
-                bottom: styleMap.bottom,
-                right: styleMap.right,
-                left: styleMap.left,
-            }}
-        >
+        <div className={`${styles.awrap} ${id === "root" && styles.root}`}>
             {
                 clicked &&
                 <ContextMenu
@@ -70,14 +56,6 @@ export default ({ id, children }) => {
                 }}
             >
                 {
-                    id === "root" &&
-                    <>
-                        <div onMouseDown={e => handleMouseDown(e, 3)} className={`${styles.resizablebar} ${styles.leftbar}`}><TbMinusVertical className={styles.lines} /></div>
-                        <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.rightbar}`}><TbMinusVertical className={styles.lines} /></div>
-
-                    </>
-                }
-                {
                     id === activeNodeId ?
                         <>
                             <InfoBar name={name} type={type} />
@@ -99,6 +77,7 @@ export default ({ id, children }) => {
                 }
                 {children}
             </div>
+            {id === "root" && <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.rightbar}`}><TbMinusVertical className={styles.lines} /></div>}
         </div >
     );
 }
@@ -108,23 +87,7 @@ const InfoBar = ({ name, type }) => {
     return (
         <div className={styles.infobar}>
             <div className={styles.ib0}>
-                {
-                    type === "root" ?
-                        <FaHome size={12} /> :
-                        type === "Block" ?
-                            <FaRegSquare size={12} /> :
-                            type === "Row" ?
-                                <FaRegSquare size={12} /> :
-                                type === "Heading" ?
-                                    <LuHeading1 size={12} /> :
-                                    type === "Text" ?
-                                        <IoText size={12} /> :
-                                        type === "Paragraph" ?
-                                            <BsTextParagraph size={12} /> :
-                                            type === "Image" ?
-                                                <FaImage size={12} /> :
-                                                type === "Video" && <FaVideo size={12} />
-                }
+                {GetIconOfType(type)}
                 {name}
             </div>
             <div

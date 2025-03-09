@@ -2,9 +2,9 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit, MdOutlineLink
 import styles from './cssbar.module.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
+import { updateDataMap, updateMaxRootWidth, updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown, IoMdLink } from 'react-icons/io';
-import { FaBold, FaCss3, FaItalic, FaLink, FaMinus, FaPlus, FaStrikethrough, FaUnderline } from 'react-icons/fa';
+import { FaBold, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaMinus, FaPlus, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
 import { changeTab } from '../../store/reducers/focusReducer';
 import { FaParagraph } from 'react-icons/fa6';
 import TextInput from '../../utils/inputs/TextInput/TextInput';
@@ -13,19 +13,47 @@ import Colorpicker from '../../utils/inputs/Colorpicker/Colorpicker';
 import Select from '../../utils/inputs/Select/Select';
 import { CgFormatBold } from 'react-icons/cg';
 import { ImBold } from 'react-icons/im';
-import { LuALargeSmall } from 'react-icons/lu';
+import { LuALargeSmall, LuHeading1 } from 'react-icons/lu';
 import { AiOutlineFontSize } from 'react-icons/ai';
+import { IoText } from 'react-icons/io5';
+import { BsTextParagraph } from 'react-icons/bs';
+
+export const GetIconOfType = (type) => {
+    return (
+        type === "root" ?
+            <FaHome size={12} /> :
+            type === "Block" ?
+                <FaRegSquare size={12} /> :
+                type === "Row" ?
+                    <FaRegSquare size={12} /> :
+                    type === "Heading" ?
+                        <LuHeading1 size={12} /> :
+                        type === "Text" ?
+                            <IoText size={12} /> :
+                            type === "Paragraph" ?
+                                <BsTextParagraph size={12} /> :
+                                type === "Image" ?
+                                    <FaImage size={12} /> :
+                                    type === "Video" && <FaVideo size={12} />
+    )
+
+}
 
 export default () => {
 
     const tab = useSelector(state => state.focusReducer.tab);
     const id = useSelector(state => state.treeReducer.activeNodeId);
+    const name = useSelector(state => state.treeReducer.dataMap[id].name);
+    const type = useSelector(state => state.treeReducer.dataMap[id].type);
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.cssbar}>
+        <div className={styles.cssbar} ref={e => dispatch(updateMaxRootWidth({ key: "right", value: e.getBoundingClientRect().left }))}>
             <div className={styles.c0}>
-                <div>Paragraph</div>
+                <div className={styles.c00}>
+                    {GetIconOfType(type)}
+                    {name}
+                </div>
                 <div
                     style={{ marginLeft: 'auto', }}
                     className={`${tab[0] === "0" ? styles.c0icon : ''}`}
@@ -72,8 +100,8 @@ const CssTab = () => {
                 <div className={`${styles.c11} ${styles.padwrap}`}>
                     <div className={styles.c110}>
                         <div className={styles.c1101}>Width</div>
-                        {id !== "root" && <><div className={styles.c1101}>Min W</div>
-                            <div className={styles.c1101}>Max W</div></>}
+                        <div className={styles.c1101}>Min W</div>
+                        <div className={styles.c1101}>Max W</div>
                     </div>
                     <div className={styles.c110}>
                         <TextInput
@@ -82,23 +110,23 @@ const CssTab = () => {
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, width: value } }))}
                         />
-                        {id !== "root" && <><TextInput
+                        <TextInput
                             auto={"0px"}
                             value={styleMap.minWidth}
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minWidth: value } }))}
                         />
-                            <TextInput
-                                auto={"none"}
-                                value={styleMap.maxWidth}
-                                units={["auto", "50px", "100px", "200px", "400px", "800px"]}
-                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
-                            /></>}
+                        <TextInput
+                            auto={"none"}
+                            value={styleMap.maxWidth}
+                            units={["auto", "50px", "100px", "200px", "400px", "800px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
+                        />
                     </div>
                     <div className={styles.c110} style={{ marginLeft: '10px' }}>
                         <div className={styles.c1101}>Height</div>
-                        {id !== "root" && <><div className={styles.c1101}>Min H</div>
-                            <div className={styles.c1101}>Max H</div></>}
+                        <div className={styles.c1101}>Min H</div>
+                        <div className={styles.c1101}>Max H</div>
                     </div>
                     <div className={styles.c110}>
                         <TextInput
@@ -107,18 +135,18 @@ const CssTab = () => {
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, height: value } }))}
                         />
-                        {id !== "root" && <><TextInput
+                        <TextInput
                             auto={"0px"}
                             value={styleMap.minHeight}
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
                             onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minHeight: value } }))}
                         />
-                            <TextInput
-                                auto={"none"}
-                                value={styleMap.maxHeight}
-                                units={["auto", "20px", "40px", "80px", "100px", "200px"]}
-                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
-                            /></>}
+                        <TextInput
+                            auto={"none"}
+                            value={styleMap.maxHeight}
+                            units={["auto", "20px", "40px", "80px", "100px", "200px"]}
+                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
+                        />
                     </div>
                 </div>
             </Wrap>
@@ -637,7 +665,7 @@ const Wrap = ({ children, title, heading }) => {
     return (
         <>
             {
-                (id !== "root" || ["Size", "Padding", "Background", "Styles", "Options"].includes(title)) &&
+                (id !== "root" || ["Display", "Padding", "Background", "Styles", "Options"].includes(title)) &&
                 <div className={styles.c10}>
                     <div className={styles.c100}>
                         <div className={styles.c1000}>{title}</div>
