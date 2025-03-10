@@ -42,7 +42,7 @@ const treeSlice = createSlice({
     },
     deleteNode: (state, { payload }) => {
       if (payload.id === "root") return;
-      state.activeNodeId = null;
+      state.activeNodeId = "root";
       const deleteWork = (id) => {
         state.tree[id].map((child) => deleteWork(child));
         delete state.dataMap[id];

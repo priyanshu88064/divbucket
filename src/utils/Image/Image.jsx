@@ -1,15 +1,18 @@
 import { FaImage } from "react-icons/fa";
 import Resizable from "../Resizable/Resizable";
 import styles from "./image.module.css";
+import { useSelector } from "react-redux";
 
 export default ({ node }) => {
+
+    const src = useSelector(state => state.treeReducer.dataMap[node].src);
+    const alt = useSelector(state => state.treeReducer.dataMap[node].alt);
+
     return (
         <Resizable
             id={node}
         >
-            <div className={styles.image}>
-                <FaImage size={40} color="gray"/>
-            </div>
+            <img src={src} alt={alt} className={styles.image} />
         </Resizable>
     );
 }

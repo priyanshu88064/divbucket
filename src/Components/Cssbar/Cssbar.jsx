@@ -1,19 +1,17 @@
-import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit, MdOutlineLink, MdTextDecrease, MdTextIncrease } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-icons/md';
 import styles from './cssbar.module.css';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDataMap, updateMaxRootWidth, updateStyleMap } from '../../store/reducers/treeReducer';
-import { IoIosArrowDown, IoMdLink } from 'react-icons/io';
-import { FaBold, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaMinus, FaPlus, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import { FaBold, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
 import { changeTab } from '../../store/reducers/focusReducer';
 import { FaParagraph } from 'react-icons/fa6';
 import TextInput from '../../utils/inputs/TextInput/TextInput';
 import CheckBox from '../../utils/inputs/CheckBox/CheckBox';
 import Colorpicker from '../../utils/inputs/Colorpicker/Colorpicker';
 import Select from '../../utils/inputs/Select/Select';
-import { CgFormatBold } from 'react-icons/cg';
-import { ImBold } from 'react-icons/im';
-import { LuALargeSmall, LuHeading1 } from 'react-icons/lu';
+import { LuHeading1 } from 'react-icons/lu';
 import { AiOutlineFontSize } from 'react-icons/ai';
 import { IoText } from 'react-icons/io5';
 import { BsTextParagraph } from 'react-icons/bs';
@@ -45,10 +43,18 @@ export default () => {
     const id = useSelector(state => state.treeReducer.activeNodeId);
     const name = useSelector(state => state.treeReducer.dataMap[id].name);
     const type = useSelector(state => state.treeReducer.dataMap[id].type);
+    const rightOffset = useSelector(state => state.treeReducer.maxRootWidth.right);
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.cssbar} ref={e => dispatch(updateMaxRootWidth({ key: "right", value: e.getBoundingClientRect().left }))}>
+        <div
+            className={styles.cssbar}
+            ref={e => {
+                const newRightOffset = e?.getBoundingClientRect()?.left;
+                if (newRightOffset && newRightOffset !== rightOffset)
+                    dispatch(updateMaxRootWidth({ key: "right", value: newRightOffset }))
+            }}
+        >
             <div className={styles.c0}>
                 <div className={styles.c00}>
                     {GetIconOfType(type)}
@@ -411,7 +417,9 @@ const EditTab = ({ focus }) => {
     const [data, setData] = useState({
         name: "",
         content: "",
-        hyperlink: ""
+        hyperlink: "",
+        src: "",
+        alt: ""
     });
 
     useEffect(() => {
@@ -419,6 +427,8 @@ const EditTab = ({ focus }) => {
             name: dataMap.name,
             content: dataMap.content,
             hyperlink: dataMap.hyperlink,
+            src: dataMap.src,
+            alt: dataMap.alt,
         });
     }, [dataMap]);
 
@@ -450,7 +460,7 @@ const EditTab = ({ focus }) => {
                 />
             </div>
             {
-                ["Paragraph", "Text"].includes(dataMap.type) &&
+                ["Paragraph", "Text","Heading"].includes(dataMap.type) &&
                 <div className={`${styles.e0} ${styles.e0flexcol}`}>
                     <div className={styles.e00}>Content <FaParagraph /></div>
                     <textarea
@@ -484,6 +494,7 @@ const EditTab = ({ focus }) => {
                         if (e.key === "Enter") handleText("hyperlink", data.hyperlink);
                     }}
                     onChange={e => setData(f => ({ ...f, hyperlink: e.target.value }))}
+                    onFocus={e => e.target.select()}
                 />
                 <CheckBox
                     name={"Open in a new tab"}
@@ -491,6 +502,38 @@ const EditTab = ({ focus }) => {
                     onChange={e => handleText("newTab", e.target.checked)}
                 />
             </div>
+            {dataMap.type === "Image" && <><div className={`${styles.e0} ${styles.e0flexcol}`}>
+                <div className={styles.e00}>
+                    Image Link
+                    <FaLink size={10} />
+                </div>
+                <input
+                    className={styles.e0i}
+                    value={data.src}
+                    onBlur={() => handleText("src", data.src)}
+                    onKeyUp={e => {
+                        if (e.key === "Enter") handleText("src", data.src);
+                    }}
+                    onChange={e => setData(f => ({ ...f, src: e.target.value }))}
+                    onFocus={e => e.target.select()}
+                />
+            </div>
+                <div className={`${styles.e0} ${styles.e0flexcol}`}>
+                    <div className={styles.e00}>
+                        Image Alt
+                        <FaLink size={10} />
+                    </div>
+                    <input
+                        className={styles.e0i}
+                        value={data.alt}
+                        onBlur={() => handleText("alt", data.alt)}
+                        onKeyUp={e => {
+                            if (e.key === "Enter") handleText("alt", data.alt);
+                        }}
+                        onChange={e => setData(f => ({ ...f, alt: e.target.value }))}
+                        onFocus={e => e.target.select()}
+                    />
+                </div></>}
         </div>
     );
 }
@@ -661,11 +704,12 @@ const Wrap = ({ children, title, heading }) => {
 
     const [isActive, setIsActive] = useState(true);
     const id = useSelector(state => state.treeReducer.activeNodeId);
+    const type = useSelector(state => state.treeReducer.dataMap[id].type);
 
     return (
         <>
             {
-                (id !== "root" || ["Display", "Padding", "Background", "Styles", "Options"].includes(title)) &&
+                isPropAllowed(type, title) &&
                 <div className={styles.c10}>
                     <div className={styles.c100}>
                         <div className={styles.c1000}>{title}</div>
@@ -700,4 +744,16 @@ const InputDropDown = ({ children, name, value }) => {
             </div>
         </div>
     );
+}
+
+const isPropAllowed = (type, prop) => {
+    if (type === "root") {
+        if (["Display", "Padding", "Background", "Styles", "Options"].includes(prop)) return true;
+        return false;
+    }
+    else if (type === "Image") {
+        if (["Padding", "Background", "Styles", "Options", "Size", "Margin", "Border"].includes(prop)) return true;
+        return false;
+    }
+    return true;
 }

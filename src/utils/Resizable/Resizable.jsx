@@ -21,6 +21,8 @@ export default ({ id, children }) => {
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
+    console.log("resizable",name,type)
+
     return (
         <div className={`${styles.awrap} ${id === "root" && styles.root}`}>
             {

@@ -16,6 +16,7 @@ import { GetIconOfType } from '../Cssbar/Cssbar';
 export default () => {
 
     const [tab, setTab] = useState(0);
+    const leftOffset = useSelector(state => state.treeReducer.maxRootWidth.left);
     const dispatch = useDispatch();
 
     const handleDragStart = (e, type) => {
@@ -30,7 +31,11 @@ export default () => {
     return (
         <div
             className={styles.sidebar}
-            ref={e => dispatch(updateMaxRootWidth({ key: "left", value: e?.getBoundingClientRect()?.right }))}
+            ref={e => {
+                const newLeftOffset = e?.getBoundingClientRect()?.right;
+                if (newLeftOffset && newLeftOffset !== leftOffset)
+                    dispatch(updateMaxRootWidth({ key: "left", value: newLeftOffset }))
+            }}
         >
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>

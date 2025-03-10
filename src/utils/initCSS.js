@@ -51,11 +51,7 @@ export default function initCSS(type) {
       style.fontWeight = "bold";
       break;
     case "Text":
-      style.width = "min-content";
-      break;
-    case "Image":
-      style.width = "200px";
-      style.height = "200px";
+      style.width = "fit-content";
       break;
     case "Video":
       style.width = "200px";
