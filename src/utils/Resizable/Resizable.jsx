@@ -75,7 +75,7 @@ export default ({ id, children }) => {
                                 </>
                             }
                         </> :
-                        id !== "root" && <div className={`${styles.resizable} ${styles.hov}`}></div>
+                        id !== "root" && <div className={`${styles.hov}`}></div>
                 }
                 {children}
             </div>

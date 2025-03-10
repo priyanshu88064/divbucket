@@ -1,5 +1,4 @@
 #BUGS/ISSUES
-- major bug in contextmenu - z-index stacking context issue
 - Cssbar>borders of resizable interfaring with activebar/infobar
 - getting click outside (hence losing focus) of the resizable box while dragging resizable border
 - another resizable gets hover while resizing
@@ -8,10 +7,11 @@
 - Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
 #FIXED
-- width/height going negative
+- major bug in contextmenu - z-index stacking context issue [Reason: there was a zindex in a div which caused this]
+- width/height going negative [FIXED: Math.min(0,...)] 
 - child nodes(resizable) are not dragging
-- currently I am not rendering more childs of Non-Layout components but their whole structure should be fixed to not support a drop.[FIXED]
-- MAXIMUM DEPTH LIMIT REACHED message in console from resizable dispatch in handlemousemove.[FIXED]
-- dropping elements not working in more than 2nd or 3rd level [FIXED]
-- hovering in a Active child element makes the parent element highlight [FIXED]
-- CSSBAR>display>flex> the dropdown is being hidden when overflow from left side [SOLVED by making that div horizontal ;)]
+- currently I am not rendering more childs of Non-Layout components but their whole structure should be fixed to not support a drop.
+- MAXIMUM DEPTH LIMIT REACHED message in console from resizable dispatch in handlemousemove.[FIXED: by not dispatching on every mousemove]
+- dropping elements not working in more than 2nd or 3rd level.
+- hovering in a Active child element makes the parent element highlight.[FIXED: by adding another div inside resizable]
+- CSSBAR>display>flex> the dropdown is being hidden when overflow from left side [FIXED: by making that div horizontal ;)]
