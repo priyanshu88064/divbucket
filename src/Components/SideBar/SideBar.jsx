@@ -141,6 +141,7 @@ const RLItem = ({ node }) => {
                     e.preventDefault();
                     setClicked(true);
                     setPoints({ x: e.pageX, y: e.pageY });
+                    dispatch(updateActiveNode({ id:node }))
                 }}
 
             >

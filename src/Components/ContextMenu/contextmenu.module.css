@@ -38,6 +38,15 @@
 .cmitem:hover .cmitem1 {
   color: white;
 }
+.cmitemoff{
+  color: gray;
+}
+.cmitemoff:hover{
+  background-color: transparent;
+}
+.cmitemoff:hover .cmitem1{
+  color: gray;
+}
 .contextmenu .br {
   height: 1px;
   margin: 5px 0;

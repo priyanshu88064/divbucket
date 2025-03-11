@@ -29,11 +29,15 @@ const treeSlice = createSlice({
         type: "root",
       },
     },
-    maxRootWidth:{
-      left:0,
-      right:0,
-      diff:0
-    }
+    maxRootWidth: {
+      left: 0,
+      right: 0,
+      diff: 0,
+    },
+    clipboard: {
+      cut: null,
+      copy: null,
+    },
   },
   reducers: {
     addNode: (state, { payload }) => {
@@ -68,12 +72,47 @@ const treeSlice = createSlice({
     updateDataMap: (state, { payload }) => {
       state.dataMap[payload.id] = payload.data;
     },
-    updateRootWidth:(state,{payload})=>{
+    updateRootWidth: (state, { payload }) => {
       state.styleMap.root.width = payload.width;
     },
-    updateMaxRootWidth:(state,{payload})=>{
+    updateMaxRootWidth: (state, { payload }) => {
       state.maxRootWidth[payload.key] = payload.value;
-      state.maxRootWidth.diff = Math.floor(state.maxRootWidth.right - state.maxRootWidth.left - 10); // -10 for the resizablebar
+      state.maxRootWidth.diff = Math.floor(
+        state.maxRootWidth.right - state.maxRootWidth.left - 10
+      ); // -10 for the resizablebar
+    },
+    updateClipboard: (state, { payload }) => {
+      if (state.clipboard.cut) {
+        treeSlice.caseReducers.deleteNode(state, {
+          payload: { id: state.clipboard.cut },
+        });
+        state.clipboard.cut = null;
+      }
+      if (payload.cut === "root" || payload.copy === "root") return;
+      state.clipboard = payload;
+    },
+    paste: (state) => {
+      const parent = state.activeNodeId;
+
+      if (state.clipboard.cut) {
+        treeSlice.caseReducers.addNode(state, {
+          payload: { parent, child: state.clipboard.cut },
+        });
+        state.activeNodeId = state.clipboard.cut;
+        state.clipboard.copy = state.clipboard.cut;
+        state.clipboard.cut = null;
+      } else if (state.clipboard.copy) {
+        const createCopy = (id) => {
+          const uid = Math.floor(Math.random() * 1000000);
+          state.styleMap[uid] = state.styleMap[id];
+          state.dataMap[uid] = state.dataMap[id];
+          state.tree[uid] = state.tree[id].map((_id) => createCopy(_id));
+          return uid;
+        };
+        const newChild = createCopy(state.clipboard.copy);
+        state.tree[parent].push(newChild);
+        state.activeNodeId = newChild;
+      }
     },
   },
 });
@@ -87,6 +126,8 @@ export const {
   deleteNode,
   deleteFromParent,
   updateRootWidth,
-  updateMaxRootWidth
+  updateMaxRootWidth,
+  updateClipboard,
+  paste,
 } = treeSlice.actions;
 export default treeSlice.reducer;
