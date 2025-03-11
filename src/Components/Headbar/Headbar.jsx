@@ -14,7 +14,7 @@ export default () => {
 
     return (
         <div className={styles.head}>
-            <div className={styles.removethis}>x</div>
+            <div className={styles.removethis}>WORK UNDER CONSTRUCTION</div>
             <div className={styles.dimensions}>
                 <div onClick={() => dispatch(updateRootWidth({ width: "425px" }))} title='mobile' className={`${styles.d0} ${width <= 425 && styles.active}`}><FaMobileAlt size={13} /></div>
                 <div onClick={() => dispatch(updateRootWidth({ width: "768px" }))} title='tablet' className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}><FaTabletAlt size={13} /></div>

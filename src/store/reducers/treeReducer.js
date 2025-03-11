@@ -1,5 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const createCopy = (id, state) => {
+  const uid = Math.floor(Math.random() * 1000000);
+  state.styleMap[uid] = state.styleMap[id];
+  state.dataMap[uid] = state.dataMap[id];
+  state.tree[uid] = state.tree[id].map((_id) => createCopy(_id,state));
+  return uid;
+};
+
+const getParent = (tree, start, id) => {
+  if (tree[start].includes(id)) return start;
+  for (const node of tree[start]) {
+    const result = getParent(tree, node, id);
+    if (result) return result;
+  }
+  return null;
+};
+
 const treeSlice = createSlice({
   name: "tree",
   initialState: {
@@ -93,7 +110,6 @@ const treeSlice = createSlice({
     },
     paste: (state) => {
       const parent = state.activeNodeId;
-
       if (state.clipboard.cut) {
         treeSlice.caseReducers.addNode(state, {
           payload: { parent, child: state.clipboard.cut },
@@ -102,18 +118,21 @@ const treeSlice = createSlice({
         state.clipboard.copy = state.clipboard.cut;
         state.clipboard.cut = null;
       } else if (state.clipboard.copy) {
-        const createCopy = (id) => {
-          const uid = Math.floor(Math.random() * 1000000);
-          state.styleMap[uid] = state.styleMap[id];
-          state.dataMap[uid] = state.dataMap[id];
-          state.tree[uid] = state.tree[id].map((_id) => createCopy(_id));
-          return uid;
-        };
-        const newChild = createCopy(state.clipboard.copy);
+        const newChild = createCopy(state.clipboard.copy, state);
         state.tree[parent].push(newChild);
         state.activeNodeId = newChild;
       }
     },
+    duplicate: (state) => {
+      if (state.activeNodeId === "root") return;
+      const parent = getParent(state.tree, "root", state.activeNodeId);
+      const duplicate = createCopy(state.activeNodeId, state);
+      state.tree[parent].push(duplicate);
+      state.activeNodeId = duplicate;
+    },
+    revealParent:(state)=>{
+      state.activeNodeId = getParent(state.tree,"root",state.activeNodeId);
+    }
   },
 });
 
@@ -129,5 +148,7 @@ export const {
   updateMaxRootWidth,
   updateClipboard,
   paste,
+  duplicate,
+  revealParent
 } = treeSlice.actions;
 export default treeSlice.reducer;

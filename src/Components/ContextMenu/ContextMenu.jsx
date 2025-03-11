@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './contextmenu.module.css';
 import { useDispatch } from 'react-redux';
-import { deleteFromParent, deleteNode, paste, updateClipboard } from '../../store/reducers/treeReducer';
+import { deleteFromParent, deleteNode, duplicate, paste, revealParent, updateClipboard } from '../../store/reducers/treeReducer';
 import { changeTab } from '../../store/reducers/focusReducer';
 
 export default ({ id, points, sidebar, setClicked }) => {
@@ -39,7 +39,10 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Duplicate",
                 command: "Ctrl + D",
-                isOff: id === "root"
+                isOff: id === "root",
+                func: () => {
+                    dispatch(duplicate());
+                }
             },
             {
                 name: "Rename",
@@ -88,7 +91,10 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Duplicate",
                 command: "Ctrl + D",
-                isOff: id === "root"
+                isOff: id === "root",
+                func: () => {
+                    dispatch(duplicate());
+                }
             },
             {
                 name: "Rename",
@@ -110,12 +116,11 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Select Parent",
                 command: "",
-                isOff: id === "root"
+                isOff: id === "root",
+                func: () => {
+                    dispatch(revealParent());
+                }
             },
-            {
-                name: "Reveal in Explorer",
-                command: ""
-            }
         ]
     ]
 

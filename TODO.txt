@@ -1,7 +1,11 @@
 #TODO
+- DRAGGABLE SIDE BAR ITEMS
+- INTRODUCE TABS
+- INTRODUCE PRE-BUILT SECTIONS
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
 - colorpicker should also support colors string ('red','blue' etc)
+- fix sidebar rlitem click and do double click to open list 
 
 #DONE
 - play with background behind Editor [decided black color for now]

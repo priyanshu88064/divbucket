@@ -460,7 +460,7 @@ const EditTab = ({ focus }) => {
                 />
             </div>
             {
-                ["Paragraph", "Text","Heading"].includes(dataMap.type) &&
+                ["Paragraph", "Text", "Heading"].includes(dataMap.type) &&
                 <div className={`${styles.e0} ${styles.e0flexcol}`}>
                     <div className={styles.e00}>Content <FaParagraph /></div>
                     <textarea
@@ -711,7 +711,7 @@ const Wrap = ({ children, title, heading }) => {
             {
                 isPropAllowed(type, title) &&
                 <div className={styles.c10}>
-                    <div className={styles.c100}>
+                    <div className={styles.c100} onDoubleClick={() => setIsActive(f => !f)}>
                         <div className={styles.c1000}>{title}</div>
                         <div className={styles.c1000} onClick={() => setIsActive(f => !f)}>
                             {
