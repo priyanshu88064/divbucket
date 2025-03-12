@@ -32,6 +32,7 @@ export function useDrag({ id }) {
     const type = e.dataTransfer.getData("type");
 
     if (
+      id === "root" ||
       id === Number(droppedId) ||
       ["Heading", "Text", "Paragraph", "Image", "Video"].includes(_type) ||
       isRelation({ parent: droppedId, child: id })
