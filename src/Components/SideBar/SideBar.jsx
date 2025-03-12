@@ -15,7 +15,7 @@ import { GetIconOfType } from '../Cssbar/Cssbar';
 
 export default () => {
 
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState(1);
     const leftOffset = useSelector(state => state.treeReducer.maxRootWidth.left);
     const dispatch = useDispatch();
 
