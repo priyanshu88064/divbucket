@@ -1,14 +1,14 @@
 import { CiSearch } from 'react-icons/ci';
 import styles from './sidebar.module.css';
-import { IoAddOutline, IoLayers, IoText } from 'react-icons/io5';
-import { useEffect, useRef, useState } from 'react';
+import { IoAddOutline, IoLayers } from 'react-icons/io5';
+import { useRef, useState } from 'react';
 import { GiSquare } from 'react-icons/gi';
 import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
 import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { addNode, deleteFromParent, moveItem, splice, updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
+import { moveItem, updateActiveNode } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
@@ -17,8 +17,6 @@ import { GrDrag } from 'react-icons/gr';
 export default () => {
 
     const [tab, setTab] = useState(1);
-    const leftOffset = useSelector(state => state.treeReducer.maxRootWidth.left);
-    const dispatch = useDispatch();
 
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("id", Date.now());
@@ -30,14 +28,7 @@ export default () => {
     }
 
     return (
-        <div
-            className={styles.sidebar}
-            ref={e => {
-                const newLeftOffset = e?.getBoundingClientRect()?.right;
-                if (newLeftOffset && newLeftOffset !== leftOffset)
-                    dispatch(updateMaxRootWidth({ key: "left", value: newLeftOffset }))
-            }}
-        >
+        <div className={styles.sidebar}>
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>

@@ -2,7 +2,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-
 import styles from './cssbar.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateDataMap, updateMaxRootWidth, updateStyleMap } from '../../store/reducers/treeReducer';
+import { updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FaBold, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
 import { changeTab } from '../../store/reducers/focusReducer';
@@ -43,17 +43,11 @@ export default () => {
     const id = useSelector(state => state.treeReducer.activeNodeId);
     const name = useSelector(state => state.treeReducer.dataMap[id].name);
     const type = useSelector(state => state.treeReducer.dataMap[id].type);
-    const rightOffset = useSelector(state => state.treeReducer.maxRootWidth.right);
     const dispatch = useDispatch();
 
     return (
         <div
             className={styles.cssbar}
-            ref={e => {
-                const newRightOffset = e?.getBoundingClientRect()?.left;
-                if (newRightOffset && newRightOffset !== rightOffset)
-                    dispatch(updateMaxRootWidth({ key: "right", value: newRightOffset }))
-            }}
         >
             <div className={styles.c0}>
                 <div className={styles.c00}>

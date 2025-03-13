@@ -5,7 +5,7 @@ import { updateRootWidth } from '../../store/reducers/treeReducer';
 
 export default () => {
     const dispatch = useDispatch();
-    const maxWidth = useSelector(state => state.treeReducer.maxRootWidth.diff);
+    const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width-10));
     const width = useSelector(state => {
         if (state.treeReducer.styleMap.root.width === '100%')
             return maxWidth;

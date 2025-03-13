@@ -1,12 +1,14 @@
 #TODO
-- DRAGGABLE SIDE BAR ITEMS
+- can we use only 1 instance of useDrag ?
+- Add dataTransfer.setImage in sidebar>explorer>rlitems
 - INTRODUCE TABS
 - INTRODUCE PRE-BUILT SECTIONS
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
 - colorpicker should also support colors string ('red','blue' etc)
-- fix sidebar rlitem click and do double click to open list 
 
 #DONE
+- DRAGGABLE SIDE BAR ITEMS
 - play with background behind Editor [decided black color for now]
 - put the infobar back inside resizable 
+- fix sidebar rlitem click and do double click to open list 

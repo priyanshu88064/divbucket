@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './contextmenu.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteFromParent, deleteNode, duplicate, paste, revealParent, updateClipboard } from '../../store/reducers/treeReducer';
 import { changeTab } from '../../store/reducers/focusReducer';
 
 export default ({ id, points, sidebar, setClicked }) => {
 
     const dispatch = useDispatch();
+    const bgHeight = useSelector(state => state.treeReducer.bgContentRect.height);
+    const bgTop = useSelector(state => state.treeReducer.bgContentRect.top);
 
     const list = sidebar ? [
         [
@@ -123,7 +125,6 @@ export default ({ id, points, sidebar, setClicked }) => {
             },
         ]
     ]
-
     return (
         <div
             className={styles.cover}
@@ -139,7 +140,11 @@ export default ({ id, points, sidebar, setClicked }) => {
         >
             <div
                 className={styles.contextmenu}
-                style={{ left: points.x, top: points.y }}
+                style={{
+                    left: points.x,
+                    top: points.y,
+                    transform: points.y - bgTop > bgHeight * 2 / 3 && 'translateY(-100%)'
+                }}
                 onMouseDown={e => {
                     e.stopPropagation();
                 }}

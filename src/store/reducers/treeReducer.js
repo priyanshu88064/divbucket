@@ -21,7 +21,7 @@ const isRelation = ({ tree, parent, child }) => {
   if (!tree[parent]) return false;
   if (tree[parent].includes(child)) return true;
   for (const _child of tree[parent]) {
-    if (isRelation({ tree,parent: _child, child })) return true;
+    if (isRelation({ tree, parent: _child, child })) return true;
   }
   return false;
 };
@@ -55,10 +55,13 @@ const treeSlice = createSlice({
         type: "root",
       },
     },
-    maxRootWidth: {
+    bgContentRect: {
+      width: 0,
+      height: 0,
+      top: 0,
+      bottom: 0,
       left: 0,
       right: 0,
-      diff: 0,
     },
     clipboard: {
       cut: null,
@@ -102,11 +105,8 @@ const treeSlice = createSlice({
     updateRootWidth: (state, { payload }) => {
       state.styleMap.root.width = payload.width;
     },
-    updateMaxRootWidth: (state, { payload }) => {
-      state.maxRootWidth[payload.key] = payload.value;
-      state.maxRootWidth.diff = Math.floor(
-        state.maxRootWidth.right - state.maxRootWidth.left - 10
-      ); // -10 for the resizablebar
+    updateBgContentRect: (state, { payload }) => {
+      state.bgContentRect = payload.bgContentRect;
     },
     updateClipboard: (state, { payload }) => {
       if (state.clipboard.cut) {
@@ -159,7 +159,15 @@ const treeSlice = createSlice({
       const { node, referenceNode, pos } = payload;
       if (payload.pos === -1 && state.dataMap[payload.referenceNode].unit)
         return;
-      if (referenceNode !== "root" && node!=="root" && isRelation({ tree: state.tree, parent: Number(node), child: Number(referenceNode) }))
+      if (
+        referenceNode !== "root" &&
+        node !== "root" &&
+        isRelation({
+          tree: state.tree,
+          parent: Number(node),
+          child: Number(referenceNode),
+        })
+      )
         return;
       treeSlice.caseReducers.deleteFromParent(state, { payload: { id: node } });
       if (pos === -1)
@@ -183,7 +191,7 @@ export const {
   deleteNode,
   deleteFromParent,
   updateRootWidth,
-  updateMaxRootWidth,
+  updateBgContentRect,
   updateClipboard,
   paste,
   duplicate,
