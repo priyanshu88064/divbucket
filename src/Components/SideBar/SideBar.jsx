@@ -1,17 +1,18 @@
 import { CiSearch } from 'react-icons/ci';
 import styles from './sidebar.module.css';
 import { IoAddOutline, IoLayers, IoText } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GiSquare } from 'react-icons/gi';
 import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
 import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
+import { addNode, deleteFromParent, splice, updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
+import { GrDrag } from 'react-icons/gr';
 
 export default () => {
 
@@ -81,15 +82,7 @@ export default () => {
                                 </div>
                             </> :
                             tab == 1 ?
-                                <>
-                                    <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
-                                    <div className={styles.rlist}>
-                                        <RLItem
-                                            key={"root"}
-                                            node={"root"}
-                                        />
-                                    </div>
-                                </> :
+                                <Explorer /> :
                                 <>
                                     <div className={styles.head}>Search</div>
                                     <div></div>
@@ -101,7 +94,83 @@ export default () => {
     );
 }
 
-const RecursiveList = ({ start }) => {
+const Explorer = () => {
+
+    const draggedNode = useRef(null);
+    const dispatch = useDispatch();
+
+    const handleDragStart = (e) => {
+        e.target.classList.add(styles.removingitem);
+        draggedNode.current = e.target;
+        var img = document.createElement("img");
+        img.src = "";
+        e.dataTransfer.setDragImage(img, 0, 0);
+    }
+    const handleDragEnd = (e) => {
+        e.target.classList.remove(styles.removingitem);
+    }
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetNode = e.target.getAttribute('data-id');
+        if (!targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
+        const rect = e.target.getBoundingClientRect();
+        const diff = e.clientY - rect.top;
+        if (targetNode !== "root" && diff <= rect.height / 3) {
+            e.target.classList.remove(styles.dragbottom, styles.dragmiddle);
+            e.target.classList.add(styles.dragtop);
+        } else if (diff <= (rect.height * 2) / 3) {
+            e.target.classList.remove(styles.dragbottom, styles.dragtop);
+            e.target.classList.add(styles.dragmiddle);
+        } else {
+            e.target.classList.remove(styles.dragtop, styles.dragmiddle);
+            e.target.classList.add(styles.dragbottom);
+        }
+    }
+    const handleDrop = (e) => {
+        const targetNode = e.target.getAttribute('data-id');
+        const _draggedNode = draggedNode.current.getAttribute('data-id');
+        if (!targetNode || targetNode === _draggedNode) return;
+        const rect = e.target.getBoundingClientRect();
+        const diff = e.clientY - rect.top;
+        if (targetNode !== "root" && diff <= rect.height / 3) {
+            dispatch(deleteFromParent({ id: _draggedNode }));
+            dispatch(splice({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
+        } else if (diff <= (rect.height * 2) / 3) {
+            dispatch(deleteFromParent({ id: _draggedNode }));
+            dispatch(addNode({parent:targetNode,child:Number(_draggedNode)}))
+        } else {
+            dispatch(deleteFromParent({ id: _draggedNode }));
+            dispatch(splice({ node: _draggedNode, referenceNode: targetNode, pos: 1 }))
+        }
+        e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
+    }
+    const handleDragLeave = (e) => {
+        e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
+    }
+
+    return (
+        <>
+            <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
+            <div
+                className={styles.rlist}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+            >
+                <RLItem
+                    key={"root"}
+                    node={"root"}
+                    pleft={5}
+                />
+            </div>
+        </>
+    );
+}
+
+const RecursiveList = ({ start, pleft }) => {
 
     const tree = useSelector(state => state.treeReducer.tree);
 
@@ -112,6 +181,7 @@ const RecursiveList = ({ start }) => {
                     <RLItem
                         key={node}
                         node={node}
+                        pleft={pleft}
                     />
                 ))
             }
@@ -119,7 +189,7 @@ const RecursiveList = ({ start }) => {
     );
 }
 
-const RLItem = ({ node }) => {
+const RLItem = ({ node, pleft }) => {
 
     const type = useSelector(state => state.treeReducer.dataMap[node].type);
     const [active, setActive] = useState(true);
@@ -129,25 +199,28 @@ const RLItem = ({ node }) => {
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.rlistitem}>
+        <div className={styles.rlistitem} >
             <div
+                draggable={node !== "root"}
+                data-id={node}
+                style={{ paddingLeft: pleft + "px" }}
                 className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''}`}
                 onClick={() => {
-                    setActive(f => !f)
                     if (activeNodeId !== node)
                         dispatch(updateActiveNode({ id: node }))
                 }}
+                onDoubleClick={() => setActive(f => !f)}
                 onContextMenu={e => {
                     e.preventDefault();
                     setClicked(true);
                     setPoints({ x: e.pageX, y: e.pageY });
-                    dispatch(updateActiveNode({ id:node }))
+                    dispatch(updateActiveNode({ id: node }))
                 }}
 
             >
                 <div
                     className={styles.rli0}
-                    onClick={e => { e.preventDefault(); e.stopPropagation(); setActive(f => !f) }}
+                    onClick={e => { setActive(f => !f) }}
                 >
                     {
                         ["root", "Row", "Block"].includes(type) ?
@@ -158,9 +231,12 @@ const RLItem = ({ node }) => {
 
                     }
                 </div>
-                <div className={styles.rli0}>
+                <div onClick={e => { setActive(f => !f) }} className={styles.rli0}>
                     {GetIconOfType(type)}
                     {name}
+                </div>
+                <div className={`${node === "root" ? styles.blockdrag : styles.grdrag}`}>
+                    <GrDrag />
                 </div>
                 {
                     clicked &&
@@ -174,9 +250,7 @@ const RLItem = ({ node }) => {
             </div>
             {
                 active &&
-                <div className={styles.rlicollapse}>
-                    <RecursiveList start={node} />
-                </div>
+                <RecursiveList start={node} pleft={pleft + 10} />
             }
         </div>
     );

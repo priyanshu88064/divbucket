@@ -4,7 +4,7 @@ const createCopy = (id, state) => {
   const uid = Math.floor(Math.random() * 1000000);
   state.styleMap[uid] = state.styleMap[id];
   state.dataMap[uid] = state.dataMap[id];
-  state.tree[uid] = state.tree[id].map((_id) => createCopy(_id,state));
+  state.tree[uid] = state.tree[id].map((_id) => createCopy(_id, state));
   return uid;
 };
 
@@ -76,7 +76,7 @@ const treeSlice = createSlice({
     },
     deleteFromParent: (state, { payload }) => {
       state.tree = Object.keys(state.tree).reduce((acc, key) => {
-        acc[key] = state.tree[key].filter((_id) => _id !== payload.id);
+        acc[key] = state.tree[key].filter((_id) => _id !== Number(payload.id));
         return acc;
       }, {});
     },
@@ -125,14 +125,26 @@ const treeSlice = createSlice({
     },
     duplicate: (state) => {
       if (state.activeNodeId === "root") return;
-      const parent = getParent(state.tree, "root", state.activeNodeId);
       const duplicate = createCopy(state.activeNodeId, state);
-      state.tree[parent].push(duplicate);
-      state.activeNodeId = duplicate;
+      treeSlice.caseReducers.splice(state,{payload:{referenceNode:state.activeNodeId,pos:1,node:duplicate}})
     },
-    revealParent:(state)=>{
-      state.activeNodeId = getParent(state.tree,"root",state.activeNodeId);
-    }
+    revealParent: (state) => {
+      state.activeNodeId = getParent(state.tree, "root", state.activeNodeId);
+    },
+    splice: (state, { payload }) => {
+      if (payload.referenceNode === "root") {
+        state.tree["root"].splice(0, 0, Number(payload.node));
+      } else {
+        const parent = getParent(
+          state.tree,
+          "root",
+          Number(payload.referenceNode)
+        );
+        const index = state.tree[parent].indexOf(Number(payload.referenceNode));
+        state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
+      }
+      state.activeNodeId = Number(payload.node);
+    },
   },
 });
 
@@ -149,6 +161,7 @@ export const {
   updateClipboard,
   paste,
   duplicate,
-  revealParent
+  revealParent,
+  splice,
 } = treeSlice.actions;
 export default treeSlice.reducer;

@@ -60,26 +60,51 @@
   font-size: 12px;
 }
 .rliwrap {
-  padding: 2px 0;
+  position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 }
 .rli0 {
+  padding: 3px 0;
   display: flex;
   align-items: center;
   gap: 5px;
   color: var(--text_0);
 }
-.rlicollapse {
-  padding-left: 8px;
+.grdrag{
+  display: none;
+  margin-left: auto;
+  margin-right: 10px;
+  cursor: move;
+}
+.blockdrag{
+  display: none;
 }
 .rliwrap:hover {
-  border: 1px solid var(--text_2);
+  border: 2px solid var(--text_2);
+  .grdrag{
+    display: flex;
+  }
 }
 .activeItemClass {
-  background: var(--bg_gray);
-  .rli0{
+  background-color: var(--bg_gray);
+  .rli0 {
     color: white;
   }
+}
+.dragtop{
+  border: 2px solid gray;
+  border-top: 2px solid yellow;
+}
+.dragmiddle{
+  border: 2px solid yellow;
+}
+.dragbottom{
+  border: 2px solid gray;
+  border-bottom: 2px solid yellow;
+}
+.removingitem{
+  opacity: .3;
+  border-color: transparent !important;
 }
