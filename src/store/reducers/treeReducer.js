@@ -17,6 +17,15 @@ const getParent = (tree, start, id) => {
   return null;
 };
 
+const isRelation = ({ tree, parent, child }) => {
+  if (!tree[parent]) return false;
+  if (tree[parent].includes(child)) return true;
+  for (const _child of tree[parent]) {
+    if (isRelation({ tree,parent: _child, child })) return true;
+  }
+  return false;
+};
+
 const treeSlice = createSlice({
   name: "tree",
   initialState: {
@@ -58,7 +67,8 @@ const treeSlice = createSlice({
   },
   reducers: {
     addNode: (state, { payload }) => {
-      state.tree[payload.parent].push(payload.child);
+      if (state.dataMap[payload.parent].unit) return;
+      state.tree[payload.parent].push(Number(payload.child));
       state.tree[payload.child] = state.tree[payload.child] || [];
     },
     deleteNode: (state, { payload }) => {
@@ -126,7 +136,9 @@ const treeSlice = createSlice({
     duplicate: (state) => {
       if (state.activeNodeId === "root") return;
       const duplicate = createCopy(state.activeNodeId, state);
-      treeSlice.caseReducers.splice(state,{payload:{referenceNode:state.activeNodeId,pos:1,node:duplicate}})
+      treeSlice.caseReducers.splice(state, {
+        payload: { referenceNode: state.activeNodeId, pos: 1, node: duplicate },
+      });
     },
     revealParent: (state) => {
       state.activeNodeId = getParent(state.tree, "root", state.activeNodeId);
@@ -135,15 +147,29 @@ const treeSlice = createSlice({
       if (payload.referenceNode === "root") {
         state.tree["root"].splice(0, 0, Number(payload.node));
       } else {
-        const parent = getParent(
-          state.tree,
-          "root",
-          Number(payload.referenceNode)
-        );
+        const parent =
+          payload.parent ||
+          getParent(state.tree, "root", Number(payload.referenceNode));
         const index = state.tree[parent].indexOf(Number(payload.referenceNode));
         state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
       }
       state.activeNodeId = Number(payload.node);
+    },
+    moveItem: (state, { payload }) => {
+      const { node, referenceNode, pos } = payload;
+      if (payload.pos === -1 && state.dataMap[payload.referenceNode].unit)
+        return;
+      if (referenceNode !== "root" && node!=="root" && isRelation({ tree: state.tree, parent: Number(node), child: Number(referenceNode) }))
+        return;
+      treeSlice.caseReducers.deleteFromParent(state, { payload: { id: node } });
+      if (pos === -1)
+        treeSlice.caseReducers.addNode(state, {
+          payload: { parent: referenceNode, child: node },
+        });
+      else
+        treeSlice.caseReducers.splice(state, {
+          payload: { ...payload },
+        });
     },
   },
 });
@@ -163,5 +189,6 @@ export const {
   duplicate,
   revealParent,
   splice,
+  moveItem,
 } = treeSlice.actions;
 export default treeSlice.reducer;

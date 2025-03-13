@@ -460,7 +460,7 @@ const EditTab = ({ focus }) => {
                 />
             </div>
             {
-                ["Paragraph", "Text", "Heading"].includes(dataMap.type) &&
+                dataMap.content &&
                 <div className={`${styles.e0} ${styles.e0flexcol}`}>
                     <div className={styles.e00}>Content <FaParagraph /></div>
                     <textarea

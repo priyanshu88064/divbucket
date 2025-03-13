@@ -6,7 +6,10 @@ export default function initData(type) {
     newTab: false,
     src: "",
     alt: "",
+    content:null
   };
+
+  data.unit = ["Image","Video","Text","Heading","Paragraph"].includes(data.type);
 
   switch (type) {
     case "Text":

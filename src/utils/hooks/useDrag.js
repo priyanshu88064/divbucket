@@ -13,6 +13,7 @@ export function useDrag({ id }) {
   const dispatch = useDispatch();
   const tree = useSelector((state) => state.treeReducer.tree);
   const _type = useSelector((state) => state.treeReducer.dataMap[id].type);
+  const unit = useSelector((state) => state.treeReducer.dataMap[id].unit);
 
   const isRelation = ({ parent, child }) => {
     if (!tree[parent]) return false;
@@ -35,7 +36,7 @@ export function useDrag({ id }) {
       !droppedId ||
       type === "root" ||
       id === Number(droppedId) ||
-      ["Heading", "Text", "Paragraph", "Image", "Video"].includes(_type) ||
+      unit ||
       isRelation({ parent: droppedId, child: id })
     ) {
       return;

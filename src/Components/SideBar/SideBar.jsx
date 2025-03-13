@@ -8,7 +8,7 @@ import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { addNode, deleteFromParent, splice, updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
+import { addNode, deleteFromParent, moveItem, splice, updateActiveNode, updateMaxRootWidth } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
@@ -128,22 +128,19 @@ const Explorer = () => {
         }
     }
     const handleDrop = (e) => {
+        e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
         const targetNode = e.target.getAttribute('data-id');
         const _draggedNode = draggedNode.current.getAttribute('data-id');
         if (!targetNode || targetNode === _draggedNode) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
         if (targetNode !== "root" && diff <= rect.height / 3) {
-            dispatch(deleteFromParent({ id: _draggedNode }));
-            dispatch(splice({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
+            dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
         } else if (diff <= (rect.height * 2) / 3) {
-            dispatch(deleteFromParent({ id: _draggedNode }));
-            dispatch(addNode({parent:targetNode,child:Number(_draggedNode)}))
+            dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: -1 }))
         } else {
-            dispatch(deleteFromParent({ id: _draggedNode }));
-            dispatch(splice({ node: _draggedNode, referenceNode: targetNode, pos: 1 }))
+            dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 1 }))
         }
-        e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
     }
     const handleDragLeave = (e) => {
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
@@ -192,6 +189,7 @@ const RecursiveList = ({ start, pleft }) => {
 const RLItem = ({ node, pleft }) => {
 
     const type = useSelector(state => state.treeReducer.dataMap[node].type);
+    const unit = useSelector(state => state.treeReducer.dataMap[node].unit);
     const [active, setActive] = useState(true);
     const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
     const name = useSelector(state => state.treeReducer.dataMap[node].name);
@@ -201,10 +199,10 @@ const RLItem = ({ node, pleft }) => {
     return (
         <div className={styles.rlistitem} >
             <div
-                draggable={node !== "root"}
                 data-id={node}
+                draggable={node !== "root"}
                 style={{ paddingLeft: pleft + "px" }}
-                className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''}`}
+                className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''} ${unit && styles.redrag}`}
                 onClick={() => {
                     if (activeNodeId !== node)
                         dispatch(updateActiveNode({ id: node }))
@@ -223,7 +221,7 @@ const RLItem = ({ node, pleft }) => {
                     onClick={e => { setActive(f => !f) }}
                 >
                     {
-                        ["root", "Row", "Block"].includes(type) ?
+                        !unit ?
                             active ?
                                 <MdKeyboardArrowDown size={17} color='var(--text_0)' /> :
                                 <MdKeyboardArrowRight size={17} color='var(--text_0)' /> :

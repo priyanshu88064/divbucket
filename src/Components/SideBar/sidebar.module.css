@@ -94,15 +94,18 @@
   }
 }
 .dragtop{
-  border: 2px solid gray;
-  border-top: 2px solid yellow;
+  border-color: gray;
+  border-top-color: yellow;
 }
 .dragmiddle{
-  border: 2px solid yellow;
+  border-color: yellow;
+}
+.dragmiddle.redrag{
+  border-color: red !important;
 }
 .dragbottom{
-  border: 2px solid gray;
-  border-bottom: 2px solid yellow;
+  border-color:  gray;
+  border-bottom-color:  yellow;
 }
 .removingitem{
   opacity: .3;
