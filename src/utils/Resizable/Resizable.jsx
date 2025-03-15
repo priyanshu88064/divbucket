@@ -9,7 +9,6 @@ import { changeTab } from '../../store/reducers/focusReducer';
 import { MdOutlineEdit } from 'react-icons/md';
 import { TbMinusVertical } from 'react-icons/tb';
 import { GetIconOfType } from '../../Components/Cssbar/Cssbar';
-import { IoIosOptions, IoMdMore, IoMdOptions, IoMdSettings } from 'react-icons/io';
 
 export default ({ id, children }) => {
 
@@ -36,7 +35,7 @@ export default ({ id, children }) => {
             }
             <div
                 ref={divRef}
-                className={styles.a}
+                className={`${styles.a}`}
                 style={{ ...styleMap, ...dim }}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}

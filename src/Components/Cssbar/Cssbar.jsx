@@ -201,7 +201,7 @@ const CssTab = () => {
                             {
                                 styleMap.background !== 'transparent' &&
                                 <Colorpicker
-                                    key={"background"+id}
+                                    key={"background" + id}
                                     value={styleMap.background}
                                     onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
                                 />
@@ -332,6 +332,7 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Text-Color</div>
                         <div className={styles.bg01}>
                             <Colorpicker
+                                key={"text" + id}
                                 value={styleMap.color}
                                 onChange={value => UpdateStyle("color", value)}
                             />
@@ -367,6 +368,7 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Border-Color</div>
                         <div className={styles.bg01}>
                             <Colorpicker
+                                key={"border" + id}
                                 value={styleMap.borderColor}
                                 onChange={value => UpdateStyle("borderColor", value)}
                             />

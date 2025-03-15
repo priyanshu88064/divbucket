@@ -100,7 +100,7 @@ const Explorer = () => {
         dragImage.classList.add(styles.dragimage);
         dragWrapper.appendChild(dragImage)
         sidebar.appendChild(dragWrapper);
-        e.dataTransfer.setDragImage(dragImage, -30, -10);
+        e.dataTransfer.setDragImage(dragImage, -10, -10);
 
         draggedNode.current = e.target;
         dragWrapperRef.current = dragWrapper;

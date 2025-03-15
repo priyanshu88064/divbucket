@@ -1,13 +1,14 @@
 #BUGS/ISSUES
+- encounter a bug where headbar > width is showing negative(can't reproduce yet)
 - FIX INFOBAR POSITION
-- when display flex and column-reverse of BODY, there is image cut from bottom
 - Cssbar>borders of resizable interfaring with activebar/infobar
-- getting click outside (hence losing focus) of the resizable box while dragging resizable border
-- another resizable gets hover while resizing
 - optimize the Layout Utility>Components (currently they all have different components though they are same)
 - Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
 #FIXED
+- when display flex and column-reverse of BODY, there is image cut from bottom [Seems like an expected behaviour.]
+- getting click outside (hence losing focus) of the resizable box while dragging resizable border. [FIXED:by adding a fixed layer of w,h:100%]
+- another resizable gets hover while resizing. [FIXED:by adding a fixed layer of w,h:100%]
 - FIX CONTEXTMENU POSITION WHEN OPEN IN BOTTOM [FIXED: transform height -100% when 2/3 of bg]
 - do explorer view overflow scroll
 - in cssbar>size> input boxes, values like "auto" should not be editable means "auto" can't be backspaced to "aut". Backspacing it causing problem currently.[FIXED:user will be responsible;)]

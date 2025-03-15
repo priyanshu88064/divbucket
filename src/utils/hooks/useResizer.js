@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStyleMap } from "../../store/reducers/treeReducer";
+import styles from '../Resizable/resizable.module.css';
 
 export function useResizer({ id }) {
   const styleMap = useSelector((state) => state.treeReducer.styleMap[id]);
@@ -70,6 +71,7 @@ export function useResizer({ id }) {
     setDim(newDim);
   };
   const handleMouseUp = () => {
+    divRef.current.classList.remove(styles.layer)
     divRef.current.style.userSelect = "";
     isResizingRef.current = false;
     dispatch(
@@ -89,6 +91,7 @@ export function useResizer({ id }) {
   const handleMouseDown = (e, direction) => {
     e.preventDefault();
     e.stopPropagation();
+    divRef.current.classList.add(styles.layer)
     isResizingRef.current = true;
     dirRef.current = direction;
     initVirtualPosition();
