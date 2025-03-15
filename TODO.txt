@@ -1,13 +1,14 @@
 #TODO
+- add a fullscreen option in headbar
 - can we use only 1 instance of useDrag ?
 - Add dataTransfer.setImage in sidebar>explorer>rlitems
 - INTRODUCE TABS
 - INTRODUCE PRE-BUILT SECTIONS
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
-- colorpicker should also support colors string ('red','blue' etc)
 
 #DONE
+- colorpicker should also support colors string ('red','blue' etc)[PARTIALLYFIXED: added checks and color string checks, but not added color suggest dropdown]
 - DRAGGABLE SIDE BAR ITEMS
 - play with background behind Editor [decided black color for now]
 - put the infobar back inside resizable 

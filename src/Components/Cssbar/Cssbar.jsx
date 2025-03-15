@@ -16,23 +16,23 @@ import { AiOutlineFontSize } from 'react-icons/ai';
 import { IoText } from 'react-icons/io5';
 import { BsTextParagraph } from 'react-icons/bs';
 
-export const GetIconOfType = (type) => {
+export const GetIconOfType = (type, size) => {
     return (
         type === "root" ?
-            <FaHome size={12} /> :
+            <FaHome size={size || 12} /> :
             type === "Block" ?
-                <FaRegSquare size={12} /> :
+                <FaRegSquare size={size || 12} /> :
                 type === "Row" ?
-                    <FaRegSquare size={12} /> :
+                    <FaRegSquare size={size || 12} /> :
                     type === "Heading" ?
-                        <LuHeading1 size={12} /> :
+                        <LuHeading1 size={size || 12} /> :
                         type === "Text" ?
-                            <IoText size={12} /> :
+                            <IoText size={size || 12} /> :
                             type === "Paragraph" ?
-                                <BsTextParagraph size={12} /> :
+                                <BsTextParagraph size={size || 12} /> :
                                 type === "Image" ?
-                                    <FaImage size={12} /> :
-                                    type === "Video" && <FaVideo size={12} />
+                                    <FaImage size={size || 12} /> :
+                                    type === "Video" && <FaVideo size={size || 12} />
     )
 
 }
@@ -201,6 +201,7 @@ const CssTab = () => {
                             {
                                 styleMap.background !== 'transparent' &&
                                 <Colorpicker
+                                    key={"background"+id}
                                     value={styleMap.background}
                                     onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
                                 />

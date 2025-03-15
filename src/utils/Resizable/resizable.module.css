@@ -131,22 +131,22 @@
   transform: translateY(-100%);
   color: white;
   display: flex;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   z-index: 2;
   font-weight: normal;
 }
 .ib0{
-  font-size: 13px;
+  font-size: 12px;
   display: flex;
   gap: 5px;
 }
 .infobar > div {
   display: flex;
-  align-items: center;
+  align-items:center;
   justify-content: center;
   border-right: 1px solid rgba(255, 255, 255, 0.285);
-  padding: 5px 10px;
+  padding: 5px 7px;
 }
 .infomore{
   background-color: red;
