@@ -2,10 +2,11 @@ import { FaLaptop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa';
 import styles from './headbar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRootWidth } from '../../store/reducers/treeReducer';
+import { MdFullscreen } from 'react-icons/md';
 
 export default () => {
     const dispatch = useDispatch();
-    const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width-10));
+    const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width - 10));
     const width = useSelector(state => {
         if (state.treeReducer.styleMap.root.width === '100%')
             return maxWidth;
@@ -29,6 +30,14 @@ export default () => {
                     }
                 </div>
                 {width}px
+            </div>
+            <div className={styles.fscreen} onClick={() => {
+                if (!document.fullscreenElement)
+                    document.documentElement.requestFullscreen();
+                else if (document.exitFullscreen)
+                    document.exitFullscreen();
+            }}>
+                <MdFullscreen size={25}/>
             </div>
         </div >
     );

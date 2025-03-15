@@ -28,7 +28,7 @@ export default () => {
     }
 
     return (
-        <div className={styles.sidebar}>
+        <div className={styles.sidebar} id='sidebar'>
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>
@@ -88,14 +88,23 @@ export default () => {
 const Explorer = () => {
 
     const draggedNode = useRef(null);
+    const dragWrapperRef = useRef(null);
     const dispatch = useDispatch();
 
     const handleDragStart = (e) => {
-        e.target.classList.add(styles.removingitem);
+        const sidebar = document.getElementById('sidebar');
+        var dragWrapper = document.createElement('div');
+        var dragImage = document.createElement('div');
+        dragImage.innerText = e.target.innerText;
+        dragWrapper.classList.add(styles.dragwrapper);
+        dragImage.classList.add(styles.dragimage);
+        dragWrapper.appendChild(dragImage)
+        sidebar.appendChild(dragWrapper);
+        e.dataTransfer.setDragImage(dragImage, -30, -10);
+
         draggedNode.current = e.target;
-        var img = document.createElement("img");
-        img.src = "";
-        e.dataTransfer.setDragImage(img, 0, 0);
+        dragWrapperRef.current = dragWrapper;
+        e.target.classList.add(styles.removingitem);
     }
     const handleDragEnd = (e) => {
         e.target.classList.remove(styles.removingitem);
@@ -120,6 +129,8 @@ const Explorer = () => {
     }
     const handleDrop = (e) => {
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
+        if (dragWrapperRef && dragWrapperRef.current)
+            dragWrapperRef.current.remove();
         const targetNode = e.target.getAttribute('data-id');
         const _draggedNode = draggedNode.current.getAttribute('data-id');
         if (!targetNode || targetNode === _draggedNode) return;

@@ -121,3 +121,16 @@
   opacity: .3;
   border-color: transparent !important;
 }
+.dragwrapper{
+  position:absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-100%);
+}
+.dragimage{
+  background-color: yellow;
+  color: black;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
