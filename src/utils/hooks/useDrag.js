@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { createTemplate } from "../template";
 import { moveItem } from "../../store/reducers/treeReducer";
+import styles from '../Resizable/resizable.module.css';
 
 const getPosi = (x, y, rect, display, direction) => {
   const xoff = x - rect.x;
@@ -24,17 +25,30 @@ const getPosi = (x, y, rect, display, direction) => {
   }
 };
 
-export function useDrag({styles}) {
+export function useDrag() {
   const dispatch = useDispatch();
   const draggedNodeRef = useRef(null);
+  const draggedWrapperRef = useRef(null);
 
   const handleDragStart = (e) => {
     e.stopPropagation();
     if (!e.target.getAttribute("data-id")) return;
     draggedNodeRef.current = e.target;
+    let draggedWrapper = document.createElement("div");
+    let draggedImage = document.createElement("div");
+    draggedWrapper.classList.add(styles.dragwrapper);
+    draggedImage.classList.add(styles.dragimage);
+    draggedImage.innerText = e.target.parentNode.children[0].innerText;
+    draggedWrapper.appendChild(draggedImage);
+    document.body.appendChild(draggedWrapper);
+    e.dataTransfer.setDragImage(draggedImage, -20, -20);
+    draggedWrapperRef.current = draggedWrapper;
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = () => {
     draggedNodeRef.current = null;
+    if (draggedWrapperRef && draggedWrapperRef.current)
+      draggedWrapperRef.current.remove();
+    draggedWrapperRef.current = null;
   };
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -165,6 +179,9 @@ export function useDrag({styles}) {
       styles.dright
     );
     draggedNodeRef.current = null;
+    if (draggedWrapperRef && draggedWrapperRef.current)
+      draggedWrapperRef.current.remove();
+    draggedWrapperRef.current = null;
   };
   const handleDragLeave = (e) => {
     e.target.classList.remove(
@@ -182,6 +199,6 @@ export function useDrag({styles}) {
     handleDragEnd,
     handleDragOver,
     handleDrop,
-    handleDragLeave
-  }
+    handleDragLeave,
+  };
 }

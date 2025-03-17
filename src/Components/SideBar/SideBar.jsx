@@ -108,8 +108,8 @@ const Explorer = () => {
         e.target.classList.remove(styles.removingitem);
         if (dragWrapperRef && dragWrapperRef.current)
             dragWrapperRef.current.remove();
-        draggedNode.current = null;
         dragWrapperRef.current = null;
+        draggedNode.current = null;
     }
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -130,7 +130,7 @@ const Explorer = () => {
         }
     }
     const handleDrop = (e) => {
-        if(!draggedNode.current)return;
+        if (!draggedNode.current) return;
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
         const targetNode = e.target.getAttribute('data-id');
         const _draggedNode = draggedNode.current.getAttribute('data-id');
@@ -144,6 +144,9 @@ const Explorer = () => {
         } else {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 1 }))
         }
+        if (dragWrapperRef && dragWrapperRef.current)
+            dragWrapperRef.current.remove();
+        dragWrapperRef.current = null;
     }
     const handleDragLeave = (e) => {
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);

@@ -18,6 +18,7 @@ export default ({ id, children }) => {
     const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const name = useSelector(state => state.treeReducer.dataMap[id].name);
     const type = useSelector(state => state.treeReducer.dataMap[id].type);
+    const unit = useSelector(state => state.treeReducer.dataMap[id].unit);
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
@@ -73,7 +74,7 @@ export default ({ id, children }) => {
                         id !== "root" &&
                         <div
                             data-target={id}
-                            className={`${styles.hov}`}
+                            className={`${styles.hov} ${unit && styles.unit}`}
                         ></div>
                 }
                 {children}
