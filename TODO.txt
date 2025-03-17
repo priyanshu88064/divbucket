@@ -1,4 +1,5 @@
 #TODO
+- don't use sidebar ref for adding drag image, directly append in document
 - can we use only 1 instance of useDrag ?
 - INTRODUCE TABS
 - INTRODUCE PRE-BUILT SECTIONS

@@ -19,7 +19,6 @@ export default () => {
     const [tab, setTab] = useState(1);
 
     const handleDragStart = (e, type) => {
-        e.dataTransfer.setData("id", Date.now());
         e.dataTransfer.setData("type", type);
     }
     const handleTabClick = (ind) => {
@@ -28,7 +27,7 @@ export default () => {
     }
 
     return (
-        <div className={styles.sidebar} id='sidebar'>
+        <div className={styles.sidebar}>
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>
@@ -92,14 +91,13 @@ const Explorer = () => {
     const dispatch = useDispatch();
 
     const handleDragStart = (e) => {
-        const sidebar = document.getElementById('sidebar');
         var dragWrapper = document.createElement('div');
         var dragImage = document.createElement('div');
         dragImage.innerText = e.target.innerText;
         dragWrapper.classList.add(styles.dragwrapper);
         dragImage.classList.add(styles.dragimage);
         dragWrapper.appendChild(dragImage)
-        sidebar.appendChild(dragWrapper);
+        document.body.appendChild(dragWrapper);
         e.dataTransfer.setDragImage(dragImage, -10, -10);
 
         draggedNode.current = e.target;
@@ -108,12 +106,16 @@ const Explorer = () => {
     }
     const handleDragEnd = (e) => {
         e.target.classList.remove(styles.removingitem);
+        if (dragWrapperRef && dragWrapperRef.current)
+            dragWrapperRef.current.remove();
+        draggedNode.current = null;
+        dragWrapperRef.current = null;
     }
     const handleDragOver = (e) => {
         e.preventDefault();
         e.stopPropagation();
         const targetNode = e.target.getAttribute('data-id');
-        if (!targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
+        if (!draggedNode.current || !targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
         if (targetNode !== "root" && diff <= rect.height / 3) {
@@ -128,9 +130,8 @@ const Explorer = () => {
         }
     }
     const handleDrop = (e) => {
+        if(!draggedNode.current)return;
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
-        if (dragWrapperRef && dragWrapperRef.current)
-            dragWrapperRef.current.remove();
         const targetNode = e.target.getAttribute('data-id');
         const _draggedNode = draggedNode.current.getAttribute('data-id');
         if (!targetNode || targetNode === _draggedNode) return;

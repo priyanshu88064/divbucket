@@ -1,5 +1,7 @@
 #BUGS/ISSUES
-- encounter a bug where headbar > width is showing negative(can't reproduce yet)
+- contextmenu going up direction ( related to sometimes mobile -10px showing in headbar, can be a persist redux extension bug)
+- bug in layer while resizing div(still bottom resizable hover while resizing)
+- encounter a bug where headbar > width is showing negative(mobile -10px)(can't reproduce yet)
 - FIX INFOBAR POSITION
 - Cssbar>borders of resizable interfaring with activebar/infobar
 - optimize the Layout Utility>Components (currently they all have different components though they are same)

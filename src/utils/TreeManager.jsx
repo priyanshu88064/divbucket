@@ -7,7 +7,6 @@ import Text from "./Text/Text";
 import Paragraph from "./Paragraph/Paragraph";
 import Image from "./Image/Image";
 import Video from "./Video/Video";
-import Editor from "./Editor/Editor";
 
 export default () => {
 

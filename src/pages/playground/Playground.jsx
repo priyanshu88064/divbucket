@@ -5,10 +5,12 @@ import TreeManager from '../../utils/TreeManager';
 import { useDispatch } from 'react-redux';
 import { updateBgContentRect } from '../../store/reducers/treeReducer';
 import { useEffect, useRef } from 'react';
+import { useDrag } from '../../utils/hooks/useDrag';
 
 export default () => {
     const dispatch = useDispatch();
     const bgRef = useRef(null);
+    const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ styles });
 
     useEffect(() => {
         const observer = new ResizeObserver(entries => {
@@ -22,7 +24,15 @@ export default () => {
     return (
         <div className={styles.playground}>
             <SideBar />
-            <div className={styles.bg} ref={bgRef}>
+            <div
+                ref={bgRef}
+                className={styles.bg}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onDragLeave={handleDragLeave}
+                onDragEnd={handleDragEnd}
+            >
                 <TreeManager />
             </div>
             <Cssbar />

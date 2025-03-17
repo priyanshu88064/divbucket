@@ -1,81 +1,187 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addNode,
-  deleteFromParent,
-  updateActiveNode,
-  updateDataMap,
-  updateStyleMap,
-} from "../../store/reducers/treeReducer";
-import initCSS from "../initCSS";
-import initData from "../initData";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { createTemplate } from "../template";
+import { moveItem } from "../../store/reducers/treeReducer";
 
-export function useDrag({ id }) {
+const getPosi = (x, y, rect, display, direction) => {
+  const xoff = x - rect.x;
+  const yoff = y - rect.y;
+  let xpos = 0,
+    ypos = 0;
+  if (xoff > (rect.width * 20) / 100) xpos = 1;
+  if (xoff > (rect.width * 80) / 100) xpos = 2;
+  if (yoff > (rect.height * 20) / 100) ypos = 1;
+  if (yoff > (rect.height * 80) / 100) ypos = 2;
+
+  if (display === "block" || ["column", "column-reverse"].includes(direction)) {
+    if (ypos === 0) return "top";
+    if (ypos === 1) return "inside";
+    return "bottom";
+  } else {
+    if (xpos === 0) return "left";
+    if (xpos === 1) return "inside";
+    return "right";
+  }
+};
+
+export function useDrag({styles}) {
   const dispatch = useDispatch();
-  const tree = useSelector((state) => state.treeReducer.tree);
-  const _type = useSelector((state) => state.treeReducer.dataMap[id].type);
-  const unit = useSelector((state) => state.treeReducer.dataMap[id].unit);
+  const draggedNodeRef = useRef(null);
 
-  const isRelation = ({ parent, child }) => {
-    if (!tree[parent]) return false;
-    if (tree[parent].includes(child)) return true;
-    for (const _child of tree[parent]) {
-      if (isRelation({ parent: _child, child })) return true;
-    }
-    return false;
-  };
-
-  const handleDrop = (e) => {
-    // when any element drops here
-    e.preventDefault();
+  const handleDragStart = (e) => {
     e.stopPropagation();
-
-    let droppedId = Number(e.dataTransfer.getData("id"));
-    const type = e.dataTransfer.getData("type");
-
-    if (
-      !droppedId ||
-      type === "root" ||
-      id === Number(droppedId) ||
-      unit ||
-      isRelation({ parent: droppedId, child: id })
-    ) {
-      return;
-    }
-
-    if (type.length) {
-      dispatch(updateStyleMap({ id: droppedId, style: initCSS(type) }));
-      dispatch(updateDataMap({ id: droppedId, data: initData(type) }));
-    } else {
-      dispatch(deleteFromParent({ id: droppedId }));
-    }
-    dispatch(addNode({ parent: id, child: droppedId }));
-    dispatch(updateActiveNode({ id: droppedId }));
+    if (!e.target.getAttribute("data-id")) return;
+    draggedNodeRef.current = e.target;
+  };
+  const handleDragEnd = (e) => {
+    draggedNodeRef.current = null;
   };
   const handleDragOver = (e) => {
-    // when any elements drag on this resizable
     e.preventDefault();
     e.stopPropagation();
+    const targetId =
+      e.target.getAttribute("data-target") ||
+      e.target.getAttribute("data-root");
+    const draggedId = draggedNodeRef.current?.getAttribute("data-id");
+
+    if (!targetId || draggedId == targetId) return;
+
+    if (targetId === "root") {
+    } else {
+      const aParent = e.target.parentNode?.parentNode?.parentNode;
+      if (!aParent) return;
+      const display = aParent.style.display;
+      const direction = aParent.style.flexDirection;
+
+      e.target.classList.add(styles.dborder);
+      const rect = e.target.getBoundingClientRect();
+      switch (getPosi(e.clientX, e.clientY, rect, display, direction)) {
+        case "inside":
+          e.target.classList.remove(
+            styles.dtop,
+            styles.dbottom,
+            styles.dleft,
+            styles.dright
+          );
+          e.target.classList.add(styles.dinside);
+          break;
+        case "top":
+          e.target.classList.remove(
+            styles.dinside,
+            styles.dbottom,
+            styles.dleft,
+            styles.dright
+          );
+          e.target.classList.add(styles.dtop);
+          break;
+        case "right":
+          e.target.classList.remove(
+            styles.dinside,
+            styles.dtop,
+            styles.dbottom,
+            styles.dleft
+          );
+          e.target.classList.add(styles.dright);
+          break;
+        case "bottom":
+          e.target.classList.remove(
+            styles.dinside,
+            styles.dtop,
+            styles.dleft,
+            styles.dright
+          );
+          e.target.classList.add(styles.dbottom);
+          break;
+        case "left":
+          e.target.classList.remove(
+            styles.dinside,
+            styles.dtop,
+            styles.dbottom,
+            styles.dright
+          );
+          e.target.classList.add(styles.dleft);
+          break;
+        default:
+          break;
+      }
+    }
   };
-  const handleDragStart = (e) => {
-    // when this resizable starts dragging
+  const handleDrop = (e) => {
     e.stopPropagation();
-    var img = document.createElement("img");
-    img.src = "";
-    e.dataTransfer.setDragImage(img, 0, 0);
-    e.dataTransfer.setData("id", id);
-  };
-  const handleDragEnter = (e) => {
-    e.stopPropagation();
+    const targetId =
+      e.target.getAttribute("data-target") ||
+      e.target.getAttribute("data-root");
+    const draggedId =
+      draggedNodeRef.current?.getAttribute("data-id") ||
+      createTemplate(e.dataTransfer.getData("type"), dispatch);
+
+    if (!targetId || draggedId == targetId) return;
+
+    if (targetId === "root") {
+      dispatch(moveItem({ node: draggedId, referenceNode: targetId, pos: -1 }));
+    } else {
+      const aParent = e.target.parentNode?.parentNode?.parentNode;
+      if (!aParent) return;
+      const display = aParent.style.display;
+      const direction = aParent.style.flexDirection;
+
+      const rect = e.target.getBoundingClientRect();
+      switch (getPosi(e.clientX, e.clientY, rect, display, direction)) {
+        case "inside":
+          dispatch(
+            moveItem({ node: draggedId, referenceNode: targetId, pos: -1 })
+          );
+          break;
+        case "top":
+          dispatch(
+            moveItem({ node: draggedId, referenceNode: targetId, pos: 0 })
+          );
+          break;
+        case "right":
+          dispatch(
+            moveItem({ node: draggedId, referenceNode: targetId, pos: 1 })
+          );
+          break;
+        case "bottom":
+          dispatch(
+            moveItem({ node: draggedId, referenceNode: targetId, pos: 1 })
+          );
+          break;
+        case "left":
+          dispatch(
+            moveItem({ node: draggedId, referenceNode: targetId, pos: 0 })
+          );
+          break;
+        default:
+          break;
+      }
+    }
+    e.target.classList.remove(
+      styles.dborder,
+      styles.dinside,
+      styles.dtop,
+      styles.dbottom,
+      styles.dleft,
+      styles.dright
+    );
+    draggedNodeRef.current = null;
   };
   const handleDragLeave = (e) => {
-    e.stopPropagation();
+    e.target.classList.remove(
+      styles.dborder,
+      styles.dinside,
+      styles.dtop,
+      styles.dbottom,
+      styles.dleft,
+      styles.dright
+    );
   };
 
   return {
-    handleDrop,
-    handleDragOver,
     handleDragStart,
-    handleDragEnter,
-    handleDragLeave,
-  };
+    handleDragEnd,
+    handleDragOver,
+    handleDrop,
+    handleDragLeave
+  }
 }

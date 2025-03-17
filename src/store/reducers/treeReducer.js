@@ -74,6 +74,11 @@ const treeSlice = createSlice({
       state.tree[payload.parent].push(Number(payload.child));
       state.tree[payload.child] = state.tree[payload.child] || [];
     },
+    addTemplate: (state, { payload }) => {
+      state.tree = { ...state.tree, ...payload.tree };
+      state.dataMap = { ...state.dataMap, ...payload.dataMap };
+      state.styleMap = { ...state.styleMap, ...payload.styleMap };
+    },
     deleteNode: (state, { payload }) => {
       if (payload.id === "root") return;
       state.activeNodeId = "root";
@@ -139,6 +144,7 @@ const treeSlice = createSlice({
       treeSlice.caseReducers.splice(state, {
         payload: { referenceNode: state.activeNodeId, pos: 1, node: duplicate },
       });
+      state.activeNodeId = duplicate;
     },
     revealParent: (state) => {
       state.activeNodeId = getParent(state.tree, "root", state.activeNodeId);
@@ -153,7 +159,6 @@ const treeSlice = createSlice({
         const index = state.tree[parent].indexOf(Number(payload.referenceNode));
         state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
       }
-      state.activeNodeId = Number(payload.node);
     },
     moveItem: (state, { payload }) => {
       const { node, referenceNode, pos } = payload;
@@ -178,6 +183,7 @@ const treeSlice = createSlice({
         treeSlice.caseReducers.splice(state, {
           payload: { ...payload },
         });
+      state.activeNodeId = Number(node);
     },
   },
 });
@@ -198,5 +204,6 @@ export const {
   revealParent,
   splice,
   moveItem,
+  addTemplate,
 } = treeSlice.actions;
 export default treeSlice.reducer;

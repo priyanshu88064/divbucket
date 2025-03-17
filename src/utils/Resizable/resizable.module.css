@@ -190,3 +190,12 @@
   color: darkgray;
   transform: scale(2,10);
 }
+.draghelper::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: var(--hoverblue);
+}

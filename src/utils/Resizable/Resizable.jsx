@@ -9,6 +9,7 @@ import { changeTab } from '../../store/reducers/focusReducer';
 import { MdOutlineEdit } from 'react-icons/md';
 import { TbMinusVertical } from 'react-icons/tb';
 import { GetIconOfType } from '../../Components/Cssbar/Cssbar';
+import { RiDragMove2Fill } from 'react-icons/ri';
 
 export default ({ id, children }) => {
 
@@ -17,7 +18,6 @@ export default ({ id, children }) => {
     const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const name = useSelector(state => state.treeReducer.dataMap[id].name);
     const type = useSelector(state => state.treeReducer.dataMap[id].type);
-    const { handleDrop, handleDragOver, handleDragStart, handleDragEnter, handleDragLeave } = useDrag({ id });
     const { dim, divRef, handleMouseDown } = useResizer({ id });
     const { clicked, setClicked, points, setPoints } = useContextMenu();
 
@@ -35,14 +35,9 @@ export default ({ id, children }) => {
             }
             <div
                 ref={divRef}
+                data-root={id}
                 className={`${styles.a}`}
                 style={{ ...styleMap, ...dim }}
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onDragStart={handleDragStart}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                draggable
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -60,7 +55,7 @@ export default ({ id, children }) => {
                 {
                     id === activeNodeId ?
                         <>
-                            <InfoBar name={name} type={type} />
+                            <InfoBar name={name} type={type} id={id} />
                             {
                                 id !== "root" &&
                                 <>
@@ -75,7 +70,11 @@ export default ({ id, children }) => {
                                 </>
                             }
                         </> :
-                        id !== "root" && <div className={`${styles.hov}`}></div>
+                        id !== "root" &&
+                        <div
+                            data-target={id}
+                            className={`${styles.hov}`}
+                        ></div>
                 }
                 {children}
             </div>
@@ -84,20 +83,27 @@ export default ({ id, children }) => {
     );
 }
 
-const InfoBar = ({ name, type }) => {
+const InfoBar = ({ name, type, id }) => {
     const dispatch = useDispatch();
     return (
         <div className={`${styles.infobar}`}>
             <div className={styles.ib0}>
-                {GetIconOfType(type,12)}
+                {GetIconOfType(type, 12)}
                 {name}
             </div>
             <div
-                style={{ borderRight: 'none', cursor: 'pointer' }}
+                style={{ cursor: 'pointer' }}
                 title='edit'
                 onClick={() => dispatch(changeTab({ tab: "11" }))}
             >
                 <MdOutlineEdit size={12} />
+            </div>
+            <div
+                draggable
+                data-id={id}
+                style={{ borderRight: 'none', cursor: 'grab' }}
+            >
+                <RiDragMove2Fill size={14}/>
             </div>
         </div>
     );
