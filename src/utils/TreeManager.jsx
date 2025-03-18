@@ -9,7 +9,7 @@ import Image from "./Image/Image";
 import Video from "./Video/Video";
 
 export default () => {
-
+  const activeTab = useSelector(state => state.treeReducer.activeTab);
   const tree = useSelector(state => state.treeReducer.tree);
   const dataMap = useSelector(state => Object.fromEntries(
     Object.entries(state.treeReducer.dataMap).map(([key, value]) => ([key, value.type]))
@@ -102,8 +102,8 @@ export default () => {
   }
 
   return (
-    <Resizable id={"root"}>
-      {tree["root"].map(tree => renderTree(tree))}
+    <Resizable id={tree.tabs[activeTab]}>
+      {tree[tree.tabs[activeTab]].map(tree => renderTree(tree))}
     </Resizable>
   );
 }

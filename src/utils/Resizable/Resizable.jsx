@@ -25,7 +25,7 @@ export default ({ id, children }) => {
     // console.log("resizable",name,type)
 
     return (
-        <div className={`${styles.awrap} ${id === "root" && styles.root}`}>
+        <div className={`${styles.awrap} ${type === "root" && styles.root}`}>
             {
                 clicked &&
                 <ContextMenu
@@ -58,7 +58,7 @@ export default ({ id, children }) => {
                         <>
                             <InfoBar name={name} type={type} id={id} />
                             {
-                                id !== "root" &&
+                                type !== "root" &&
                                 <>
                                     <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 0)} className={`${styles.resizable} ${styles.top}`}></div>
                                     <div draggable={false} onMouseDown={(e) => handleMouseDown(e, 1)} className={`${styles.resizable} ${styles.right}`}></div>
@@ -71,7 +71,7 @@ export default ({ id, children }) => {
                                 </>
                             }
                         </> :
-                        id !== "root" &&
+                        type !== "root" &&
                         <div
                             data-target={id}
                             className={`${styles.hov} ${unit && styles.unit}`}
@@ -79,7 +79,7 @@ export default ({ id, children }) => {
                 }
                 {children}
             </div>
-            {id === "root" && <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.rightbar}`}><TbMinusVertical className={styles.lines} /></div>}
+            {type === "root" && <div onMouseDown={e => handleMouseDown(e, 1)} className={`${styles.resizablebar} ${styles.rightbar}`}><TbMinusVertical className={styles.lines} /></div>}
         </div >
     );
 }

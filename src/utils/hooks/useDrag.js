@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { createTemplate } from "../template";
 import { moveItem } from "../../store/reducers/treeReducer";
-import styles from '../Resizable/resizable.module.css';
+import styles from "../Resizable/resizable.module.css";
 
 const getPosi = (x, y, rect, display, direction) => {
   const xoff = x - rect.x;
@@ -25,7 +25,7 @@ const getPosi = (x, y, rect, display, direction) => {
   }
 };
 
-export function useDrag() {
+export function useDrag({ root }) {
   const dispatch = useDispatch();
   const draggedNodeRef = useRef(null);
   const draggedWrapperRef = useRef(null);
@@ -60,7 +60,7 @@ export function useDrag() {
 
     if (!targetId || draggedId == targetId) return;
 
-    if (targetId === "root") {
+    if (targetId === root) {
     } else {
       const aParent = e.target.parentNode?.parentNode?.parentNode;
       if (!aParent) return;
@@ -131,7 +131,7 @@ export function useDrag() {
 
     if (!targetId || !draggedId || draggedId == targetId) return;
 
-    if (targetId === "root") {
+    if (targetId === root) {
       dispatch(moveItem({ node: draggedId, referenceNode: targetId, pos: -1 }));
     } else {
       const aParent = e.target.parentNode?.parentNode?.parentNode;

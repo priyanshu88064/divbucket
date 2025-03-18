@@ -2,17 +2,18 @@ import styles from './playground.module.css';
 import SideBar from '../../Components/SideBar/SideBar';
 import Cssbar from '../../Components/Cssbar/Cssbar';
 import TreeManager from '../../utils/TreeManager';
-import { useDispatch } from 'react-redux';
-import { updateBgContentRect } from '../../store/reducers/treeReducer';
-import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateActiveTab, updateBgContentRect } from '../../store/reducers/treeReducer';
+import { useEffect, useRef } from 'react';
 import { useDrag } from '../../utils/hooks/useDrag';
 import { IoIosClose } from 'react-icons/io';
 
 export default () => {
     const dispatch = useDispatch();
     const bgRef = useRef(null);
-    const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ styles });
-    const [tab,setTab] = useState(0);
+    const tabs = useSelector(state => state.treeReducer.tree.tabs);
+    const activeTab = useSelector(state => state.treeReducer.activeTab);
+    const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ root: tabs[activeTab] });
 
     useEffect(() => {
         const observer = new ResizeObserver(entries => {
@@ -36,9 +37,18 @@ export default () => {
                 onDragEnd={handleDragEnd}
             >
                 <div className={styles.tabwrap}>
-                    <div onClick={()=>setTab(0)} className={`${styles.tab} ${tab===0 && styles.activetab}`}>Homepage  <IoIosClose style={{cursor:"pointer"}} size={17}/></div>
-                    <div onClick={()=>setTab(1)} className={`${styles.tab} ${tab===1 && styles.activetab}`}>About Us  <IoIosClose style={{cursor:"pointer"}} size={17}/></div>
-                    <div onClick={()=>setTab(2)} className={`${styles.tab} ${tab===2 && styles.activetab}`}>Container <IoIosClose style={{cursor:"pointer"}} size={17}/></div>
+                    {
+                        tabs.map((tab, ind) => (
+                            <div
+                                key={tab + ind + ""}
+                                onClick={() => dispatch(updateActiveTab({ tab: ind }))}
+                                className={`${styles.tab} ${ind === activeTab && styles.activetab}`}
+                            >
+                                {tab}
+                                <IoIosClose style={{ cursor: "pointer" }} size={17} />
+                            </div>
+                        ))
+                    }
                 </div>
                 <TreeManager />
             </div>

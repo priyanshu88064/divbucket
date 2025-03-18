@@ -9,13 +9,14 @@ export default ({ id, points, sidebar, setClicked }) => {
     const dispatch = useDispatch();
     const bgHeight = useSelector(state => state.treeReducer.bgContentRect.height);
     const bgTop = useSelector(state => state.treeReducer.bgContentRect.top);
+    const type = useSelector(state => state.treeReducer.dataMap[id].type);
 
     const list = sidebar ? [
         [
             {
                 name: "Cut",
                 command: "Ctrl + X",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(updateClipboard({ cut: id, copy: null }));
                     dispatch(deleteFromParent({ id }))
@@ -24,7 +25,7 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Copy",
                 command: "Ctrl + C",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(updateClipboard({ copy: id, cut: null }));
                 }
@@ -41,7 +42,7 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Duplicate",
                 command: "Ctrl + D",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(duplicate());
                 }
@@ -59,7 +60,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 func: () => {
                     dispatch(deleteNode({ id }))
                 },
-                isOff: id === "root"
+                isOff: type === "root"
             }
         ],
     ] : [
@@ -67,7 +68,7 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Cut",
                 command: "Ctrl + X",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(updateClipboard({ cut: id, copy: null }));
                     dispatch(deleteFromParent({ id }))
@@ -76,7 +77,7 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Copy",
                 command: "Ctrl + C",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(updateClipboard({ copy: id, cut: null }));
                 }
@@ -93,7 +94,7 @@ export default ({ id, points, sidebar, setClicked }) => {
             {
                 name: "Duplicate",
                 command: "Ctrl + D",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(duplicate());
                 }
@@ -111,14 +112,14 @@ export default ({ id, points, sidebar, setClicked }) => {
                 func: () => {
                     dispatch(deleteNode({ id }))
                 },
-                isOff: id === "root"
+                isOff: type === "root"
             }
         ],
         [
             {
                 name: "Select Parent",
                 command: "",
-                isOff: id === "root",
+                isOff: type === "root",
                 func: () => {
                     dispatch(revealParent());
                 }

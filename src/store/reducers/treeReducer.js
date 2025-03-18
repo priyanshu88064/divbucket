@@ -29,10 +29,31 @@ const isRelation = ({ tree, parent, child }) => {
 const treeSlice = createSlice({
   name: "tree",
   initialState: {
-    tree: { root: [] },
+    tree: {
+      tabs: ["root", "homepage"],
+      root: [],
+      homepage:[],
+    },
     activeNodeId: "root",
+    activeTab: 0,
     styleMap: {
       root: {
+        width: "100%",
+        height: "100%",
+        minWidth: "350px",
+        background: "white",
+        paddingTop: "5px",
+        paddingRight: "5px",
+        paddingBottom: "5px",
+        paddingLeft: "5px",
+        display: "block",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        gap: "0px",
+        flexWrap: "nowrap",
+      },
+      homepage: {
         width: "100%",
         height: "100%",
         minWidth: "350px",
@@ -52,6 +73,10 @@ const treeSlice = createSlice({
     dataMap: {
       root: {
         name: "BODY",
+        type: "root",
+      },
+      homepage: {
+        name: "HomePage",
         type: "root",
       },
     },
@@ -80,8 +105,8 @@ const treeSlice = createSlice({
       state.styleMap = { ...state.styleMap, ...payload.styleMap };
     },
     deleteNode: (state, { payload }) => {
-      if (payload.id === "root") return;
-      state.activeNodeId = "root";
+      if (payload.id === state.tree.tabs[state.activeTab]) return;
+      state.activeNodeId = state.tree.tabs[state.activeTab];
       const deleteWork = (id) => {
         state.tree[id].map((child) => deleteWork(child));
         delete state.dataMap[id];
@@ -101,6 +126,10 @@ const treeSlice = createSlice({
     updateActiveNode: (state, { payload }) => {
       state.activeNodeId = payload.id;
     },
+    updateActiveTab: (state, { payload }) => {
+      state.activeTab = payload.tab;
+      state.activeNodeId = state.tree.tabs[payload.tab];
+    },
     updateStyleMap: (state, { payload }) => {
       state.styleMap[payload.id] = payload.style;
     },
@@ -108,7 +137,7 @@ const treeSlice = createSlice({
       state.dataMap[payload.id] = payload.data;
     },
     updateRootWidth: (state, { payload }) => {
-      state.styleMap.root.width = payload.width;
+      state.styleMap[state.tree.tabs[state.activeTab]].width = payload.width;
     },
     updateBgContentRect: (state, { payload }) => {
       state.bgContentRect = payload.bgContentRect;
@@ -120,7 +149,7 @@ const treeSlice = createSlice({
         });
         state.clipboard.cut = null;
       }
-      if (payload.cut === "root" || payload.copy === "root") return;
+      if (payload.cut === state.tree.tabs[state.activeTab] || payload.copy === state.tree.tabs[state.activeTab]) return;
       state.clipboard = payload;
     },
     paste: (state) => {
@@ -139,7 +168,7 @@ const treeSlice = createSlice({
       }
     },
     duplicate: (state) => {
-      if (state.activeNodeId === "root") return;
+      if (state.activeNodeId === state.tree.tabs[state.activeTab]) return;
       const duplicate = createCopy(state.activeNodeId, state);
       treeSlice.caseReducers.splice(state, {
         payload: { referenceNode: state.activeNodeId, pos: 1, node: duplicate },
@@ -147,15 +176,15 @@ const treeSlice = createSlice({
       state.activeNodeId = duplicate;
     },
     revealParent: (state) => {
-      state.activeNodeId = getParent(state.tree, "root", state.activeNodeId);
+      state.activeNodeId = getParent(state.tree, state.tree.tabs[state.activeTab], state.activeNodeId);
     },
     splice: (state, { payload }) => {
-      if (payload.referenceNode === "root") {
-        state.tree["root"].splice(0, 0, Number(payload.node));
+      if (payload.referenceNode === state.tree.tabs[state.activeTab]) {
+        state.tree[state.tree.tabs[state.activeTab]].splice(0, 0, Number(payload.node));
       } else {
         const parent =
           payload.parent ||
-          getParent(state.tree, "root", Number(payload.referenceNode));
+          getParent(state.tree, state.tree.tabs[state.activeTab], Number(payload.referenceNode));
         const index = state.tree[parent].indexOf(Number(payload.referenceNode));
         state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
       }
@@ -165,8 +194,8 @@ const treeSlice = createSlice({
       if (payload.pos === -1 && state.dataMap[payload.referenceNode].unit)
         return;
       if (
-        referenceNode !== "root" &&
-        node !== "root" &&
+        referenceNode !== state.tree.tabs[state.activeTab] &&
+        node !== state.tree.tabs[state.activeTab] &&
         isRelation({
           tree: state.tree,
           parent: Number(node),
@@ -205,5 +234,6 @@ export const {
   splice,
   moveItem,
   addTemplate,
+  updateActiveTab
 } = treeSlice.actions;
 export default treeSlice.reducer;

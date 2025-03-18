@@ -89,6 +89,8 @@ const Explorer = () => {
     const draggedNode = useRef(null);
     const dragWrapperRef = useRef(null);
     const dispatch = useDispatch();
+    const tabs = useSelector(state => state.treeReducer.tree.tabs);
+    const activeTab = useSelector(state => state.treeReducer.activeTab);
 
     const handleDragStart = (e) => {
         var dragWrapper = document.createElement('div');
@@ -118,7 +120,7 @@ const Explorer = () => {
         if (!draggedNode.current || !targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== "root" && diff <= rect.height / 3) {
+        if (targetNode !== tabs[activeTab] && diff <= rect.height / 3) {
             e.target.classList.remove(styles.dragbottom, styles.dragmiddle);
             e.target.classList.add(styles.dragtop);
         } else if (diff <= (rect.height * 2) / 3) {
@@ -137,7 +139,7 @@ const Explorer = () => {
         if (!targetNode || targetNode === _draggedNode) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== "root" && diff <= rect.height / 3) {
+        if (targetNode !== tabs[activeTab] && diff <= rect.height / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
         } else if (diff <= (rect.height * 2) / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: -1 }))
@@ -164,8 +166,8 @@ const Explorer = () => {
                 onDrop={handleDrop}
             >
                 <RLItem
-                    key={"root"}
-                    node={"root"}
+                    key={tabs[activeTab]}
+                    node={tabs[activeTab]}
                     pleft={5}
                 />
             </div>
@@ -206,7 +208,7 @@ const RLItem = ({ node, pleft }) => {
         <div className={styles.rlistitem} >
             <div
                 data-id={node}
-                draggable={node !== "root"}
+                draggable={type !== "root"}
                 style={{ paddingLeft: pleft + "px" }}
                 className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''} ${unit && styles.redrag}`}
                 onClick={() => {
@@ -239,7 +241,7 @@ const RLItem = ({ node, pleft }) => {
                     {GetIconOfType(type)}
                     {name}
                 </div>
-                <div className={`${node === "root" ? styles.blockdrag : styles.grdrag}`}>
+                <div className={`${type === "root" ? styles.blockdrag : styles.grdrag}`}>
                     <GrDrag />
                 </div>
                 {
