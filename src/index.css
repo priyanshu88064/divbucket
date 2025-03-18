@@ -16,6 +16,7 @@
   --gray_border: rgb(100, 100, 100);
   --resizeblue: #c800ff;
   --hoverblue:#15539E;
+  --gradient:linear-gradient(to right, #493240, #ff0099);
 }
 
 ::-webkit-scrollbar {

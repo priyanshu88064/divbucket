@@ -3,13 +3,16 @@
   width: fit-content;
   height: fit-content;
   justify-content: center;
+
 }
 .root{
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  /* padding: 20px; */
 }
 .root > .a {
-  overflow-y: scroll;
+  overflow: scroll;
 }
 
 .a {

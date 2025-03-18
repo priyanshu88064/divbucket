@@ -129,7 +129,7 @@ export function useDrag() {
       draggedNodeRef.current?.getAttribute("data-id") ||
       createTemplate(e.dataTransfer.getData("type"), dispatch);
 
-    if (!targetId || draggedId == targetId) return;
+    if (!targetId || !draggedId || draggedId == targetId) return;
 
     if (targetId === "root") {
       dispatch(moveItem({ node: draggedId, referenceNode: targetId, pos: -1 }));

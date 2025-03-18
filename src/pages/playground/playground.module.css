@@ -4,25 +4,40 @@
   width: 100%;
   overflow: hidden;
 }
-.container {
-  background-color: var(--pg_bg);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-}
 .bg {
   background-color: var(--pg_bg);
   flex: 1;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-.container::-webkit-scrollbar {
-  display: none;
+.tabwrap {
+  display: flex;
+  color: white;
+  font-size: 12px;
+  cursor: default;
+  user-select: none;
+  padding: 6px;
+  gap: 6px;
 }
-
-.container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.tab {
+  padding: 2px 7px;
+  color: var(--text_2);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 200ms;
+}
+.tab:hover{
+  background-color: var(--bg_gray);
+}
+.activetab {
+  background: var(--bg_gray0);
+  color: white;
+}
+.activetab:hover{
+  background-color: var(--bg_gray0);
 }
 .res {
   background-color: rgb(245, 181, 181);

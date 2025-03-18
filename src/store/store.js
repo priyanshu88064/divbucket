@@ -6,7 +6,7 @@ const store = configureStore({
     devTools:true,
     reducer:{
         treeReducer,
-        focusReducer
+        focusReducer,
     },
 });
 

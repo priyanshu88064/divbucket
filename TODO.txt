@@ -1,12 +1,12 @@
 #TODO
-- don't use sidebar ref for adding drag image, directly append in document
-- can we use only 1 instance of useDrag ?
 - INTRODUCE TABS
 - INTRODUCE PRE-BUILT SECTIONS
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
 
 #DONE
+- don't use sidebar ref for adding drag image, directly append in document
+- can we use only 1 instance of useDrag ? [yes we can]
 - Add dataTransfer.setImage in sidebar>explorer>rlitems
 - add a fullscreen option in headbar
 - colorpicker should also support colors string ('red','blue' etc)[PARTIALLYFIXED: added checks and color string checks, but not added color suggest dropdown]

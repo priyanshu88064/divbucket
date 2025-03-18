@@ -1,4 +1,5 @@
 #BUGS/ISSUES
+- in a row with long height the ondraghover drag helper boxes showing in left right side instead of top bottom
 - contextmenu going up direction ( related to sometimes mobile -10px showing in headbar, can be a persist redux extension bug)
 - encounter a bug where headbar > width is showing negative(mobile -10px)(can't reproduce yet)
 - bug in layer while resizing div(still bottom resizable hover while resizing)
