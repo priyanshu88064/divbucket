@@ -32,10 +32,10 @@ const treeSlice = createSlice({
     tree: {
       tabs: ["root", "homepage"],
       root: [],
-      homepage:[],
+      homepage: [],
     },
     activeNodeId: "root",
-    activeTab: 0,
+    activeTab: "root",
     styleMap: {
       root: {
         width: "100%",
@@ -105,8 +105,8 @@ const treeSlice = createSlice({
       state.styleMap = { ...state.styleMap, ...payload.styleMap };
     },
     deleteNode: (state, { payload }) => {
-      if (payload.id === state.tree.tabs[state.activeTab]) return;
-      state.activeNodeId = state.tree.tabs[state.activeTab];
+      if (state.tree.tabs.includes(payload.id)) return;
+      state.activeNodeId = state.activeTab;
       const deleteWork = (id) => {
         state.tree[id].map((child) => deleteWork(child));
         delete state.dataMap[id];
@@ -128,7 +128,7 @@ const treeSlice = createSlice({
     },
     updateActiveTab: (state, { payload }) => {
       state.activeTab = payload.tab;
-      state.activeNodeId = state.tree.tabs[payload.tab];
+      state.activeNodeId = payload.tab;
     },
     updateStyleMap: (state, { payload }) => {
       state.styleMap[payload.id] = payload.style;
@@ -137,7 +137,7 @@ const treeSlice = createSlice({
       state.dataMap[payload.id] = payload.data;
     },
     updateRootWidth: (state, { payload }) => {
-      state.styleMap[state.tree.tabs[state.activeTab]].width = payload.width;
+      state.styleMap[state.activeTab].width = payload.width;
     },
     updateBgContentRect: (state, { payload }) => {
       state.bgContentRect = payload.bgContentRect;
@@ -149,7 +149,8 @@ const treeSlice = createSlice({
         });
         state.clipboard.cut = null;
       }
-      if (payload.cut === state.tree.tabs[state.activeTab] || payload.copy === state.tree.tabs[state.activeTab]) return;
+      if (payload.cut === state.activeTab || payload.copy === state.activeTab)
+        return;
       state.clipboard = payload;
     },
     paste: (state) => {
@@ -168,7 +169,7 @@ const treeSlice = createSlice({
       }
     },
     duplicate: (state) => {
-      if (state.activeNodeId === state.tree.tabs[state.activeTab]) return;
+      if (state.activeNodeId === state.activeTab) return;
       const duplicate = createCopy(state.activeNodeId, state);
       treeSlice.caseReducers.splice(state, {
         payload: { referenceNode: state.activeNodeId, pos: 1, node: duplicate },
@@ -176,15 +177,19 @@ const treeSlice = createSlice({
       state.activeNodeId = duplicate;
     },
     revealParent: (state) => {
-      state.activeNodeId = getParent(state.tree, state.tree.tabs[state.activeTab], state.activeNodeId);
+      state.activeNodeId = getParent(
+        state.tree,
+        state.activeTab,
+        state.activeNodeId
+      );
     },
     splice: (state, { payload }) => {
-      if (payload.referenceNode === state.tree.tabs[state.activeTab]) {
-        state.tree[state.tree.tabs[state.activeTab]].splice(0, 0, Number(payload.node));
+      if (state.tree.tabs.includes(payload.referenceNode)) {
+        state.tree[payload.referenceNode].splice(0, 0, Number(payload.node));
       } else {
         const parent =
           payload.parent ||
-          getParent(state.tree, state.tree.tabs[state.activeTab], Number(payload.referenceNode));
+          getParent(state.tree, "tabs", Number(payload.referenceNode));
         const index = state.tree[parent].indexOf(Number(payload.referenceNode));
         state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
       }
@@ -194,8 +199,7 @@ const treeSlice = createSlice({
       if (payload.pos === -1 && state.dataMap[payload.referenceNode].unit)
         return;
       if (
-        referenceNode !== state.tree.tabs[state.activeTab] &&
-        node !== state.tree.tabs[state.activeTab] &&
+        !state.tree.tabs.includes(referenceNode) &&
         isRelation({
           tree: state.tree,
           parent: Number(node),
@@ -234,6 +238,6 @@ export const {
   splice,
   moveItem,
   addTemplate,
-  updateActiveTab
+  updateActiveTab,
 } = treeSlice.actions;
 export default treeSlice.reducer;

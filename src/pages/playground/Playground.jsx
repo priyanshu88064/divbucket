@@ -13,7 +13,7 @@ export default () => {
     const bgRef = useRef(null);
     const tabs = useSelector(state => state.treeReducer.tree.tabs);
     const activeTab = useSelector(state => state.treeReducer.activeTab);
-    const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ root: tabs[activeTab] });
+    const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ root: activeTab });
 
     useEffect(() => {
         const observer = new ResizeObserver(entries => {
@@ -41,8 +41,8 @@ export default () => {
                         tabs.map((tab, ind) => (
                             <div
                                 key={tab + ind + ""}
-                                onClick={() => dispatch(updateActiveTab({ tab: ind }))}
-                                className={`${styles.tab} ${ind === activeTab && styles.activetab}`}
+                                onClick={() => dispatch(updateActiveTab({ tab }))}
+                                className={`${styles.tab} ${tab === activeTab && styles.activetab}`}
                             >
                                 {tab}
                                 <IoIosClose style={{ cursor: "pointer" }} size={17} />

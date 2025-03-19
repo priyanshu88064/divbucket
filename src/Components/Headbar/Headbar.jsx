@@ -6,13 +6,12 @@ import { MdFullscreen } from 'react-icons/md';
 
 export default () => {
     const dispatch = useDispatch();
-    const tabs = useSelector(state => state.treeReducer.tree.tabs);
     const activeTab = useSelector(state => state.treeReducer.activeTab);
     const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width - 10));
     const width = useSelector(state => {
-        if (state.treeReducer.styleMap[tabs[activeTab]].width === '100%')
+        if (state.treeReducer.styleMap[activeTab].width === '100%')
             return maxWidth;
-        return Math.min(maxWidth, Math.max(350, Number(state.treeReducer.styleMap[tabs[activeTab]].width.split('p')[0])));
+        return Math.min(maxWidth, Math.max(350, Number(state.treeReducer.styleMap[activeTab].width.split('p')[0])));
     });
 
     return (

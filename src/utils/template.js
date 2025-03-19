@@ -3,7 +3,7 @@ import initCSS from "./initCSS";
 import initData from "./initData";
 
 const TYPES = {
-  form: {
+  formExample: {
     tree: { 0: [1, 2], 1: [], 2: [] },
     styleMap: {
       0: { display: "flex" },
@@ -14,6 +14,33 @@ const TYPES = {
       0: { name: "form", type: "form" },
       1: { name: "ss", type: "ss" },
       2: { name: "ff", type: "ff" },
+    },
+  },
+  Tab: {
+    tree: { 0: [] },
+    styleMap: {
+      0: {
+        width: "100%",
+        height: "100%",
+        minWidth: "350px",
+        background: "white",
+        paddingTop: "5px",
+        paddingRight: "5px",
+        paddingBottom: "5px",
+        paddingLeft: "5px",
+        display: "block",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        gap: "0px",
+        flexWrap: "nowrap",
+      },
+    },
+    dataMap: {
+      0: {
+        name: "HomePage",
+        type: "root",
+      },
     },
   },
   Block: {

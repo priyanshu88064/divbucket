@@ -122,6 +122,16 @@ export function useDrag({ root }) {
   };
   const handleDrop = (e) => {
     e.stopPropagation();
+
+    e.target.classList.remove(
+      styles.dborder,
+      styles.dinside,
+      styles.dtop,
+      styles.dbottom,
+      styles.dleft,
+      styles.dright
+    );
+
     const targetId =
       e.target.getAttribute("data-target") ||
       e.target.getAttribute("data-root");
@@ -170,14 +180,6 @@ export function useDrag({ root }) {
           break;
       }
     }
-    e.target.classList.remove(
-      styles.dborder,
-      styles.dinside,
-      styles.dtop,
-      styles.dbottom,
-      styles.dleft,
-      styles.dright
-    );
     draggedNodeRef.current = null;
     if (draggedWrapperRef && draggedWrapperRef.current)
       draggedWrapperRef.current.remove();

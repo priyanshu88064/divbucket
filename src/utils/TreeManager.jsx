@@ -102,8 +102,8 @@ export default () => {
   }
 
   return (
-    <Resizable id={tree.tabs[activeTab]}>
-      {tree[tree.tabs[activeTab]].map(tree => renderTree(tree))}
+    <Resizable id={activeTab}>
+      {tree[activeTab].map(tree => renderTree(tree))}
     </Resizable>
   );
 }

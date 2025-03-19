@@ -60,11 +60,11 @@
   overflow-y: scroll;
 }
 .rlist {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
-.rlist::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
+.rlist::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 .rlistitem {
   font-size: 12px;
@@ -82,18 +82,19 @@
   gap: 5px;
   color: var(--text_0);
 }
-.grdrag{
+.grdrag {
   display: none;
   margin-left: auto;
   margin-right: 10px;
   cursor: move;
 }
-.blockdrag{
-  display: none;
+.grshow {
+  display: flex;
+  color: var(--text_0);
 }
 .rliwrap:hover {
   border: 2px solid var(--text_2);
-  .grdrag{
+  .grdrag {
     display: flex;
   }
 }
@@ -103,31 +104,31 @@
     color: white;
   }
 }
-.dragtop{
+.dragtop {
   border-color: gray;
   border-top-color: yellow;
 }
-.dragmiddle{
+.dragmiddle {
   border-color: yellow;
 }
-.dragmiddle.redrag{
+.dragmiddle.redrag {
   border-color: red !important;
 }
-.dragbottom{
-  border-color:  gray;
-  border-bottom-color:  yellow;
+.dragbottom {
+  border-color: gray;
+  border-bottom-color: yellow;
 }
-.removingitem{
-  opacity: .3;
+.removingitem {
+  opacity: 0.3;
   border-color: transparent !important;
 }
-.dragwrapper{
-  position:absolute;
+.dragwrapper {
+  position: absolute;
   left: 0;
   top: 0;
   transform: translate(-100%);
 }
-.dragimage{
+.dragimage {
   background-color: yellow;
   color: black;
   font-size: 11px;

@@ -8,11 +8,12 @@ import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { moveItem, updateActiveNode } from '../../store/reducers/treeReducer';
+import { moveItem, updateActiveNode, updateActiveTab } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
 import { GrDrag } from 'react-icons/gr';
+import { FaFile } from 'react-icons/fa';
 
 export default () => {
 
@@ -120,7 +121,7 @@ const Explorer = () => {
         if (!draggedNode.current || !targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== tabs[activeTab] && diff <= rect.height / 3) {
+        if (targetNode !== activeTab && diff <= rect.height / 3) {
             e.target.classList.remove(styles.dragbottom, styles.dragmiddle);
             e.target.classList.add(styles.dragtop);
         } else if (diff <= (rect.height * 2) / 3) {
@@ -139,7 +140,7 @@ const Explorer = () => {
         if (!targetNode || targetNode === _draggedNode) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== tabs[activeTab] && diff <= rect.height / 3) {
+        if (targetNode !== activeTab && diff <= rect.height / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
         } else if (diff <= (rect.height * 2) / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: -1 }))
@@ -165,17 +166,22 @@ const Explorer = () => {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
-                <RLItem
-                    key={tabs[activeTab]}
-                    node={tabs[activeTab]}
-                    pleft={5}
-                />
+                {
+                    tabs.map((tab, ind) => (
+                        <RLItem
+                            key={tab + ind + ""}
+                            node={tab}
+                            pleft={5}
+                            myTab={tab}
+                        />
+                    ))
+                }
             </div>
         </>
     );
 }
 
-const RecursiveList = ({ start, pleft }) => {
+const RecursiveList = ({ start, pleft,myTab }) => {
 
     const tree = useSelector(state => state.treeReducer.tree);
 
@@ -187,6 +193,7 @@ const RecursiveList = ({ start, pleft }) => {
                         key={node}
                         node={node}
                         pleft={pleft}
+                        myTab={myTab}
                     />
                 ))
             }
@@ -194,12 +201,13 @@ const RecursiveList = ({ start, pleft }) => {
     );
 }
 
-const RLItem = ({ node, pleft }) => {
+const RLItem = ({ node, pleft, myTab }) => {
 
     const type = useSelector(state => state.treeReducer.dataMap[node].type);
     const unit = useSelector(state => state.treeReducer.dataMap[node].unit);
     const [active, setActive] = useState(true);
     const activeNodeId = useSelector(state => state.treeReducer.activeNodeId);
+    const activeTab = useSelector(state => state.treeReducer.activeTab);
     const name = useSelector(state => state.treeReducer.dataMap[node].name);
     const { clicked, setClicked, points, setPoints } = useContextMenu();
     const dispatch = useDispatch();
@@ -212,6 +220,8 @@ const RLItem = ({ node, pleft }) => {
                 style={{ paddingLeft: pleft + "px" }}
                 className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ''} ${unit && styles.redrag}`}
                 onClick={() => {
+                    if (myTab !== activeTab)
+                        dispatch(updateActiveTab({ tab: myTab }))
                     if (activeNodeId !== node)
                         dispatch(updateActiveNode({ id: node }))
                 }}
@@ -241,8 +251,12 @@ const RLItem = ({ node, pleft }) => {
                     {GetIconOfType(type)}
                     {name}
                 </div>
-                <div className={`${type === "root" ? styles.blockdrag : styles.grdrag}`}>
-                    <GrDrag />
+                <div className={`${styles.grdrag} ${type === 'root' && styles.grshow}`}>
+                    {
+                        type === 'root' ?
+                            <FaFile /> :
+                            <GrDrag />
+                    }
                 </div>
                 {
                     clicked &&
@@ -256,7 +270,7 @@ const RLItem = ({ node, pleft }) => {
             </div>
             {
                 active &&
-                <RecursiveList start={node} pleft={pleft + 10} />
+                <RecursiveList start={node} pleft={pleft + 10} myTab={myTab} />
             }
         </div>
     );
