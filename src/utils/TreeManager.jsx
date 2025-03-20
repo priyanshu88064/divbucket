@@ -15,7 +15,7 @@ export default () => {
     Object.entries(state.treeReducer.dataMap).map(([key, value]) => ([key, value.type]))
   ), shallowEqual);
 
-  console.log("treemanager", dataMap)
+  // console.log("treemanager", dataMap)
 
   const renderTree = (node) => {
 
@@ -101,9 +101,17 @@ export default () => {
 
   }
 
+  console.log("activetab",activeTab)
+
   return (
-    <Resizable id={activeTab}>
-      {tree[activeTab].map(tree => renderTree(tree))}
-    </Resizable>
+    <>
+      {
+        activeTab ?
+          <Resizable id={activeTab}>
+            {tree[activeTab].map(tree => renderTree(tree))}
+          </Resizable>:
+          ""
+      }
+    </>
   );
 }

@@ -38,8 +38,10 @@ const TYPES = {
     },
     dataMap: {
       0: {
-        name: "HomePage",
         type: "root",
+        name: "newTab",
+        unit:false,
+        open:true
       },
     },
   },
@@ -80,11 +82,11 @@ const TYPES = {
   },
 };
 
-export const createTemplate = (type, dispatch) => {
+export const createTemplate = ({ type, dispatch, name }) => {
   if (!Object.keys(TYPES).includes(type)) return;
-  let tree = {},
-    dataMap = {},
-    styleMap = {};
+  let tree = {};
+  let dataMap = {};
+  let styleMap = {};
   const createCopy = (id, obj) => {
     const uid = Math.floor(Math.random() * 1000000);
     dataMap[uid] = obj.dataMap[id];
@@ -93,6 +95,7 @@ export const createTemplate = (type, dispatch) => {
     return uid;
   };
   const rootId = createCopy(0, TYPES[type]);
+  if (name && name.length) dataMap[rootId] = {...dataMap[rootId],name}
   dispatch(addTemplate({ tree, dataMap, styleMap }));
   return rootId;
 };

@@ -1,10 +1,10 @@
-import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-icons/md';
+import { MdAdsClick, MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-icons/md';
 import styles from './cssbar.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDataMap, updateStyleMap } from '../../store/reducers/treeReducer';
 import { IoIosArrowDown } from 'react-icons/io';
-import { FaBold, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
+import { FaBold, FaCat, FaCss3, FaHome, FaImage, FaItalic, FaLink, FaRegSquare, FaStrikethrough, FaUnderline, FaVideo } from 'react-icons/fa';
 import { changeTab } from '../../store/reducers/focusReducer';
 import { FaParagraph } from 'react-icons/fa6';
 import TextInput from '../../utils/inputs/TextInput/TextInput';
@@ -41,44 +41,57 @@ export default () => {
 
     const tab = useSelector(state => state.focusReducer.tab);
     const id = useSelector(state => state.treeReducer.activeNodeId);
-    const name = useSelector(state => state.treeReducer.dataMap[id].name);
-    const type = useSelector(state => state.treeReducer.dataMap[id].type);
+    const name = useSelector(state => state.treeReducer.dataMap[id]?.name);
+    const type = useSelector(state => state.treeReducer.dataMap[id]?.type);
     const dispatch = useDispatch();
 
     return (
         <div
             className={styles.cssbar}
         >
-            <div className={styles.c0}>
-                <div className={styles.c00}>
-                    {GetIconOfType(type)}
-                    {name}
-                </div>
-                <div
-                    style={{ marginLeft: 'auto', }}
-                    className={`${tab[0] === "0" ? styles.c0icon : ''}`}
-                    onClick={() => dispatch(changeTab({ tab: "00" }))}
-                    title='css'
-                >
-                    <FaCss3 />
-                </div>
-                <div
-                    className={`${tab[0] === "1" ? styles.c0icon : ''}`}
-                    onClick={() => dispatch(changeTab({ tab: "10" }))}
-                    title='edit'
-                >
-                    <MdOutlineEdit />
-                </div>
-            </div>
-            <div className={styles.c1}>
-                {
-                    id ?
-                        tab[0] === "0" ?
-                            <CssTab /> :
-                            <EditTab focus={tab[1]} /> :
-                        "Please select an element"
-                }
-            </div>
+            {
+                id ?
+                    <>
+                        <div className={styles.c0}>
+                            <div className={styles.c00}>
+                                {GetIconOfType(type)}
+                                {name}
+                            </div>
+                            <div
+                                style={{ marginLeft: 'auto', }}
+                                className={`${tab[0] === "0" ? styles.c0icon : ''}`}
+                                onClick={() => dispatch(changeTab({ tab: "00" }))}
+                                title='css'
+                            >
+                                <FaCss3 />
+                            </div>
+                            <div
+                                className={`${tab[0] === "1" ? styles.c0icon : ''}`}
+                                onClick={() => dispatch(changeTab({ tab: "10" }))}
+                                title='edit'
+                            >
+                                <MdOutlineEdit />
+                            </div>
+                        </div>
+                        <div className={styles.c1}>
+                            {
+                                tab[0] === "0" ?
+                                    <CssTab /> :
+                                    <EditTab focus={tab[1]} />
+                            }
+                        </div>
+                    </> :
+                    <Empty/>
+            }
+        </div>
+    );
+}
+
+const Empty = ()=>{
+    return (
+        <div className={styles.empty}>
+            <FaCat size={50}/>
+            <div>Feeling empty</div>
         </div>
     );
 }

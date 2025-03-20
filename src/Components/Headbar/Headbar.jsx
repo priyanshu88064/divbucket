@@ -5,7 +5,25 @@ import { updateRootWidth } from '../../store/reducers/treeReducer';
 import { MdFullscreen } from 'react-icons/md';
 
 export default () => {
-    const dispatch = useDispatch();
+    const activeTab = useSelector(state => state.treeReducer.activeTab);
+
+    return (
+        <div className={styles.head}>
+            <div className={styles.removethis}>WORK UNDER CONSTRUCTION</div>
+            {activeTab && <WidthBox />}
+            <div className={styles.fscreen} onClick={() => {
+                if (!document.fullscreenElement)
+                    document.documentElement.requestFullscreen();
+                else if (document.exitFullscreen)
+                    document.exitFullscreen();
+            }}>
+                <MdFullscreen size={25} />
+            </div>
+        </div >
+    );
+}
+
+const WidthBox = () => {
     const activeTab = useSelector(state => state.treeReducer.activeTab);
     const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width - 10));
     const width = useSelector(state => {
@@ -13,10 +31,10 @@ export default () => {
             return maxWidth;
         return Math.min(maxWidth, Math.max(350, Number(state.treeReducer.styleMap[activeTab].width.split('p')[0])));
     });
-
+    const dispatch = useDispatch();
+    
     return (
-        <div className={styles.head}>
-            <div className={styles.removethis}>WORK UNDER CONSTRUCTION</div>
+        <>
             <div className={styles.dimensions}>
                 <div onClick={() => dispatch(updateRootWidth({ width: "425px" }))} title='mobile' className={`${styles.d0} ${width <= 425 && styles.active}`}><FaMobileAlt size={13} /></div>
                 <div onClick={() => dispatch(updateRootWidth({ width: "768px" }))} title='tablet' className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}><FaTabletAlt size={13} /></div>
@@ -32,14 +50,6 @@ export default () => {
                 </div>
                 {width}px
             </div>
-            <div className={styles.fscreen} onClick={() => {
-                if (!document.fullscreenElement)
-                    document.documentElement.requestFullscreen();
-                else if (document.exitFullscreen)
-                    document.exitFullscreen();
-            }}>
-                <MdFullscreen size={25}/>
-            </div>
-        </div >
+        </>
     );
 }

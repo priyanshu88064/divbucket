@@ -30,9 +30,8 @@ const treeSlice = createSlice({
   name: "tree",
   initialState: {
     tree: {
-      tabs: ["root", "homepage"],
+      tabs: ["root"],
       root: [],
-      homepage: [],
     },
     activeNodeId: "root",
     activeTab: "root",
@@ -53,31 +52,18 @@ const treeSlice = createSlice({
         gap: "0px",
         flexWrap: "nowrap",
       },
-      homepage: {
-        width: "100%",
-        height: "100%",
-        minWidth: "350px",
-        background: "white",
-        paddingTop: "5px",
-        paddingRight: "5px",
-        paddingBottom: "5px",
-        paddingLeft: "5px",
-        display: "block",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "stretch",
-        gap: "0px",
-        flexWrap: "nowrap",
-      },
     },
     dataMap: {
       root: {
         name: "BODY",
         type: "root",
+        unit: false,
+        open: true,
       },
-      homepage: {
-        name: "HomePage",
-        type: "root",
+      tabs: {
+        unit: false,
+        type: "tabwrapper",
+        name: "tabwrapper",
       },
     },
     bgContentRect: {
@@ -105,7 +91,6 @@ const treeSlice = createSlice({
       state.styleMap = { ...state.styleMap, ...payload.styleMap };
     },
     deleteNode: (state, { payload }) => {
-      if (state.tree.tabs.includes(payload.id)) return;
       state.activeNodeId = state.activeTab;
       const deleteWork = (id) => {
         state.tree[id].map((child) => deleteWork(child));
@@ -129,6 +114,15 @@ const treeSlice = createSlice({
     updateActiveTab: (state, { payload }) => {
       state.activeTab = payload.tab;
       state.activeNodeId = payload.tab;
+      if (!state.dataMap[payload.tab].open)
+        state.dataMap[payload.tab].open = true;
+    },
+    updateTabOpenStatus: (state, { payload }) => {
+      state.dataMap[payload.tab].open = payload.open;
+      if (payload.tab !== state.activeTab) return;
+      state.activeTab =
+        state.tree.tabs.filter((tab) => state.dataMap[tab].open)[0] || null;
+      state.activeNodeId = state.activeTab;
     },
     updateStyleMap: (state, { payload }) => {
       state.styleMap[payload.id] = payload.style;
@@ -239,5 +233,6 @@ export const {
   moveItem,
   addTemplate,
   updateActiveTab,
+  updateTabOpenStatus,
 } = treeSlice.actions;
 export default treeSlice.reducer;
