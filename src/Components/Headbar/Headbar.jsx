@@ -25,7 +25,7 @@ export default () => {
 
 const WidthBox = () => {
     const activeTab = useSelector(state => state.treeReducer.activeTab);
-    const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width - 10));
+    const maxWidth = useSelector(state => Math.floor(state.treeReducer.bgContentRect?.width - 10 - 80));//-10 for resizebar, -80 for margin
     const width = useSelector(state => {
         if (state.treeReducer.styleMap[activeTab].width === '100%')
             return maxWidth;

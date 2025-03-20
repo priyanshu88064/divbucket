@@ -1,26 +1,25 @@
-.awrap{
+.awrap {
   display: flex;
   width: fit-content;
   height: fit-content;
   justify-content: center;
-
 }
-.root{
+.root {
   height: 100%;
-  width: 100%;
+  width: auto;
   overflow: hidden;
-  /* padding: 20px; */
+  margin: 20px 40px;
 }
 .root > .a {
   overflow: scroll;
 }
 
 .a {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
-.a::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
+.a::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 .a {
@@ -33,8 +32,8 @@
   bottom: auto !important;
 }
 
-.layer::before{
-  content: '';
+.layer::before {
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
@@ -143,24 +142,35 @@
   transform: translateY(-100%);
   color: white;
   display: flex;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-radius: 3px;
+
   z-index: 2;
   font-weight: normal;
 }
-.ib0{
+.root > .a > .infobar {
+  transform: none;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 5px;
+}
+.root > .a > .awrap:first-of-type > .a > .infobar {
+  transform: translateY(100%);
+  top: auto;
+  bottom: 0;
+}
+.ib0 {
   font-size: 12px;
   display: flex;
   gap: 5px;
 }
 .infobar > div {
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: center;
   border-right: 1px solid rgba(255, 255, 255, 0.285);
   padding: 5px 7px;
 }
-.infomore{
+.infomore {
   background-color: red;
   position: absolute;
   bottom: 0;
@@ -168,7 +178,7 @@
   transform: translateY(100%);
 }
 
-.resizablebar{
+.resizablebar {
   z-index: 2;
   background-color: rgb(41, 41, 41);
   width: 10px;
@@ -178,23 +188,23 @@
   justify-content: center;
   align-items: center;
 }
-.resizablebar:hover{
+.resizablebar:hover {
   background-color: rgb(75, 75, 75);
 }
-.leftbar{
+.leftbar {
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
-.rightbar{
+.rightbar {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-.lines{
+.lines {
   color: darkgray;
-  transform: scale(2,10);
+  transform: scale(2, 10);
 }
-.draghelper::before{
-  content: '';
+.draghelper::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -206,7 +216,7 @@
 .dborder {
   border: 2px solid var(--hoverblue);
 }
-.dborder::before{
+.dborder::before {
   content: "";
   z-index: 1;
   opacity: 0.5;
@@ -220,7 +230,7 @@
   right: 20%;
   bottom: 20%;
 }
-.unit.dinside::before{
+.unit.dinside::before {
   display: none;
 }
 .dtop::before {
@@ -252,14 +262,14 @@
   top: 0;
   animation: none;
 }
-.dragwrapper{
+.dragwrapper {
   position: fixed;
   top: 0;
   left: 0;
   transform: translate(-100%);
 }
-.dragimage{
-  background-color:var(--hoverblue);
+.dragimage {
+  background-color: var(--hoverblue);
   padding: 3px 10px;
   border-radius: 10px;
   color: white;
