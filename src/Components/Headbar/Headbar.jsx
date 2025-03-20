@@ -17,7 +17,7 @@ export default () => {
                 else if (document.exitFullscreen)
                     document.exitFullscreen();
             }}>
-                <MdFullscreen size={25} />
+                <MdFullscreen size={22} />
             </div>
         </div >
     );
@@ -38,7 +38,7 @@ const WidthBox = () => {
             <div className={styles.dimensions}>
                 <div onClick={() => dispatch(updateRootWidth({ width: "425px" }))} title='mobile' className={`${styles.d0} ${width <= 425 && styles.active}`}><FaMobileAlt size={13} /></div>
                 <div onClick={() => dispatch(updateRootWidth({ width: "768px" }))} title='tablet' className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}><FaTabletAlt size={13} /></div>
-                <div onClick={() => dispatch(updateRootWidth({ width: "100%" }))} title='PC' className={`${styles.d0} ${width > 768 && styles.active}`}><FaLaptop size={15} /></div>
+                <div onClick={() => dispatch(updateRootWidth({ width: "100%" }))} title='PC' className={`${styles.d0} ${width > 768 && styles.active}`}><FaLaptop size={14} /></div>
             </div>
             <div className={styles.width}>
                 <div>

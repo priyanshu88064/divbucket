@@ -97,13 +97,13 @@ const InfoBar = ({ name, type, id }) => {
             >
                 <MdOutlineEdit size={12} />
             </div>
-            <div
+            {type !== 'root' && <div
                 draggable
                 data-id={id}
                 style={{ borderRight: 'none', cursor: 'grab' }}
             >
-                <RiDragMove2Fill size={14}/>
-            </div>
+                <RiDragMove2Fill size={14} />
+            </div>}
         </div>
     );
 }

@@ -20,7 +20,7 @@
     border-radius: 3px;
     display: flex;
     align-items: center;
-    padding: 5px 7px;
+    padding: 4px 7px;
     color: var(--text_2);
 }
 .d0:hover{
@@ -33,7 +33,7 @@
 .width{
     cursor: default;
     font-size: 12px;
-    padding: 5px 10px;
+    padding: 4px 7px;
     background-color: var(--pg_bg);
     border-radius: 3px;
     color:var(--text_2);
