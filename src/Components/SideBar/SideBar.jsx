@@ -160,18 +160,20 @@ const Explorer = () => {
     const handleDragLeave = (e) => {
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
     }
-    const handleAddPage = ()=>{
-        if(!newPageName.length) return;
+    const handleAddPage = () => {
+        if (!newPageName.length) return;
         setNewPage(false);
         setNewPageName('My Page');
-        dispatch(addNode({parent:'tabs',child:createTemplate({type:'Tab',name:newPageName,dispatch})}))
+        const child = createTemplate({ type: 'Tab', name: newPageName, dispatch })
+        dispatch(addNode({ parent: 'tabs', child }))
+        dispatch(updateActiveTab({ tab: child }))
     }
 
     return (
         <>
             <div className={`${styles.head} ${styles.exp}`}>
                 <div>EXPLORER</div>
-                <div style={{ cursor: 'pointer' }} onClick={() => setNewPage(f => !f)}>
+                <div title='add page' style={{ cursor: 'pointer' }} onClick={() => setNewPage(f => !f)}>
                     <VscNewFile size={15} color='white' />
                 </div>
             </div>
@@ -200,7 +202,7 @@ const Explorer = () => {
                                 setNewPageName(e.target.value);
                             }}
                         />
-                        <div onClick={()=>handleAddPage()}>Add Page</div>
+                        <div onClick={() => handleAddPage()}>Add Page</div>
                     </div>
                 }
                 {
@@ -216,10 +218,6 @@ const Explorer = () => {
             </div>
         </>
     );
-}
-
-const AddPage = () => {
-
 }
 
 const RecursiveList = ({ start, pleft, myTab }) => {

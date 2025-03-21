@@ -12,6 +12,7 @@
   flex-direction: column;
 }
 .tabwrap {
+  overflow-x: scroll;
   display: flex;
   color: white;
   font-size: 12px;
@@ -20,7 +21,15 @@
   padding: 6px;
   gap: 6px;
 }
+.tabwrap {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.tabwrap::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
 .tab {
+  text-wrap-mode: nowrap;
   padding: 2px 7px;
   color: var(--text_2);
   border-radius: 2px;
