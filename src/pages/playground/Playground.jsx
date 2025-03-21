@@ -76,8 +76,6 @@ const Tabs = () => {
     const tabsName = useSelector(selectTabsName, shallowEqual);
     const dispatch = useDispatch();
 
-    console.log("tabs")
-
     return (
         <div className={styles.tabwrap}>
             {

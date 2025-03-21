@@ -8,12 +8,16 @@ import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
-import { moveItem, updateActiveNode, updateActiveTab } from '../../store/reducers/treeReducer';
+import { addNode, moveItem, updateActiveNode, updateActiveTab } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
 import { GrDrag } from 'react-icons/gr';
-import { FaFile } from 'react-icons/fa';
+import { FaFile, FaHome } from 'react-icons/fa';
+import { FaFileCirclePlus } from 'react-icons/fa6';
+import { BsFileEarmarkPlus, BsFileEarmarkPlusFill } from 'react-icons/bs';
+import { VscNewFile } from 'react-icons/vsc';
+import { createTemplate } from '../../utils/template';
 
 export default () => {
 
@@ -92,6 +96,8 @@ const Explorer = () => {
     const dispatch = useDispatch();
     const tabs = useSelector(state => state.treeReducer.tree.tabs);
     const activeTab = useSelector(state => state.treeReducer.activeTab);
+    const [newPage, setNewPage] = useState(false);
+    const [newPageName, setNewPageName] = useState('My Page');
 
     const handleDragStart = (e) => {
         var dragWrapper = document.createElement('div');
@@ -154,10 +160,21 @@ const Explorer = () => {
     const handleDragLeave = (e) => {
         e.target.classList.remove(styles.dragtop, styles.dragmiddle, styles.dragbottom);
     }
+    const handleAddPage = ()=>{
+        if(!newPageName.length) return;
+        setNewPage(false);
+        setNewPageName('My Page');
+        dispatch(addNode({parent:'tabs',child:createTemplate({type:'Tab',name:newPageName,dispatch})}))
+    }
 
     return (
         <>
-            <div className={`${styles.head} ${styles.exp}`}>EXPLORER</div>
+            <div className={`${styles.head} ${styles.exp}`}>
+                <div>EXPLORER</div>
+                <div style={{ cursor: 'pointer' }} onClick={() => setNewPage(f => !f)}>
+                    <VscNewFile size={15} color='white' />
+                </div>
+            </div>
             <div
                 className={styles.rlist}
                 onDragStart={handleDragStart}
@@ -166,6 +183,26 @@ const Explorer = () => {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
+                {
+                    newPage &&
+                    <div className={styles.newpage}>
+                        <input
+                            size={5}
+                            value={newPageName}
+                            onFocus={e => e.target.select()}
+                            type='text'
+                            onKeyUp={e => {
+                                if (e.key === 'Enter') {
+                                    handleAddPage();
+                                }
+                            }}
+                            onChange={e => {
+                                setNewPageName(e.target.value);
+                            }}
+                        />
+                        <div onClick={()=>handleAddPage()}>Add Page</div>
+                    </div>
+                }
                 {
                     tabs.map((tab, ind) => (
                         <RLItem
@@ -181,7 +218,11 @@ const Explorer = () => {
     );
 }
 
-const RecursiveList = ({ start, pleft,myTab }) => {
+const AddPage = () => {
+
+}
+
+const RecursiveList = ({ start, pleft, myTab }) => {
 
     const tree = useSelector(state => state.treeReducer.tree);
 

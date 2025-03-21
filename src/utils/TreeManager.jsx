@@ -15,8 +15,6 @@ export default () => {
     Object.entries(state.treeReducer.dataMap).map(([key, value]) => ([key, value.type]))
   ), shallowEqual);
 
-  // console.log("treemanager", dataMap)
-
   const renderTree = (node) => {
 
     let ele;
@@ -100,8 +98,6 @@ export default () => {
     return ele;
 
   }
-
-  console.log("activetab",activeTab)
 
   return (
     <>

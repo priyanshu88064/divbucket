@@ -54,6 +54,14 @@
   font-size: 12px;
   color: var(--text_0);
   border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.exp > div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .rlist {
   cursor: pointer;
@@ -134,4 +142,28 @@
   font-size: 11px;
   padding: 3px 10px;
   border-radius: 10px;
+}
+.newpage{
+  cursor: text;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--text_0);
+  justify-content: right;
+  margin: 10px 5px;
+}
+.newpage > input {
+  all:unset;
+  padding: 5px;
+  border-bottom: 1px solid gray;
+  color: white;
+}
+.newpage > input:focus{
+  border-bottom: 1px solid white;
+}
+.newpage > div{
+  cursor: pointer;
+  padding: 5px 7px;
+  background-color: var(--pg_bg);
+  border-radius: 3px;
 }
