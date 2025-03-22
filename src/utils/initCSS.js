@@ -20,11 +20,6 @@ export default function initCSS(type) {
     paddingRight: "0",
     paddingBottom: "0",
     paddingLeft: "0",
-    position: "static",
-    top: "auto",
-    bottom: "auto",
-    right: "auto",
-    left: "auto",
     fontWeight: "normal",
     fontSize: "16px",
     background:"transparent",
@@ -35,7 +30,12 @@ export default function initCSS(type) {
     borderWidth:"1px",
     borderStyle:"none",
     borderColor:"#000000",
-    color:"#000000"
+    color:"#000000",
+    position: "static",
+    top: "auto",
+    bottom: "auto",
+    right: "auto",
+    left: "auto",
   };
 
   switch (type) {

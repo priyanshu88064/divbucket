@@ -1,58 +1,191 @@
-.head{
-    background-color: var(--bg_gray);
-    color: white;
-    height: 35px;
-    border-bottom: 1px solid var(--gray_border);
-    display: flex;
-    align-items: center;
+.head {
+  background-color: var(--bg_gray);
+  color: white;
+  height: 35px;
+  border-bottom: 1px solid var(--gray_border);
+  display: flex;
+  align-items: center;
 }
-.removethis{
-    flex: 1;
-    font-size: 10px;
-    color: orange;
+.removethis {
+  flex: 1;
+  font-size: 10px;
+  color: orange;
 }
-.dimensions{
-    display: flex;
-    gap: 10px;
+.dimensions {
+  display: flex;
+  gap: 10px;
 }
-.d0{
-    cursor: pointer;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    padding: 4px 7px;
-    color: var(--text_2);
+.d0 {
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 4px 7px;
+  color: var(--text_2);
 }
-.d0:hover{
-    color: white;
+.d0:hover {
+  color: white;
 }
-.active{
-    color: white;
-    background-color: var(--pg_bg);
+.active {
+  color: white;
+  background-color: var(--pg_bg);
 }
-.width{
-    cursor: default;
-    font-size: 12px;
-    padding: 4px 7px;
-    background-color: var(--pg_bg);
-    border-radius: 3px;
-    color:var(--text_2);
-    margin-left: 10px;
-    display: flex;
-    gap: 5px;
-    width: 110px;
+.width {
+  cursor: default;
+  font-size: 12px;
+  padding: 4px 7px;
+  background-color: var(--pg_bg);
+  border-radius: 3px;
+  color: var(--text_2);
+  margin-left: 10px;
+  display: flex;
+  gap: 5px;
+  width: 110px;
 }
-.width > div{
-    border-right: 1px solid var(--gray_border);
-    padding-right: 5px;
+.width > div {
+  border-right: 1px solid var(--gray_border);
+  padding-right: 5px;
 }
-.fscreen{
-    display: flex;
-    align-items: center;
-    margin-inline: 10px;
-    color: var(--text_2);
-    font-weight: bolder;
+.fscreen {
+  display: flex;
+  align-items: center;
+  margin-inline: 10px;
+  color: var(--text_2);
+  font-weight: bolder;
 }
-.fscreen:hover{
-    background-color: var(--pg_bg);
+.fscreen:hover {
+  background-color: var(--pg_bg);
+}
+.code {
+  background-color: var(--hoverblue);
+  font-size: 11px;
+  padding: 4px 20px;
+  margin-inline: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.preview {
+  background: inherit;
+  border: 1px solid var(--gray_border);
+  transition: border-color 200ms;
+}
+.code:hover {
+  border-color: var(--text_2);
+}
+.codeboxwrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.codebox {
+  border-radius: 5px;
+  max-height: 500px;
+  max-width: 800px;
+  width: 90%;
+  height: 90%;
+  background: var(--pg_bg);
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  position: relative;
+  color: var(--text_0);
+  animation: popup 200ms ease;
+}
+@keyframes popup {
+  from {
+    scale: 0.95;
+  }
+  to {
+    scale: 1;
+  }
+}
+.codesidebar {
+  background-color: var(--bg_gray);
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px;
+  overflow-y: scroll;
+}
+.csb0 {
+  cursor: default;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.csb0active {
+  background: var(--bg_gray0);
+}
+.codesidebar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.codesidebar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.codearea {
+  background-color: black;
+  flex: 1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.codearea::before {
+  content: "";
+  height: 20px;
+  display: block;
+  background-color: var(--bg_gray);
+  text-align: center;
+  border-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: 10px;
+}
+.codearea > textarea {
+  background-color: #2d2a2e;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  color: lightblue;
+  padding: 10px;
+}
+.codearea > textarea:focus-visible {
+  outline: none;
+}
+.codecopy {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  color: var(--text_2);
+  cursor: pointer;
+  text-align: center;
+}
+.codecopy:hover {
+  color: var(--text_0);
+}
+.catabs {
+  display: flex;
+  height: 25px;
+  cursor: pointer;
+}
+.catabs > div {
+  flex: 1;
+  text-align: center;
+  padding: 3px 0;
+}
+.catabsactive{
+    border-bottom: 2px solid var(--hoverblue);
 }

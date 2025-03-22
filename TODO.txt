@@ -1,4 +1,5 @@
 #TODO
+- add a 'code output not perfect and is under progress'
 - add option to delete tab
 - we can remove default css from stylemap hence using less ram
 - INTRODUCE TABS
