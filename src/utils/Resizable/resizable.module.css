@@ -5,13 +5,9 @@
   justify-content: center;
 }
 .root {
-  height: 100%;
   width: auto;
-  overflow: hidden;
-  margin: 20px 40px;
-}
-.root > .a {
-  overflow: scroll;
+  flex: 1;
+  margin: 25px 33px 20px 40px;
 }
 
 .a {
@@ -154,11 +150,7 @@
   transform: translateX(-50%);
   top: 5px;
 }
-.root > .a > .awrap:first-of-type > .a > .infobar {
-  transform: translateY(100%);
-  top: auto;
-  bottom: 0;
-}
+
 .ib0 {
   font-size: 12px;
   display: flex;
@@ -275,4 +267,18 @@
   border-radius: 10px;
   color: white;
   font-size: 12px;
+}
+.fixinfobar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.fixinfobar::-webkit-scrollbar {
+  width: 7px;
+  background-color: var(--pg_bg);
+}
+.fixinfobar::-webkit-scrollbar-thumb {
+  background-color: var(--bg_gray0);
 }

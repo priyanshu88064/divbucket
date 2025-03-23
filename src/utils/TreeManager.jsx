@@ -7,6 +7,7 @@ import Text from "./Text/Text";
 import Paragraph from "./Paragraph/Paragraph";
 import Image from "./Image/Image";
 import Video from "./Video/Video";
+import styles from "./Resizable/resizable.module.css";
 
 export default () => {
   const activeTab = useSelector(state => state.treeReducer.activeTab);
@@ -103,9 +104,11 @@ export default () => {
     <>
       {
         activeTab ?
-          <Resizable id={activeTab}>
-            {tree[activeTab].map(tree => renderTree(tree))}
-          </Resizable>:
+          <div className={styles.fixinfobar}>
+            <Resizable id={activeTab}>
+              {tree[activeTab].map(tree => renderTree(tree))}
+            </Resizable>
+          </div>:
           ""
       }
     </>

@@ -30,7 +30,7 @@ const treeSlice = createSlice({
   name: "tree",
   initialState: {
     tree: {
-      tabs: [],
+      tabs: []
     },
     activeNodeId: null,
     activeTab: null,

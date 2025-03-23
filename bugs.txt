@@ -2,12 +2,12 @@
 - paste/cut inside unit elements[can't reproduce]
 - contextmenu going up direction ( related to sometimes mobile -10px showing in headbar, can be a persist redux extension bug)
 - encounter a bug where headbar > width is showing negative(mobile -10px)(can't reproduce yet)
-- FIX INFOBAR POSITION
 - Cssbar>borders of resizable interfaring with activebar/infobar
 - optimize the Layout Utility>Components (currently they all have different components though they are same)
 - Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
 #FIXED
+- FIX INFOBAR POSITION [by adding a div wrapper (fixinfobar) in treemanager]
 - bug in layer while resizing div(still bottom resizable hover while resizing)[FIXED:zindex issue]
 - in a row with long height the ondraghover drag helper boxes showing in left right side instead of top bottom
 - when display flex and column-reverse of BODY, there is image cut from bottom [Seems like an expected behaviour.]
