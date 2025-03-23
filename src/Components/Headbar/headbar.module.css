@@ -189,3 +189,7 @@
 .catabsactive{
     border-bottom: 2px solid var(--hoverblue);
 }
+.codewarning{
+  color: red;
+  padding: 10px;
+}

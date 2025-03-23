@@ -1,13 +1,13 @@
 #TODO
-- add a 'code output not perfect and is under progress'
 - add option to delete tab
 - we can remove default css from stylemap hence using less ram
-- INTRODUCE TABS
 - INTRODUCE PRE-BUILT SECTIONS
 - hover resizable when hover in rlistitems in Explorer
 - fix entire theme
 
 #DONE
+- add a 'code output not perfect and is under progress'
+- INTRODUCE TABS
 - don't use sidebar ref for adding drag image, directly append in document
 - can we use only 1 instance of useDrag ? [yes we can]
 - Add dataTransfer.setImage in sidebar>explorer>rlitems

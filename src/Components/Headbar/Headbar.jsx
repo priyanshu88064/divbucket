@@ -91,6 +91,9 @@ const Code = () => {
                     <div onClick={() => setIsHtml(false)} className={`${!isHtml && styles.catabsactive}`}>CSS</div>
                 </div>
                 <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css} readOnly />
+                <div className={styles.codewarning}>
+                    *generated HTML/CSS code contains some bugs and may produce unexpected results. App is still in working phase and will be fixed as soon as possible.
+                </div>
             </div>
         </>
     );
