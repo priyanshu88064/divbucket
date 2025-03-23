@@ -10,7 +10,7 @@ import { generateCode } from '../../utils/treeFunctions';
 
 export default () => {
     const activeTab = useSelector(state => state.treeReducer.activeTab);
-    const [isCode, setIsCode] = useState(true);
+    const [isCode, setIsCode] = useState(false);
 
     return (
         <div className={styles.head}>
@@ -92,7 +92,7 @@ const Code = () => {
                 </div>
                 <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css} readOnly />
                 <div className={styles.codewarning}>
-                    *generated HTML/CSS code contains some bugs and may produce unexpected results. App is still in working phase and will be fixed as soon as possible.
+                    *generated HTML/CSS code contains some bugs and may produce unexpected results. App is in development phase, bugs will be fixed as soon as possible.
                 </div>
             </div>
         </>

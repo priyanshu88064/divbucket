@@ -30,36 +30,12 @@ const treeSlice = createSlice({
   name: "tree",
   initialState: {
     tree: {
-      tabs: ["root"],
-      root: [],
+      tabs: [],
     },
-    activeNodeId: "root",
-    activeTab: "root",
-    styleMap: {
-      root: {
-        width: "100%",
-        height: "100%",
-        minWidth: "350px",
-        background: "white",
-        paddingTop: "5px",
-        paddingRight: "5px",
-        paddingBottom: "5px",
-        paddingLeft: "5px",
-        display: "block",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "stretch",
-        gap: "0px",
-        flexWrap: "nowrap",
-      },
-    },
+    activeNodeId: null,
+    activeTab: null,
+    styleMap: {},
     dataMap: {
-      root: {
-        name: "BODY",
-        type: "root",
-        unit: false,
-        open: true,
-      },
       tabs: {
         unit: false,
         type: "tabwrapper",
@@ -178,7 +154,7 @@ const treeSlice = createSlice({
       );
     },
     splice: (state, { payload }) => {
-      if (state.tree.tabs.includes(payload.referenceNode)) {
+      if (state.tree.tabs.includes(Number(payload.referenceNode))) {
         state.tree[payload.referenceNode].splice(0, 0, Number(payload.node));
       } else {
         const parent =

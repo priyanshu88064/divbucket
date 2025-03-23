@@ -62,7 +62,8 @@ export function useDrag({ root }) {
 
     if (targetId == root) {
     } else {
-      const aParent = e.target.parentNode?.parentNode?.parentNode;
+      let aParent = e.target.parentNode?.parentNode;
+      if (e.target.getAttribute("data-target")) aParent = aParent?.parentNode;
       if (!aParent) return;
       const display = aParent.style.display;
       const direction = aParent.style.flexDirection;
@@ -137,14 +138,15 @@ export function useDrag({ root }) {
       e.target.getAttribute("data-root");
     const draggedId =
       draggedNodeRef.current?.getAttribute("data-id") ||
-      createTemplate({type:e.dataTransfer.getData("type"), dispatch});
+      createTemplate({ type: e.dataTransfer.getData("type"), dispatch });
 
     if (!targetId || !draggedId || draggedId == targetId) return;
 
     if (targetId == root) {
       dispatch(moveItem({ node: draggedId, referenceNode: targetId, pos: -1 }));
     } else {
-      const aParent = e.target.parentNode?.parentNode?.parentNode;
+      let aParent = e.target.parentNode?.parentNode;
+      if (e.target.getAttribute("data-target")) aParent = aParent?.parentNode;
       if (!aParent) return;
       const display = aParent.style.display;
       const direction = aParent.style.flexDirection;

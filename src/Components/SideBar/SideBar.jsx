@@ -13,9 +13,7 @@ import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
 import { GrDrag } from 'react-icons/gr';
-import { FaFile, FaHome } from 'react-icons/fa';
-import { FaFileCirclePlus } from 'react-icons/fa6';
-import { BsFileEarmarkPlus, BsFileEarmarkPlusFill } from 'react-icons/bs';
+import { FaFile } from 'react-icons/fa';
 import { VscNewFile } from 'react-icons/vsc';
 import { createTemplate } from '../../utils/template';
 
@@ -127,7 +125,7 @@ const Explorer = () => {
         if (!draggedNode.current || !targetNode || targetNode === draggedNode.current.getAttribute('data-id')) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== activeTab && diff <= rect.height / 3) {
+        if (!tabs.includes(Number(targetNode)) && diff <= rect.height / 3) {
             e.target.classList.remove(styles.dragbottom, styles.dragmiddle);
             e.target.classList.add(styles.dragtop);
         } else if (diff <= (rect.height * 2) / 3) {
@@ -146,7 +144,7 @@ const Explorer = () => {
         if (!targetNode || targetNode === _draggedNode) return;
         const rect = e.target.getBoundingClientRect();
         const diff = e.clientY - rect.top;
-        if (targetNode !== activeTab && diff <= rect.height / 3) {
+        if (!tabs.includes(Number(targetNode)) && diff <= rect.height / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: 0 }))
         } else if (diff <= (rect.height * 2) / 3) {
             dispatch(moveItem({ node: _draggedNode, referenceNode: targetNode, pos: -1 }))

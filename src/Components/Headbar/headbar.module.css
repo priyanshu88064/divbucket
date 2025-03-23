@@ -72,6 +72,8 @@
   background: inherit;
   border: 1px solid var(--gray_border);
   transition: border-color 200ms;
+  cursor:not-allowed;
+  opacity: 0.5;
 }
 .code:hover {
   border-color: var(--text_2);
