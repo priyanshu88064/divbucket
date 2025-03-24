@@ -1,13 +1,12 @@
 .awrap {
-  display: flex;
-  width: fit-content;
-  height: fit-content;
-  justify-content: center;
+  width: auto;
+  height: auto;
 }
 .root {
-  width: auto;
   flex: 1;
+  display: flex;
   margin: 25px 33px 20px 40px;
+  justify-content: center;
 }
 
 .a {
@@ -147,8 +146,7 @@
 .root > .a > .infobar {
   transform: none;
   left: 50%;
-  transform: translateX(-50%);
-  top: 5px;
+  transform: translate(-50%,-110%);
 }
 
 .ib0 {

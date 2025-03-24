@@ -5,7 +5,6 @@ export default ({ node,tree, renderTree }) => {
         <Resizable
             id={node}
         >
-            {node} Row
             {
                 tree[node].map(node => renderTree(node))
             }

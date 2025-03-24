@@ -51,7 +51,7 @@
   cursor: default;
 }
 .c0 > div {
-  padding: 7px 15px;
+  padding: 7px 12px;
 }
 .c0icon {
   background-color: var(--bg_gray);
@@ -503,4 +503,11 @@
   div{
     margin-top: 10px;
   }
+}
+.c01{
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  cursor: pointer;
 }

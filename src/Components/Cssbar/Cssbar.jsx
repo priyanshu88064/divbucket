@@ -58,19 +58,21 @@ export default () => {
                                 {name}
                             </div>
                             <div
-                                style={{ marginLeft: 'auto', }}
-                                className={`${tab[0] === "0" ? styles.c0icon : ''}`}
+                                style={{ marginLeft: 'auto' }}
+                                className={`${styles.c01} ${tab[0] === "0" ? styles.c0icon : ''}`}
                                 onClick={() => dispatch(changeTab({ tab: "00" }))}
                                 title='css'
                             >
                                 <FaCss3 />
+                                Styles
                             </div>
                             <div
-                                className={`${tab[0] === "1" ? styles.c0icon : ''}`}
+                                className={`${styles.c01} ${tab[0] === "1" ? styles.c0icon : ''}`}
                                 onClick={() => dispatch(changeTab({ tab: "10" }))}
                                 title='edit'
                             >
                                 <MdOutlineEdit />
+                                EDIT
                             </div>
                         </div>
                         <div className={styles.c1}>

@@ -7,19 +7,22 @@ import { LuHeading1, LuLetterText, LuSquareArrowRight } from 'react-icons/lu';
 import { PiImageLight, PiVideoLight } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
+import { MdHorizontalRule, MdKeyboardArrowDown, MdKeyboardArrowRight, MdLinearScale } from 'react-icons/md';
 import { addNode, moveItem, updateActiveNode, updateActiveTab } from '../../store/reducers/treeReducer';
 import { useContextMenu } from '../../utils/hooks/useContextMenu';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import { GetIconOfType } from '../Cssbar/Cssbar';
 import { GrDrag } from 'react-icons/gr';
-import { FaFile } from 'react-icons/fa';
+import { FaFile, FaList } from 'react-icons/fa';
 import { VscNewFile } from 'react-icons/vsc';
 import { createTemplate } from '../../utils/template';
+import { IoIosList } from 'react-icons/io';
+import { GoHorizontalRule } from 'react-icons/go';
+import { TbLayoutNavbar } from 'react-icons/tb';
 
 export default () => {
 
-    const [tab, setTab] = useState(1);
+    const [tab, setTab] = useState(0);
 
     const handleDragStart = (e, type) => {
         e.dataTransfer.setData("type", type);
@@ -41,8 +44,8 @@ export default () => {
                 <div className={styles.a}>
                     {
                         tab === 0 ?
-                            <>
-                                <div className={styles.head}>Nodes</div>
+                            <div className={styles.a0}>
+                                <div className={styles.head}>Elements</div>
                                 <div className={styles.a1}>
                                     <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Block")}>
                                         <div><GiSquare size={40} /></div>
@@ -68,12 +71,27 @@ export default () => {
                                         <div><PiImageLight size={40} /></div>
                                         <div>Image</div>
                                     </div>
-                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Video")}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "List")}>
+                                        <div><IoIosList size={40} /></div>
+                                        <div>List</div>
+                                    </div>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "ListItem")}>
+                                        <div><GoHorizontalRule size={40} /></div>
+                                        <div>List Item</div>
+                                    </div>
+                                    {/* <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Video")}>
                                         <div><PiVideoLight size={40} /></div>
                                         <div>Video</div>
+                                    </div> */}
+                                </div>
+                                <div className={styles.head} style={{ marginTop: '15px' }}>Layouts</div>
+                                <div className={styles.a1}>
+                                    <div className={styles.a10} draggable onDragStart={(e) => handleDragStart(e, "Navbar")}>
+                                        <div><TbLayoutNavbar size={40} /></div>
+                                        <div>Navbar</div>
                                     </div>
                                 </div>
-                            </> :
+                            </div> :
                             tab == 1 ?
                                 <Explorer /> :
                                 <>

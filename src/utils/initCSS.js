@@ -40,11 +40,11 @@ export default function initCSS(type) {
 
   switch (type) {
     case "Row":
-      style.height = "50px";
+      style.minHeight = "20px";
       style.display = "flex";
       break;
     case "Block":
-      style.height = "20px";
+      style.minHeight = '20px';
       break;
     case "Heading":
       style.fontSize = "2em";
@@ -52,6 +52,12 @@ export default function initCSS(type) {
       break;
     case "Text":
       style.width = "fit-content";
+      break;
+    case "Image":
+      // style.width = "200px";
+      // style.height = "200px";
+      style.width = 'fit-content';
+      style.height = 'fit-content';
       break;
     case "Video":
       style.width = "200px";
