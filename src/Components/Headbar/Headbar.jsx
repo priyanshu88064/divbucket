@@ -7,6 +7,7 @@ import { FaDownload } from 'react-icons/fa6';
 import { useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { generateCode } from '../../utils/treeFunctions';
+import { LuPaintBucket } from 'react-icons/lu';
 
 export default () => {
     const activeTab = useSelector(state => state.treeReducer.activeTab);
@@ -14,23 +15,31 @@ export default () => {
 
     return (
         <div className={styles.head}>
-            <div className={styles.removethis}>WORK UNDER CONSTRUCTION</div>
-            {activeTab && <WidthBox />}
-            <div className={styles.fscreen} onClick={() => {
-                if (!document.fullscreenElement)
-                    document.documentElement.requestFullscreen();
-                else if (document.exitFullscreen)
-                    document.exitFullscreen();
-            }}>
-                <MdFullscreen size={22} />
+            <div className={styles.logo}>
+                <LuPaintBucket size={20} className={styles.licon}/>
+                <div className={styles.l0}>DIV</div>
+                <div className={styles.l1}>Bucket</div>
             </div>
-            <div className={`${styles.code} ${styles.preview}`}>
-                <FaEye />
-                PREVIEW
+            <div className={styles.h1}>
+                {activeTab && <WidthBox />}
+                <div className={styles.fscreen} onClick={() => {
+                    if (!document.fullscreenElement)
+                        document.documentElement.requestFullscreen();
+                    else if (document.exitFullscreen)
+                        document.exitFullscreen();
+                }}>
+                    <MdFullscreen size={22} />
+                </div>
             </div>
-            <div className={styles.code} onClick={() => setIsCode(f => !f)}>
-                <FaDownload />
-                HTML/CSS
+            <div className={styles.h2}>
+                <div className={`${styles.code} ${styles.preview}`}>
+                    <FaEye />
+                    PREVIEW
+                </div>
+                <div className={styles.code} onClick={() => setIsCode(f => !f)}>
+                    <FaDownload />
+                    HTML/CSS
+                </div>
             </div>
             {
                 isCode &&
@@ -90,7 +99,7 @@ const Code = () => {
                     <div onClick={() => setIsHtml(true)} className={`${isHtml && styles.catabsactive}`}>HTML</div>
                     <div onClick={() => setIsHtml(false)} className={`${!isHtml && styles.catabsactive}`}>CSS</div>
                 </div>
-                <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css.length > 5000 ? code[activeTab].css.substr(0,5000)+`\n...`:code[activeTab].css } readOnly />
+                <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css.length > 5000 ? code[activeTab].css.substr(0, 5000) + `\n...` : code[activeTab].css} readOnly />
                 <div className={styles.codewarning}>
                     *generated HTML/CSS code contains some bugs and may produce unexpected results. App is in development phase, bugs will be fixed as soon as possible.
                 </div>
