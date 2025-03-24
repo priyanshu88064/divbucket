@@ -90,7 +90,7 @@ const Code = () => {
                     <div onClick={() => setIsHtml(true)} className={`${isHtml && styles.catabsactive}`}>HTML</div>
                     <div onClick={() => setIsHtml(false)} className={`${!isHtml && styles.catabsactive}`}>CSS</div>
                 </div>
-                <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css} readOnly />
+                <textarea style={{ color: isHtml && 'orange' }} value={isHtml ? code[activeTab].html : code[activeTab].css.length > 5000 ? code[activeTab].css.substr(0,5000)+`\n...`:code[activeTab].css } readOnly />
                 <div className={styles.codewarning}>
                     *generated HTML/CSS code contains some bugs and may produce unexpected results. App is in development phase, bugs will be fixed as soon as possible.
                 </div>

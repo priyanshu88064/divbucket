@@ -23,7 +23,7 @@ export default function initData(type) {
       data.content = "HEADING";
       break;
     case "Image":
-      data.src = "http://localhost:5173/sample.jpg";
+      data.src = "/sample.jpg";
       data.alt = "image";
       break;
   }

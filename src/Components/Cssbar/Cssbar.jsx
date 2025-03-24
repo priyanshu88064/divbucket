@@ -492,7 +492,7 @@ const EditTab = ({ focus }) => {
                     />
                 </div>
             }
-            <div className={`${styles.e0} ${styles.e0flexcol}`}>
+            {/* <div className={`${styles.e0} ${styles.e0flexcol}`}>
                 <div className={styles.e00}>
                     Hyperlink
                     <FaLink size={10} />
@@ -513,15 +513,16 @@ const EditTab = ({ focus }) => {
                     checked={dataMap.newTab}
                     onChange={e => handleText("newTab", e.target.checked)}
                 />
-            </div>
+            </div> */}
             {dataMap.type === "Image" && <><div className={`${styles.e0} ${styles.e0flexcol}`}>
                 <div className={styles.e00}>
-                    Image Link
+                    Image URL
                     <FaLink size={10} />
                 </div>
                 <input
-                    className={styles.e0i}
                     value={data.src}
+                    className={styles.e0i}
+                    placeholder='https://picsum.photos/200'
                     onBlur={() => handleText("src", data.src)}
                     onKeyUp={e => {
                         if (e.key === "Enter") handleText("src", data.src);
