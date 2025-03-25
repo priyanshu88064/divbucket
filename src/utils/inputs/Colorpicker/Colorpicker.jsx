@@ -154,7 +154,7 @@ const CSS_COLOR_NAMES = {
 };
 
 
-export default ({ value, onChange }) => {
+export default ({id, value, onChange }) => {
 
     const [hex, setHex] = useState(value);
     const debounce = useDebounce(hex, 500);

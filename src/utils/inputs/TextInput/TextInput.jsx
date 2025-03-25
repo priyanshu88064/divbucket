@@ -1,19 +1,19 @@
 import styles from './textinput.module.css';
 import { useEffect, useState } from 'react';
 
-export default ({ auto, onChange, value, units }) => {
+export default ({ onChange, value, units }) => {
 
-    const [val, setVal] = useState(value);
+    const [val, setVal] = useState(value || 'auto');
 
     useEffect(() => {
-        setVal(value);
+        setVal(value || "auto");
     }, [value]);
 
     return (
         <div className={styles.ti}>
             <input
-                value={val===auto?"auto":val}
-                className={val === "auto" || val===auto ? styles.auto : ''}
+                value={val}
+                className={val === "auto" ? styles.auto : ''}
                 onChange={e => setVal(e.target.value)}
                 onBlur={() => onChange(val)}
                 onFocus={e => e.target.select()}
@@ -28,9 +28,7 @@ export default ({ auto, onChange, value, units }) => {
                     {
                         units.map(unit => (
                             <div onMouseDown={() => {
-                                if (unit === "auto")
-                                    setVal(auto);
-                                else setVal(unit);
+                                setVal(unit)
                             }} key={unit}>{unit}</div>
                         ))
                     }

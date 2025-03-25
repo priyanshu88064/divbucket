@@ -16,12 +16,6 @@ TYPES.Tab = {
       paddingRight: "5px",
       paddingBottom: "5px",
       paddingLeft: "5px",
-      display: "block",
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "stretch",
-      gap: "0px",
-      flexWrap: "nowrap",
     },
   },
   dataMap: {
@@ -108,7 +102,8 @@ TYPES.Navbar = {
       borderStyle:'Solid',
       borderColor:'gray',
       borderRadius:'5px',
-      alignItems:'center'
+      borderWidth:'1px',
+      alignItems:'center',
     },
     1:{
       ...TYPES.Image.styleMap[0]

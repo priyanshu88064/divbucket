@@ -1,4 +1,4 @@
-import { MdAdsClick, MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdOutlineEdit } from 'react-icons/md';
 import styles from './cssbar.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -83,16 +83,16 @@ export default () => {
                             }
                         </div>
                     </> :
-                    <Empty/>
+                    <Empty />
             }
         </div>
     );
 }
 
-const Empty = ()=>{
+const Empty = () => {
     return (
         <div className={styles.empty}>
-            <FaCat size={50}/>
+            <FaCat size={50} />
             <div>Feeling empty</div>
         </div>
     );
@@ -105,7 +105,10 @@ const CssTab = () => {
     const dispatch = useDispatch();
 
     const UpdateStyle = (prop, value) => {
-        dispatch(updateStyleMap({ id, style: { ...styleMap, [prop]: value } }))
+        let style = { ...styleMap, [prop]: value };
+        if (value === 'auto')
+            delete style[prop];
+        dispatch(updateStyleMap({ id, style }));
     }
 
     return (
@@ -120,22 +123,19 @@ const CssTab = () => {
                     </div>
                     <div className={styles.c110}>
                         <TextInput
-                            auto={"auto"}
                             value={styleMap.width}
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, width: value } }))}
+                            onChange={value => UpdateStyle('width', value)}
                         />
                         <TextInput
-                            auto={"0px"}
                             value={styleMap.minWidth}
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minWidth: value } }))}
+                            onChange={value => UpdateStyle('minWidth', value)}
                         />
                         <TextInput
-                            auto={"none"}
                             value={styleMap.maxWidth}
                             units={["auto", "50px", "100px", "200px", "400px", "800px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxWidth: value } }))}
+                            onChange={value => UpdateStyle('maxWidth', value)}
                         />
                     </div>
                     <div className={styles.c110} style={{ marginLeft: '10px' }}>
@@ -145,22 +145,19 @@ const CssTab = () => {
                     </div>
                     <div className={styles.c110}>
                         <TextInput
-                            auto={"auto"}
                             value={styleMap.height}
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, height: value } }))}
+                            onChange={value => UpdateStyle('height', value)}
                         />
                         <TextInput
-                            auto={"0px"}
                             value={styleMap.minHeight}
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, minHeight: value } }))}
+                            onChange={value => UpdateStyle('minHeight', value)}
                         />
                         <TextInput
-                            auto={"none"}
                             value={styleMap.maxHeight}
                             units={["auto", "20px", "40px", "80px", "100px", "200px"]}
-                            onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, maxHeight: value } }))}
+                            onChange={value => UpdateStyle('maxHeight', value)}
                         />
                     </div>
                 </div>
@@ -168,22 +165,33 @@ const CssTab = () => {
             <Wrap title={"Display"}>
                 <div className={`${styles.dicont} ${styles.padwrap}`}>
                     <div className={`${styles.dic0} ${styles.beffect}`}>
-                        <div className={`${styleMap.display === "block" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "block" } }))}  >Block</div>
-                        <div className={`${styleMap.display === "flex" && styles.beffectactivediv}`} onClick={() => dispatch(updateStyleMap({ id, style: { ...styleMap, display: "flex" } }))} >Flex</div>
+                        <div className={`${styleMap.display !== "flex" && styles.beffectactivediv}`} onClick={() => UpdateStyle('display', 'auto')}  >Block</div>
+                        <div className={`${styleMap.display === "flex" && styles.beffectactivediv}`} onClick={() => UpdateStyle('display', 'flex')} >Flex</div>
                     </div>
                     {
                         styleMap.display === "flex" &&
                         <>
-                            <FlexProperties data={{ name: "Direction", prop: "flexDirection", values: ["row", "row-reverse", "column", "column-reverse"] }} />
-                            <FlexProperties data={{ name: "Justify", prop: "justifyContent", values: ["flex-start", "flex-end", "center", "space-around", "space-between", "space-evenly"] }} />
-                            <FlexProperties data={{ name: "Align", prop: "alignItems", values: ["stretch", "center", "flex-start", "flex-end", "start", "end", "baseline"] }} />
+                            <FlexProperties
+                                id={id}
+                                data={{ name: "Direction", prop: "flexDirection", values: ["auto", "row", "row-reverse", "column", "column-reverse"] }}
+                                onChange={value => UpdateStyle('flexDirection', value)}
+                            />
+                            <FlexProperties
+                                id={id}
+                                data={{ name: "Justify", prop: "justifyContent", values: ["auto", "flex-start", "flex-end", "center", "space-around", "space-between", "space-evenly"] }}
+                                onChange={value => UpdateStyle('justifyContent', value)}
+                            />
+                            <FlexProperties
+                                id={id}
+                                data={{ name: "Align", prop: "alignItems", values: ["auto", "stretch", "center", "flex-start", "flex-end", "start", "end", "baseline"] }}
+                                onChange={value => UpdateStyle('alignItems', value)}
+                            />
                             <div className={styles.dic2}>
                                 <div className={styles.dic20}>
                                     <div style={{ color: 'var(--text_0)' }} className={styles.c1101}>Gap:</div>
                                     <TextInput
-                                        auto={"0px"}
                                         value={styleMap.gap}
-                                        onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, gap: value } }))}
+                                        onChange={value => UpdateStyle('gap', value)}
                                     />
                                 </div>
                                 <CheckBox
@@ -209,16 +217,16 @@ const CssTab = () => {
                         <div className={styles.bg01}>
                             <Select
                                 options={["Auto", "Solid"]}
-                                values={["transparent", "#ffffff"]}
-                                onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
-                                value={styleMap.background === "transparent" ? "Auto" : "Solid"}
+                                values={["auto", "white"]}
+                                onChange={value => UpdateStyle('background', value)}
+                                value={styleMap.background ? "Solid" : "Auto"}
                             />
                             {
-                                styleMap.background !== 'transparent' &&
+                                styleMap.background &&
                                 <Colorpicker
                                     key={"background" + id}
                                     value={styleMap.background}
-                                    onChange={value => dispatch(updateStyleMap({ id, style: { ...styleMap, background: value } }))}
+                                    onChange={value => UpdateStyle('background', value)}
                                 />
                             }
                         </div>
@@ -233,7 +241,7 @@ const CssTab = () => {
                                 title='bold'
                                 className={`${styles.holder0} ${styleMap.fontWeight === "bold" ? styles.holderactive : ''}`}
                                 onClick={() => {
-                                    if (styleMap.fontWeight === "bold") UpdateStyle("fontWeight", "normal");
+                                    if (styleMap.fontWeight === "bold") UpdateStyle("fontWeight", "auto");
                                     else UpdateStyle("fontWeight", "bold");
                                 }}
                             >
@@ -243,7 +251,7 @@ const CssTab = () => {
                                 title='italic'
                                 className={`${styles.holder0} ${styleMap.fontStyle === "italic" ? styles.holderactive : ''}`}
                                 onClick={() => {
-                                    if (styleMap.fontStyle === "italic") UpdateStyle("fontStyle", "normal");
+                                    if (styleMap.fontStyle === "italic") UpdateStyle("fontStyle", "auto");
                                     else UpdateStyle("fontStyle", "italic")
                                 }}
                             >
@@ -253,7 +261,7 @@ const CssTab = () => {
                                 title='underline'
                                 className={`${styles.holder0} ${styleMap.textDecoration === "underline" ? styles.holderactive : ''}`}
                                 onClick={() => {
-                                    if (styleMap.textDecoration === "underline") UpdateStyle("textDecoration", "none");
+                                    if (styleMap.textDecoration === "underline") UpdateStyle("textDecoration", "auto");
                                     else UpdateStyle("textDecoration", "underline");
                                 }}
                             >
@@ -263,7 +271,7 @@ const CssTab = () => {
                                 title='strikethrough'
                                 className={`${styles.holder0} ${styleMap.textDecoration === "line-through" ? styles.holderactive : ''}`}
                                 onClick={() => {
-                                    if (styleMap.textDecoration === "line-through") UpdateStyle("textDecoration", "none");
+                                    if (styleMap.textDecoration === "line-through") UpdateStyle("textDecoration", "auto");
                                     else UpdateStyle("textDecoration", "line-through");
                                 }}
                             >
@@ -273,7 +281,7 @@ const CssTab = () => {
                                 title='small-caps'
                                 className={`${styles.holder0} ${styleMap.fontVariant === "small-caps" ? styles.holderactive : ''}`}
                                 onClick={() => {
-                                    if (styleMap.fontVariant === "small-caps") UpdateStyle("fontVariant", "normal");
+                                    if (styleMap.fontVariant === "small-caps") UpdateStyle("fontVariant", "auto");
                                     else UpdateStyle("fontVariant", "small-caps");
                                 }}
                             >
@@ -287,13 +295,14 @@ const CssTab = () => {
                         <div className={styles.fontselect}>
                             <input
                                 type='text'
-                                className={`${styles.fontsi} ${styleMap.fontFamily === "system-ui" ? styles.fontdefault : ''}`}
-                                value={styleMap.fontFamily}
+                                className={`${styles.fontsi} ${!styleMap.fontFamily ? styles.fontdefault : ''}`}
+                                value={styleMap.fontFamily || 'auto'}
                                 readOnly
                             />
                             <div className={styles.fontdrop}>
                                 {
                                     [
+                                        "auto",
                                         "serif",
                                         "sans-serif",
                                         "monospace",
@@ -310,7 +319,7 @@ const CssTab = () => {
                                     ].map(font => (
                                         <div
                                             key={font}
-                                            style={{ fontFamily: font }}
+                                            style={{ fontFamily: font !=='auto' && font }}
                                             onMouseDown={() => UpdateStyle("fontFamily", font)}
                                         >
                                             {font}
@@ -324,7 +333,6 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Font-Size</div>
                         <div className={styles.sizesiwrap}>
                             <TextInput
-                                auto={"16px"}
                                 value={styleMap.fontSize}
                                 units={["auto", "8px", "10px", "12px", "14px", "16px", "20px", "24px"]}
                                 onChange={value => UpdateStyle("fontSize", value)}
@@ -335,7 +343,6 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Font-Weight</div>
                         <div className={styles.sizesiwrap}>
                             <TextInput
-                                auto={"normal"}
                                 value={styleMap.fontWeight}
                                 units={["auto", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600"]}
                                 onChange={value => UpdateStyle("fontWeight", value)}
@@ -348,7 +355,7 @@ const CssTab = () => {
                         <div className={styles.bg01}>
                             <Colorpicker
                                 key={"text" + id}
-                                value={styleMap.color}
+                                value={styleMap.color || 'black'}
                                 onChange={value => UpdateStyle("color", value)}
                             />
                         </div>
@@ -361,7 +368,6 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Border-Style</div>
                         <div className={styles.sizesiwrap}>
                             <TextInput
-                                auto={"none"}
                                 value={styleMap.borderStyle}
                                 units={["auto", "solid", "dotted", "dashed", "double", "groove", "hidden"]}
                                 onChange={value => UpdateStyle("borderStyle", value)}
@@ -372,7 +378,6 @@ const CssTab = () => {
                         <div className={styles.bg0name}>Border-Width</div>
                         <div className={styles.sizesiwrap}>
                             <TextInput
-                                auto={"1px"}
                                 value={styleMap.borderWidth}
                                 units={["auto", "1px", "2px", "3px", "4px"]}
                                 onChange={value => UpdateStyle("borderWidth", value)}
@@ -384,7 +389,7 @@ const CssTab = () => {
                         <div className={styles.bg01}>
                             <Colorpicker
                                 key={"border" + id}
-                                value={styleMap.borderColor}
+                                value={styleMap.borderColor || 'black'}
                                 onChange={value => UpdateStyle("borderColor", value)}
                             />
                         </div>
@@ -675,31 +680,28 @@ const MPbox = ({ prefix }) => {
                 <div className={styles.mpin} style={{ boxShadow: prefix === "margin" ? "2px 2px 5px #00000070" : "inset 2px 2px 5px #00000070", background: prefix === "margin" ? 'var(--bg_gray0)' : 'var(--bg_gray)' }}>
                 </div>
             </div>
-            hello
         </div>
     );
 }
 
-const FlexProperties = ({ data }) => {
+const FlexProperties = ({ id, data, onChange }) => {
 
-    const id = useSelector(state => state.treeReducer.activeNodeId);
-    const styleMap = useSelector(state => state.treeReducer.styleMap);
-    const dispatch = useDispatch();
+    const styleMap = useSelector(state => state.treeReducer.styleMap[id]);
     const [demoStyle, setDemoStyle] = useState({});
 
     useEffect(() => {
         setDemoStyle({
-            flexDirection: styleMap[id].flexDirection,
-            justifyContent: styleMap[id].justifyContent,
-            alignItems: styleMap[id].alignItems,
+            flexDirection: styleMap.flexDirection,
+            justifyContent: styleMap.justifyContent,
+            alignItems: styleMap.alignItems,
         });
     }, [id, styleMap]);
 
     return (
-        <InputDropDown name={data.name} value={styleMap[id][data.prop]} >
+        <InputDropDown name={data.name} value={styleMap[data.prop] || 'auto'} >
             <div className={styles.dic111}>
                 {
-                    data.values.map((i, d) => <div onMouseEnter={() => setDemoStyle(prev => ({ ...prev, [data.prop]: i }))} onMouseDown={() => dispatch(updateStyleMap({ id, style: { ...styleMap[id], [data.prop]: i } }))} key={d}>{i}</div>)
+                    data.values.map((i, d) => <div onMouseEnter={() => setDemoStyle(prev => ({ ...prev, [data.prop]: i }))} onMouseDown={() => onChange(i)} key={d}>{i}</div>)
                 }
             </div>
             <div className={styles.dic110}>
