@@ -10,6 +10,7 @@ import { MdOutlineEdit } from 'react-icons/md';
 import { TbMinusVertical } from 'react-icons/tb';
 import { GetIconOfType } from '../../Components/Cssbar/Cssbar';
 import { RiDragMove2Fill } from 'react-icons/ri';
+import useShortcuts from '../hooks/useShortcuts';
 
 export default ({ id, children }) => {
 

@@ -65,8 +65,8 @@ export function useDrag({ root }) {
       let aParent = e.target.parentNode?.parentNode;
       if (e.target.getAttribute("data-target")) aParent = aParent?.parentNode;
       if (!aParent) return;
-      const display = aParent.style.display;
-      const direction = aParent.style.flexDirection;
+      const display = aParent.style.display || "block";
+      const direction = aParent.style.flexDirection || "row";
 
       e.target.classList.add(styles.dborder);
       const rect = e.target.getBoundingClientRect();
@@ -148,8 +148,8 @@ export function useDrag({ root }) {
       let aParent = e.target.parentNode?.parentNode;
       if (e.target.getAttribute("data-target")) aParent = aParent?.parentNode;
       if (!aParent) return;
-      const display = aParent.style.display;
-      const direction = aParent.style.flexDirection;
+      const display = aParent.style.display || "block";
+      const direction = aParent.style.flexDirection || "row";
 
       const rect = e.target.getBoundingClientRect();
       switch (getPosi(e.clientX, e.clientY, rect, display, direction)) {

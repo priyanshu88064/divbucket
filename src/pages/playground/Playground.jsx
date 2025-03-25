@@ -9,12 +9,14 @@ import { useDrag } from '../../utils/hooks/useDrag';
 import { IoIosClose } from 'react-icons/io';
 import { createTemplate } from '../../utils/template';
 import { createSelector } from '@reduxjs/toolkit';
+import useShortcuts from '../../utils/hooks/useShortcuts';
 
 export default () => {
     const dispatch = useDispatch();
     const bgRef = useRef(null);
     const activeTab = useSelector(state => state.treeReducer.activeTab);
     const { handleDragStart, handleDragEnd, handleDragOver, handleDrop, handleDragLeave } = useDrag({ root: activeTab });
+    useShortcuts();
 
     useEffect(() => {
         const observer = new ResizeObserver(entries => {

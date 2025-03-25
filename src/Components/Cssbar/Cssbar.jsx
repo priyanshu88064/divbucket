@@ -644,10 +644,10 @@ const MPbox = ({ prefix }) => {
 
     useEffect(() => {
         setValue({
-            Top: styleMap[prefix + "Top"],
-            Right: styleMap[prefix + "Right"],
-            Bottom: styleMap[prefix + "Bottom"],
-            Left: styleMap[prefix + "Left"],
+            Top: styleMap[prefix + "Top"] || "0",
+            Right: styleMap[prefix + "Right"] || "0",
+            Bottom: styleMap[prefix + "Bottom"] || "0",
+            Left: styleMap[prefix + "Left"] || "0",
         });
     }, [id, styleMap]);
 

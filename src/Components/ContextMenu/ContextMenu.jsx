@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './contextmenu.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteFromParent, deleteNode, duplicate, paste, revealParent, updateClipboard } from '../../store/reducers/treeReducer';
+import { copy, cut, deleteNode, duplicate, paste, revealParent, updateClipboard } from '../../store/reducers/treeReducer';
 import { changeTab } from '../../store/reducers/focusReducer';
 
 export default ({ id, points, sidebar, setClicked }) => {
@@ -18,8 +18,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Ctrl + X",
                 isOff: type === "root",
                 func: () => {
-                    dispatch(updateClipboard({ cut: id, copy: null }));
-                    dispatch(deleteFromParent({ id }))
+                    dispatch(cut())
                 }
             },
             {
@@ -27,7 +26,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Ctrl + C",
                 isOff: type === "root",
                 func: () => {
-                    dispatch(updateClipboard({ copy: id, cut: null }));
+                    dispatch(copy())
                 }
             },
             {
@@ -49,14 +48,12 @@ export default ({ id, points, sidebar, setClicked }) => {
             },
             {
                 name: "Rename",
-                command: "Ctrl + R",
                 func: () => {
                     dispatch(changeTab({ tab: "12" }))
                 }
             },
             {
                 name: "Delete",
-                command: "Backspace",
                 func: () => {
                     dispatch(deleteNode({ id }))
                 },
@@ -70,8 +67,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Ctrl + X",
                 isOff: type === "root",
                 func: () => {
-                    dispatch(updateClipboard({ cut: id, copy: null }));
-                    dispatch(deleteFromParent({ id }))
+                    dispatch(cut())
                 }
             },
             {
@@ -79,7 +75,7 @@ export default ({ id, points, sidebar, setClicked }) => {
                 command: "Ctrl + C",
                 isOff: type === "root",
                 func: () => {
-                    dispatch(updateClipboard({ copy: id, cut: null }));
+                    dispatch(copy())
                 }
             },
             {
@@ -101,14 +97,12 @@ export default ({ id, points, sidebar, setClicked }) => {
             },
             {
                 name: "Rename",
-                command: "Ctrl + R",
                 func: () => {
                     dispatch(changeTab({ tab: "12" }))
                 }
             },
             {
                 name: "Delete",
-                command: "Backspace",
                 func: () => {
                     dispatch(deleteNode({ id }))
                 },

@@ -30,7 +30,7 @@ const treeSlice = createSlice({
   name: "tree",
   initialState: {
     tree: {
-      tabs: []
+      tabs: [],
     },
     activeNodeId: null,
     activeTab: null,
@@ -119,12 +119,12 @@ const treeSlice = createSlice({
         });
         state.clipboard.cut = null;
       }
-      if (payload.cut === state.activeTab || payload.copy === state.activeTab)
-        return;
+      if (state.tree.tabs.includes(payload.cut || payload.copy)) return;
       state.clipboard = payload;
     },
     paste: (state) => {
       const parent = state.activeNodeId;
+      if (state.dataMap[parent].unit) return;
       if (state.clipboard.cut) {
         treeSlice.caseReducers.addNode(state, {
           payload: { parent, child: state.clipboard.cut },
@@ -139,7 +139,7 @@ const treeSlice = createSlice({
       }
     },
     duplicate: (state) => {
-      if (state.activeNodeId === state.activeTab) return;
+      if (state.tree.tabs.includes(state.activeNodeId)) return;
       const duplicate = createCopy(state.activeNodeId, state);
       treeSlice.caseReducers.splice(state, {
         payload: { referenceNode: state.activeNodeId, pos: 1, node: duplicate },
@@ -188,6 +188,19 @@ const treeSlice = createSlice({
         });
       state.activeNodeId = Number(node);
     },
+    cut: (state) => {
+      if(state.tree.tabs.includes(state.activeNodeId))return;
+      treeSlice.caseReducers.updateClipboard(state, {
+        payload: { cut: state.activeNodeId, copy: null },
+      });
+      treeSlice.caseReducers.deleteFromParent(state,{payload:{id:state.activeNodeId}})
+    },
+    copy: (state) => {
+      if(state.tree.tabs.includes(state.activeNodeId))return;
+      treeSlice.caseReducers.updateClipboard(state, {
+        payload: { copy: state.activeNodeId, cut: null },
+      });
+    },
   },
 });
 
@@ -210,5 +223,7 @@ export const {
   addTemplate,
   updateActiveTab,
   updateTabOpenStatus,
+  cut,
+  copy
 } = treeSlice.actions;
 export default treeSlice.reducer;
