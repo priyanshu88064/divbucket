@@ -1,4 +1,3 @@
-import { FaImage } from "react-icons/fa";
 import Resizable from "../Resizable/Resizable";
 import styles from "./image.module.css";
 import { useSelector } from "react-redux";

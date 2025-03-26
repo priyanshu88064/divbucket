@@ -8,7 +8,6 @@ import Paragraph from "./Paragraph/Paragraph";
 import Image from "./Image/Image";
 import Video from "./Video/Video";
 import styles from "./Resizable/resizable.module.css";
-import useShortcuts from "./hooks/useShortcuts";
 
 export default () => {
   const activeTab = useSelector(state => state.treeReducer.activeTab);

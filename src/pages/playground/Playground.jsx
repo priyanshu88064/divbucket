@@ -3,11 +3,10 @@ import SideBar from '../../Components/SideBar/SideBar';
 import Cssbar from '../../Components/Cssbar/Cssbar';
 import TreeManager from '../../utils/TreeManager';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addNode, deleteNode, updateActiveTab, updateBgContentRect, updateTabOpenStatus } from '../../store/reducers/treeReducer';
+import { updateActiveTab, updateBgContentRect, updateTabOpenStatus } from '../../store/reducers/treeReducer';
 import { useEffect, useRef } from 'react';
 import { useDrag } from '../../utils/hooks/useDrag';
 import { IoIosClose } from 'react-icons/io';
-import { createTemplate } from '../../utils/template';
 import { createSelector } from '@reduxjs/toolkit';
 import useShortcuts from '../../utils/hooks/useShortcuts';
 

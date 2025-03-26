@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styles from './contextmenu.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { copy, cut, deleteNode, duplicate, paste, revealParent, updateClipboard } from '../../store/reducers/treeReducer';
+import { copy, cut, deleteNode, duplicate, paste, revealParent } from '../../store/reducers/treeReducer';
 import { changeTab } from '../../store/reducers/focusReducer';
 
 export default ({ id, points, sidebar, setClicked }) => {

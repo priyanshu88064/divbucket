@@ -5,7 +5,6 @@ import { updateRootWidth } from '../../store/reducers/treeReducer';
 import { MdFullscreen, MdOutlineContentCopy } from 'react-icons/md';
 import { FaDownload } from 'react-icons/fa6';
 import { useRef, useState } from 'react';
-import { IoMdClose } from 'react-icons/io';
 import { generateCode } from '../../utils/treeFunctions';
 import { LuPaintBucket } from 'react-icons/lu';
 

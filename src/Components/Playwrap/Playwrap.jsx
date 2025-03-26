@@ -2,7 +2,7 @@ import { MdOutlineSecurityUpdateWarning } from 'react-icons/md';
 import Playground from '../../pages/playground/Playground';
 import Headbar from '../Headbar/Headbar';
 import styles from './playwrap.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 export default () => {
     const widthRef = useRef(window.screen.width);

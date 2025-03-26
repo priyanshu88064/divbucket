@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { copy, cut, duplicate, paste } from "../../store/reducers/treeReducer";
-import { changeTab } from "../../store/reducers/focusReducer";
 
 export default function useShortcuts() {
   const keyPressed = useRef({});

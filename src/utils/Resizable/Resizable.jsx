@@ -1,7 +1,6 @@
 import styles from './resizable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateActiveNode } from '../../store/reducers/treeReducer';
-import { useDrag } from '../hooks/useDrag';
 import { useResizer } from '../hooks/useResizer';
 import { useContextMenu } from '../hooks/useContextMenu';
 import ContextMenu from '../../Components/ContextMenu/ContextMenu';
@@ -10,7 +9,6 @@ import { MdOutlineEdit } from 'react-icons/md';
 import { TbMinusVertical } from 'react-icons/tb';
 import { GetIconOfType } from '../../Components/Cssbar/Cssbar';
 import { RiDragMove2Fill } from 'react-icons/ri';
-import useShortcuts from '../hooks/useShortcuts';
 
 export default ({ id, children }) => {
 
