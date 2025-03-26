@@ -946,7 +946,7 @@ const treeSlice = createSlice({
       },
       936385: {
         type: "root",
-        name: "Home",
+        name: "Homepage",
         unit: false,
         open: true,
       },
