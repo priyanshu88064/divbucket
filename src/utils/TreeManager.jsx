@@ -105,7 +105,7 @@ export default () => {
     <>
       {
         activeTab ?
-          <div className={styles.fixinfobar}>
+          <div tabIndex={1} className={styles.fixinfobar}>
             <Resizable id={activeTab}>
               {tree[activeTab].map(tree => renderTree(tree))}
             </Resizable>

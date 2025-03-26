@@ -37,7 +37,7 @@ export default () => {
             <div className={styles.cont}>
                 <div onClick={() => handleTabClick(0)} className={`${tab === 0 && styles.activetab} ${styles.it}`}><IoAddOutline className={styles.it0} size={23} /></div>
                 <div onClick={() => handleTabClick(1)} className={`${tab === 1 && styles.activetab} ${styles.it}`}><IoLayers className={styles.it0} size={23} /></div>
-                <div onClick={() => handleTabClick(2)} className={`${tab === 2 && styles.activetab} ${styles.it}`}><CiSearch className={styles.it0} strokeWidth={'1'} size={23} /></div>
+                {/* <div onClick={() => handleTabClick(2)} className={`${tab === 2 && styles.activetab} ${styles.it}`}><CiSearch className={styles.it0} strokeWidth={'1'} size={23} /></div> */}
             </div>
             {
                 tab !== null &&
@@ -95,8 +95,6 @@ export default () => {
                             tab == 1 ?
                                 <Explorer /> :
                                 <>
-                                    <div className={styles.head}>Search</div>
-                                    <div></div>
                                 </>
                     }
                 </div>

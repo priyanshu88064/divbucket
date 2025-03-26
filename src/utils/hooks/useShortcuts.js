@@ -9,6 +9,7 @@ export default function useShortcuts() {
 
   useEffect(() => {
     const handlePress = (e) => {
+      if (e.target.tabIndex !== 1) return;
       if (keyPressed.current["Control"]) {
         e.preventDefault();
         keyPressed.current = {};
