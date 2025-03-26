@@ -180,7 +180,6 @@ export default ({id, value, onChange }) => {
                 }}
                 className={styles.su}
                 onFocus={e => e.target.select()}
-                maxLength={7}
                 size={2}
             />
             <input

@@ -9,8 +9,8 @@ export default function useShortcuts() {
 
   useEffect(() => {
     const handlePress = (e) => {
-      e.preventDefault();
       if (keyPressed.current["Control"]) {
+        e.preventDefault();
         keyPressed.current = {};
         if (e.key === "x") dispatch(cut());
         if (e.key === "c") dispatch(copy());

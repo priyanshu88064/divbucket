@@ -1,5 +1,5 @@
 #BUGS/ISSUES
-- paste/cut inside unit elements[can't reproduce]
+- can't copy/cut/ inside any textarea in app
 - contextmenu going up direction ( related to sometimes mobile -10px showing in headbar, can be a persist redux extension bug)
 - encounter a bug where headbar > width is showing negative(mobile -10px)(can't reproduce yet)
 - Cssbar>borders of resizable interfaring with activebar/infobar
@@ -7,6 +7,7 @@
 - Need to optimize ALL components specially resizable (re-rendering) by using tools like react profiler,react components,redux devtools.
 
 #FIXED
+- paste/cut inside unit elements[can't reproduce]
 - FIX INFOBAR POSITION [by adding a div wrapper (fixinfobar) in treemanager]
 - bug in layer while resizing div(still bottom resizable hover while resizing)[FIXED:zindex issue]
 - in a row with long height the ondraghover drag helper boxes showing in left right side instead of top bottom

@@ -441,11 +441,11 @@ const EditTab = ({ focus }) => {
 
     useEffect(() => {
         setData({
-            name: dataMap.name,
-            content: dataMap.content,
-            hyperlink: dataMap.hyperlink,
-            src: dataMap.src,
-            alt: dataMap.alt,
+            name: dataMap.name || "",
+            content: dataMap.content || "",
+            hyperlink: dataMap.hyperlink || "",
+            src: dataMap.src || "",
+            alt: dataMap.alt || "",
         });
     }, [dataMap]);
 
@@ -477,7 +477,7 @@ const EditTab = ({ focus }) => {
                 />
             </div>
             {
-                dataMap.content &&
+                ['Text','Paragraph','Heading'].includes(dataMap.type) &&
                 <div className={`${styles.e0} ${styles.e0flexcol}`}>
                     <div className={styles.e00}>Content <FaParagraph /></div>
                     <textarea

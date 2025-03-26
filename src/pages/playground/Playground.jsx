@@ -25,12 +25,8 @@ export default () => {
         })
         if (bgRef && bgRef.current) observer.observe(bgRef.current);
 
-        const newTab = createTemplate({ type: "Tab", dispatch, name: "SuccessTab" })
-        dispatch(addNode({ parent: 'tabs', child: newTab }))
-        dispatch(updateActiveTab({tab:newTab}))
         return () => {
             observer.disconnect();
-            dispatch(deleteNode({ id: newTab }))
         }
     }, []);
 

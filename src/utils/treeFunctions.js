@@ -54,7 +54,8 @@ body {
     }{\n`;
     cssMap.map(
       ([x, y]) => {
-        css += styleMap[id][y] ? "  "+x + ": " + styleMap[id][y] + `;\n`:'';
+        if(dataMap[id].type !== 'root' || (y !== 'width' && y!=='minWidth'))
+        css += styleMap[id][y] ? "  "+x + ": " + styleMap[id][y] + `;\n` :'';
       }
     );
     css+=`}\n`;
