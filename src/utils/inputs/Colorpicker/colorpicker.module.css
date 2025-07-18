@@ -41,6 +41,6 @@
 .dropdown::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
-.su:focus ~ .dropdown{
-    display: block;
+.su:focus ~ .dropdown {
+  display: block;
 }

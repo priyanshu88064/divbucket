@@ -493,18 +493,18 @@
   height: 1px;
   background-color: rgb(72, 72, 72);
 }
-.empty{
+.empty {
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   color: var(--text_2);
   margin-top: 50px;
-  div{
+  div {
     margin-top: 10px;
   }
 }
-.c01{
+.c01 {
   display: flex;
   align-items: center;
   gap: 3px;

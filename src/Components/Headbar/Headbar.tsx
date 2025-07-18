@@ -1,0 +1,210 @@
+import {
+  FaEye,
+  FaHome,
+  FaLaptop,
+  FaMobileAlt,
+  FaTabletAlt,
+} from "react-icons/fa";
+import styles from "./headbar.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRootWidth } from "../../store/reducers/treeReducer";
+import { MdFullscreen, MdOutlineContentCopy } from "react-icons/md";
+import { FaDownload } from "react-icons/fa6";
+import { useRef, useState } from "react";
+import { generateCode } from "../../utils/treeFunctions";
+import { LuPaintBucket } from "react-icons/lu";
+import type { RootState } from "../../store/store";
+
+export default () => {
+  const activeTab = useSelector(
+    (state: RootState) => state.treeReducer.activeTab,
+  );
+  const [isCode, setIsCode] = useState(false);
+
+  return (
+    <div className={styles.head}>
+      <div className={styles.logo}>
+        <LuPaintBucket size={20} className={styles.licon} />
+        <div className={styles.l0}>DIV</div>
+        <div className={styles.l1}>Bucket</div>
+      </div>
+      <div className={styles.h1}>
+        {activeTab && <WidthBox />}
+        <div
+          className={styles.fscreen}
+          onClick={() => {
+            if (!document.fullscreenElement)
+              document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+          }}
+        >
+          <MdFullscreen size={22} />
+        </div>
+      </div>
+      <div className={styles.h2}>
+        <div className={`${styles.code} ${styles.preview}`}>
+          <FaEye />
+          PREVIEW
+        </div>
+        <div className={styles.code} onClick={() => setIsCode((f) => !f)}>
+          <FaDownload />
+          HTML/CSS
+        </div>
+      </div>
+      {isCode && (
+        <div className={styles.codeboxwrapper} onClick={() => setIsCode(false)}>
+          <div className={styles.codebox} onClick={(e) => e.stopPropagation()}>
+            <Code />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Code = () => {
+  const tabs = useSelector((state: RootState) => state.treeReducer.tree[-1]);
+  const tree = useSelector((state: RootState) => state.treeReducer.tree);
+  const dataMap = useSelector((state: RootState) => state.treeReducer.dataMap);
+  const styleMap = useSelector(
+    (state: RootState) => state.treeReducer.styleMap,
+  );
+  const [activeTab, setActiveTab] = useState(0);
+  const code = tabs.map((tab) =>
+    generateCode({ tab, tree, dataMap, styleMap }),
+  );
+  const [isHtml, setIsHtml] = useState(true);
+  const copiedRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <>
+      <div className={styles.codesidebar}>
+        {tabs.map((tab, ind) => (
+          <div
+            key={tab + ind + ""}
+            className={`${styles.csb0} ${ind === activeTab && styles.csb0active}`}
+            onClick={() => setActiveTab(ind)}
+          >
+            <FaHome />
+            {dataMap[tab].name}
+          </div>
+        ))}
+      </div>
+      <div className={styles.codearea}>
+        <div
+          className={styles.codecopy}
+          onClick={() => {
+            if (isHtml) navigator.clipboard.writeText(code[activeTab].html);
+            else navigator.clipboard.writeText(code[activeTab].css);
+            if (copiedRef && copiedRef.current)
+              copiedRef.current.style.visibility = "visible";
+            setTimeout(() => {
+              if (copiedRef && copiedRef.current)
+                copiedRef.current.style.visibility = "hidden";
+            }, 1000);
+          }}
+        >
+          <MdOutlineContentCopy size={20} />
+          <div style={{ visibility: "hidden" }} ref={copiedRef}>
+            copied!!
+          </div>
+        </div>
+        <div className={styles.catabs}>
+          <div
+            onClick={() => setIsHtml(true)}
+            className={`${isHtml && styles.catabsactive}`}
+          >
+            HTML
+          </div>
+          <div
+            onClick={() => setIsHtml(false)}
+            className={`${!isHtml && styles.catabsactive}`}
+          >
+            CSS
+          </div>
+        </div>
+        <textarea
+          style={{ color: isHtml ? "orange" : "" }}
+          value={
+            isHtml
+              ? code[activeTab].html
+              : code[activeTab].css.length > 5000
+                ? code[activeTab].css.substr(0, 5000) + `\n...`
+                : code[activeTab].css
+          }
+          readOnly
+        />
+        <div className={styles.codewarning}>
+          * generated HTML/CSS code contain some bugs and may produce unexpected
+          results. App is in development phase, bugs will be fixed as soon as
+          possible.
+        </div>
+      </div>
+    </>
+  );
+};
+
+const WidthBox = () => {
+  const activeTab = useSelector(
+    (state: RootState) => state.treeReducer.activeTab,
+  );
+  const maxWidth = useSelector((state: RootState) =>
+    Math.floor(state.treeReducer.bgContentRect?.width - 10 - 80),
+  ); //-10 for resizebar, -80 for margin
+  const width = useSelector((state: RootState) => {
+    if (!activeTab) return;
+    if (state.treeReducer.styleMap[activeTab].width === "100%") return maxWidth;
+    return Math.min(
+      maxWidth,
+      Math.max(
+        350,
+        Number(
+          (state.treeReducer.styleMap[activeTab].width as string).split("p")[0],
+        ),
+      ),
+    );
+  });
+  const dispatch = useDispatch();
+
+  if (!width) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <div className={styles.dimensions}>
+        <div
+          onClick={() => dispatch(updateRootWidth({ width: "425px" }))}
+          title="mobile"
+          className={`${styles.d0} ${width <= 425 && styles.active}`}
+        >
+          <FaMobileAlt size={13} />
+        </div>
+        <div
+          onClick={() => dispatch(updateRootWidth({ width: "768px" }))}
+          title="tablet"
+          className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}
+        >
+          <FaTabletAlt size={13} />
+        </div>
+        <div
+          onClick={() => dispatch(updateRootWidth({ width: "100%" }))}
+          title="PC"
+          className={`${styles.d0} ${width > 768 && styles.active}`}
+        >
+          <FaLaptop size={14} />
+        </div>
+      </div>
+      <div className={styles.width}>
+        <div>
+          {width <= 425
+            ? "Mobile"
+            : width > 425 && width <= 768
+              ? "Tablet"
+              : "Laptop"}
+        </div>
+        {width}px
+      </div>
+    </>
+  );
+};

@@ -29,12 +29,12 @@
   overflow-y: scroll;
   bottom: 0;
   transform: translateY(100%);
-  color:var(--text_0);
+  color: var(--text_0);
 }
 .dropdown > div {
   padding: 5px;
 }
-.dropdown > div:hover{
+.dropdown > div:hover {
   background-color: var(--hoverblue);
 }
 .ti > input:focus ~ .dropdown {

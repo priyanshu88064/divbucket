@@ -1,4 +1,4 @@
-.cover{
+.cover {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -38,13 +38,13 @@
 .cmitem:hover .cmitem1 {
   color: white;
 }
-.cmitemoff{
+.cmitemoff {
   color: gray;
 }
-.cmitemoff:hover{
+.cmitemoff:hover {
   background-color: transparent;
 }
-.cmitemoff:hover .cmitem1{
+.cmitemoff:hover .cmitem1 {
   color: gray;
 }
 .contextmenu .br {

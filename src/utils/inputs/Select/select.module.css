@@ -1,46 +1,46 @@
-.select{
-    width: 100%;
-    display: flex;
-    border-radius: 5px;
-    align-items: center;
-    color: var(--text_0);
-    border: 1px solid var(--pg_bg);
-    box-shadow: 1px 1px black;
-    transition: background-color 200ms;
-    position: relative;
+.select {
+  width: 100%;
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  color: var(--text_0);
+  border: 1px solid var(--pg_bg);
+  box-shadow: 1px 1px black;
+  transition: background-color 200ms;
+  position: relative;
 }
-.select:hover{
-    background-color: rgba(0, 0, 0, 0.100);
+.select:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
-.si{
-    all: unset;
-    padding: 6px;
-    width: 100%;
-    cursor: default;
-    z-index: 1;
+.si {
+  all: unset;
+  padding: 6px;
+  width: 100%;
+  cursor: default;
+  z-index: 1;
 }
-.sicon{
-    position: absolute;
-    right: 6px;
+.sicon {
+  position: absolute;
+  right: 6px;
 }
-.dropdown{
-    position: absolute;
-    display: none;
-    min-width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    border-radius: 5px;
-    padding: 5px 0;
-    background-color: var(--pg_bg);
-    transform:scale(1.02);
+.dropdown {
+  position: absolute;
+  display: none;
+  min-width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: 5px;
+  padding: 5px 0;
+  background-color: var(--pg_bg);
+  transform: scale(1.02);
 }
-.si:focus ~ .dropdown{
-    display: block;
+.si:focus ~ .dropdown {
+  display: block;
 }
-.dropdown > div{
-    padding: 6px;
+.dropdown > div {
+  padding: 6px;
 }
-.dropdown > div:hover{
-    background-color: var(--hoverblue);
+.dropdown > div:hover {
+  background-color: var(--hoverblue);
 }
