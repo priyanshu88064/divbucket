@@ -12,28 +12,28 @@
   font-size: 10px;
   color: orange;
   display: flex;
-  align-items:last baseline;
+  align-items: last baseline;
   gap: 5px;
 }
-.licon{
+.licon {
   margin-left: 30px;
   align-self: center;
 }
-.l0{
+.l0 {
   font-size: 20px;
   font-weight: bolder;
   font-style: italic;
 }
-.l1{
+.l1 {
   color: white;
   font-size: 12px;
 }
-.h1{
+.h1 {
   flex: 1;
   display: flex;
   justify-content: center;
 }
-.h2{
+.h2 {
   flex: 1;
   display: flex;
   justify-content: right;
@@ -99,7 +99,7 @@
   background: inherit;
   border: 1px solid var(--gray_border);
   transition: border-color 200ms;
-  cursor:not-allowed;
+  cursor: not-allowed;
   opacity: 0.5;
 }
 .code:hover {
@@ -215,10 +215,10 @@
   text-align: center;
   padding: 3px 0;
 }
-.catabsactive{
-    border-bottom: 2px solid var(--hoverblue);
+.catabsactive {
+  border-bottom: 2px solid var(--hoverblue);
 }
-.codewarning{
+.codewarning {
   color: red;
   padding: 10px;
 }

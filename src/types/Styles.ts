@@ -1,0 +1,31 @@
+export interface CSSProperties {
+  minHeight?: string;
+  width?: string;
+  height?: string;
+  marginTop?: string;
+  marginLeft?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  borderColor?: string;
+  borderRadius?: string;
+  paddingTop?: string;
+  paddingRight?: string;
+  paddingLeft?: string;
+  background?: string;
+  paddingBottom?: string;
+  color?: string;
+  display?: string;
+  flex?: string;
+  gap?: string;
+  marginBottom?: string;
+  fontSize?: string;
+  fontWeight?: string;
+  flexDirection?: string;
+  alignItems?: string;
+  justifyContent?: string;
+  flexWrap?: string;
+  minWidth?: string;
+  fontFamily?: string;
+  fontStyle?: string;
+  fontVariant?: string;
+}

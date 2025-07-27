@@ -6,32 +6,34 @@
   z-index: 1;
   visibility: hidden;
 }
-.a:hover{
-  .resizer{
+.a:hover {
+  .resizer {
     visibility: visible;
   }
 }
-.top,.bottom{
+.top,
+.bottom {
   width: 100%;
   height: 1px;
   top: 0;
   left: 0;
   border-top: 1px dashed blue;
 }
-.bottom{
+.bottom {
   top: unset;
   border: unset;
   bottom: 0;
   border-bottom: 1px dashed blue;
 }
-.left,.right{
+.left,
+.right {
   width: 1px;
   height: 100%;
   top: 0;
   left: 0;
   border-left: 1px dashed blue;
 }
-.right{
+.right {
   border: unset;
   left: unset;
   right: 0;

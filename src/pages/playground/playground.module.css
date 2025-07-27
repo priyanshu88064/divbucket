@@ -38,14 +38,14 @@
   gap: 5px;
   transition: background 100ms;
 }
-.tab:hover{
+.tab:hover {
   background-color: var(--bg_gray);
 }
 .activetab {
   background: var(--bg_gray0);
   color: white;
 }
-.activetab:hover{
+.activetab:hover {
   background-color: var(--bg_gray0);
 }
 .res {
