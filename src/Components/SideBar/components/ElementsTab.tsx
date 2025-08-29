@@ -73,7 +73,7 @@ export default function ElementsTab() {
   };
 
   return (
-    <div className="overflow-y-scroll p-3 flex flex-col gap-8">
+    <div className="p-3 flex flex-col gap-8 overflow-y-auto">
       {elementList.map((ele, ind) => (
         <div key={"elements-" + ind}>
           <div className="mt-2 text-[var(--text_0)] text-xs font-semibold uppercase">

@@ -11,11 +11,11 @@ import {
 import { createTemplate } from "../../../utils/template";
 import { VscNewFile } from "react-icons/vsc";
 import { useContextMenu } from "../../../utils/hooks/useContextMenu";
-import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { GetIconOfType } from "../../Cssbar/Cssbar";
 import { FaFile } from "react-icons/fa";
 import { GrDrag } from "react-icons/gr";
 import ContextMenu from "../../ContextMenu/ContextMenu";
+import { GoChevronDown, GoChevronRight } from "react-icons/go";
 
 export default function Explorer() {
   const draggedNode = useRef<HTMLDivElement | null>(null);
@@ -126,7 +126,7 @@ export default function Explorer() {
   return (
     <>
       <div className={`${styles.head} ${styles.exp}`}>
-        <div>EXPLORER</div>
+        <div className="text-xs">EXPLORER</div>
         <div
           title="add page"
           style={{ cursor: "pointer" }}
@@ -185,7 +185,7 @@ const RLItem = ({
   const unit = useSelector(
     (state: RootState) => state.treeReducer.dataMap[node].unit,
   );
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const activeNodeId = useSelector(
     (state: RootState) => state.treeReducer.activeNodeId,
   );
@@ -199,17 +199,20 @@ const RLItem = ({
   const dispatch = useDispatch();
 
   return (
-    <div className={styles.rlistitem}>
+    <div className='text-xs'>
       <div
         data-id={node}
         draggable={type !== "root"}
         style={{ paddingLeft: pleft + "px" }}
-        className={`${styles.rliwrap} ${activeNodeId === node ? styles.activeItemClass : ""} ${unit && styles.redrag}`}
+        className={`
+          group relative flex items-center hover:bg-[#333C46] border
+          ${activeNodeId === node ? 'bg-[#333C46] border-gray-400' : 'border-transparent'} ${unit && styles.redrag}
+        `}
         onClick={() => {
+          setActive(f => !f);
           if (myTab !== activeTab) dispatch(updateActiveTab({ tab: myTab }));
           if (activeNodeId !== node) dispatch(updateActiveNode({ id: node }));
         }}
-        onDoubleClick={() => setActive((f) => !f)}
         onContextMenu={(e) => {
           e.preventDefault();
           setClicked(true);
@@ -218,31 +221,24 @@ const RLItem = ({
         }}
       >
         <div
-          className={styles.rli0}
-          onClick={() => {
-            setActive((f) => !f);
-          }}
+          className="py-[3px] flex items-center gap-1 text-[var(--text_0)]"
         >
-          {!unit ? (
-            active ? (
-              <MdKeyboardArrowDown size={17} color="var(--text_0)" />
-            ) : (
-              <MdKeyboardArrowRight size={17} color="var(--text_0)" />
-            )
-          ) : (
-            <MdKeyboardArrowRight size={17} color="transparent" />
-          )}
-        </div>
-        <div
-          onClick={() => {
-            setActive((f) => !f);
-          }}
-          className={styles.rli0}
-        >
-          {GetIconOfType(type)}
+          <div className="w-4">
+            {
+              unit ?
+                <div className="pl-[2px]">{GetIconOfType(type)}</div> :
+                active ?
+                  <GoChevronDown size={17} /> :
+                  <GoChevronRight size={17} />
+            }
+          </div>
           {name}
         </div>
-        <div className={`${styles.grdrag} ${type === "root" && styles.grshow}`}>
+        <div className={`
+            group-hover:flex ml-auto mr-[10px] cursor-move
+            ${type === "root" ? 'flex text-[var(--text_0)]' : 'hidden'}
+          `}
+        >
           {type === "root" ? <FaFile /> : <GrDrag />}
         </div>
         {clicked && (
@@ -254,9 +250,12 @@ const RLItem = ({
           />
         )}
       </div>
-      {active && (
-        <RecursiveList start={node} pleft={pleft + 10} myTab={myTab} />
-      )}
+      <div className="relative">
+        <div style={{ left: pleft + 8 + 'px' }} className={`absolute h-full border-l border-gray-600 w-[1px]`}></div>
+        {active && (
+          <RecursiveList start={node} pleft={pleft + 10} myTab={myTab} />
+        )}
+      </div>
     </div>
   );
 };

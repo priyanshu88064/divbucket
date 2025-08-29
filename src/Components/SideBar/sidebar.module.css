@@ -5,32 +5,40 @@
   display: flex;
   user-select: none;
 }
+
 .it {
   text-align: center;
   padding: 7px 0;
   cursor: pointer;
 }
+
 .it0 {
   color: var(--text_2);
 }
+
 .activetab {
   border-left: 1px solid white;
+
   .it0 {
     color: white;
   }
 }
+
 .a0 {
   overflow-y: scroll;
 }
+
 .head {
   padding: 12px 20px;
   color: var(--text_0);
   font-size: 12px;
 }
+
 .a1 {
   display: flex;
   flex-wrap: wrap;
 }
+
 .a10 {
   width: 50%;
   border: 1px solid gray;
@@ -40,96 +48,78 @@
   text-align: center;
   cursor: grab;
 }
+
 .a10 svg {
   stroke-width: 1;
 }
+
 .exp {
-  font-size: 12px;
   color: var(--text_0);
-  border-bottom: 1px solid gray;
+  /* border-bottom: 1px solid gray; */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.exp > div {
+
+.exp>div {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .rlist {
   cursor: pointer;
   overflow-y: scroll;
   padding-bottom: 300px;
 }
+
 .rlist {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
 .rlist::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
-.rlistitem {
-  font-size: 12px;
-}
-.rliwrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border: 2px solid transparent;
-}
-.rli0 {
-  padding: 3px 0;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--text_0);
-}
-.grdrag {
   display: none;
-  margin-left: auto;
-  margin-right: 10px;
-  cursor: move;
+  /* Safari and Chrome */
 }
-.grshow {
-  display: flex;
-  color: var(--text_0);
-}
-.rliwrap:hover {
-  border: 2px solid var(--text_2);
-  .grdrag {
-    display: flex;
-  }
-}
+
 .activeItemClass {
-  background-color: var(--bg_gray);
-  .rli0 {
-    color: white;
-  }
+  background-color: #333C46;
+  border: 1px solid var(--text_2);
 }
+
 .dragtop {
   border-color: gray;
   border-top-color: yellow;
 }
+
 .dragmiddle {
   border-color: yellow;
 }
+
 .dragmiddle.redrag {
   border-color: red !important;
 }
+
 .dragbottom {
   border-color: gray;
   border-bottom-color: yellow;
 }
+
 .removingitem {
   opacity: 0.3;
   border-color: transparent !important;
 }
+
 .dragwrapper {
   position: absolute;
   left: 0;
   top: 0;
   transform: translate(-100%);
 }
+
 .dragimage {
   background-color: yellow;
   color: black;
@@ -137,6 +127,7 @@
   padding: 3px 10px;
   border-radius: 10px;
 }
+
 .newpage {
   cursor: text;
   font-size: 12px;
@@ -146,16 +137,19 @@
   justify-content: right;
   margin: 10px 5px;
 }
-.newpage > input {
+
+.newpage>input {
   all: unset;
   padding: 5px;
   border-bottom: 1px solid gray;
   color: white;
 }
-.newpage > input:focus {
+
+.newpage>input:focus {
   border-bottom: 1px solid white;
 }
-.newpage > div {
+
+.newpage>div {
   cursor: pointer;
   padding: 5px 7px;
   background-color: var(--pg_bg);
