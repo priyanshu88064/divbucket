@@ -1,9 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hoverblue: var(--hoverblue);
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   touch-action: none;
 }
+
 body {
   font-family:
     system-ui,
@@ -25,7 +30,7 @@ body {
   --text_0: #d9d9d9;
   --text_2: #b5b5b5;
   --pg_bg: #1c1e1f;
-  --gray_border: rgb(100, 100, 100);
+  --gray_border: #363d43;
   --resizeblue: #c800ff;
   --hoverblue: #15539e;
   --gradient: linear-gradient(to right, #493240, #ff0099);
@@ -33,8 +38,9 @@ body {
 
 ::-webkit-scrollbar {
   width: 4px;
-  background-color: var(--bg_gray);
+  background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background-color: var(--gray_border);
+  background-color: #333c46;
 }

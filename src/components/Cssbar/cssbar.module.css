@@ -3,98 +3,59 @@
   padding: 10px 10px 15px 10px;
   color: var(--text_2);
 }
+
 .makedrop {
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: var(--bg_gray0);
+  background-color: #333c46;
   z-index: 1;
   border-radius: 3px;
   box-shadow: 0 0 6px var(--pg_bg);
   transform: translateY(100%);
 }
+
 .beffect {
-  background-color: var(--pg_bg);
+  background-color: #1b2228;
   display: flex;
-  border-radius: 5px;
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 1px 1px 7px 0px #6c6c6c inset;
-  padding: 8px 13px;
+  padding: 6px;
   color: var(--text_2);
 
   div {
-    border-radius: 3px;
+    border-radius: 4px;
     flex: 1;
     padding: 4px;
   }
 }
+
 .beffectactivediv {
   color: var(--text_0) !important;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #333c46;
+  cursor: default !important;
 }
+
 /* reusable ends */
 
-.cssbar {
-  width: 250px;
-  height: 100%;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-  overflow: hidden;
-  background-color: var(--bg_gray);
-}
-
-.c0 {
-  background-color: var(--pg_bg);
-  display: flex;
-  cursor: default;
-}
-.c0 > div {
-  padding: 7px 12px;
-}
-.c0icon {
-  background-color: var(--bg_gray);
-  height: 100%;
-}
 .c00 {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.c1 {
-  overflow-y: scroll;
-  height: 100%;
-  padding-bottom: 150px;
-}
-.c10 {
-  color: var(--text_0);
-  cursor: default;
-  border-bottom: 1px solid var(--gray_border);
-}
-.c100 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  user-select: none;
-}
-.c1000 {
-  padding: 10px;
-}
-.arrow {
-  cursor: pointer;
-  font-size: 13px;
-}
+
 .c11 {
   display: flex;
   justify-content: space-between;
   gap: 5px;
 }
+
 .c110 {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .c1100 {
   position: relative;
   background-color: var(--pg_bg);
@@ -106,27 +67,33 @@
   text-align: right;
   width: 60px;
   color: var(--text_0);
+
   .in {
     all: unset;
     width: 100%;
     text-align: left;
   }
 }
+
 .c1101 {
   padding: 6px 0;
   text-wrap: nowrap;
 }
+
 .dropdown {
   display: none;
   text-wrap: nowrap;
 }
+
 .d0 {
   text-align: left;
   border-right: 1px solid var(--bg_gray);
 }
+
 .d1 {
   text-align: center;
 }
+
 .d0,
 .d1 {
   display: flex;
@@ -136,39 +103,48 @@
     padding: 5px;
     cursor: pointer;
   }
+
   div:hover {
     background-color: var(--bg_gray);
   }
 }
+
 .in:focus ~ .dropdown {
   display: flex;
 }
+
 .dicont {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 .dic0 {
   div {
     cursor: pointer;
     text-align: center;
   }
+
   div:hover {
-    color: white;
+    color: var(--text_0);
   }
 }
+
 .dic1 {
   position: relative;
   overflow: visible;
+
   div {
     text-align: left;
     color: var(--text_2);
     cursor: default;
   }
+
   div:hover {
     color: var(--text_2);
   }
 }
+
 .dic10 {
   position: relative;
   display: flex;
@@ -177,14 +153,17 @@
   gap: 20px;
   text-wrap: nowrap;
 }
+
 .dic11 {
-  border: 1px solid gray;
+  border: 1px solid rgb(90, 90, 90);
   display: none;
   padding: 0 !important;
 }
+
 .dic110 {
   color: white !important;
 }
+
 /*reusable*/
 .dic111 {
   text-wrap: nowrap;
@@ -196,11 +175,13 @@
     text-align: left;
     border: 1px solid transparent;
   }
+
   div:hover {
     color: white;
-    background-color: var(--bg_gray);
+    background-color: var(--hoverblue);
   }
 }
+
 .iforhover {
   all: unset;
   width: 100%;
@@ -209,6 +190,7 @@
   left: 0;
   position: absolute;
 }
+
 .dic10:has(.iforhover:focus) + .dic11 {
   display: flex;
   flex-direction: column;
@@ -219,12 +201,12 @@
   display: flex;
   width: 120px;
   height: 120px;
-  background-color: var(--pg_bg);
-  gap: 2px;
+  background-color: #1b2228;
+  gap: 4px;
 
   div {
     all: unset;
-    background-color: var(--bg_gray);
+    background-color: #333c46;
     padding: 5px;
     border-radius: 3px;
     display: flex;
@@ -232,6 +214,7 @@
     justify-content: center;
   }
 }
+
 .dic2 {
   color: var(--text_0);
   margin-top: 5px;
@@ -239,6 +222,7 @@
   align-items: center;
   gap: 20px;
 }
+
 .dic20 {
   display: flex;
   gap: 10px;
@@ -246,13 +230,15 @@
 
 .mpout {
   position: relative;
-  border: 1px dotted rgba(128, 128, 128, 0.25);
+  border: 1px dotted rgba(128, 128, 128, 0.268);
   padding: 40px 70px;
   margin: 10px 0;
 }
+
 .mpin {
   height: 40px;
 }
+
 .mpcut {
   position: absolute;
   display: flex;
@@ -260,34 +246,40 @@
   justify-content: center;
   transition: all 200ms;
 }
+
 .mpcut:hover {
   background: rgba(0, 0, 0, 0.02);
   box-shadow: inset 1px 1px 2px #00000070;
 }
+
 .mpout > .top {
   top: 0;
   left: 0;
   height: 41px;
   width: 100%;
 }
+
 .mpout > .right {
   top: 0;
   right: 0;
   height: 100%;
   width: 71px;
 }
+
 .mpout > .bottom {
   bottom: 0;
   left: 0;
   height: 41px;
   width: 100%;
 }
+
 .mpout > .left {
   top: 0;
   left: 0;
   height: 100%;
   width: 71px;
 }
+
 .mpcut0 {
   all: unset;
   text-align: center;
@@ -295,15 +287,18 @@
   border-bottom: 1px solid transparent;
   color: var(--text_0);
 }
+
 .mpcut0:focus {
   border-bottom: 1px solid var(--gray_border);
 }
+
 .p00 {
   position: relative;
   background-color: var(--pg_bg);
   height: 100px;
   overflow-y: scroll;
 }
+
 .pdefault {
   width: fit-content;
   min-width: 50px;
@@ -315,57 +310,70 @@
   align-items: center;
   justify-content: center;
 }
+
 .p00:has(.pscroll) {
   overflow: hidden;
 }
+
 .pscroll {
   padding: 0 !important;
   height: 100%;
   animation: scroll 5s linear infinite;
 }
+
 @keyframes scroll {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-100px);
   }
+
   100% {
     transform: translateY(0);
   }
 }
+
 .ppscroll {
   padding: 0 !important;
   overflow: hidden;
 }
+
 .p01 {
   overflow: hidden;
   padding: 10px 0 !important;
   height: 100px;
   color: var(--text_0) !important;
 }
+
 .positioninputs {
   padding-top: 20px;
   padding-inline: 0;
 }
+
 .e0 {
   padding: 10px 10px;
   color: var(--text_2);
   display: flex;
   gap: 10px;
 }
+
 .e00 {
   display: flex;
   align-items: center;
   gap: 5px;
   width: 100%;
 }
+
 .e0flex {
   align-items: center;
 }
+
 .e0flexcol {
   flex-direction: column;
 }
+
 .e0i {
   all: unset;
   flex: 1;
@@ -375,47 +383,58 @@
   border-radius: 3px;
   color: var(--text_0);
 }
+
 .e0i:focus {
   border: 1px solid darkblue;
   border-radius: 5px;
 }
+
 .e0tarea {
   word-wrap: break-word;
 }
+
 .edittab {
   animation: focus 1000ms ease-in-out;
 }
+
 @keyframes focus {
   0% {
     background: inherit;
   }
+
   50% {
     background: white;
   }
+
   100% {
     background: inherit;
   }
 }
+
 .bg0 {
   display: flex;
   justify-content: space-between;
   gap: 40px;
 }
+
 .bg0name {
   padding: 6px;
   padding-left: 0;
   white-space: nowrap;
 }
+
 .bg01 {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 .fontselect {
   width: 100%;
   display: flex;
   position: relative;
 }
+
 .fontsi {
   all: unset;
   border-radius: 5px;
@@ -425,6 +444,7 @@
   background-color: var(--pg_bg);
   cursor: default;
 }
+
 .fontdrop {
   display: none;
   color: white;
@@ -438,39 +458,49 @@
   height: 150px;
   overflow-y: scroll;
 }
+
 .fontsi:focus ~ .fontdrop {
   display: block;
 }
+
 .fontdrop > div {
   padding: 5px;
 }
+
 .fontdrop > div:hover {
   background-color: var(--hoverblue);
 }
+
 .fontdefault {
   color: gray;
 }
+
 .bgwrap {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .sizesiwrap {
   border-radius: 5px;
   width: 100px;
 }
+
 .boldtoggle {
   border: 1px solid var(--gray_border);
   cursor: pointer;
   border-radius: 4px;
 }
+
 .boldtoggle:hover {
   border: 1px solid white;
 }
+
 .boldactive {
   background: var(--pg_bg);
   color: white;
 }
+
 .holder {
   padding: 5px;
   display: flex;
@@ -479,20 +509,24 @@
   gap: 5px;
   border-radius: 3px;
 }
+
 .holder0 {
   border-radius: 3px;
   display: flex;
   align-items: center;
   padding: 3px 7px;
 }
+
 .holderactive {
   background-color: var(--hoverblue);
   color: white;
 }
+
 .br {
   height: 1px;
   background-color: rgb(72, 72, 72);
 }
+
 .empty {
   height: 100%;
   display: flex;
@@ -500,14 +534,8 @@
   flex-direction: column;
   color: var(--text_2);
   margin-top: 50px;
+
   div {
     margin-top: 10px;
   }
-}
-.c01 {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 10px;
-  cursor: pointer;
 }

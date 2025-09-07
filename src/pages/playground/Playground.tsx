@@ -1,6 +1,6 @@
 import styles from "./playground.module.css";
-import SideBar from "../../Components/SideBar/SideBar";
-import Cssbar from "../../Components/Cssbar/Cssbar";
+import SideBar from "../../components/SideBar/SideBar";
+import Cssbar from "../../components/Cssbar/Cssbar";
 import TreeManager from "../../utils/TreeManager";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {

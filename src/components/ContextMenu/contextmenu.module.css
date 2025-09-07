@@ -1,24 +1,3 @@
-.cover {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  background-color: transparent;
-}
-.contextmenu {
-  position: fixed;
-  color: white;
-  font-size: 13px;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: default;
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  background-color: #000000c7;
-  z-index: 10;
-}
 .cmitem {
   display: flex;
   justify-content: space-between;

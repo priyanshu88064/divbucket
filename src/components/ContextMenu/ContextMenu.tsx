@@ -150,7 +150,7 @@ export default ({
       ];
   return (
     <div
-      className={styles.cover}
+      className="fixed w-full h-full top-0 left-0 z-10 bg-transparent"
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -162,7 +162,7 @@ export default ({
       }}
     >
       <div
-        className={styles.contextmenu}
+        className="fixed text-white text-xs p-1 rounded-sm z-10 cursor-default bg-black"
         style={{
           left: points.x,
           top: points.y,

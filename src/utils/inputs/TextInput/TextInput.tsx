@@ -1,4 +1,3 @@
-import styles from "./textinput.module.css";
 import { useEffect, useState } from "react";
 
 export default ({
@@ -7,7 +6,7 @@ export default ({
   units,
 }: {
   value: string;
-  units: string[];
+  units?: string[];
   onChange: (value: string) => void;
 }) => {
   const [val, setVal] = useState(value || "auto");
@@ -17,10 +16,13 @@ export default ({
   }, [value]);
 
   return (
-    <div className={styles.ti}>
+    <div className="relative bg-[#1B2228] rounded-xs text-[var(--text_0)] flex gap-1 w-full">
       <input
         value={val}
-        className={val === "auto" ? styles.auto : ""}
+        className={`
+          peer w-full flex-[1] p-[6px] pr-0 z-0 outline-none
+          ${val === "auto" ? "text-gray-500" : ""}
+        `}
         onChange={(e) => setVal(e.target.value)}
         onBlur={() => onChange(val)}
         onFocus={(e) => e.target.select()}
@@ -29,13 +31,14 @@ export default ({
         }}
       />
       {units && units.length && (
-        <div className={styles.dropdown}>
+        <div className="z-[1] absolute hidden peer-focus:block w-full max-h-[150px] bottom-0 translate-y-full bg-black overflow-y-scroll text-[var(--text_0)]">
           {units.map((unit) => (
             <div
               onMouseDown={() => {
                 setVal(unit);
               }}
               key={unit}
+              className="p-[5px] hover:bg-[var(--hoverblue)]"
             >
               {unit}
             </div>
