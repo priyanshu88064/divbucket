@@ -199,17 +199,17 @@ const RLItem = ({
   const dispatch = useDispatch();
 
   return (
-    <div className='text-xs'>
+    <div className="text-xs">
       <div
         data-id={node}
         draggable={type !== "root"}
         style={{ paddingLeft: pleft + "px" }}
         className={`
           group relative flex items-center hover:bg-[#333C46] border
-          ${activeNodeId === node ? 'bg-[#333C46] border-gray-400' : 'border-transparent'} ${unit && styles.redrag}
+          ${activeNodeId === node ? "bg-[#333C46] border-gray-400" : "border-transparent"} ${unit && styles.redrag}
         `}
         onClick={() => {
-          setActive(f => !f);
+          setActive((f) => !f);
           if (myTab !== activeTab) dispatch(updateActiveTab({ tab: myTab }));
           if (activeNodeId !== node) dispatch(updateActiveNode({ id: node }));
         }}
@@ -220,23 +220,22 @@ const RLItem = ({
           dispatch(updateActiveNode({ id: node }));
         }}
       >
-        <div
-          className="py-[3px] flex items-center gap-1 text-[var(--text_0)]"
-        >
+        <div className="py-[3px] flex items-center gap-1 text-[var(--text_0)]">
           <div className="w-4">
-            {
-              unit ?
-                <div className="pl-[2px]">{GetIconOfType(type)}</div> :
-                active ?
-                  <GoChevronDown size={17} /> :
-                  <GoChevronRight size={17} />
-            }
+            {unit ? (
+              <div className="pl-[2px]">{GetIconOfType(type)}</div>
+            ) : active ? (
+              <GoChevronDown size={17} />
+            ) : (
+              <GoChevronRight size={17} />
+            )}
           </div>
           {name}
         </div>
-        <div className={`
+        <div
+          className={`
             group-hover:flex ml-auto mr-[10px] cursor-move
-            ${type === "root" ? 'flex text-[var(--text_0)]' : 'hidden'}
+            ${type === "root" ? "flex text-[var(--text_0)]" : "hidden"}
           `}
         >
           {type === "root" ? <FaFile /> : <GrDrag />}
@@ -251,7 +250,10 @@ const RLItem = ({
         )}
       </div>
       <div className="relative">
-        <div style={{ left: pleft + 8 + 'px' }} className={`absolute h-full border-l border-gray-600 w-[1px]`}></div>
+        <div
+          style={{ left: pleft + 8 + "px" }}
+          className={`absolute h-full border-l border-gray-600 w-[1px]`}
+        ></div>
         {active && (
           <RecursiveList start={node} pleft={pleft + 10} myTab={myTab} />
         )}

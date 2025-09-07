@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import Playwrap from "./Components/Playwrap/Playwrap";
+import Playwrap from "./components/Playwrap/Playwrap";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>

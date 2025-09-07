@@ -274,6 +274,7 @@
   overflow-y: scroll;
 }
 .fixinfobar::-webkit-scrollbar {
+  display: none;
   width: 7px;
   background-color: var(--pg_bg);
 }

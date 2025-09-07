@@ -31,9 +31,9 @@ export default () => {
             key={"_tab-" + ind}
             onClick={() => handleTabClick(ind)}
             className={`
-                flex items-center justify-center aspect-square rounded-md cursor-pointer [&>*]:text-gray-300 hover:border border-gray-600
-                ${tab === ind ? "bg-[#323A43] [&>*]:text-white" : ""}
-              `}
+              flex items-center justify-center aspect-square rounded-md cursor-pointer [&>*]:text-gray-300 border border-transparent hover:border-blue-400 active:bg-hoverblue
+              ${tab === ind ? "bg-[#323A43] [&>*]:text-white" : ""}
+            `}
           >
             {_tab.icon}
           </div>

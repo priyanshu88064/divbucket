@@ -61,7 +61,7 @@
   align-items: center;
 }
 
-.exp>div {
+.exp > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@
 }
 
 .activeItemClass {
-  background-color: #333C46;
+  background-color: #333c46;
   border: 1px solid var(--text_2);
 }
 
@@ -138,18 +138,18 @@
   margin: 10px 5px;
 }
 
-.newpage>input {
+.newpage > input {
   all: unset;
   padding: 5px;
   border-bottom: 1px solid gray;
   color: white;
 }
 
-.newpage>input:focus {
+.newpage > input:focus {
   border-bottom: 1px solid white;
 }
 
-.newpage>div {
+.newpage > div {
   cursor: pointer;
   padding: 5px 7px;
   background-color: var(--pg_bg);
