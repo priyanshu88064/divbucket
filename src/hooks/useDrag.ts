@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { createTemplate } from "../template";
-import { moveItem } from "../../store/reducers/treeReducer";
-import styles from "../Resizable/resizable.module.css";
-import type { AppDispatch } from "../../store/store";
+import styles from "../utils/Resizable/resizable.module.css";
+import type { AppDispatch } from "../store/store";
+import { createTemplate } from "../utils/template";
+import { moveItem } from "../store/reducers/treeReducer";
 
 const getPosi = (
   x: number,

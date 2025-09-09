@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStyleMap } from "../../store/reducers/treeReducer";
-import styles from "../Resizable/resizable.module.css";
-import type { AppDispatch, RootState } from "../../store/store";
+import styles from "../utils/Resizable/resizable.module.css";
+import type { AppDispatch, RootState } from "../store/store";
+import { updateStyleMap } from "../store/reducers/treeReducer";
 
 export function useResizer({ id }: { id: number }) {
   const styleMap = useSelector(
