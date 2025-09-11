@@ -26,10 +26,10 @@ export default () => {
 
   return (
     <div className={styles.head}>
-      <div className={styles.logo}>
-        <LuPaintBucket size={20} className={styles.licon} />
-        <div className={styles.l0}>DIV</div>
-        <div className={styles.l1}>Bucket</div>
+      <div className="flex items-baseline-last gap-1 flex-[1] text-[10px] text-orange-400">
+        <LuPaintBucket size={20} className="ml-[30px] self-center" />
+        <div className="text-[20px] font-bold italic">DIV</div>
+        <div className="text-white text-xs">Bucket</div>
       </div>
       <div className={styles.h1}>
         {activeTab && <WidthBox />}
@@ -54,12 +54,15 @@ export default () => {
             }).html;
             dispatch(preview({ pageSrc }));
           }}
-          className={`${styles.code} ${styles.preview}`}
+          className={`text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue`}
         >
           <FaEye />
           PREVIEW
         </div>
-        <div className={styles.code} onClick={() => setIsCode((f) => !f)}>
+        <div
+          onClick={() => setIsCode((f) => !f)}
+          className="bg-hoverblue text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue"
+        >
           <FaDownload />
           HTML/CSS
         </div>
@@ -157,7 +160,7 @@ const Code = () => {
           readOnly
         />
         <div className={styles.codewarning}>
-          * generated HTML/CSS code contain some bugs and may produce unexpected
+          * generated html/css code may contain bugs and produce unexpected
           results. App is in development phase, bugs will be fixed as soon as
           possible.
         </div>
