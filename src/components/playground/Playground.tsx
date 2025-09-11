@@ -9,10 +9,10 @@ import {
   updateTabOpenStatus,
 } from "../../store/reducers/treeReducer";
 import { useEffect, useRef } from "react";
-import { useDrag } from "../../utils/hooks/useDrag";
+import { useDrag } from "../../hooks/useDrag";
 import { IoIosClose } from "react-icons/io";
 import { createSelector } from "@reduxjs/toolkit";
-import useShortcuts from "../../utils/hooks/useShortcuts";
+import useShortcuts from "../../hooks/useShortcuts";
 import type { AppDispatch, RootState } from "../../store/store";
 
 export default () => {

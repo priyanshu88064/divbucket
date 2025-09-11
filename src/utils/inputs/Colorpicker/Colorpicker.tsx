@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./colorpicker.module.css";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounce } from "../../../hooks/useDebounce";
 
 const CSS_COLOR_NAMES = {
   aliceblue: "#F0F8FF",

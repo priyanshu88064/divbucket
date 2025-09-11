@@ -10,7 +10,7 @@ import {
 } from "../../../store/reducers/treeReducer";
 import { createTemplate } from "../../../utils/template";
 import { VscNewFile } from "react-icons/vsc";
-import { useContextMenu } from "../../../utils/hooks/useContextMenu";
+import { useContextMenu } from "../../../hooks/useContextMenu";
 import { GetIconOfType } from "../../Cssbar/Cssbar";
 import { FaFile } from "react-icons/fa";
 import { GrDrag } from "react-icons/gr";

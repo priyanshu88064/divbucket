@@ -11,22 +11,25 @@ import { updateRootWidth } from "../../store/reducers/treeReducer";
 import { MdFullscreen, MdOutlineContentCopy } from "react-icons/md";
 import { FaDownload } from "react-icons/fa6";
 import { useRef, useState } from "react";
-import { generateCode } from "../../utils/treeFunctions";
 import { LuPaintBucket } from "react-icons/lu";
 import type { RootState } from "../../store/store";
+import { useGenerateCode } from "../../hooks/useGenerateCode";
+import { preview } from "../../store/reducers/previewReducer";
 
 export default () => {
   const activeTab = useSelector(
     (state: RootState) => state.treeReducer.activeTab,
   );
   const [isCode, setIsCode] = useState(false);
+  const { generate } = useGenerateCode();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.head}>
-      <div className={styles.logo}>
-        <LuPaintBucket size={20} className={styles.licon} />
-        <div className={styles.l0}>DIV</div>
-        <div className={styles.l1}>Bucket</div>
+      <div className="flex items-baseline-last gap-1 flex-[1] text-[10px] text-orange-400">
+        <LuPaintBucket size={20} className="ml-[30px] self-center" />
+        <div className="text-[20px] font-bold italic">DIV</div>
+        <div className="text-white text-xs">Bucket</div>
       </div>
       <div className={styles.h1}>
         {activeTab && <WidthBox />}
@@ -42,18 +45,37 @@ export default () => {
         </div>
       </div>
       <div className={styles.h2}>
-        <div className={`${styles.code} ${styles.preview}`}>
+        <div
+          onClick={() => {
+            if (!activeTab) return;
+            const pageSrc = generate({
+              tab: activeTab,
+              isInternalStyleSheet: true,
+            }).html;
+            dispatch(preview({ pageSrc }));
+          }}
+          className={`text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue`}
+        >
           <FaEye />
           PREVIEW
         </div>
-        <div className={styles.code} onClick={() => setIsCode((f) => !f)}>
+        <div
+          onClick={() => setIsCode((f) => !f)}
+          className="bg-hoverblue text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue"
+        >
           <FaDownload />
           HTML/CSS
         </div>
       </div>
       {isCode && (
-        <div className={styles.codeboxwrapper} onClick={() => setIsCode(false)}>
-          <div className={styles.codebox} onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/90 z-20"
+          onClick={() => setIsCode(false)}
+        >
+          <div
+            className="relative flex max-h-[500px] max-w-[800px] w-[90%] h-[90%] rounded-sm bg-[#1B2228] p-4 gap-2 text-xs text-[var(--text_0)]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Code />
           </div>
         </div>
@@ -64,25 +86,28 @@ export default () => {
 
 const Code = () => {
   const tabs = useSelector((state: RootState) => state.treeReducer.tree[-1]);
-  const tree = useSelector((state: RootState) => state.treeReducer.tree);
   const dataMap = useSelector((state: RootState) => state.treeReducer.dataMap);
-  const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap,
-  );
   const [activeTab, setActiveTab] = useState(0);
+  const { generate } = useGenerateCode();
+
   const code = tabs.map((tab) =>
-    generateCode({ tab, tree, dataMap, styleMap }),
+    generate({ tab, isInternalStyleSheet: false }),
   );
   const [isHtml, setIsHtml] = useState(true);
   const copiedRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <>
-      <div className={styles.codesidebar}>
+      <div
+        className={`${styles.codesidebar} w-[150px] rounded-sm p-2 overflow-y-scroll bg-[#283037]`}
+      >
         {tabs.map((tab, ind) => (
           <div
             key={tab + ind + ""}
-            className={`${styles.csb0} ${ind === activeTab && styles.csb0active}`}
+            className={`
+              flex items-center gap-1 p-1 cursor-pointer
+              ${ind === activeTab ? "bg-gray-600" : ""}
+            `}
             onClick={() => setActiveTab(ind)}
           >
             <FaHome />
@@ -135,7 +160,7 @@ const Code = () => {
           readOnly
         />
         <div className={styles.codewarning}>
-          * generated HTML/CSS code contain some bugs and may produce unexpected
+          * generated html/css code may contain bugs and produce unexpected
           results. App is in development phase, bugs will be fixed as soon as
           possible.
         </div>

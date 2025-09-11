@@ -1,8 +1,6 @@
 import styles from "./resizable.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateActiveNode } from "../../store/reducers/treeReducer";
-import { useResizer } from "../hooks/useResizer";
-import { useContextMenu } from "../hooks/useContextMenu";
 import ContextMenu from "../../components/ContextMenu/ContextMenu";
 import { changeTab } from "../../store/reducers/focusReducer";
 import { MdOutlineEdit } from "react-icons/md";
@@ -11,6 +9,8 @@ import { GetIconOfType } from "../../components/Cssbar/Cssbar";
 import { RiDragMove2Fill } from "react-icons/ri";
 import type { AppDispatch, RootState } from "../../store/store";
 import React from "react";
+import { useResizer } from "../../hooks/useResizer";
+import { useContextMenu } from "../../hooks/useContextMenu";
 
 export default ({
   id,

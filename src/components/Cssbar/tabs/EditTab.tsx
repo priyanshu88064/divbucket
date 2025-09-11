@@ -6,7 +6,6 @@ import { updateDataMap } from "../../../store/reducers/treeReducer";
 import { FaParagraph } from "react-icons/fa6";
 import styles from "../cssbar.module.css";
 import { FaLink } from "react-icons/fa";
-import Wrap from "../Wrap";
 
 export default function EditTab({ focus }: { focus: string }) {
   const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
