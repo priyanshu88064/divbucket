@@ -1,9 +1,3 @@
-.playground {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
 .bg {
   background-color: var(--pg_bg);
   flex: 1;

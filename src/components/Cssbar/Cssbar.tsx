@@ -53,33 +53,35 @@ export default () => {
   const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
   const dispatch = useDispatch<AppDispatch>();
 
-  if (!id) {
-    return <Empty />;
-  }
-
   return (
-    <div className="w-[280px] h-full text-white flex text-xs overflow-hidden bg-[#283037]">
-      <div className="flex-1 overflow-y-scroll h-full pb-[150px]">
-        {tab[0] === "0" ? <CssTab /> : <EditTab focus={tab[1]} />}
-      </div>
-      <div className="p-[4px] pr-[2px] pt-2 flex flex-col items-center gap-2">
-        <div className="flex justify-center items-center w-6 h-6 p-[4px] border border-transparent rounded-sm hover:border-blue-400 active:bg-hoverblue">
-          <IoIosMenu size={18} />
-        </div>
-        {CssTabs.map((csstab, ind) => (
-          <div
-            key={csstab.name + ind}
-            title={csstab.name}
-            className={`
+    <div className="w-[280px] h-full ml-auto text-white flex text-xs overflow-hidden bg-[#283037]">
+      {id ? (
+        <>
+          <div className="flex-1 overflow-y-scroll h-full pb-[150px]">
+            {tab[0] === "0" ? <CssTab /> : <EditTab focus={tab[1]} />}
+          </div>
+          <div className="p-[4px] pr-[2px] pt-2 flex flex-col items-center gap-2">
+            <div className="flex justify-center items-center w-6 h-6 p-[4px] border border-transparent rounded-sm hover:border-blue-400 active:bg-hoverblue">
+              <IoIosMenu size={18} />
+            </div>
+            {CssTabs.map((csstab, ind) => (
+              <div
+                key={csstab.name + ind}
+                title={csstab.name}
+                className={`
                 flex justify-center items-center w-6 h-6 p-[4px] border border-transparent rounded-sm
                 hover:border-blue-400 active:bg-hoverblue ${tab[0] === ind + "" ? "bg-gray-600" : ""}
               `}
-            onClick={() => dispatch(changeTab({ tab: csstab.changeRef }))}
-          >
-            {csstab.icon}
+                onClick={() => dispatch(changeTab({ tab: csstab.changeRef }))}
+              >
+                {csstab.icon}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : (
+        <Empty />
+      )}
     </div>
   );
 };

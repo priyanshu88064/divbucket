@@ -1271,15 +1271,16 @@ const treeSlice = createSlice({
     cut: (state) => {
       const cutNode = state.activeNodeId;
       if (!cutNode) return;
-
-      const parent = getParent(state.tree, -1, cutNode);
       if (state.tree[-1].includes(cutNode)) return;
+
       treeSlice.caseReducers.updateClipboard(state, {
         payload: { cut: cutNode, copy: null },
       });
       treeSlice.caseReducers.deleteFromParent(state, {
         payload: { id: cutNode },
       });
+
+      const parent = getParent(state.tree, -1, cutNode);
       state.activeNodeId = parent || state.activeTab;
     },
     copy: (state) => {

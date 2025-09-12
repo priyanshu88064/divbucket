@@ -1,13 +1,17 @@
 import type { Tree, TreeState } from "../types/Tree";
 import type { WritableDraft } from "immer";
 
-export const getParent = (tree: Tree, start: number, id: number): number => {
+export const getParent = (
+  tree: Tree,
+  start: number,
+  id: number,
+): number | null => {
   if (tree[start].includes(id)) return start;
   for (const node of tree[start]) {
     const result = getParent(tree, node, id);
     if (result) return result;
   }
-  throw new Error("cannot get parent [getParent]");
+  return null;
 };
 
 export const DeleteFromParent = (
@@ -39,11 +43,12 @@ export const DeleteNode = (
     };
   },
 ) => {
-  if (!state.activeNodeId) return;
-  state.activeNodeId = getParent(state.tree, -1, state.activeNodeId);
-  if (!state.activeNodeId) return;
+  if (state.activeNodeId) {
+    const parent = getParent(state.tree, -1, state.activeNodeId);
+    if (parent) state.activeNodeId = parent;
+    else throw new Error("cannot get parent [getParent]");
+  }
 
-  state.activeNodeId = getParent(state.tree, -1, state.activeNodeId);
   const deleteWork = (id: number) => {
     state.tree[id].map((child) => deleteWork(child));
     delete state.dataMap[id];
@@ -90,6 +95,11 @@ export const Splice = (
     const parent =
       payload.parent ||
       getParent(state.tree, -1, Number(payload.referenceNode));
+
+    if (!parent) {
+      throw new Error("cannot get parent [getParent]");
+    }
+
     const index = state.tree[parent].indexOf(Number(payload.referenceNode));
     state.tree[parent].splice(index + payload.pos, 0, Number(payload.node));
   }
