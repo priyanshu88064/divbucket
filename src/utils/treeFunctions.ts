@@ -43,9 +43,15 @@ export const DeleteNode = (
     };
   },
 ) => {
-  if (state.activeNodeId) {
+  // make another node active
+  if (state.activeNodeId === payload.id) {
     const parent = getParent(state.tree, -1, state.activeNodeId);
-    if (parent) state.activeNodeId = parent;
+    if (parent === -1) {
+      const nextTabToFocus =
+        state.tree[-1].find((tab) => tab !== state.activeNodeId) || null;
+      state.activeNodeId = nextTabToFocus;
+      state.activeTab = nextTabToFocus;
+    } else if (parent) state.activeNodeId = parent;
     else throw new Error("cannot get parent [getParent]");
   }
 

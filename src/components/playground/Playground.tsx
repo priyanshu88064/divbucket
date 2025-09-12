@@ -21,7 +21,7 @@ export default () => {
   );
 
   return (
-    <div className="flex h-full w-full overflow-hidden bg-black">
+    <div className="flex h-full w-full overflow-hidden bg-[var(--pg_bg)]">
       <SideBar />
       {activeTab && <JustAWrapper activeTab={activeTab} />}
       <Cssbar />

@@ -84,7 +84,7 @@ export default ({
             func: () => {
               dispatch(deleteNode({ id }));
             },
-            isOff: type === "root",
+            isOff: false,
           },
         ],
       ]

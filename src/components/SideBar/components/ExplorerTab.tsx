@@ -217,7 +217,8 @@ const RLItem = ({
           e.preventDefault();
           setClicked(true);
           setPoints({ x: e.pageX, y: e.pageY });
-          dispatch(updateActiveNode({ id: node }));
+          if (myTab !== activeTab) dispatch(updateActiveTab({ tab: myTab }));
+          if (activeNodeId !== node) dispatch(updateActiveNode({ id: node }));
         }}
       >
         <div className="py-[3px] flex items-center gap-1 text-[var(--text_0)]">
