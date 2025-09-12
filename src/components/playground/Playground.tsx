@@ -16,13 +16,22 @@ import useShortcuts from "../../hooks/useShortcuts";
 import type { AppDispatch, RootState } from "../../store/store";
 
 export default () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const bgRef = useRef(null);
   const activeTab = useSelector(
     (state: RootState) => state.treeReducer.activeTab,
   );
-  if (!activeTab) return <>please fix this</>;
 
+  return (
+    <div className="flex h-full w-full overflow-hidden bg-black">
+      <SideBar />
+      {activeTab && <JustAWrapper activeTab={activeTab} />}
+      <Cssbar />
+    </div>
+  );
+};
+
+const JustAWrapper = ({ activeTab }: { activeTab: number }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const bgRef = useRef(null);
   const {
     handleDragStart,
     handleDragEnd,
@@ -48,23 +57,18 @@ export default () => {
       observer.disconnect();
     };
   }, []);
-
   return (
-    <div className={styles.playground}>
-      <SideBar />
-      <div
-        ref={bgRef}
-        className={styles.bg}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragLeave={handleDragLeave}
-        onDragEnd={handleDragEnd}
-      >
-        <Tabs />
-        <TreeManager />
-      </div>
-      <Cssbar />
+    <div
+      ref={bgRef}
+      className={styles.bg}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      onDragLeave={handleDragLeave}
+      onDragEnd={handleDragEnd}
+    >
+      <Tabs />
+      <TreeManager />
     </div>
   );
 };

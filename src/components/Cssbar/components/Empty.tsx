@@ -1,11 +1,10 @@
 import { FaCat } from "react-icons/fa";
-import styles from "../cssbar.module.css";
 
 export default function Empty() {
   return (
-    <div className={styles.empty}>
+    <div className="h-full w-full flex flex-col items-center pt-12 opacity-50">
       <FaCat size={50} />
-      <div>Feeling empty</div>
+      <div className="mt-[10px]">Feeling empty</div>
     </div>
   );
 }
