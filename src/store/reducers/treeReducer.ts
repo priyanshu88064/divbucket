@@ -93,7 +93,6 @@ const initialState: TreeState = {
     920177: [11706],
     936385: [881404, 579774, 227285, 352908, 690009, 59187, 359031],
     936675: [741342],
-    945829: [],
     962312: [],
     968176: [405318, 519402],
     968581: [],
@@ -437,7 +436,6 @@ const initialState: TreeState = {
       paddingRight: "10px",
       paddingLeft: "10px",
     },
-    945829: {},
     962312: {
       fontSize: "12px",
       display: "flex",
@@ -971,16 +969,6 @@ const initialState: TreeState = {
       alt: "",
       content: null,
       unit: false,
-    },
-    945829: {
-      name: "Text",
-      type: "Text",
-      hyperlink: "",
-      newTab: false,
-      src: "",
-      alt: "",
-      content: "Welcome here",
-      unit: true,
     },
     962312: {
       name: "Text",

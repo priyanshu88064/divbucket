@@ -67,7 +67,7 @@ export default () => {
           HTML/CSS
         </div>
       </div>
-      {isCode && (
+      {isCode && activeTab && (
         <div
           className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/90 z-20"
           onClick={() => setIsCode(false)}
