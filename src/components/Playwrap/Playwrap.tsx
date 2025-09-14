@@ -1,24 +1,65 @@
 import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
 import Headbar from "../Headbar/Headbar";
 import styles from "./playwrap.module.css";
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import Playground from "../playground/Playground";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import type { Template } from "../../types/Template";
+import {
+  addTemplate,
+  updateActiveNode,
+  updateActiveTab,
+} from "../../store/reducers/treeReducer";
 
 const Preview = lazy(() => import("../preview/Preview"));
 
 export default () => {
-  const widthRef = useRef(window.screen.width);
   const isPreviewOpen = useSelector(
     (state: RootState) => state.previewReducer.isOpen,
   );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const initDefaultProject = async () => {
+      const response = await fetch("/projects/divbucket.json");
+      const data = (await response.json()) as Template;
+
+      dispatch(
+        addTemplate({
+          tree: data.tree,
+          styleMap: data.styleMap,
+          dataMap: data.dataMap,
+        }),
+      );
+
+      if (data.tree[-1] && data.tree[-1].length) {
+        dispatch(updateActiveTab({ tab: data.tree[-1][0] }));
+        dispatch(updateActiveNode({ id: data.tree[-1][0] }));
+      }
+    };
+    initDefaultProject();
+  }, []);
 
   return (
     <div className={styles.playwrap}>
       <Headbar />
       <Playground />
+      <RestrictSmallerScreen />
 
+      {isPreviewOpen && (
+        <Suspense fallback={<></>}>
+          <Preview />
+        </Suspense>
+      )}
+    </div>
+  );
+};
+
+const RestrictSmallerScreen = () => {
+  const widthRef = useRef(window.screen.width);
+  return (
+    <>
       {widthRef.current < 1024 && (
         <div className={styles.notsupported}>
           <div className={styles.ns0}>
@@ -33,16 +74,6 @@ export default () => {
           </div>
         </div>
       )}
-
-      {isPreviewOpen && (
-        <Suspense
-          fallback={
-            <div className="fixed top-0 left-0 w-full h-full bg-white" />
-          }
-        >
-          <Preview />
-        </Suspense>
-      )}
-    </div>
+    </>
   );
 };
