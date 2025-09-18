@@ -32,7 +32,11 @@ const cssMap = [
   ["border-width", "borderWidth"],
   ["border-style", "borderStyle"],
   ["border-color", "borderColor"],
+  ["border-radius", "borderRadius"],
   ["color", "color"],
+  ["overflow-x", "overflowX"],
+  ["overflow-y", "overflowY"],
+  ["cursor", "cursor"],
 ];
 
 export function useGenerateCode() {

@@ -89,7 +89,7 @@ export default () => {
 export const isPropAllowed = (type: string, prop: string) => {
   if (type === "root") {
     if (
-      ["Display", "Padding", "Background", "Styles", "Options"].includes(prop)
+      ["Display", "Padding", "Background", "Overflow", "Cursor"].includes(prop)
     )
       return true;
     return false;

@@ -29,7 +29,7 @@ export default function Wrap({
             className="flex items-center justify-between select-none"
             onClick={() => setIsActive((f) => !f)}
           >
-            <div className="p-[10px]">{title}</div>
+            <div className="p-[10px] py-4 cursor-pointer">{title}</div>
             <div className="p-[10px]">
               {!heading ? (
                 isActive ? (

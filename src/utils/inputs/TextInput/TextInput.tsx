@@ -4,10 +4,12 @@ export default ({
   onChange,
   value,
   units,
+  isSelectOnly = false,
 }: {
   value: string;
   units?: string[];
   onChange: (value: string) => void;
+  isSelectOnly?: boolean;
 }) => {
   const [val, setVal] = useState(value || "auto");
 
@@ -29,6 +31,7 @@ export default ({
         onKeyUp={(e) => {
           if (e.key === "Enter") onChange(val);
         }}
+        readOnly={isSelectOnly}
       />
       {units && units.length && (
         <div className="z-[1] absolute hidden peer-focus:block w-full max-h-[150px] bottom-0 translate-y-full bg-black overflow-y-scroll text-[var(--text_0)]">
