@@ -1,4 +1,6 @@
 #BUGS/ISSUES
+- CSSBUG: border is visible in editor but not in preview
+- CSSBUG: overflow affecting app's UI, actually many node's css properties affecting app's UI
 - color picker going off the screen
 - contextmenu going up direction ( related to sometimes mobile -10px showing in headbar, can be a persist redux extension bug)
 - encounter a bug where headbar > width is showing negative(mobile -10px)(can't reproduce yet)

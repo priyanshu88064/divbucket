@@ -10,7 +10,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <Provider store={store}>
       <Playwrap />
-      <Analytics/>
+      <Analytics />
     </Provider>
   </StrictMode>,
 );

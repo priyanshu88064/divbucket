@@ -1,5 +1,5 @@
 import styles from "./sidebar.module.css";
-import { IoAddOutline, IoLayers, IoSettings } from "react-icons/io5";
+import { IoAddOutline, IoLayers } from "react-icons/io5";
 import { lazy, Suspense, useState } from "react";
 import Explorer from "./components/ExplorerTab";
 import ElementsTab from "./components/ElementsTab";

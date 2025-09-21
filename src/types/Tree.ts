@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 
+export type BackgroundType = "Auto" | "Solid" | "URL" | "Custom";
+
 export interface Tree {
   [id: number]: number[];
 }
@@ -19,6 +21,9 @@ export interface NodeData {
     content?: string | null;
     unit?: boolean;
     open?: boolean;
+    cssData?: {
+      backgroundType?: BackgroundType;
+    };
   };
 }
 
