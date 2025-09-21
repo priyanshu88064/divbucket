@@ -85,28 +85,3 @@ export default () => {
     </div>
   );
 };
-
-export const isPropAllowed = (type: string, prop: string) => {
-  if (type === "root") {
-    if (
-      ["Display", "Padding", "Background", "Overflow", "Cursor"].includes(prop)
-    )
-      return true;
-    return false;
-  } else if (type === "Image") {
-    if (
-      [
-        "Padding",
-        "Background",
-        "Styles",
-        "Options",
-        "Size",
-        "Margin",
-        "Border",
-      ].includes(prop)
-    )
-      return true;
-    return false;
-  }
-  return true;
-};

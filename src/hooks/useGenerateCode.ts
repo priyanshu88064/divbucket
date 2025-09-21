@@ -8,34 +8,58 @@ const cssMap = [
   ["height", "height"],
   ["max-height", "maxHeight"],
   ["min-height", "minHeight"],
+
   ["display", "display"],
   ["flex-direction", "flexDirection"],
   ["justify-content", "justifyContent"],
   ["align-items", "alignItems"],
   ["gap", "gap"],
   ["flex-wrap", "flexWrap"],
+
   ["margin-top", "marginTop"],
   ["margin-right", "marginRight"],
   ["margin-bottom", "marginBottom"],
   ["margin-left", "marginLeft"],
+
   ["padding-top", "paddingTop"],
   ["padding-right", "paddingRight"],
   ["padding-bottom", "paddingBottom"],
   ["padding-left", "paddingLeft"],
+
+  ["background", "background"],
+  ["background-color", "backgroundColor"],
+  ["background-image", "backgroundImage"],
+  ["background-repeat", "backgroundRepeat"],
+  ["background-position", "backgroundPosition"],
+  ["background-size", "backgroundSize"],
+
+  ["color", "color"],
   ["font-weight", "fontWeight"],
   ["font-size", "fontSize"],
-  ["background", "background"],
   ["font-family", "fontFamily"],
   ["font-style", "fontStyle"],
   ["text-decoration", "textDecoration"],
+  ["text-transform", "textTransform"],
+  ["text-align", "textAlign"],
   ["font-variant", "fontVariant"],
+
   ["border-width", "borderWidth"],
+  ["border-top-width", "borderTopWidth"],
+  ["border-bottom-width", "borderBottomWidth"],
+  ["border-left-width", "borderLeftWidth"],
+  ["border-right-width", "borderRightWidth"],
   ["border-style", "borderStyle"],
   ["border-color", "borderColor"],
   ["border-radius", "borderRadius"],
-  ["color", "color"],
+
   ["overflow-x", "overflowX"],
   ["overflow-y", "overflowY"],
+
+  ["box-shadow", "boxShadow"],
+  ["text-shadow", "textShadow"],
+
+  ["translate", "translate"],
+
   ["cursor", "cursor"],
 ];
 
