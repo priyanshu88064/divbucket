@@ -1,13 +1,18 @@
 import type { CSSProperties } from "react";
 
 export type BackgroundType = "Auto" | "Solid" | "URL" | "Custom";
+export type CssState = "default" | "hover" | "active";
 
 export interface Tree {
   [id: number]: number[];
 }
 
 export interface NodeStyle {
-  [id: number]: CSSProperties;
+  [id: number]: {
+    default: CSSProperties;
+    hover: CSSProperties;
+    active: CSSProperties;
+  };
 }
 
 export interface NodeData {
@@ -49,4 +54,5 @@ export interface TreeState {
   activeTab: number | null;
   bgContentRect: BGContentRect;
   clipboard: Clipboard;
+  cssState: CssState;
 }

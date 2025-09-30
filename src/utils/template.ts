@@ -11,14 +11,18 @@ TYPES.Tab = {
   tree: { 0: [] },
   styleMap: {
     0: {
-      width: "100%",
-      height: "100%",
-      minWidth: "350px",
-      background: "white",
-      paddingTop: "5px",
-      paddingRight: "5px",
-      paddingBottom: "5px",
-      paddingLeft: "5px",
+      default: {
+        width: "100%",
+        height: "100%",
+        minWidth: "350px",
+        background: "white",
+        paddingTop: "5px",
+        paddingRight: "5px",
+        paddingBottom: "5px",
+        paddingLeft: "5px",
+      },
+      hover: {},
+      active: {},
     },
   },
   dataMap: {
@@ -32,37 +36,37 @@ TYPES.Tab = {
 };
 TYPES.Block = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Block") },
+  styleMap: { 0: { default: initCSS("Block"), hover: {}, active: {} } },
   dataMap: { 0: initData("Block") },
 };
 TYPES.Row = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Row") },
+  styleMap: { 0: { default: initCSS("Row"), hover: {}, active: {} } },
   dataMap: { 0: initData("Row") },
 };
 TYPES.Heading = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Heading") },
+  styleMap: { 0: { default: initCSS("Heading"), hover: {}, active: {} } },
   dataMap: { 0: initData("Heading") },
 };
 TYPES.Text = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Text") },
+  styleMap: { 0: { default: initCSS("Text"), hover: {}, active: {} } },
   dataMap: { 0: initData("Text") },
 };
 TYPES.Paragraph = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Paragraph") },
+  styleMap: { 0: { default: initCSS("Paragraph"), hover: {}, active: {} } },
   dataMap: { 0: initData("Paragraph") },
 };
 TYPES.Image = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Image") },
+  styleMap: { 0: { default: initCSS("Image"), hover: {}, active: {} } },
   dataMap: { 0: initData("Image") },
 };
 TYPES.ListItem = {
   tree: { 0: [] },
-  styleMap: { 0: initCSS("Text") },
+  styleMap: { 0: { default: initCSS("Text"), hover: {}, active: {} } },
   dataMap: {
     0: { ...initData("Text"), name: "LItem", content: "• List Item" },
   },
@@ -71,12 +75,16 @@ TYPES.List = {
   tree: { 0: [1, 2, 3, 4], 1: [], 2: [], 3: [], 4: [] },
   styleMap: {
     0: {
-      ...TYPES.Block.styleMap[0],
-      height: "auto",
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingLeft: "10px",
-      paddingRight: "10px",
+      default: {
+        ...TYPES.Block.styleMap[0],
+        height: "auto",
+        paddingTop: "10px",
+        paddingBottom: "10px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+      },
+      hover: {},
+      active: {},
     },
     1: TYPES.ListItem.styleMap[0],
     2: TYPES.ListItem.styleMap[0],
@@ -95,42 +103,64 @@ TYPES.Navbar = {
   tree: { 0: [1, 2], 1: [], 2: [3, 4, 5, 6], 3: [], 4: [], 5: [], 6: [] },
   styleMap: {
     0: {
-      ...TYPES.Row.styleMap[0],
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingLeft: "10px",
-      paddingRight: "10px",
-      gap: "20px",
-      justifyContent: "space-between",
-      borderStyle: "Solid",
-      borderColor: "gray",
-      borderRadius: "5px",
-      borderWidth: "1px",
-      alignItems: "center",
+      default: {
+        ...TYPES.Row.styleMap[0],
+        paddingTop: "10px",
+        paddingBottom: "10px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        gap: "20px",
+        justifyContent: "space-between",
+        borderStyle: "Solid",
+        borderColor: "gray",
+        borderRadius: "5px",
+        borderWidth: "1px",
+        alignItems: "center",
+      },
+      hover: {},
+      active: {},
     },
-    1: {
-      ...TYPES.Image.styleMap[0],
-    },
+    1: TYPES.Image.styleMap[0],
     2: {
-      ...TYPES.Row.styleMap[0],
-      gap: "50px",
-      minHeight: "0",
+      default: {
+        ...TYPES.Row.styleMap[0].default,
+        gap: "50px",
+        minHeight: "0",
+      },
+      hover: {},
+      active: {},
     },
     3: {
-      ...TYPES.Text.styleMap[0],
-      fontSize: "12px",
+      default: {
+        ...TYPES.Text.styleMap[0].default,
+        fontSize: "12px",
+      },
+      hover: {},
+      active: {},
     },
     4: {
-      ...TYPES.Text.styleMap[0],
-      fontSize: "12px",
+      default: {
+        ...TYPES.Text.styleMap[0].default,
+        fontSize: "12px",
+      },
+      hover: {},
+      active: {},
     },
     5: {
-      ...TYPES.Text.styleMap[0],
-      fontSize: "12px",
+      default: {
+        ...TYPES.Text.styleMap[0].default,
+        fontSize: "12px",
+      },
+      hover: {},
+      active: {},
     },
     6: {
-      ...TYPES.Text.styleMap[0],
-      fontSize: "12px",
+      default: {
+        ...TYPES.Text.styleMap[0].default,
+        fontSize: "12px",
+      },
+      hover: {},
+      active: {},
     },
   },
   dataMap: {
@@ -160,6 +190,42 @@ TYPES.Navbar = {
     6: {
       ...TYPES.Text.dataMap[0],
       content: "Contact Us",
+    },
+  },
+};
+
+TYPES.Button = {
+  tree: { 0: [] },
+  styleMap: {
+    0: {
+      default: {
+        width: "fit-content",
+        paddingTop: "4px",
+        paddingRight: "8px",
+        paddingLeft: "8px",
+        paddingBottom: "4px",
+        backgroundColor: "#1163ff",
+        color: "#ffffff",
+        borderRadius: "4px",
+        cursor: "pointer",
+      },
+      hover: {},
+      active: {},
+    },
+  },
+  dataMap: {
+    0: {
+      name: "Button",
+      type: "Button",
+      hyperlink: "",
+      newTab: false,
+      src: "",
+      alt: "",
+      content: "Button",
+      unit: true,
+      cssData: {
+        backgroundType: "Solid",
+      },
     },
   },
 };

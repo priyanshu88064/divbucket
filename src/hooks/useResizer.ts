@@ -6,7 +6,7 @@ import { updateStyleMap } from "../store/reducers/treeReducer";
 
 export function useResizer({ id }: { id: number }) {
   const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap[id],
+    (state: RootState) => state.treeReducer.styleMap[id].default,
   );
   const virtualPos = useRef<{
     top: number | null;
@@ -106,6 +106,7 @@ export function useResizer({ id }: { id: number }) {
           width: Number(dirRef.current) % 2 ? calWidth() : styleMap.width,
           height: Number(dirRef.current) % 2 ? styleMap.height : calHeight(),
         },
+        cssState: "default",
       }),
     );
     dirRef.current = null;

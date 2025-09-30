@@ -178,13 +178,16 @@ const WidthBox = () => {
   ); //-10 for resizebar, -80 for margin
   const width = useSelector((state: RootState) => {
     if (!activeTab) return;
-    if (state.treeReducer.styleMap[activeTab].width === "100%") return maxWidth;
+    if (state.treeReducer.styleMap[activeTab].default.width === "100%")
+      return maxWidth;
     return Math.min(
       maxWidth,
       Math.max(
         350,
         Number(
-          (state.treeReducer.styleMap[activeTab].width as string).split("p")[0],
+          (state.treeReducer.styleMap[activeTab].default.width as string).split(
+            "p",
+          )[0],
         ),
       ),
     );

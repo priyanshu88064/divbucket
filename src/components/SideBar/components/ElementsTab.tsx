@@ -1,5 +1,9 @@
 import { GiSquare } from "react-icons/gi";
-import { LuLetterText, LuSquareArrowRight } from "react-icons/lu";
+import {
+  LuLetterText,
+  LuMousePointerClick,
+  LuSquareArrowRight,
+} from "react-icons/lu";
 import { PiImageLight } from "react-icons/pi";
 import { RiText } from "react-icons/ri";
 import { IoIosList } from "react-icons/io";
@@ -39,6 +43,10 @@ const elementList = [
         id: "Image",
         name: "Image",
         icon: <PiImageLight size={30} />,
+      },
+      {
+        id: "Button",
+        icon: <div className="border px-2 py-1 rounded-sm text-sm">Button</div>,
       },
       {
         id: "List",
@@ -91,7 +99,7 @@ export default function ElementsTab() {
                 `}
               >
                 {item.icon}
-                <div className="">{item.name}</div>
+                {item.name && <div className="">{item.name}</div>}
               </div>
             ))}
           </div>

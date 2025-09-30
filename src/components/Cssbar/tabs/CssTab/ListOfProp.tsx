@@ -1,21 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../store/store";
+import type {
+  BackgroundType,
+  CssState,
+  NodeData,
+} from "../../../../types/Tree";
+import TextInput from "../../../../utils/inputs/TextInput/TextInput";
+import Wrap from "../../Wrap";
+import styles from "../../cssbar.module.css";
+import type { RootState } from "../../../../store/store";
 import {
   updateDataMap,
   updateStyleMap,
-} from "../../../store/reducers/treeReducer";
-import Wrap from "../Wrap";
-import styles from "../cssbar.module.css";
-import TextInput from "../../../utils/inputs/TextInput/TextInput";
-import FlexProperties from "../components/FlexProperties";
-import CheckBox from "../../../utils/inputs/CheckBox/CheckBox";
-import MPbox from "../components/MPbox";
-import Select from "../../../utils/inputs/Select/Select";
-import Colorpicker from "../../../utils/inputs/Colorpicker/Colorpicker";
+} from "../../../../store/reducers/treeReducer";
+import FlexProperties from "../../components/FlexProperties";
+import CheckBox from "../../../../utils/inputs/CheckBox/CheckBox";
+import MPbox from "../../components/MPbox";
+import Select from "../../../../utils/inputs/Select/Select";
+import Colorpicker from "../../../../utils/inputs/Colorpicker/Colorpicker";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
 import { AiOutlineFontSize } from "react-icons/ai";
-import type { BackgroundType, NodeData } from "../../../types/Tree";
 
+// for boxShadow css property
 const getBoxShadowLevel = (value: string) => {
   if (!value || value.includes("0 0")) return "none";
   if (value.includes("0 1px 2px")) return "Extra-small";
@@ -25,6 +30,7 @@ const getBoxShadowLevel = (value: string) => {
   return "Extra-large";
 };
 
+// for textShadow css property
 const getTextShadowLevel = (value: string) => {
   if (!value || value.includes("none")) return "none";
   if (value.includes("1px 1px 1px")) return "Extra-small";
@@ -34,23 +40,25 @@ const getTextShadowLevel = (value: string) => {
   return "Extra-large";
 };
 
-export default function CssTab() {
-  const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
-  if (!id) return <></>;
-
+export default function ListOfProp({
+  id,
+  cssState,
+}: {
+  id: number;
+  cssState: CssState;
+}) {
+  const dispatch = useDispatch();
   const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap[id],
+    (state: RootState) => state.treeReducer.styleMap[id][cssState],
   );
   const dataMap = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id],
   );
 
-  const dispatch = useDispatch();
-
   const UpdateStyle = (prop: keyof React.CSSProperties, value: string) => {
     let style = { ...styleMap, [prop]: value };
     if (value === "auto") delete style[prop];
-    dispatch(updateStyleMap({ id, style }));
+    dispatch(updateStyleMap({ id, style, cssState }));
   };
 
   const UpdateData = (id: number, data: NodeData[number]) => {
@@ -103,7 +111,7 @@ export default function CssTab() {
       ...dataMap,
       cssData: { ...dataMap.cssData, backgroundType: type },
     });
-    dispatch(updateStyleMap({ id, style: tempStyleMap }));
+    dispatch(updateStyleMap({ id, style: tempStyleMap, cssState }));
   };
 
   return (
@@ -191,6 +199,7 @@ export default function CssTab() {
                   ],
                 }}
                 onChange={(value) => UpdateStyle("flexDirection", value)}
+                cssState={cssState}
               />
               <FlexProperties
                 id={id}
@@ -208,6 +217,7 @@ export default function CssTab() {
                   ],
                 }}
                 onChange={(value) => UpdateStyle("justifyContent", value)}
+                cssState={cssState}
               />
               <FlexProperties
                 id={id}
@@ -226,6 +236,7 @@ export default function CssTab() {
                   ],
                 }}
                 onChange={(value) => UpdateStyle("alignItems", value)}
+                cssState={cssState}
               />
               <div className={styles.dic2}>
                 <div className={styles.dic20}>
@@ -251,6 +262,7 @@ export default function CssTab() {
                           ...styleMap,
                           flexWrap: e.target.checked ? "wrap" : "nowrap",
                         },
+                        cssState,
                       }),
                     )
                   }
@@ -262,11 +274,15 @@ export default function CssTab() {
       </Wrap>
 
       <Wrap title={"Margin"}>
-        <MPbox prefix={"margin"} />
+        <MPbox key={"marginBox-" + id} prefix={"margin"} cssState={cssState} />
       </Wrap>
 
       <Wrap title={"Padding"}>
-        <MPbox prefix={"padding"} />
+        <MPbox
+          key={"paddingBox-" + id}
+          prefix={"padding"}
+          cssState={cssState}
+        />
       </Wrap>
 
       <Wrap title={"Background"}>

@@ -1,55 +1,52 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../store/store";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { updateStyleMap } from "../../../store/reducers/treeReducer";
 import styles from "../cssbar.module.css";
+import type { CssState } from "../../../types/Tree";
 
-export default function MPbox({ prefix }: { prefix: string }) {
+export default function MPbox({
+  prefix,
+  cssState,
+}: {
+  prefix: string;
+  cssState: CssState;
+}) {
   const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
-  if (!id) return <>please fix this</>;
+  if (!id) return <></>;
 
-  const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap[id],
-  );
-  const disptach = useDispatch<AppDispatch>();
   const [value, setValue] = useState({
     Top: "0",
-    Right: "0",
-    Bottom: "0",
     Left: "0",
+    Bottom: "0",
+    Right: "0",
   });
+
+  const styleMap = useSelector(
+    (state: RootState) => state.treeReducer.styleMap[id][cssState],
+  );
+  const disptach = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setValue({
-      Top:
-        (styleMap[(prefix + "Top") as keyof React.CSSProperties] as string) ||
-        "0",
+      Top: (styleMap[(prefix + "Top") as keyof CSSProperties] as string) || "0",
       Right:
-        (styleMap[(prefix + "Right") as keyof React.CSSProperties] as string) ||
-        "0",
+        (styleMap[(prefix + "Right") as keyof CSSProperties] as string) || "0",
       Bottom:
-        (styleMap[
-          (prefix + "Bottom") as keyof React.CSSProperties
-        ] as string) || "0",
+        (styleMap[(prefix + "Bottom") as keyof CSSProperties] as string) || "0",
       Left:
-        (styleMap[(prefix + "Left") as keyof React.CSSProperties] as string) ||
-        "0",
+        (styleMap[(prefix + "Left") as keyof CSSProperties] as string) || "0",
     });
-  }, [id, styleMap]);
+  }, [prefix, styleMap]);
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (typeof Number(e.key) !== "number" && e.key !== "Backspace")
-      e.preventDefault();
-  };
-  const onFocus = (e: React.FocusEvent<HTMLInputElement>) => e.target.select();
-  const onBlur = (dir: "Top" | "Right" | "Bottom" | "Left") => {
-    let style = { ...styleMap };
-    if (value[dir] === "" || value[dir] === "0")
-      (style as any)[prefix + dir] = "0";
-    else
-      (style as any)[prefix + dir] =
-        value[dir] + (typeof Number(value[dir]) !== "number") ? "" : "px";
-    disptach(updateStyleMap({ id, style }));
+  const updateStyle = (dir: string, value: string) => {
+    disptach(
+      updateStyleMap({
+        id,
+        style: { ...styleMap, [prefix + dir]: value },
+        cssState,
+      }),
+    );
   };
 
   return (
@@ -63,52 +60,56 @@ export default function MPbox({ prefix }: { prefix: string }) {
       >
         <div title="top" className={`${styles.mpcut} ${styles.top}`}>
           <input
-            onChange={(e) => setValue((f) => ({ ...f, Top: e.target.value }))}
-            onBlur={() => onBlur("Top")}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
-            className={styles.mpcut0}
-            maxLength={4}
-            placeholder="0"
             value={value.Top}
+            placeholder="0"
+            onFocus={(e) => e.target.select()}
+            onBlur={() => updateStyle("Top", value.Top)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") updateStyle("Top", value.Top);
+            }}
+            onChange={(e) => setValue((f) => ({ ...f, Top: e.target.value }))}
+            className={styles.mpcut0}
           />
         </div>
         <div title="right" className={`${styles.mpcut} ${styles.right}`}>
           <input
-            onChange={(e) => setValue((f) => ({ ...f, Right: e.target.value }))}
-            onBlur={() => onBlur("Right")}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
-            className={styles.mpcut0}
-            maxLength={4}
-            placeholder="0"
             value={value.Right}
+            placeholder="0"
+            onFocus={(e) => e.target.select()}
+            onBlur={() => updateStyle("Right", value.Right)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") updateStyle("Right", value.Right);
+            }}
+            onChange={(e) => setValue((f) => ({ ...f, Right: e.target.value }))}
+            className={styles.mpcut0}
           />
         </div>
         <div title="bottom" className={`${styles.mpcut} ${styles.bottom}`}>
           <input
+            value={value.Bottom}
+            placeholder="0"
+            onFocus={(e) => e.target.select()}
+            onBlur={() => updateStyle("Bottom", value.Bottom)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") updateStyle("Bottom", value.Bottom);
+            }}
             onChange={(e) =>
               setValue((f) => ({ ...f, Bottom: e.target.value }))
             }
-            onBlur={() => onBlur("Bottom")}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
             className={styles.mpcut0}
-            maxLength={4}
-            placeholder="0"
-            value={value.Bottom}
           />
         </div>
         <div title="left" className={`${styles.mpcut} ${styles.left}`}>
           <input
-            onChange={(e) => setValue((f) => ({ ...f, Left: e.target.value }))}
-            onBlur={() => onBlur("Left")}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
-            className={styles.mpcut0}
-            maxLength={4}
-            placeholder="0"
             value={value.Left}
+            placeholder="0"
+            onFocus={(e) => e.target.select()}
+            onBlur={() => updateStyle("Left", value.Left)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") updateStyle("Left", value.Left);
+            }}
+            onChange={(e) => setValue((f) => ({ ...f, Left: e.target.value }))}
+            className={styles.mpcut0}
           />
         </div>
         <div

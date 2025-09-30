@@ -58,7 +58,7 @@ export default function EditTab({ focus }: { focus: string }) {
           onFocus={(e) => e.target.select()}
         />
       </div>
-      {["Text", "Paragraph", "Heading"].includes(dataMap.type) && (
+      {["Text", "Paragraph", "Heading", "Button"].includes(dataMap.type) && (
         <div className={`${styles.e0} ${styles.e0flexcol}`}>
           <div className={styles.e00}>
             Content <FaParagraph />
