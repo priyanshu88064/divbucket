@@ -3,6 +3,7 @@ import type { RootState } from "../../../store/store";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styles from "../cssbar.module.css";
+import type { CssState } from "../../../types/Tree";
 
 interface FlexPropertyData {
   name: string;
@@ -14,13 +15,15 @@ export default function FlexProperties({
   id,
   data,
   onChange,
+  cssState,
 }: {
   id: number;
   data: FlexPropertyData;
   onChange: (value: string) => void;
+  cssState: CssState;
 }) {
   const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap[id],
+    (state: RootState) => state.treeReducer.styleMap[id][cssState],
   );
   const [demoStyle, setDemoStyle] = useState({});
 

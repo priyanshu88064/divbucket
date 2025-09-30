@@ -9,6 +9,7 @@ import Image from "./Image/Image";
 import Video from "./Video/Video";
 import styles from "./Resizable/resizable.module.css";
 import type { RootState } from "../store/store";
+import Button from "./Button/Button";
 
 export default () => {
   const activeTab = useSelector(
@@ -55,13 +56,11 @@ export default () => {
       case "Video":
         ele = <Video key={node} node={node} />;
         break;
+      case "Button":
+        ele = <Button key={node} node={node} />;
+        break;
       default:
-        ele = (
-          <Resizable id={node} key={node}>
-            {node} resizable
-            {tree[node].map((node) => renderTree(node))}
-          </Resizable>
-        );
+        ele = <></>;
         break;
     }
 

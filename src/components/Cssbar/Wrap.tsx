@@ -3,10 +3,20 @@ import type { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
+// mapping of unsupported props to a node type
 const propBlackList: { [key: string]: string[] } = {
   root: ["Size", "Margin", "Shadows", "Transform"],
   Image: ["Display", "Typography"],
 };
+
+// initially collapsed props
+const activeBlacklist = [
+  "Border",
+  "Overflow",
+  "Shadows",
+  "Transform",
+  "Cursor",
+];
 
 export default function Wrap({
   children,
@@ -17,7 +27,7 @@ export default function Wrap({
   title: string;
   heading?: boolean;
 }) {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(!activeBlacklist.includes(title));
   const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
 
   if (!id) throw new Error();

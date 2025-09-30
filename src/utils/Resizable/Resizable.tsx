@@ -24,7 +24,7 @@ export default ({
     (state: RootState) => state.treeReducer.activeNodeId,
   );
   const styleMap = useSelector(
-    (state: RootState) => state.treeReducer.styleMap[id],
+    (state: RootState) => state.treeReducer.styleMap[id].default,
   );
   const name = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id].name,

@@ -19,9 +19,14 @@ export default function initData(type: string) {
     content: null,
   };
 
-  data.unit = ["Image", "Video", "Text", "Heading", "Paragraph"].includes(
-    data.type,
-  );
+  data.unit = [
+    "Image",
+    "Video",
+    "Text",
+    "Heading",
+    "Paragraph",
+    "Button",
+  ].includes(data.type);
 
   switch (type) {
     case "Text":
@@ -37,6 +42,9 @@ export default function initData(type: string) {
     case "Image":
       data.src = "/sample.jpg";
       data.alt = "image";
+      break;
+    case "Button":
+      data.content = "Button";
       break;
   }
 

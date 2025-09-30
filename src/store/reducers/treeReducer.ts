@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type {
   BGContentRect,
   Clipboard,
+  CssState,
   NodeData,
   NodeStyle,
   Tree,
@@ -15,6 +16,7 @@ import {
   getParent,
   Splice,
 } from "../../utils/treeFunctions";
+import type { CSSProperties } from "react";
 
 const createCopy = (id: number, state: WritableDraft<TreeState>) => {
   const uid = Math.floor(Math.random() * 1000000);
@@ -59,6 +61,7 @@ const initialState: TreeState = {
     cut: null,
     copy: null,
   },
+  cssState: "default",
 };
 
 const treeSlice = createSlice({
@@ -164,8 +167,13 @@ const treeSlice = createSlice({
         state.tree[-1].filter((tab) => state.dataMap[tab].open)[0] || null;
       state.activeNodeId = state.activeTab;
     },
-    updateStyleMap: (state, { payload }) => {
-      state.styleMap[payload.id] = payload.style;
+    updateStyleMap: (
+      state,
+      {
+        payload,
+      }: { payload: { id: number; style: CSSProperties; cssState: CssState } },
+    ) => {
+      state.styleMap[payload.id][payload.cssState] = payload.style;
     },
     updateDataMap: (state, { payload }) => {
       state.dataMap[payload.id] = payload.data;
@@ -181,7 +189,7 @@ const treeSlice = createSlice({
       },
     ) => {
       if (state.activeTab) {
-        state.styleMap[state.activeTab].width = payload.width;
+        state.styleMap[state.activeTab].default.width = payload.width;
       }
     },
     updateBgContentRect: (
@@ -319,6 +327,12 @@ const treeSlice = createSlice({
         payload: { copy: state.activeNodeId, cut: null },
       });
     },
+    updateCssState: (
+      state,
+      { payload }: { payload: { cssState: CssState } },
+    ) => {
+      state.cssState = payload.cssState;
+    },
   },
 });
 
@@ -342,5 +356,6 @@ export const {
   updateTabOpenStatus,
   cut,
   copy,
+  updateCssState,
 } = treeSlice.actions;
 export default treeSlice.reducer;

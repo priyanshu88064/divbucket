@@ -8,7 +8,7 @@ import { BsTextParagraph } from "react-icons/bs";
 import type { AppDispatch, RootState } from "../../store/store";
 import Empty from "./components/Empty";
 import EditTab from "./tabs/EditTab";
-import CssTab from "./tabs/CssTab";
+import CssTab from "./tabs/CssTab/CssTab";
 import { IoIosMenu } from "react-icons/io";
 
 export const GetIconOfType = (type: string, size?: number) => {
