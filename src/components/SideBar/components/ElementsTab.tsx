@@ -1,14 +1,12 @@
 import { GiSquare } from "react-icons/gi";
-import {
-  LuLetterText,
-  LuMousePointerClick,
-  LuSquareArrowRight,
-} from "react-icons/lu";
+import { LuLetterText, LuSquareArrowRight } from "react-icons/lu";
 import { PiImageLight } from "react-icons/pi";
 import { RiText } from "react-icons/ri";
 import { IoIosList } from "react-icons/io";
 import { GoHorizontalRule } from "react-icons/go";
-import { TbLayoutNavbar } from "react-icons/tb";
+import { TbLayoutNavbar, TbTemplate } from "react-icons/tb";
+import { CiCreditCard1 } from "react-icons/ci";
+import { GrDomain } from "react-icons/gr";
 
 const elementList = [
   {
@@ -45,10 +43,6 @@ const elementList = [
         icon: <PiImageLight size={30} />,
       },
       {
-        id: "Button",
-        icon: <div className="border px-2 py-1 rounded-sm text-sm">Button</div>,
-      },
-      {
         id: "List",
         name: "List",
         icon: <IoIosList size={30} />,
@@ -57,6 +51,15 @@ const elementList = [
         id: "ListItem",
         name: "List Item",
         icon: <GoHorizontalRule size={30} />,
+      },
+      {
+        id: "Button",
+        icon: <div className="border px-2 py-1 rounded-sm text-xs">Button</div>,
+      },
+      {
+        id: "Card",
+        name: "Card",
+        icon: <CiCreditCard1 size={30} />,
       },
     ],
   },
@@ -67,6 +70,16 @@ const elementList = [
         id: "Navbar",
         name: "Navbar",
         icon: <TbLayoutNavbar size={30} />,
+      },
+      {
+        id: "Hero",
+        name: "Hero",
+        icon: <GrDomain size={25} />,
+      },
+      {
+        id: "Feature",
+        name: "Feature",
+        icon: <TbTemplate size={25} />,
       },
     ],
   },
@@ -81,7 +94,7 @@ export default function ElementsTab() {
   };
 
   return (
-    <div className="p-3 flex flex-col gap-8 overflow-y-auto">
+    <div className="p-3 pb-48 flex flex-col gap-8 overflow-y-auto">
       {elementList.map((ele, ind) => (
         <div key={"elements-" + ind}>
           <div className="mt-2 text-[var(--text_0)] text-xs font-semibold uppercase">

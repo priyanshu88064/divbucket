@@ -23,9 +23,9 @@ import { AiOutlineFontSize } from "react-icons/ai";
 // for boxShadow css property
 const getBoxShadowLevel = (value: string) => {
   if (!value || value.includes("0 0")) return "none";
-  if (value.includes("0 1px 2px")) return "Extra-small";
-  if (value.includes("0 1px 3px")) return "Small";
-  if (value.includes("0 4px 6px")) return "Medium";
+  if (value.includes("0 1px 3px")) return "Extra-small";
+  if (value.includes("0 1px 6px")) return "Small";
+  if (value.includes("0 3px 6px")) return "Medium";
   if (value.includes("0 10px 15px")) return "Large";
   return "Extra-large";
 };
@@ -314,7 +314,9 @@ export default function ListOfProp({
                 <div className={styles.sizesiwrap}>
                   <TextInput
                     value={
-                      (styleMap.backgroundImage as string).split("url(")[1]
+                      (styleMap.backgroundImage as string)
+                        .split("url(")[1]
+                        .split(")")[0]
                     }
                     onChange={(value) =>
                       UpdateStyle("backgroundImage", `url(${value})`)
@@ -566,7 +568,7 @@ export default function ListOfProp({
             <div className={styles.sizesiwrap}>
               <TextInput
                 value={styleMap.textAlign || "left"}
-                units={["left", "right", "justify"]}
+                units={["left", "right", "center", "justify"]}
                 onChange={(value) => UpdateStyle("textAlign", value)}
                 isSelectOnly={true}
               />
@@ -719,13 +721,13 @@ export default function ListOfProp({
                       prefix = "0 0";
                       break;
                     case "Extra-small":
-                      prefix = "0 1px 2px";
-                      break;
-                    case "Small":
                       prefix = "0 1px 3px";
                       break;
+                    case "Small":
+                      prefix = "0 1px 6px";
+                      break;
                     case "Medium":
-                      prefix = "0 4px 6px";
+                      prefix = "0 3px 6px";
                       break;
                     case "Large":
                       prefix = "0 10px 15px";
