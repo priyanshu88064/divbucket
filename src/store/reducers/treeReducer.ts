@@ -175,7 +175,10 @@ const treeSlice = createSlice({
     ) => {
       state.styleMap[payload.id][payload.cssState] = payload.style;
     },
-    updateDataMap: (state, { payload }) => {
+    updateDataMap: (
+      state,
+      { payload }: { payload: { id: number; data: NodeData[number] } },
+    ) => {
       state.dataMap[payload.id] = payload.data;
     },
     updateRootWidth: (
