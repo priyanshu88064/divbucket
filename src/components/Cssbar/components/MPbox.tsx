@@ -135,14 +135,14 @@ export default function MPbox({
               if (!joints?.x) updateStyle("Right", value.Left);
               updateData({ y: joints?.y, x: !joints?.x });
             }}
-            className={`absolute top-1/2 -translate-y-1/2 w-full h-0.5 hover:h-2 rounded-sm cursor-pointer ${joints?.x ? "bg-blue-400" : "bg-gray-600"}`}
+            className={`absolute top-1/2 -translate-y-1/2 w-full h-0.5 hover:h-2 transition-[height] duration-100 rounded-sm cursor-pointer ${joints?.x ? "bg-blue-400" : "bg-gray-600"}`}
           ></div>
           <div
             onClick={() => {
               if (!joints?.y) updateStyle("Bottom", value.Top);
               updateData({ x: joints?.x, y: !joints?.y });
             }}
-            className={`absolute left-1/2 -translate-x-1/2 h-full w-[3px] hover:w-2 rounded-sm cursor-pointer ${joints?.y ? "bg-blue-400" : "bg-gray-600"}`}
+            className={`absolute left-1/2 -translate-x-1/2 h-full w-[3px] hover:w-2 transition-[width] duration-100 rounded-sm cursor-pointer ${joints?.y ? "bg-blue-400" : "bg-gray-600"}`}
           ></div>
           <div
             onClick={() => {
@@ -162,7 +162,7 @@ export default function MPbox({
             }}
             className={`z-10 px-2 py-[2px] ${prefix === "margin" ? "bg-[#333C46]" : "bg-[#283037]"} cursor-pointer rounded-sm ${joints?.all ? "!bg-blue-600 text-white" : "text-gray-400"}`}
           >
-            <FaEquals />
+            <FaEquals className="hover:scale-x-150 transition-[scale]" />
           </div>
         </div>
       </div>
