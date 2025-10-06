@@ -77,7 +77,7 @@ export default function StatsForNerds(): React.JSX.Element {
       className="fixed max-h-128 w-64 p-4 grid grid-cols-[35%_auto] gap-y-2 bg-black/80 text-xs font-semibold select-none active:cursor-move overflow-y-scroll rounded-sm"
     >
       <div className="text-gray-200 text-sm p-1 pl-0 whitespace-nowrap w-fit">
-        Stats for nerds 😞
+        Stats for nerds 😔
       </div>
       <div></div>
       <div className="text-green-500">Tab</div>
