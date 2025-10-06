@@ -3,6 +3,7 @@ import {
   FaHome,
   FaLaptop,
   FaMobileAlt,
+  FaPlay,
   FaTabletAlt,
 } from "react-icons/fa";
 import styles from "./headbar.module.css";
@@ -25,11 +26,12 @@ export default () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={styles.head}>
-      <div className="flex items-baseline-last gap-1 flex-[1] text-[10px] text-orange-400">
-        <LuPaintBucket size={20} className="ml-[30px] self-center" />
-        <div className="text-[20px] font-bold italic">DIV</div>
-        <div className="text-white text-xs">Bucket</div>
+    <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600">
+      {/* LOGO */}
+      <div className="flex items-baseline-last gap-1 flex-[1] text-orange-400">
+        <LuPaintBucket className="ml-4 self-center" />
+        <div className="text-md font-bold italic">DIV</div>
+        <div className="text-white text-[10px]">Bucket</div>
       </div>
       <div className={styles.h1}>
         {activeTab && <WidthBox />}
@@ -41,10 +43,10 @@ export default () => {
             else if (document.exitFullscreen) document.exitFullscreen();
           }}
         >
-          <MdFullscreen size={22} />
+          <MdFullscreen size={18} />
         </div>
       </div>
-      <div className={styles.h2}>
+      <div className="flex flex-[1] justify-end text-[9px] tracking-wider">
         <div
           onClick={() => {
             if (!activeTab) return;
@@ -54,14 +56,14 @@ export default () => {
             }).html;
             dispatch(preview({ pageSrc }));
           }}
-          className={`text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue`}
+          className={`px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue`}
         >
-          <FaEye />
+          <FaPlay />
           PREVIEW
         </div>
         <div
           onClick={() => setIsCode((f) => !f)}
-          className="bg-hoverblue text-[11px] px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue"
+          className="bg-hoverblue px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue"
         >
           <FaDownload />
           HTML/CSS
@@ -206,21 +208,21 @@ const WidthBox = () => {
           title="mobile"
           className={`${styles.d0} ${width <= 425 && styles.active}`}
         >
-          <FaMobileAlt size={13} />
+          <FaMobileAlt size={12} />
         </div>
         <div
           onClick={() => dispatch(updateRootWidth({ width: "768px" }))}
           title="tablet"
           className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}
         >
-          <FaTabletAlt size={13} />
+          <FaTabletAlt size={12} />
         </div>
         <div
           onClick={() => dispatch(updateRootWidth({ width: "100%" }))}
           title="PC"
           className={`${styles.d0} ${width > 768 && styles.active}`}
         >
-          <FaLaptop size={14} />
+          <FaLaptop size={13} />
         </div>
       </div>
       <div className={styles.width}>

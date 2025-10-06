@@ -7,6 +7,12 @@ export interface Tree {
   [id: number]: number[];
 }
 
+export interface Joints {
+  x?: boolean;
+  y?: boolean;
+  all?: boolean;
+}
+
 export interface NodeStyle {
   [id: number]: {
     default: CSSProperties;
@@ -28,6 +34,10 @@ export interface NodeData {
     open?: boolean;
     cssData?: {
       backgroundType?: BackgroundType;
+      joints?: {
+        margin?: Joints;
+        padding?: Joints;
+      };
     };
   };
 }

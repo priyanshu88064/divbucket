@@ -1,8 +1,8 @@
 .head {
-  background-color: var(--bg_gray);
+  background-color: #283037;
   color: white;
   height: 35px;
-  border-bottom: 1px solid var(--gray_border);
+  border-bottom: 1px solid #4a5565;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,18 +25,12 @@
   display: flex;
   justify-content: center;
 }
-.h2 {
-  flex: 1;
-  display: flex;
-  justify-content: right;
-}
 .dimensions {
   display: flex;
   gap: 10px;
 }
 .d0 {
   cursor: pointer;
-  border-radius: 3px;
   display: flex;
   align-items: center;
   padding: 4px 7px;
@@ -54,7 +48,6 @@
   font-size: 12px;
   padding: 4px 7px;
   background-color: var(--pg_bg);
-  border-radius: 3px;
   color: var(--text_2);
   margin-left: 10px;
   display: flex;
@@ -71,6 +64,7 @@
   margin-inline: 10px;
   color: var(--text_2);
   font-weight: bolder;
+  padding-inline: 4px;
 }
 .fscreen:hover {
   background-color: var(--pg_bg);
