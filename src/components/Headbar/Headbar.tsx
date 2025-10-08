@@ -1,5 +1,4 @@
 import {
-  FaEye,
   FaHome,
   FaLaptop,
   FaMobileAlt,
@@ -176,8 +175,8 @@ const WidthBox = () => {
     (state: RootState) => state.treeReducer.activeTab,
   );
   const maxWidth = useSelector((state: RootState) =>
-    Math.floor(state.treeReducer.bgContentRect?.width - 10 - 80),
-  ); //-10 for resizebar, -80 for margin
+    Math.floor(state.treeReducer.bgContentRect?.width - 8),
+  ); // 8 for resizebar
   const width = useSelector((state: RootState) => {
     if (!activeTab) return;
     if (state.treeReducer.styleMap[activeTab].default.width === "100%")

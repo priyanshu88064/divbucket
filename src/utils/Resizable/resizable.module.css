@@ -161,34 +161,9 @@
   border-right: 1px solid rgba(255, 255, 255, 0.285);
   padding: 5px 7px;
 }
-.infomore {
-  background-color: red;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transform: translateY(100%);
-}
 
-.resizablebar {
-  z-index: 2;
-  background-color: rgb(41, 41, 41);
-  width: 10px;
-  transition: background-color 150ms;
-  cursor: ew-resize;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .resizablebar:hover {
   background-color: rgb(75, 75, 75);
-}
-.leftbar {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.rightbar {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 .lines {
   color: darkgray;
@@ -266,18 +241,12 @@
   color: white;
   font-size: 12px;
 }
-.fixinfobar {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  overflow-y: scroll;
-}
-.fixinfobar::-webkit-scrollbar {
+
+.scroller::-webkit-scrollbar {
   display: none;
   width: 7px;
   background-color: var(--pg_bg);
 }
-.fixinfobar::-webkit-scrollbar-thumb {
+.scroller::-webkit-scrollbar-thumb {
   background-color: var(--bg_gray0);
 }

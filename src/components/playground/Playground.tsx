@@ -60,12 +60,12 @@ const JustAWrapper = ({ activeTab }: { activeTab: number }) => {
   return (
     <div
       ref={bgRef}
-      className={styles.bg}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragLeave={handleDragLeave}
       onDragEnd={handleDragEnd}
+      className="bg-[var(--pg_bg)] flex-[1] flex flex-col overflow-hidden"
     >
       <Tabs />
       <TreeManager />
@@ -106,14 +106,19 @@ const Tabs = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={styles.tabwrap}>
+    <div
+      className={`overflow-x-scroll flex gap-[6px] text-white text-xs cursor-default select-none p-[6px] ${styles.tabwrap}`}
+    >
       {tabs
         .filter((tab) => tabsOpen[tab])
         .map((tab, ind) => (
           <div
             key={tab + ind + ""}
             onClick={() => dispatch(updateActiveTab({ tab }))}
-            className={`${styles.tab} ${tab === activeTab && styles.activetab}`}
+            className={`
+              px-[7px] py-[2px] text-[var(--text_2)] rounded-xs flex items-center gap-[5px] transition-[background] duration-100 hover:bg-[var(--bg_gray)]
+              ${tab === activeTab ? "bg-[var(--bg_gray0)] text-white hover:bg-[var(--bg_gray0)]" : ""}
+            `}
           >
             {tabsName[tab]}
             <IoIosClose

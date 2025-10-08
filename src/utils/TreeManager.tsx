@@ -70,10 +70,14 @@ export default () => {
   return (
     <>
       {activeTab ? (
-        <div tabIndex={1} className={styles.fixinfobar}>
-          <Resizable id={activeTab}>
-            {tree[activeTab].map((tree) => renderTree(tree))}
-          </Resizable>
+        <div
+          className={`flex-[1] flex flex-col overflow-hidden overflow-y-scroll ${styles.scroller}`}
+        >
+          <div className="relative flex-[1] flex justify-center">
+            <Resizable id={activeTab}>
+              {tree[activeTab].map((tree) => renderTree(tree))}
+            </Resizable>
+          </div>
         </div>
       ) : (
         ""

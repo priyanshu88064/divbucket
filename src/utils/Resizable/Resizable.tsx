@@ -12,13 +12,91 @@ import React from "react";
 import { useResizer } from "../../hooks/useResizer";
 import { useContextMenu } from "../../hooks/useContextMenu";
 
-export default ({
+export default function Resizable({
   id,
   children,
 }: {
   id: number;
   children: React.ReactNode;
-}) => {
+}) {
+  const dispatch = useDispatch<AppDispatch>();
+  const activeNodeId = useSelector(
+    (state: RootState) => state.treeReducer.activeNodeId,
+  );
+  const styleMap = useSelector(
+    (state: RootState) => state.treeReducer.styleMap[id].default,
+  );
+  const name = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].name,
+  );
+  const type = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].type,
+  );
+  const unit = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].unit,
+  );
+  const { dim, divRef, handleMouseDown } = useResizer({ id });
+  const { clicked, setClicked, points, setPoints } = useContextMenu();
+
+  const pureNode = (
+    <div
+      ref={divRef}
+      style={{ ...styleMap, ...dim }}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (id !== activeNodeId) dispatch(updateActiveNode({ id }));
+      }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setClicked(true);
+        setPoints({ x: e.pageX, y: e.pageY });
+        dispatch(updateActiveNode({ id }));
+      }}
+    >
+      {children}
+    </div>
+  );
+
+  if (type === "root") {
+    return (
+      <div className="w-full flex justify-center overflow-hidden">
+        {pureNode}
+
+        {/* resizable right bar for root */}
+        <div
+          onMouseDown={(e) => handleMouseDown(e, 1)}
+          className="w-2 cursor-ew-resize bg-gray-600 hover:bg-gray-500 transition-[background]"
+        ></div>
+
+        {/* context menu */}
+        {clicked && (
+          <ContextMenu id={id} points={points} setClicked={setClicked} />
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {pureNode}
+
+      {/* context menu */}
+      {clicked && (
+        <ContextMenu id={id} points={points} setClicked={setClicked} />
+      )}
+    </>
+  );
+}
+
+export function Resizable2({
+  id,
+  children,
+}: {
+  id: number;
+  children: React.ReactNode;
+}) {
   const dispatch = useDispatch<AppDispatch>();
   const activeNodeId = useSelector(
     (state: RootState) => state.treeReducer.activeNodeId,
@@ -125,7 +203,7 @@ export default ({
       )}
     </div>
   );
-};
+}
 
 const InfoBar = ({
   name,
@@ -138,8 +216,8 @@ const InfoBar = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <div className={`${styles.infobar}`}>
-      <div className={styles.ib0}>
+    <div className="flex absolute top-0 left-0 -translate-y-full text-white bg-[#ff0099] rounded-xs z-[2] font-normal">
+      <div className="text-xs flex items-center justify-center px-[7px] py-[5px] gap-[5px] border-r border-[rgba(255, 255, 255, 0.285)]">
         {GetIconOfType(type, 12)}
         {name}
       </div>
