@@ -59,13 +59,14 @@ const JustAWrapper = ({ activeTab }: { activeTab: number }) => {
   }, []);
   return (
     <div
+      id="bgRef"
       ref={bgRef}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragLeave={handleDragLeave}
       onDragEnd={handleDragEnd}
-      className="bg-[var(--pg_bg)] flex-[1] flex flex-col overflow-hidden"
+      className="flex-[1] flex flex-col overflow-hidden"
     >
       <Tabs />
       <TreeManager />
@@ -107,7 +108,7 @@ const Tabs = () => {
 
   return (
     <div
-      className={`overflow-x-scroll flex gap-[6px] text-white text-xs cursor-default select-none p-[6px] ${styles.tabwrap}`}
+      className={`overflow-x-scroll bg-[var(--pg_bg)] flex gap-[6px] text-white text-xs cursor-default select-none p-[6px] z-[1] ${styles.tabwrap}`}
     >
       {tabs
         .filter((tab) => tabsOpen[tab])

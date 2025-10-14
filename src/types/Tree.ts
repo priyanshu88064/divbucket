@@ -61,6 +61,7 @@ export interface TreeState {
   dataMap: NodeData;
   styleMap: NodeStyle;
   activeNodeId: number | null;
+  hoverNodeId: number | null;
   activeTab: number | null;
   bgContentRect: BGContentRect;
   clipboard: Clipboard;

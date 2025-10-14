@@ -37,10 +37,6 @@
   z-index: 21;
 }
 
-.resizable {
-  position: absolute;
-  z-index: 1;
-}
 .hov {
   position: absolute;
   width: 100%;
@@ -50,39 +46,6 @@
 }
 .hov:hover {
   border: 1px solid var(--resizeblue);
-}
-
-.top {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  border-top: 2px solid var(--resizeblue);
-  cursor: ns-resize;
-}
-.bottom {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  border-bottom: 2px solid var(--resizeblue);
-  cursor: ns-resize;
-}
-.left {
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  border-left: 2px solid var(--resizeblue);
-  cursor: ew-resize;
-}
-.right {
-  top: 0;
-  right: 0;
-  width: 1px;
-  height: 100%;
-  border-right: 2px solid var(--resizeblue);
-  cursor: ew-resize;
 }
 
 .circle {
@@ -182,14 +145,14 @@
 .dborder {
   border: 2px solid var(--hoverblue);
 }
-.dborder::before {
+/* .dborder::before {
   content: "";
   z-index: 1;
   opacity: 0.5;
   position: absolute;
   background-color: blue;
   border-radius: 10px;
-}
+} */
 .dinside::before {
   top: 20%;
   left: 20%;

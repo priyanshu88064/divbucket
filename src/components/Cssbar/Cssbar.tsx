@@ -54,7 +54,7 @@ export default () => {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div className="w-[280px] h-full ml-auto text-white flex text-xs overflow-hidden bg-[#283037]">
+    <div className="w-[280px] h-full ml-auto text-white flex text-xs overflow-hidden bg-[#283037] z-[3]">
       {id ? (
         <>
           <div className="flex-1 overflow-y-scroll h-full pb-[150px]">

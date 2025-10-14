@@ -1,6 +1,9 @@
 import styles from "./resizable.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { updateActiveNode } from "../../store/reducers/treeReducer";
+import {
+  updateActiveNode,
+  updateHoverNodeId,
+} from "../../store/reducers/treeReducer";
 import ContextMenu from "../../components/ContextMenu/ContextMenu";
 import { changeTab } from "../../store/reducers/focusReducer";
 import { MdOutlineEdit } from "react-icons/md";
@@ -20,20 +23,11 @@ export default function Resizable({
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch<AppDispatch>();
-  const activeNodeId = useSelector(
-    (state: RootState) => state.treeReducer.activeNodeId,
-  );
   const styleMap = useSelector(
     (state: RootState) => state.treeReducer.styleMap[id].default,
   );
-  const name = useSelector(
-    (state: RootState) => state.treeReducer.dataMap[id].name,
-  );
   const type = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id].type,
-  );
-  const unit = useSelector(
-    (state: RootState) => state.treeReducer.dataMap[id].unit,
   );
   const { dim, divRef, handleMouseDown } = useResizer({ id });
   const { clicked, setClicked, points, setPoints } = useContextMenu();
@@ -41,11 +35,15 @@ export default function Resizable({
   const pureNode = (
     <div
       ref={divRef}
+      id={type === "root" ? `node-root` : `node-${id}`}
+      // data-root={id}
+      // data-target={id}
+      data-id={id}
       style={{ ...styleMap, ...dim }}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (id !== activeNodeId) dispatch(updateActiveNode({ id }));
+        dispatch(updateActiveNode({ id }));
       }}
       onContextMenu={(e) => {
         e.preventDefault();
@@ -53,6 +51,14 @@ export default function Resizable({
         setClicked(true);
         setPoints({ x: e.pageX, y: e.pageY });
         dispatch(updateActiveNode({ id }));
+      }}
+      onMouseOver={(e) => {
+        e.stopPropagation();
+        dispatch(updateHoverNodeId({ id }));
+      }}
+      onMouseLeave={(e) => {
+        e.stopPropagation();
+        dispatch(updateHoverNodeId({ id: null }));
       }}
     >
       {children}

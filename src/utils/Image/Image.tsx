@@ -13,7 +13,7 @@ export default ({ node }: { node: number }) => {
 
   return (
     <Resizable id={node}>
-      <img src={src} alt={alt} className={styles.image} />
+      <img data-id={node} src={src} alt={alt} className={styles.image} />
     </Resizable>
   );
 };
