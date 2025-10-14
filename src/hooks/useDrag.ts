@@ -41,96 +41,99 @@ export function useDrag({ root }: { root: number }) {
     e.stopPropagation();
     if (!(e.target as HTMLDivElement).getAttribute("data-id")) return;
     draggedNodeRef.current = e.target as HTMLDivElement;
+
+    // dummy div for creating drag image
     let draggedWrapper = document.createElement("div");
     let draggedImage = document.createElement("div");
     draggedWrapper.classList.add(styles.dragwrapper);
     draggedImage.classList.add(styles.dragimage);
     draggedImage.innerText =
-      (e.target as HTMLDivElement).parentNode!.children[0].textContent || "";
+      draggedNodeRef.current.parentNode!.children[0].textContent || "";
     draggedWrapper.appendChild(draggedImage);
     document.body.appendChild(draggedWrapper);
     e.dataTransfer.setDragImage(draggedImage, -20, -20);
+
     draggedWrapperRef.current = draggedWrapper;
   };
+
   const handleDragEnd = () => {
     draggedNodeRef.current = null;
     if (draggedWrapperRef && draggedWrapperRef.current)
       draggedWrapperRef.current.remove();
     draggedWrapperRef.current = null;
   };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    const targetId =
-      (e.target as HTMLDivElement).getAttribute("data-target") ||
-      (e.target as HTMLDivElement).getAttribute("data-root");
+
+    const targetId = (e.target as HTMLDivElement).getAttribute("data-id");
     const draggedId = draggedNodeRef.current?.getAttribute("data-id");
 
-    if (!targetId || draggedId == targetId) return;
+    if (
+      !targetId ||
+      Number(targetId) === root ||
+      !draggedId ||
+      draggedId === targetId
+    )
+      return;
 
-    if (Number(targetId) === root) {
-    } else {
-      let aParent = (e.target as HTMLDivElement).parentNode
-        ?.parentNode as HTMLDivElement;
-      if ((e.target as HTMLDivElement).getAttribute("data-target"))
-        aParent = aParent?.parentNode as HTMLDivElement;
-      if (!aParent) return;
-      const display = aParent.style.display || "block";
-      const direction = aParent.style.flexDirection || "row";
+    const display = (e.target as HTMLDivElement).style.display || "block";
+    const direction = (e.target as HTMLDivElement).style.flexDirection || "row";
 
-      (e.target as HTMLDivElement).classList.add(styles.dborder);
-      const rect = (e.target as HTMLDivElement).getBoundingClientRect();
-      switch (getPosi(e.clientX, e.clientY, rect, display, direction)) {
-        case "inside":
-          (e.target as HTMLDivElement).classList.remove(
-            styles.dtop,
-            styles.dbottom,
-            styles.dleft,
-            styles.dright,
-          );
-          (e.target as HTMLDivElement).classList.add(styles.dinside);
-          break;
-        case "top":
-          (e.target as HTMLDivElement).classList.remove(
-            styles.dinside,
-            styles.dbottom,
-            styles.dleft,
-            styles.dright,
-          );
-          (e.target as HTMLDivElement).classList.add(styles.dtop);
-          break;
-        case "right":
-          (e.target as HTMLDivElement).classList.remove(
-            styles.dinside,
-            styles.dtop,
-            styles.dbottom,
-            styles.dleft,
-          );
-          (e.target as HTMLDivElement).classList.add(styles.dright);
-          break;
-        case "bottom":
-          (e.target as HTMLDivElement).classList.remove(
-            styles.dinside,
-            styles.dtop,
-            styles.dleft,
-            styles.dright,
-          );
-          (e.target as HTMLDivElement).classList.add(styles.dbottom);
-          break;
-        case "left":
-          (e.target as HTMLDivElement).classList.remove(
-            styles.dinside,
-            styles.dtop,
-            styles.dbottom,
-            styles.dright,
-          );
-          (e.target as HTMLDivElement).classList.add(styles.dleft);
-          break;
-        default:
-          break;
-      }
-    }
+    (e.target as HTMLDivElement).classList.add(styles.dborder);
+    const rect = (e.target as HTMLDivElement).getBoundingClientRect();
+    // switch (getPosi(e.clientX, e.clientY, rect, display, direction)) {
+    //   case "inside":
+    //     (e.target as HTMLDivElement).classList.remove(
+    //       styles.dtop,
+    //       styles.dbottom,
+    //       styles.dleft,
+    //       styles.dright,
+    //     );
+    //     (e.target as HTMLDivElement).classList.add(styles.dinside);
+    //     break;
+    //   case "top":
+    //     (e.target as HTMLDivElement).classList.remove(
+    //       styles.dinside,
+    //       styles.dbottom,
+    //       styles.dleft,
+    //       styles.dright,
+    //     );
+    //     (e.target as HTMLDivElement).classList.add(styles.dtop);
+    //     break;
+    //   case "right":
+    //     (e.target as HTMLDivElement).classList.remove(
+    //       styles.dinside,
+    //       styles.dtop,
+    //       styles.dbottom,
+    //       styles.dleft,
+    //     );
+    //     (e.target as HTMLDivElement).classList.add(styles.dright);
+    //     break;
+    //   case "bottom":
+    //     (e.target as HTMLDivElement).classList.remove(
+    //       styles.dinside,
+    //       styles.dtop,
+    //       styles.dleft,
+    //       styles.dright,
+    //     );
+    //     (e.target as HTMLDivElement).classList.add(styles.dbottom);
+    //     break;
+    //   case "left":
+    //     (e.target as HTMLDivElement).classList.remove(
+    //       styles.dinside,
+    //       styles.dtop,
+    //       styles.dbottom,
+    //       styles.dright,
+    //     );
+    //     (e.target as HTMLDivElement).classList.add(styles.dleft);
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.stopPropagation();
 

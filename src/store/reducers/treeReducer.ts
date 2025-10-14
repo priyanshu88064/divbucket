@@ -46,6 +46,7 @@ const isRelation = ({
 const initialState: TreeState = {
   tree: {},
   activeNodeId: null,
+  hoverNodeId: null,
   activeTab: null,
   styleMap: {},
   dataMap: {},
@@ -134,6 +135,18 @@ const treeSlice = createSlice({
       },
     ) => {
       state.activeNodeId = payload.id;
+    },
+    updateHoverNodeId: (
+      state,
+      {
+        payload,
+      }: {
+        payload: {
+          id: number | null;
+        };
+      },
+    ) => {
+      state.hoverNodeId = payload.id;
     },
     updateActiveTab: (
       state,
@@ -341,6 +354,7 @@ const treeSlice = createSlice({
 
 export const {
   updateActiveNode,
+  updateHoverNodeId,
   addNode,
   updateStyleMap,
   updateDataMap,

@@ -10,6 +10,7 @@ import Video from "./Video/Video";
 import styles from "./Resizable/resizable.module.css";
 import type { RootState } from "../store/store";
 import Button from "./Button/Button";
+import NodeOverlays from "../components/Infobar/Infobar";
 
 export default () => {
   const activeTab = useSelector(
@@ -70,10 +71,16 @@ export default () => {
   return (
     <>
       {activeTab ? (
-        <div tabIndex={1} className={styles.fixinfobar}>
-          <Resizable id={activeTab}>
-            {tree[activeTab].map((tree) => renderTree(tree))}
-          </Resizable>
+        <div
+          id="tree-manager"
+          className={`flex-[1] flex flex-col overflow-scroll ${styles.scroller}`}
+        >
+          <div className="relative flex-[1] flex justify-center">
+            <Resizable id={activeTab}>
+              {tree[activeTab].map((tree) => renderTree(tree))}
+            </Resizable>
+            <NodeOverlays />
+          </div>
         </div>
       ) : (
         ""

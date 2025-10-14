@@ -89,7 +89,7 @@ export function useGenerateCode() {
     selector: string,
     pseudoClass: CssState,
   ) {
-    let declaration = `.${selector}${pseudoClass !== "default" ? ":" + pseudoClass : ""} {\n`;
+    let declaration = `${selector}${pseudoClass !== "default" ? ":" + pseudoClass : ""} {\n`;
 
     Object.keys(styleMap[id][pseudoClass]).map((prop) => {
       if (
@@ -125,7 +125,7 @@ export function useGenerateCode() {
         else
           css += createDeclaration(
             id,
-            `${dataMap[id].name}_${cind}`,
+            `.${dataMap[id].name}_${cind}`,
             cssState as CssState,
           );
       });

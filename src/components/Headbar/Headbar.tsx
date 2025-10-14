@@ -1,5 +1,4 @@
 import {
-  FaEye,
   FaHome,
   FaLaptop,
   FaMobileAlt,
@@ -16,6 +15,7 @@ import { LuPaintBucket } from "react-icons/lu";
 import type { RootState } from "../../store/store";
 import { useGenerateCode } from "../../hooks/useGenerateCode";
 import { preview } from "../../store/reducers/previewReducer";
+import { createPortal } from "react-dom";
 
 export default () => {
   const activeTab = useSelector(
@@ -26,7 +26,7 @@ export default () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600">
+    <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600 z-[3]">
       {/* LOGO */}
       <div className="flex items-baseline-last gap-1 flex-[1] text-orange-400">
         <LuPaintBucket className="ml-4 self-center" />
@@ -69,19 +69,22 @@ export default () => {
           HTML/CSS
         </div>
       </div>
-      {isCode && activeTab && (
-        <div
-          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/90 z-20"
-          onClick={() => setIsCode(false)}
-        >
+      {isCode &&
+        activeTab &&
+        createPortal(
           <div
-            className="relative flex max-h-[500px] max-w-[800px] w-[90%] h-[90%] rounded-sm bg-[#1B2228] p-4 gap-2 text-xs text-[var(--text_0)]"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/90 z-[4]"
+            onClick={() => setIsCode(false)}
           >
-            <Code />
-          </div>
-        </div>
-      )}
+            <div
+              className="relative flex max-h-[500px] max-w-[800px] w-[90%] h-[90%] rounded-sm bg-[#1B2228] p-4 gap-2 text-xs text-[var(--text_0)]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Code />
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };
@@ -176,8 +179,8 @@ const WidthBox = () => {
     (state: RootState) => state.treeReducer.activeTab,
   );
   const maxWidth = useSelector((state: RootState) =>
-    Math.floor(state.treeReducer.bgContentRect?.width - 10 - 80),
-  ); //-10 for resizebar, -80 for margin
+    Math.floor(state.treeReducer.bgContentRect?.width - 8),
+  ); // 8 for resizebar
   const width = useSelector((state: RootState) => {
     if (!activeTab) return;
     if (state.treeReducer.styleMap[activeTab].default.width === "100%")
