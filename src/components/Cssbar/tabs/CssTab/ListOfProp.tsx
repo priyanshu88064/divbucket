@@ -672,6 +672,71 @@ export default function ListOfProp({
         </div>
       </Wrap>
 
+      <Wrap title={"Position"}>
+        <div className={`${styles.padwrap} ${styles.bgwrap}`}>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Position</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={styleMap.position || "static"}
+                units={["static", "relative", "absolute"]}
+                onChange={(value) => UpdateStyle("position", value)}
+                isSelectOnly={true}
+              />
+            </div>
+          </div>
+          {styleMap.position && styleMap.position !== "static" && (
+            <>
+              <div className={styles.bg0}>
+                <div className={styles.bg0name}>Top</div>
+                <div className={styles.sizesiwrap}>
+                  <TextInput
+                    value={(styleMap.top as string) || "auto"}
+                    onChange={(value) => UpdateStyle("top", value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.bg0}>
+                <div className={styles.bg0name}>Right</div>
+                <div className={styles.sizesiwrap}>
+                  <TextInput
+                    value={(styleMap.right as string) || "auto"}
+                    onChange={(value) => UpdateStyle("right", value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.bg0}>
+                <div className={styles.bg0name}>Bottom</div>
+                <div className={styles.sizesiwrap}>
+                  <TextInput
+                    value={(styleMap.bottom as string) || "auto"}
+                    onChange={(value) => UpdateStyle("bottom", value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.bg0}>
+                <div className={styles.bg0name}>Left</div>
+                <div className={styles.sizesiwrap}>
+                  <TextInput
+                    value={(styleMap.left as string) || "auto"}
+                    onChange={(value) => UpdateStyle("left", value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.bg0}>
+                <div className={styles.bg0name}>Z-Index</div>
+                <div className={styles.sizesiwrap}>
+                  <TextInput
+                    value={(styleMap.zIndex as string) || "auto"}
+                    onChange={(value) => UpdateStyle("zIndex", value)}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </Wrap>
+
       <Wrap title={"Overflow"}>
         <div className={`${styles.padwrap} ${styles.bgwrap}`}>
           <div className={styles.bg0}>

@@ -66,6 +66,13 @@ const cssMap: { [key: string]: string } = {
   borderColor: "border-color",
   borderRadius: "border-radius",
 
+  position: "position",
+  top: "top",
+  right: "right",
+  bottom: "bottom",
+  left: "left",
+  zIndex: "z-index",
+
   overflowX: "overflow-x",
   overflowY: "overflow-y",
 

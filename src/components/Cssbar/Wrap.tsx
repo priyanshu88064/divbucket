@@ -5,13 +5,14 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 // mapping of unsupported props to a node type
 const propBlackList: { [key: string]: string[] } = {
-  root: ["Size", "Margin", "Shadows", "Transform"],
+  root: ["Size", "Margin", "Shadows", "Transform", "Position"],
   Image: ["Display", "Typography"],
 };
 
 // initially collapsed props
 const activeBlacklist = [
   "Border",
+  "Position",
   "Overflow",
   "Shadows",
   "Transform",
