@@ -86,13 +86,6 @@ const elementList = [
 ];
 
 export default function ElementsTab() {
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    type: string,
-  ) => {
-    e.dataTransfer.setData("type", type);
-  };
-
   return (
     <div className="p-3 pb-48 flex flex-col gap-8 overflow-y-auto">
       {elementList.map((ele, ind) => (
@@ -105,7 +98,7 @@ export default function ElementsTab() {
               <div
                 key={"item-" + ind + item.id}
                 draggable
-                onDragStart={(e) => handleDragStart(e, item.id)}
+                data-type={item.id}
                 className={`
                     flex-1 bg-[#333C46] text-[var(--text_0)] cursor-grab rounded-md shadow-lg
                     py-4 flex gap-2 flex-col justify-center items-center border border-gray-600
