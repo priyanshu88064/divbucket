@@ -10,15 +10,15 @@ export default ({ node }: { node: number }) => {
   const dispatch = useDispatch();
   return (
     <Resizable id={node}>
-      <div
+      {/* <div
         data-id={node}
         onDoubleClick={(e) => {
           e.stopPropagation();
           dispatch(changeTab({ tab: "11" }));
         }}
-      >
-        {content}
-      </div>
+      > */}
+      {content}
+      {/* </div> */}
     </Resizable>
   );
 };

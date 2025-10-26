@@ -19,26 +19,34 @@ export default () => {
   const activeTab = useSelector(
     (state: RootState) => state.treeReducer.activeTab,
   );
-
-  return (
-    <div className="flex h-full w-full overflow-hidden bg-[var(--pg_bg)]">
-      <SideBar />
-      {activeTab && <JustAWrapper activeTab={activeTab} />}
-      <Cssbar />
-    </div>
-  );
-};
-
-const JustAWrapper = ({ activeTab }: { activeTab: number }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const bgRef = useRef(null);
   const {
     handleDragStart,
     handleDragEnd,
     handleDragOver,
     handleDrop,
     handleDragLeave,
-  } = useDrag({ root: activeTab });
+  } = useDrag();
+
+  return (
+    <div
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      onDragLeave={handleDragLeave}
+      onDragEnd={handleDragEnd}
+      className="flex h-full w-full overflow-hidden bg-[var(--pg_bg)]"
+    >
+      <SideBar />
+      {activeTab && <JustAWrapper />}
+      <Cssbar />
+    </div>
+  );
+};
+
+const JustAWrapper = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const bgRef = useRef(null);
+
   useShortcuts();
 
   useEffect(() => {
@@ -61,11 +69,6 @@ const JustAWrapper = ({ activeTab }: { activeTab: number }) => {
     <div
       id="bgRef"
       ref={bgRef}
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-      onDragLeave={handleDragLeave}
-      onDragEnd={handleDragEnd}
       className="flex-[1] flex flex-col overflow-hidden"
     >
       <Tabs />

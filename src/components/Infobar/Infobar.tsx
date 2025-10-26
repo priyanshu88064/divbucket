@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GetIconOfType } from "../Cssbar/Cssbar";
 import { changeTab } from "../../store/reducers/focusReducer";
 import { MdOutlineEdit } from "react-icons/md";

@@ -11,15 +11,15 @@ export default ({ node }: { node: number }) => {
 
   return (
     <Resizable id={node}>
-      <div
+      {/* <div
         data-id={node}
         onDoubleClick={(e) => {
           e.stopPropagation();
           dispatch(changeTab({ tab: "11" }));
         }}
-      >
-        {content}
-      </div>
+      > */}
+      {content}
+      {/* </div> */}
     </Resizable>
   );
 };
