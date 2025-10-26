@@ -319,7 +319,7 @@ const treeSlice = createSlice({
         treeSlice.caseReducers.splice(state, {
           payload: { ...payload },
         });
-      state.activeNodeId = Number(node);
+      state.activeNodeId = state.activeTab;
     },
     cut: (state) => {
       const cutNode = state.activeNodeId;
