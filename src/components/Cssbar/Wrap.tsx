@@ -7,6 +7,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 const propBlackList: { [key: string]: string[] } = {
   root: ["Size", "Margin", "Shadows", "Transform", "Position"],
   Image: ["Display", "Typography"],
+  Video: ["Display", "Typography"],
 };
 
 // initially collapsed props
