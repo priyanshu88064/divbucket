@@ -3,7 +3,7 @@ import { LuLetterText, LuSquareArrowRight } from "react-icons/lu";
 import { PiImageLight } from "react-icons/pi";
 import { RiText } from "react-icons/ri";
 import { IoIosList } from "react-icons/io";
-import { GoHorizontalRule } from "react-icons/go";
+import { GoHorizontalRule, GoVideo } from "react-icons/go";
 import { TbLayoutNavbar, TbTemplate } from "react-icons/tb";
 import { CiCreditCard1 } from "react-icons/ci";
 import { GrDomain } from "react-icons/gr";
@@ -38,9 +38,18 @@ const elementList = [
         icon: <LuLetterText size={30} />,
       },
       {
+        id: "Button",
+        icon: <div className="border px-2 py-1 rounded-sm text-xs">Button</div>,
+      },
+      {
         id: "Image",
         name: "Image",
         icon: <PiImageLight size={30} />,
+      },
+      {
+        id: "Video",
+        name: "Video",
+        icon: <GoVideo size={30} />,
       },
       {
         id: "List",
@@ -51,15 +60,6 @@ const elementList = [
         id: "ListItem",
         name: "List Item",
         icon: <GoHorizontalRule size={30} />,
-      },
-      {
-        id: "Button",
-        icon: <div className="border px-2 py-1 rounded-sm text-xs">Button</div>,
-      },
-      {
-        id: "Card",
-        name: "Card",
-        icon: <CiCreditCard1 size={30} />,
       },
     ],
   },
@@ -80,6 +80,11 @@ const elementList = [
         id: "Feature",
         name: "Feature",
         icon: <TbTemplate size={25} />,
+      },
+      {
+        id: "Card",
+        name: "Card",
+        icon: <CiCreditCard1 size={30} />,
       },
     ],
   },

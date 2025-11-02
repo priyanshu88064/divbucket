@@ -58,7 +58,7 @@ export default () => {
       {id ? (
         <>
           <div className="flex-1 overflow-y-scroll h-full pb-[150px]">
-            {tab[0] === "0" ? <CssTab /> : <EditTab focus={tab[1]} />}
+            {tab[0] === "0" ? <CssTab /> : <EditTab id={id} focus={tab[1]} />}
           </div>
           <div className="p-[4px] pr-[2px] pt-2 flex flex-col items-center gap-2">
             <div className="flex justify-center items-center w-6 h-6 p-[4px] border border-transparent rounded-sm hover:border-blue-400 active:bg-hoverblue">

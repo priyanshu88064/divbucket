@@ -26,12 +26,18 @@ export interface NodeData {
     name: string;
     type: string;
     hyperlink?: string;
-    newTab?: boolean;
-    src?: string;
-    alt?: string;
     content?: string | null;
     unit?: boolean;
     open?: boolean;
+    media?: {
+      src?: string;
+      alt?: string;
+      autoPlay?: boolean;
+      controls?: boolean;
+      loop?: boolean;
+      muted?: boolean;
+      newTab?: boolean;
+    };
     cssData?: {
       backgroundType?: BackgroundType;
       joints?: {

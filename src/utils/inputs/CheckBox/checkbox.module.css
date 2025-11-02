@@ -1,8 +1,0 @@
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  border-radius: 3px;
-  user-select: none;
-  width: 100%;
-}

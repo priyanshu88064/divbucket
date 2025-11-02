@@ -1,21 +1,10 @@
+import type { NodeData } from "../types/Tree";
+
 export default function initData(type: string) {
-  let data: {
-    name: string;
-    type: string;
-    hyperlink?: string;
-    newTab?: boolean;
-    src?: string;
-    alt?: string;
-    content?: string | null;
-    unit?: boolean;
-    open?: boolean;
-  } = {
+  let data: NodeData[number] = {
     name: type,
     type,
     hyperlink: "",
-    newTab: false,
-    src: "",
-    alt: "",
     content: null,
   };
 
@@ -40,8 +29,19 @@ export default function initData(type: string) {
       data.content = "HEADING";
       break;
     case "Image":
-      data.src = "/sample.jpg";
-      data.alt = "image";
+      data.media = {
+        src: "/sample.jpg",
+        alt: "image",
+      };
+      break;
+    case "Video":
+      data.media = {
+        src: "https://www.w3schools.com/html/mov_bbb.mp4",
+        loop: true,
+        muted: true,
+        autoPlay: true,
+        controls: false,
+      };
       break;
     case "Button":
       data.content = "Button";

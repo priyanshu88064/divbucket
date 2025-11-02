@@ -19,10 +19,6 @@ export default function initCSS(type: string) {
       style.width = "fit-content";
       style.height = "fit-content";
       break;
-    case "Video":
-      style.width = "200px";
-      style.height = "200px";
-      break;
   }
 
   return style;

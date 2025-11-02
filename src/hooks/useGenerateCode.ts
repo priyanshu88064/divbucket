@@ -172,9 +172,11 @@ export function useGenerateCode() {
         html += `${dataMap[id].content}`;
         html += `</div>\n`;
       } else if (dataMap[id].type === "Image") {
-        html = `${spacing}<img class='${dataMap[id].name + "_" + cind}' alt='${
-          dataMap[id].alt
-        }' src='${dataMap[id].src}' />\n`;
+        html = `${spacing}<img class='${dataMap[id].name + "_" + cind}' alt='${dataMap[id].media?.alt || ""}' src='${dataMap[id].media?.src}' />\n`;
+      } else if (dataMap[id].type === "Video") {
+        html = `${spacing}<video class='${dataMap[id].name + "_" + cind}' ${dataMap[id].media?.loop && "loop"} ${dataMap[id].media?.controls && "controls"} ${dataMap[id].media?.autoPlay && "autoPlay"} ${dataMap[id].media?.muted && "muted"} alt='${
+          dataMap[id].media?.alt || ""
+        }' src='${dataMap[id].media?.src}' /></video>\n`;
       } else if (dataMap[id].type === "Button") {
         html = `${spacing}<div class='${dataMap[id].name + "_" + cind}'>`;
         html += `${dataMap[id].content}`;

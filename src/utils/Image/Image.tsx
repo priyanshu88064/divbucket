@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 
 export default ({ node }: { node: number }) => {
   const src = useSelector(
-    (state: RootState) => state.treeReducer.dataMap[node].src,
+    (state: RootState) => state.treeReducer.dataMap[node].media?.src,
   );
   const alt = useSelector(
-    (state: RootState) => state.treeReducer.dataMap[node].alt,
+    (state: RootState) => state.treeReducer.dataMap[node].media?.alt,
   );
 
   return (
