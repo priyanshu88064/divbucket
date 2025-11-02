@@ -6,40 +6,32 @@ import { updateDataMap } from "../../../store/reducers/treeReducer";
 import { FaParagraph } from "react-icons/fa6";
 import styles from "../cssbar.module.css";
 import { FaLink } from "react-icons/fa";
+import CheckBox from "../../../utils/inputs/CheckBox/CheckBox";
 
-export default function EditTab({ focus }: { focus: string }) {
-  const id = useSelector((state: RootState) => state.treeReducer.activeNodeId);
-  if (!id) return <>please fix this</>;
-
+export default function EditTab({ id, focus }: { id: number; focus: string }) {
   const dataMap = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id],
   );
   const dispatch = useDispatch();
-  const [data, setData] = useState({
+  const [data, setData] = useState<NodeData[number]>({
     name: "",
-    content: "",
-    hyperlink: "",
-    src: "",
-    alt: "",
+    type: "",
   });
 
   useEffect(() => {
-    setData({
-      name: dataMap.name || "",
-      content: dataMap.content || "",
-      hyperlink: dataMap.hyperlink || "",
-      src: dataMap.src || "",
-      alt: dataMap.alt || "",
-    });
+    setData(dataMap);
   }, [dataMap]);
 
-  const handleText = (key: keyof NodeData[number], data: string) => {
-    if (dataMap[key] !== data)
-      dispatch(updateDataMap({ id, data: { ...dataMap, [key]: data } }));
-  };
+  function handleUpdate<K extends keyof NodeData[number]>(
+    key: K,
+    data: NodeData[number][K],
+  ) {
+    dispatch(updateDataMap({ id, data: { ...dataMap, [key]: data } }));
+  }
 
   return (
     <div className={`${focus === "1" ? styles.edittab : ""}`}>
+      {/* name */}
       <div
         className={`${styles.e0} ${styles.e0flex} ${focus === "2" ? styles.edittab : ""}`}
         style={{ marginTop: "10px" }}
@@ -48,28 +40,33 @@ export default function EditTab({ focus }: { focus: string }) {
           autoFocus={focus === "2"}
           value={data.name}
           className={styles.e0i}
-          onBlur={() => handleText("name", data.name)}
+          onBlur={() => handleUpdate("name", data.name)}
           onChange={(e) => {
             setData((f) => ({ ...f, name: e.target.value }));
           }}
           onKeyUp={(e) => {
-            if (e.key === "Enter") handleText("name", data.name);
+            if (e.key === "Enter") handleUpdate("name", data.name);
           }}
           onFocus={(e) => e.target.select()}
         />
       </div>
+
+      {/* content */}
       {["Text", "Paragraph", "Heading", "Button"].includes(dataMap.type) && (
         <div className={`${styles.e0} ${styles.e0flexcol}`}>
           <div className={styles.e00}>
             Content <FaParagraph />
           </div>
           <textarea
-            value={data.content}
+            value={data.content || ""}
             className={`${styles.e0i} ${styles.e0tarea}`}
-            onBlur={() => handleText("content", data.content)}
+            onBlur={() => handleUpdate("content", data.content)}
             onKeyUp={(e) => {
               if (e.key === "Enter")
-                handleText("content", (e.target as HTMLTextAreaElement).value);
+                handleUpdate(
+                  "content",
+                  (e.target as HTMLTextAreaElement).value,
+                );
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") e.preventDefault();
@@ -81,64 +78,103 @@ export default function EditTab({ focus }: { focus: string }) {
           />
         </div>
       )}
-      {/* <div className={`${styles.e0} ${styles.e0flexcol}`}>
-                <div className={styles.e00}>
-                    Hyperlink
-                    <FaLink size={10} />
-                </div>
-                <input
-                    placeholder='www.google.com'
-                    className={styles.e0i}
-                    value={data.hyperlink}
-                    onBlur={() => handleText("hyperlink", data.hyperlink)}
-                    onKeyUp={e => {
-                        if (e.key === "Enter") handleText("hyperlink", data.hyperlink);
-                    }}
-                    onChange={e => setData(f => ({ ...f, hyperlink: e.target.value }))}
-                    onFocus={e => e.target.select()}
-                />
-                <CheckBox
-                    name={"Open in a new tab"}
-                    checked={dataMap.newTab}
-                    onChange={e => handleText("newTab", e.target.checked)}
-                />
-            </div> */}
+
+      {/* src */}
+      {["Image", "Video"].includes(dataMap.type) && (
+        <div className={`${styles.e0} ${styles.e0flexcol}`}>
+          <div className={styles.e00}>
+            {dataMap.type} URL
+            <FaLink size={10} />
+          </div>
+          <input
+            value={data.media?.src || ""}
+            className={styles.e0i}
+            placeholder="https://picsum.photos/200"
+            onBlur={() => handleUpdate("media", data.media)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") handleUpdate("media", data.media);
+            }}
+            onChange={(e) =>
+              setData((f) => ({
+                ...f,
+                media: { ...f.media, src: e.target.value },
+              }))
+            }
+            onFocus={(e) => e.target.select()}
+          />
+        </div>
+      )}
+
+      {/* alt */}
       {dataMap.type === "Image" && (
-        <>
-          <div className={`${styles.e0} ${styles.e0flexcol}`}>
-            <div className={styles.e00}>
-              Image URL
-              <FaLink size={10} />
-            </div>
-            <input
-              value={data.src}
-              className={styles.e0i}
-              placeholder="https://picsum.photos/200"
-              onBlur={() => handleText("src", data.src)}
-              onKeyUp={(e) => {
-                if (e.key === "Enter") handleText("src", data.src);
-              }}
-              onChange={(e) => setData((f) => ({ ...f, src: e.target.value }))}
-              onFocus={(e) => e.target.select()}
-            />
+        <div className={`${styles.e0} ${styles.e0flexcol}`}>
+          <div className={styles.e00}>
+            {dataMap.type} Alt
+            <FaLink size={10} />
           </div>
-          <div className={`${styles.e0} ${styles.e0flexcol}`}>
-            <div className={styles.e00}>
-              Image Alt
-              <FaLink size={10} />
-            </div>
-            <input
-              className={styles.e0i}
-              value={data.alt}
-              onBlur={() => handleText("alt", data.alt)}
-              onKeyUp={(e) => {
-                if (e.key === "Enter") handleText("alt", data.alt);
-              }}
-              onChange={(e) => setData((f) => ({ ...f, alt: e.target.value }))}
-              onFocus={(e) => e.target.select()}
-            />
-          </div>
-        </>
+          <input
+            className={styles.e0i}
+            value={data.media?.alt || ""}
+            onBlur={() => handleUpdate("media", data.media)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") handleUpdate("media", data.media);
+            }}
+            onChange={(e) =>
+              setData((f) => ({
+                ...f,
+                media: { ...f.media, alt: e.target.value },
+              }))
+            }
+            onFocus={(e) => e.target.select()}
+          />
+        </div>
+      )}
+
+      {/* video settings */}
+      {dataMap.type === "Video" && (
+        <div className={`${styles.e0} ${styles.e0flexcol}`}>
+          <div className={styles.e00}>Additional</div>
+          <CheckBox
+            name={"Show controls"}
+            checked={dataMap.media?.controls || false}
+            onChange={(e) =>
+              handleUpdate("media", {
+                ...dataMap.media,
+                controls: e.target.checked,
+              })
+            }
+          />
+          <CheckBox
+            name={"Mute audio"}
+            checked={dataMap.media?.muted || false}
+            onChange={(e) =>
+              handleUpdate("media", {
+                ...dataMap.media,
+                muted: e.target.checked,
+              })
+            }
+          />
+          <CheckBox
+            name={"Loop"}
+            checked={dataMap.media?.loop || false}
+            onChange={(e) =>
+              handleUpdate("media", {
+                ...dataMap.media,
+                loop: e.target.checked,
+              })
+            }
+          />
+          <CheckBox
+            name={"Autoplay"}
+            checked={dataMap.media?.autoPlay || false}
+            onChange={(e) =>
+              handleUpdate("media", {
+                ...dataMap.media,
+                autoPlay: e.target.checked,
+              })
+            }
+          />
+        </div>
       )}
     </div>
   );

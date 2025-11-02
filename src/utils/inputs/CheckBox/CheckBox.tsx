@@ -1,5 +1,3 @@
-import styles from "./checkbox.module.css";
-
 export default ({
   name,
   checked,
@@ -10,7 +8,7 @@ export default ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <label className={styles.checkbox}>
+    <label className="w-full flex gap-2 rounded-sm select-none">
       <input type="checkbox" checked={checked} onChange={onChange} />
       {name}
     </label>

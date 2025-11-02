@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetIconOfType } from "../Cssbar/Cssbar";
 import { changeTab } from "../../store/reducers/focusReducer";
 import { MdOutlineEdit } from "react-icons/md";
@@ -85,7 +85,7 @@ const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
       >
         <div className="flex items-center justify-center gap-1 p-0.5 px-2 text-white text-[11px] rounded-xs">
           {GetIconOfType(type, 10)}
-          {name}
+          {name || type}
         </div>
         <div
           title="edit"
@@ -114,7 +114,7 @@ const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
           width: dim.width,
           height: "1px",
         }}
-        className={`fixed border-t-2 border-[var(--resizeblue)] cursor-ns-resize}`}
+        className={`fixed border-t-2 border-[var(--resizeblue)]`}
       ></div>
       <div
         draggable={false}
@@ -125,7 +125,7 @@ const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
           width: "1px",
           height: dim.height + 1,
         }}
-        className={`fixed border-r-2 border-[var(--resizeblue)] cursor-ew-resize`}
+        className={`fixed border-r-2 border-[var(--resizeblue)]`}
       ></div>
       <div
         draggable={false}
@@ -136,7 +136,7 @@ const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
           width: dim.width + 1,
           height: "1px",
         }}
-        className={`fixed border-b-2 border-[var(--resizeblue)] cursor-ns-resize`}
+        className={`fixed border-b-2 border-[var(--resizeblue)]`}
       ></div>
       <div
         draggable={false}
@@ -147,7 +147,7 @@ const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
           width: "1px",
           height: dim.height,
         }}
-        className={`fixed border-l-2 border-[var(--resizeblue)] cursor-ew-resize`}
+        className={`fixed border-l-2 border-[var(--resizeblue)]`}
       ></div>
     </>
   );

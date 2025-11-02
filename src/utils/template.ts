@@ -64,6 +64,11 @@ TYPES.Image = {
   styleMap: { 0: { default: initCSS("Image"), hover: {}, active: {} } },
   dataMap: { 0: initData("Image") },
 };
+TYPES.Video = {
+  tree: { 0: [] },
+  styleMap: { 0: { default: initCSS("Video"), hover: {}, active: {} } },
+  dataMap: { 0: initData("Video") },
+};
 TYPES.ListItem = {
   tree: { 0: [] },
   styleMap: { 0: { default: initCSS("Text"), hover: {}, active: {} } },
@@ -170,7 +175,9 @@ TYPES.Navbar = {
     },
     1: {
       ...TYPES.Image.dataMap[0],
-      src: "https://img.logoipsum.com/350.svg",
+      media: {
+        src: "https://img.logoipsum.com/350.svg",
+      },
     },
     2: {
       ...TYPES.Row.dataMap[0],
@@ -217,10 +224,6 @@ TYPES.Button = {
     0: {
       name: "Button",
       type: "Button",
-      hyperlink: "",
-      newTab: false,
-      src: "",
-      alt: "",
       content: "Button",
       unit: true,
       cssData: {

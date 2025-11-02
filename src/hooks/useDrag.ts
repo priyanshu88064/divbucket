@@ -74,8 +74,7 @@ export function useDrag() {
       !targetId ||
       draggedId === targetId ||
       !overlayRef.current ||
-      !targetType ||
-      !["root", "Row", "Block"].includes(targetType)
+      !targetType
     )
       return;
 
@@ -91,6 +90,8 @@ export function useDrag() {
 
     switch (getPosi(e.clientX, e.clientY, rect)) {
       case "inside":
+        if (!["root", "Row", "Block"].includes(targetType)) break; // cannot drop inside a unit element
+
         overlayRef.current.style.top = rect.top + "px";
         overlayRef.current.style.left = rect.left + "px";
         overlayRef.current.style.width = rect.width + "px";
