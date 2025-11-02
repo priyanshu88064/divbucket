@@ -14,7 +14,7 @@ export default function Resizable({
   children,
 }: {
   id: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   const dispatch = useDispatch<AppDispatch>();
   const styleMap = useSelector(
@@ -23,16 +23,69 @@ export default function Resizable({
   const type = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id].type,
   );
-  const { dim, divRef, handleMouseDown } = useResizer({ id });
+
+  // for video
+  const src = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.src,
+  );
+  const autoPlay = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.autoPlay,
+  );
+  const muted = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.muted,
+  );
+  const controls = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.controls,
+  );
+  const loop = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.loop,
+  );
+
+  const { dim, handleMouseDown } = useResizer({ id });
   const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const pureNode = (() => {
     // because not every element can be a div (eg. video, image)
     switch (type) {
+      case "Video":
+        return (
+          <video
+            // ref={divRef}
+            id={`node-${id}`}
+            data-id={id}
+            data-type={type}
+            style={{ ...styleMap, ...dim }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              dispatch(updateActiveNode({ id }));
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setClicked(true);
+              setPoints({ x: e.pageX, y: e.pageY });
+              dispatch(updateActiveNode({ id }));
+            }}
+            onMouseOver={(e) => {
+              e.stopPropagation();
+              dispatch(updateHoverNodeId({ id }));
+            }}
+            onMouseLeave={(e) => {
+              e.stopPropagation();
+              dispatch(updateHoverNodeId({ id: null }));
+            }}
+            src={src}
+            autoPlay={autoPlay}
+            loop={loop}
+            muted={muted}
+            controls={controls}
+          ></video>
+        );
       default:
         return (
           <div
-            ref={divRef}
+            // ref={divRef}
             id={type === "root" ? `node-root` : `node-${id}`}
             data-id={id}
             data-type={type}
