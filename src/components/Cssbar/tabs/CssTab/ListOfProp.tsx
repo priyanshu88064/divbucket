@@ -274,12 +274,16 @@ export default function ListOfProp({
       </Wrap>
 
       <Wrap title={"Margin"}>
-        <MPbox key={"marginBox-" + id} prefix={"margin"} cssState={cssState} />
+        <MPbox
+          key={"marginBox" + cssState + id}
+          prefix={"margin"}
+          cssState={cssState}
+        />
       </Wrap>
 
       <Wrap title={"Padding"}>
         <MPbox
-          key={"paddingBox-" + id}
+          key={"paddingBox" + cssState + id}
           prefix={"padding"}
           cssState={cssState}
         />
@@ -300,7 +304,7 @@ export default function ListOfProp({
               />
               {dataMap.cssData?.backgroundType === "Solid" && (
                 <Colorpicker
-                  key={"backgroundColor" + id}
+                  key={"backgroundColor" + cssState + id}
                   value={styleMap.backgroundColor as string}
                   onChange={(value) => UpdateStyle("backgroundColor", value)}
                 />
@@ -387,7 +391,7 @@ export default function ListOfProp({
                 <div className={styles.bg0name}>Color</div>
                 <div className={styles.sizesiwrap}>
                   <Colorpicker
-                    key={"urlBackgroundColor" + id}
+                    key={"urlBackgroundColor" + cssState + id}
                     value={styleMap.backgroundColor as string}
                     onChange={(value) => UpdateStyle("backgroundColor", value)}
                   />
@@ -470,7 +474,7 @@ export default function ListOfProp({
               </div>
             </div>
             <Colorpicker
-              key={"textColor" + id}
+              key={"textColor" + cssState + id}
               value={styleMap.color || "#000000"}
               onChange={(value) => UpdateStyle("color", value)}
             />
@@ -583,14 +587,14 @@ export default function ListOfProp({
             <div className={styles.bg0name}>Border-Style</div>
             <div className={styles.sizesiwrap}>
               <TextInput
-                value={(styleMap.borderStyle as string) || "solid"}
+                value={(styleMap.borderStyle as string) || "none"}
                 units={[
+                  "none",
                   "solid",
                   "dotted",
                   "dashed",
                   "double",
                   "groove",
-                  "hidden",
                 ]}
                 onChange={(value) => UpdateStyle("borderStyle", value)}
                 isSelectOnly={true}
@@ -607,7 +611,7 @@ export default function ListOfProp({
                 onChange={(value) => UpdateStyle("borderWidth", value)}
               />
               <Colorpicker
-                key={"borderColor" + id}
+                key={"borderColor" + cssState + id}
                 value={styleMap.borderColor || "#000000"}
                 onChange={(value) => UpdateStyle("borderColor", value)}
               />
@@ -814,7 +818,7 @@ export default function ListOfProp({
                 isSelectOnly={true}
               />
               <Colorpicker
-                key={"boxShadowColor" + id}
+                key={"boxShadowColor" + cssState + id}
                 value={
                   styleMap.boxShadow
                     ? `#${styleMap.boxShadow.split("#")[1]}`
@@ -884,7 +888,7 @@ export default function ListOfProp({
                 isSelectOnly={true}
               />
               <Colorpicker
-                key={"textShadowColor" + id}
+                key={"textShadowColor" + cssState + id}
                 value={
                   styleMap.textShadow
                     ? `#${styleMap.textShadow.split("#")[1]}`
@@ -958,6 +962,16 @@ export default function ListOfProp({
                     UpdateStyle("translate", `0 ${value}`);
                   }
                 }}
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Rotate</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={styleMap.rotate || "0"}
+                units={["0", "45deg", "90deg", "180deg"]}
+                onChange={(value) => UpdateStyle("rotate", value)}
               />
             </div>
           </div>

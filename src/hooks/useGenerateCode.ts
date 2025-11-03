@@ -80,6 +80,7 @@ const cssMap: { [key: string]: string } = {
   textShadow: "text-shadow",
 
   translate: "translate",
+  rotate: "rotate",
 
   cursor: "cursor",
 };

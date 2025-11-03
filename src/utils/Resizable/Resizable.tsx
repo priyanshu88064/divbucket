@@ -24,9 +24,12 @@ export default function Resizable({
     (state: RootState) => state.treeReducer.dataMap[id].type,
   );
 
-  // for video
+  // for media
   const src = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id].media?.src,
+  );
+  const alt = useSelector(
+    (state: RootState) => state.treeReducer.dataMap[id].media?.alt,
   );
   const autoPlay = useSelector(
     (state: RootState) => state.treeReducer.dataMap[id].media?.autoPlay,
@@ -82,6 +85,40 @@ export default function Resizable({
             controls={controls}
           ></video>
         );
+
+      case "Image":
+        return (
+          <img
+            // ref={divRef}
+            id={`node-${id}`}
+            data-id={id}
+            data-type={type}
+            style={{ ...styleMap, ...dim }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              dispatch(updateActiveNode({ id }));
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setClicked(true);
+              setPoints({ x: e.pageX, y: e.pageY });
+              dispatch(updateActiveNode({ id }));
+            }}
+            onMouseOver={(e) => {
+              e.stopPropagation();
+              dispatch(updateHoverNodeId({ id }));
+            }}
+            onMouseLeave={(e) => {
+              e.stopPropagation();
+              dispatch(updateHoverNodeId({ id: null }));
+            }}
+            src={src}
+            alt={alt}
+          />
+        );
+
       default:
         return (
           <div

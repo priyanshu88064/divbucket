@@ -22,7 +22,8 @@ export default () => {
 
   useEffect(() => {
     const initDefaultProject = async () => {
-      const response = await fetch("/projects/divbucket.json");
+      // const response = await fetch("/projects/divbucket.json");
+      const response = await fetch("/projects/witcher.json");
       const data = (await response.json()) as Template;
 
       dispatch(
