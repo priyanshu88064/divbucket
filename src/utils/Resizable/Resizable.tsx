@@ -41,7 +41,7 @@ export default function Resizable({
     (state: RootState) => state.treeReducer.dataMap[id].media?.loop,
   );
 
-  const { dim, handleMouseDown } = useResizer({ id });
+  const { dim, divRef, handleMouseDown } = useResizer({ id });
   const { clicked, setClicked, points, setPoints } = useContextMenu();
 
   const pureNode = (() => {
@@ -85,7 +85,7 @@ export default function Resizable({
       default:
         return (
           <div
-            // ref={divRef}
+            ref={divRef}
             id={type === "root" ? `node-root` : `node-${id}`}
             data-id={id}
             data-type={type}
