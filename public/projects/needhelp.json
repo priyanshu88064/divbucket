@@ -1,0 +1,354 @@
+{
+  "tree": {
+    "-1": [
+      319269
+    ],
+    "77336": [],
+    "91049": [],
+    "91625": [],
+    "117400": [
+      968581
+    ],
+    "272644": [
+      77336,
+      576277
+    ],
+    "319269": [
+      799522,
+      832427,
+      117400
+    ],
+    "348806": [
+      272644,
+      900318
+    ],
+    "412282": [],
+    "441882": [],
+    "576277": [],
+    "799522": [
+      441882,
+      348806
+    ],
+    "832427": [
+      412282,
+      91049,
+      91625
+    ],
+    "900318": [],
+    "968581": []
+  },
+  "styleMap": {
+    "77336": {
+      "default": {
+        "fontSize": "16px",
+        "color": "#4a4a4a",
+        "fontWeight": "bold"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "91049": {
+      "default": {
+        "color": "#303030",
+        "marginTop": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "91625": {
+      "default": {
+        "color": "#303030",
+        "marginTop": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "117400": {
+      "default": {
+        "minHeight": "20px",
+        "paddingTop": "20px",
+        "paddingBottom": "20px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "272644": {
+      "default": {
+        "minHeight": "20px",
+        "width": "303px",
+        "display": "flex",
+        "alignItems": "flex-end",
+        "gap": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "319269": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "minWidth": "350px",
+        "background": "white",
+        "paddingTop": "5px",
+        "paddingRight": "5px",
+        "paddingBottom": "5px",
+        "paddingLeft": "5px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "348806": {
+      "default": {
+        "minHeight": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "412282": {
+      "default": {
+        "color": "#4a4a4a"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "441882": {
+      "default": {
+        "width": "178px",
+        "height": "fit-content"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "576277": {
+      "default": {
+        "fontSize": "2em",
+        "fontWeight": "bold",
+        "color": "#ff7300"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "799522": {
+      "default": {
+        "minHeight": "20px",
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "50px",
+        "marginTop": "20px",
+        "marginBottom": "0",
+        "paddingTop": "20px",
+        "paddingBottom": "20px",
+        "paddingRight": "20px",
+        "paddingLeft": "20px",
+        "flexWrap": "wrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "832427": {
+      "default": {
+        "minHeight": "20px",
+        "paddingTop": "20px",
+        "paddingBottom": "20px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px",
+        "marginTop": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "900318": {
+      "default": {
+        "fontSize": "16px",
+        "fontWeight": "bold",
+        "color": "#4a4a4a",
+        "marginTop": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "968581": {
+      "default": {
+        "color": "blue",
+        "justifyContent": "flex-end",
+        "marginTop": "0",
+        "paddingTop": "0",
+        "paddingBottom": "0",
+        "paddingRight": "0",
+        "paddingLeft": "0",
+        "fontStyle": "italic",
+        "fontSize": "14px",
+        "height": "15px"
+      },
+      "hover": {},
+      "active": {}
+    }
+  },
+  "dataMap": {
+    "77336": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "Hi, I'm",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "91049": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "💼 I'm currently looking for job opportunities. If you happen to know of any openings or have any connections who might help, I'd really appreciate.",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "91625": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "Even any feedback or advice from your side would mean a lot ❤️.",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "117400": {
+      "name": "Block",
+      "type": "Block",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": false,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "272644": {
+      "name": "Block",
+      "type": "Block",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": false,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "319269": {
+      "type": "root",
+      "name": "Need Your Help",
+      "unit": false,
+      "open": true,
+      "media": {}
+    },
+    "348806": {
+      "name": "Block",
+      "type": "Block",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": false,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "412282": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "💌 The motivation behind this project was to showcase and test my skills.",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "441882": {
+      "name": "Image",
+      "type": "Image",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": true,
+      "media": {
+        "src": "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+        "alt": "image"
+      }
+    },
+    "576277": {
+      "name": "Heading",
+      "type": "Heading",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "Priyanshu",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "799522": {
+      "name": "Row",
+      "type": "Row",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": false,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "832427": {
+      "name": "Block",
+      "type": "Block",
+      "hyperlink": "",
+      "newTab": false,
+      "content": null,
+      "unit": false,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "900318": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "• A Full Stack Developer",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    "968581": {
+      "name": "Text",
+      "type": "Text",
+      "hyperlink": "",
+      "newTab": false,
+      "content": "📧 priyanshutiwari88064@gmail.com",
+      "unit": true,
+      "media": {
+        "src": "",
+        "alt": ""
+      }
+    }
+  }
+}

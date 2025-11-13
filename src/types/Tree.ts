@@ -52,9 +52,7 @@ export interface BGContentRect {
   width: number;
   height: number;
   top: number;
-  bottom: number;
   left: number;
-  right: number;
 }
 
 export interface Clipboard {

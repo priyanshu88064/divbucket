@@ -88,7 +88,7 @@ export default function ListOfProp({
         break;
       case "URL":
         tempStyleMap.backgroundImage =
-          tempStyleMap.backgroundImage || "url(https://picsum.photos/200/300";
+          tempStyleMap.backgroundImage || "url(https://picsum.photos/200/300)";
         tempStyleMap.backgroundRepeat =
           tempStyleMap.backgroundRepeat || "no-repeat";
         tempStyleMap.backgroundPosition =
@@ -289,10 +289,10 @@ export default function ListOfProp({
         />
       </Wrap>
 
-      <Wrap title={"Background"}>
+      <Wrap title={"Appearance"}>
         <div className={`${styles.padwrap} flex flex-col gap-[15px]`}>
           <div className={styles.bg0}>
-            <div className={styles.bg0name}>Type</div>
+            <div className={styles.bg0name}>Background</div>
             <div className={styles.bg01}>
               <Select
                 options={["Auto", "Solid", "URL", "Custom"]}
@@ -410,6 +410,16 @@ export default function ListOfProp({
               </div>
             </div>
           )}
+
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Opacity</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(styleMap.opacity as string) || "1"}
+                onChange={(value) => UpdateStyle("opacity", value)}
+              />
+            </div>
+          </div>
         </div>
       </Wrap>
 
@@ -575,6 +585,26 @@ export default function ListOfProp({
                 units={["left", "right", "center", "justify"]}
                 onChange={(value) => UpdateStyle("textAlign", value)}
                 isSelectOnly={true}
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Word-Spacing</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(styleMap.wordSpacing as string) || "normal"}
+                units={["normal", "4px", "8px", "12px"]}
+                onChange={(value) => UpdateStyle("wordSpacing", value)}
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Letter-Spacing</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(styleMap.letterSpacing as string) || "normal"}
+                units={["normal", "4px", "8px", "12px"]}
+                onChange={(value) => UpdateStyle("letterSpacing", value)}
               />
             </div>
           </div>
@@ -966,11 +996,51 @@ export default function ListOfProp({
             </div>
           </div>
           <div className={styles.bg0}>
+            <div className={styles.bg0name}>Scale-X</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(() => {
+                  if (!styleMap.scale) return "1";
+                  return (styleMap.scale as string).split(" ")[0];
+                })()}
+                onChange={(value) =>
+                  UpdateStyle(
+                    "scale",
+                    (() => {
+                      if (!styleMap.scale) return `${value} 1`;
+                      return `${value} ${(styleMap.scale as string).split(" ")[1]}`;
+                    })(),
+                  )
+                }
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Scale-Y</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(() => {
+                  if (!styleMap.scale) return "1";
+                  return (styleMap.scale as string).split(" ")[1];
+                })()}
+                onChange={(value) =>
+                  UpdateStyle(
+                    "scale",
+                    (() => {
+                      if (!styleMap.scale) return `1 ${value}`;
+                      return `${(styleMap.scale as string).split(" ")[0]} ${value}`;
+                    })(),
+                  )
+                }
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
             <div className={styles.bg0name}>Rotate</div>
             <div className={styles.sizesiwrap}>
               <TextInput
                 value={styleMap.rotate || "0"}
-                units={["0", "45deg", "90deg", "180deg"]}
+                units={["0deg", "45deg", "90deg", "180deg"]}
                 onChange={(value) => UpdateStyle("rotate", value)}
               />
             </div>
@@ -998,6 +1068,59 @@ export default function ListOfProp({
                   "zoom-out",
                 ]}
                 onChange={(value) => UpdateStyle("cursor", value)}
+                isSelectOnly={true}
+              />
+            </div>
+          </div>
+        </div>
+      </Wrap>
+
+      <Wrap title={"Transition"}>
+        <div className={`${styles.padwrap} ${styles.bgwrap}`}>
+          <CheckBox
+            name={"Enable Transition"}
+            checked={styleMap.transition != null}
+            onChange={(e) =>
+              UpdateStyle("transition", e.target.checked ? "all 200ms" : "auto")
+            }
+          />
+        </div>
+      </Wrap>
+
+      <Wrap title={"Fitting & Alignment"}>
+        <div className={`${styles.padwrap} ${styles.bgwrap}`}>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Object-Fit</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={styleMap.objectFit || "none"}
+                units={["none", "cover", "contain", "fill"]}
+                onChange={(value) => UpdateStyle("objectFit", value)}
+                isSelectOnly={true}
+              />
+            </div>
+          </div>
+          <div className={styles.bg0}>
+            <div className={styles.bg0name}>Object-Position</div>
+            <div className={styles.sizesiwrap}>
+              <TextInput
+                value={(styleMap.objectPosition as string) || "left top"}
+                units={[
+                  "center",
+                  "left",
+                  "left top",
+                  "left bottom",
+                  "top",
+                  "top left",
+                  "top right",
+                  "right",
+                  "right top",
+                  "right bottom",
+                  "bottom",
+                  "bottom left",
+                  "bottom right",
+                ]}
+                onChange={(value) => UpdateStyle("objectPosition", value)}
                 isSelectOnly={true}
               />
             </div>

@@ -26,7 +26,7 @@ export default () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600 z-[3]">
+    <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600 z-[5]">
       {/* LOGO */}
       <div className="flex items-baseline-last gap-1 flex-[1] text-orange-400">
         <LuPaintBucket className="ml-4 self-center" />

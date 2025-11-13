@@ -15,7 +15,7 @@ export default function Preview(): React.JSX.Element {
   if (!isOpen) return <></>;
 
   return createPortal(
-    <div className="fixed top-0 left-0 h-full w-full bg-white flex flex-col">
+    <div className="fixed z-[9999] top-0 left-0 h-full w-full bg-white flex flex-col">
       <div className="flex items-center justify-between bg-[#283037] h-8 text-gray-200 text-xs">
         <div className="flex items-baseline-last gap-1 text-orange-400">
           <LuPaintBucket size={20} className="ml-[30px] self-center" />

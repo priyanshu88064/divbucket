@@ -160,7 +160,7 @@ export default function MPbox({
               );
               updateData({ all: !joints?.all });
             }}
-            className={`z-10 px-2 py-[2px] ${prefix === "margin" ? "bg-[#333C46]" : "bg-[#283037]"} cursor-pointer rounded-sm ${joints?.all ? "!bg-blue-600 text-white" : "text-gray-400"}`}
+            className={`relative px-2 py-[2px] ${prefix === "margin" ? "bg-[#333C46]" : "bg-[#283037]"} cursor-pointer rounded-sm ${joints?.all ? "!bg-blue-600 text-white" : "text-gray-400"}`}
           >
             <FaEquals className="hover:scale-x-150 transition-[scale]" />
           </div>

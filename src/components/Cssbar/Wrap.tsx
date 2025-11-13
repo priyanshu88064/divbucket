@@ -18,6 +18,8 @@ const activeBlacklist = [
   "Shadows",
   "Transform",
   "Cursor",
+  "Transition",
+  "Fitting & Alignment",
 ];
 
 export default function Wrap({

@@ -30,6 +30,9 @@ const cssMap: { [key: string]: string } = {
   gap: "gap",
   flexWrap: "flex-wrap",
 
+  objectFit: "object-fit",
+  objectPosition: "object-position",
+
   marginTop: "margin-top",
   marginRight: "margin-right",
   marginBottom: "margin-bottom",
@@ -46,6 +49,7 @@ const cssMap: { [key: string]: string } = {
   backgroundRepeat: "background-repeat",
   backgroundPosition: "background-position",
   backgroundSize: "background-size",
+  opacity: "opacity",
 
   color: "color",
   fontWeight: "font-weight",
@@ -56,6 +60,8 @@ const cssMap: { [key: string]: string } = {
   textTransform: "text-transform",
   textAlign: "text-align",
   fontVariant: "font-variant",
+  wordSpacing: "word-spacing",
+  letterSpacing: "letter-spacing",
 
   borderWidth: "border-width",
   borderTopWidth: "border-top-width",
@@ -80,9 +86,12 @@ const cssMap: { [key: string]: string } = {
   textShadow: "text-shadow",
 
   translate: "translate",
+  scale: "scale",
   rotate: "rotate",
 
   cursor: "cursor",
+
+  transition: "transition",
 };
 
 export function useGenerateCode() {
@@ -100,11 +109,15 @@ export function useGenerateCode() {
     let declaration = `${selector}${pseudoClass !== "default" ? ":" + pseudoClass : ""} {\n`;
 
     Object.keys(styleMap[id][pseudoClass]).map((prop) => {
-      if (
-        dataMap[id].type !== "root" ||
-        (prop !== "width" && prop !== "minWidth")
-      )
+      if (dataMap[id].type === "root") {
+        if (prop === "width" || prop === "minWidth") {
+          /*skip*/
+        } else if (prop === "height") declaration += `  height: 100vh;\n`;
+        else
+          declaration += `  ${cssMap[prop]}: ${(styleMap[id][pseudoClass] as any)[prop]};\n`;
+      } else {
         declaration += `  ${cssMap[prop]}: ${(styleMap[id][pseudoClass] as any)[prop]};\n`;
+      }
     });
 
     declaration += "}\n";

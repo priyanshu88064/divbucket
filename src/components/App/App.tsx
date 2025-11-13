@@ -1,8 +1,7 @@
 import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
 import Headbar from "../Headbar/Headbar";
-import styles from "./playwrap.module.css";
+import styles from "./app.module.css";
 import { lazy, Suspense, useEffect, useRef } from "react";
-import Playground from "../playground/Playground";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import type { Template } from "../../types/Template";
@@ -11,8 +10,10 @@ import {
   updateActiveNode,
   updateActiveTab,
 } from "../../store/reducers/treeReducer";
+import PlaygroundContainer from "../Playground/PlaygroundContainer/PlaygroundContainer";
+import type { Tree } from "../../types/Tree";
 
-const Preview = lazy(() => import("../preview/Preview"));
+const Preview = lazy(() => import("../Preview/Preview"));
 
 export default () => {
   const isPreviewOpen = useSelector(
@@ -22,22 +23,37 @@ export default () => {
 
   useEffect(() => {
     const initDefaultProject = async () => {
-      // const response = await fetch("/projects/divbucket.json");
-      const response = await fetch("/projects/witcher.json");
-      const data = (await response.json()) as Template;
+      const [witcher, divbucket, needHelp]: Template[] = await Promise.all([
+        fetch("/projects/witcher.json").then((res) => res.json()),
+        fetch("/projects/divbucket.json").then((res) => res.json()),
+        fetch("/projects/needhelp.json").then((res) => res.json()),
+      ]);
+
+      let tree: Tree = { ...witcher.tree, ...divbucket.tree, ...needHelp.tree };
+      tree[-1] = [
+        witcher.tree[-1][0],
+        divbucket.tree[-1][0],
+        needHelp.tree[-1][0],
+      ];
 
       dispatch(
         addTemplate({
-          tree: data.tree,
-          styleMap: data.styleMap,
-          dataMap: data.dataMap,
+          tree,
+          styleMap: {
+            ...witcher.styleMap,
+            ...divbucket.styleMap,
+            ...needHelp.styleMap,
+          },
+          dataMap: {
+            ...witcher.dataMap,
+            ...divbucket.dataMap,
+            ...needHelp.dataMap,
+          },
         }),
       );
 
-      if (data.tree[-1] && data.tree[-1].length) {
-        dispatch(updateActiveTab({ tab: data.tree[-1][0] }));
-        dispatch(updateActiveNode({ id: data.tree[-1][0] }));
-      }
+      dispatch(updateActiveTab({ tab: tree[-1][0] }));
+      dispatch(updateActiveNode({ id: tree[-1][0] }));
     };
     initDefaultProject();
   }, []);
@@ -45,7 +61,7 @@ export default () => {
   return (
     <div className={styles.playwrap}>
       <Headbar />
-      <Playground />
+      <PlaygroundContainer />
       <RestrictSmallerScreen />
 
       {isPreviewOpen && (

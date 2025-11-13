@@ -29,7 +29,7 @@ export default () => {
 
   return (
     <>
-      <div className={`${styles.sidebar}`}>
+      <div className={`h-full text-white flex select-none`}>
         <div className="w-12 bg-[#1B2228] h-full p-2 flex flex-col gap-2 border-r border-gray-600">
           {tabList.map((_tab, ind) => (
             <div

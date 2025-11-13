@@ -74,7 +74,7 @@ export default function StatsForNerds(): React.JSX.Element {
       onMouseLeave={() => (isDragging.current = false)}
       onMouseMove={handleMouseMove}
       style={{ top: cord.y, left: cord.x }}
-      className="fixed max-h-128 w-64 p-4 grid grid-cols-[35%_auto] gap-y-2 bg-black/80 text-xs font-semibold select-none active:cursor-move overflow-y-scroll rounded-sm"
+      className="fixed z-[99] max-h-128 w-64 p-4 grid grid-cols-[35%_auto] gap-y-2 bg-black/80 text-xs font-semibold select-none active:cursor-move overflow-y-scroll rounded-sm"
     >
       <div className="text-gray-200 text-sm p-1 pl-0 whitespace-nowrap w-fit">
         Stats for nerds 😔

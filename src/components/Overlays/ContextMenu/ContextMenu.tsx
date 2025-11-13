@@ -8,9 +8,10 @@ import {
   duplicate,
   paste,
   revealParent,
-} from "../../store/reducers/treeReducer";
-import { changeTab } from "../../store/reducers/focusReducer";
-import type { RootState } from "../../store/store";
+} from "../../../store/reducers/treeReducer";
+import { changeTab } from "../../../store/reducers/focusReducer";
+import type { RootState } from "../../../store/store";
+import { createPortal } from "react-dom";
 
 export default ({
   id,
@@ -148,7 +149,8 @@ export default ({
           },
         ],
       ];
-  return (
+
+  return createPortal(
     <div
       className="fixed w-full h-full top-0 left-0 z-10 bg-transparent"
       onContextMenu={(e) => {
@@ -200,6 +202,7 @@ export default ({
           </React.Fragment>
         ))}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

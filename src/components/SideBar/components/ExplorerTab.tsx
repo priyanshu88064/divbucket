@@ -14,7 +14,7 @@ import { useContextMenu } from "../../../hooks/useContextMenu";
 import { GetIconOfType } from "../../Cssbar/Cssbar";
 import { FaFile } from "react-icons/fa";
 import { GrDrag } from "react-icons/gr";
-import ContextMenu from "../../ContextMenu/ContextMenu";
+import ContextMenu from "../../Overlays/ContextMenu/ContextMenu";
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 
 export default function Explorer() {
@@ -23,7 +23,7 @@ export default function Explorer() {
   const dispatch = useDispatch<AppDispatch>();
   const tabs = useSelector((state: RootState) => state.treeReducer.tree[-1]);
   const [newPage, setNewPage] = useState(false);
-  const [newPageName, setNewPageName] = useState("My Page");
+  const [newPageName, setNewPageName] = useState("Untitled");
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     var dragWrapper = document.createElement("div");
@@ -117,7 +117,7 @@ export default function Explorer() {
   const handleAddPage = () => {
     if (!newPageName.length) return;
     setNewPage(false);
-    setNewPageName("My Page");
+    setNewPageName("Untitled");
     const child = createTemplate({ type: "Tab", name: newPageName, dispatch });
     dispatch(addNode({ parent: -1, child }));
     dispatch(updateActiveTab({ tab: child }));
