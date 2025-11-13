@@ -1,11 +1,9 @@
-import styles from "./sidebar.module.css";
 import { IoAddOutline, IoLayers } from "react-icons/io5";
-import { lazy, Suspense, useState } from "react";
+import { useState } from "react";
 import Explorer from "./components/ExplorerTab";
 import ElementsTab from "./components/ElementsTab";
 import { VscDebug } from "react-icons/vsc";
-
-const StatsForNerds = lazy(() => import("../StatsForNerds/StatsForNerds"));
+import StatsForNerds from "../StatsForNerds/StatsForNerds";
 
 const tabList = [
   {
@@ -61,11 +59,7 @@ export default () => {
       </div>
 
       {/* place it somewhere better */}
-      {isStatsForNerds && (
-        <Suspense fallback={<></>}>
-          <StatsForNerds />
-        </Suspense>
-      )}
+      {isStatsForNerds && <StatsForNerds />}
     </>
   );
 };

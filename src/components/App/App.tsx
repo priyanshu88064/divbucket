@@ -1,5 +1,4 @@
 import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
-import Headbar from "../Headbar/Headbar";
 import styles from "./app.module.css";
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +9,13 @@ import {
   updateActiveNode,
   updateActiveTab,
 } from "../../store/reducers/treeReducer";
-import PlaygroundContainer from "../Playground/PlaygroundContainer/PlaygroundContainer";
 import type { Tree } from "../../types/Tree";
+import Loader from "../Overlays/Loader/Loader";
 
+const Headbar = lazy(() => import("../Headbar/Headbar"));
+const PlaygroundContainer = lazy(
+  () => import("../Playground/PlaygroundContainer/PlaygroundContainer"),
+);
 const Preview = lazy(() => import("../Preview/Preview"));
 
 export default () => {
@@ -59,17 +62,15 @@ export default () => {
   }, []);
 
   return (
-    <div className={styles.playwrap}>
-      <Headbar />
-      <PlaygroundContainer />
-      <RestrictSmallerScreen />
+    <Suspense fallback={<Loader />}>
+      <div className={styles.playwrap}>
+        <Headbar />
+        <PlaygroundContainer />
+        <RestrictSmallerScreen />
 
-      {isPreviewOpen && (
-        <Suspense fallback={<></>}>
-          <Preview />
-        </Suspense>
-      )}
-    </div>
+        {isPreviewOpen && <Preview />}
+      </div>
+    </Suspense>
   );
 };
 
