@@ -7,6 +7,7 @@ import type { RootState } from "../../../store/store";
 import styles from "../../../utils/Resizable/resizable.module.css";
 import NodeOverlays from "../../Overlays/NodeOverlays/NodeOverlays";
 import NodeRenderer from "../../Renderer/NodeRenderer";
+import { syncCSSPosition } from "../../../hooks/syncCSSPosition";
 
 export default function Playground() {
   const dispatch = useDispatch();
@@ -16,6 +17,9 @@ export default function Playground() {
     (state: RootState) => state.treeReducer.activeTab,
   );
   useShortcuts();
+
+  // very very bad temporary fix for syncing position 'fixed', need to find another way
+  syncCSSPosition();
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {

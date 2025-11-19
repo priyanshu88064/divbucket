@@ -713,7 +713,7 @@ export default function ListOfProp({
             <div className={styles.sizesiwrap}>
               <TextInput
                 value={styleMap.position || "static"}
-                units={["static", "relative", "absolute"]}
+                units={["static", "relative", "absolute", "fixed"]}
                 onChange={(value) => UpdateStyle("position", value)}
                 isSelectOnly={true}
               />
@@ -730,24 +730,28 @@ export default function ListOfProp({
                   />
                 </div>
               </div>
-              <div className={styles.bg0}>
-                <div className={styles.bg0name}>Right</div>
-                <div className={styles.sizesiwrap}>
-                  <TextInput
-                    value={(styleMap.right as string) || "auto"}
-                    onChange={(value) => UpdateStyle("right", value)}
-                  />
-                </div>
-              </div>
-              <div className={styles.bg0}>
-                <div className={styles.bg0name}>Bottom</div>
-                <div className={styles.sizesiwrap}>
-                  <TextInput
-                    value={(styleMap.bottom as string) || "auto"}
-                    onChange={(value) => UpdateStyle("bottom", value)}
-                  />
-                </div>
-              </div>
+              {styleMap.position !== "fixed" && (
+                <>
+                  <div className={styles.bg0}>
+                    <div className={styles.bg0name}>Right</div>
+                    <div className={styles.sizesiwrap}>
+                      <TextInput
+                        value={(styleMap.right as string) || "auto"}
+                        onChange={(value) => UpdateStyle("right", value)}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.bg0}>
+                    <div className={styles.bg0name}>Bottom</div>
+                    <div className={styles.sizesiwrap}>
+                      <TextInput
+                        value={(styleMap.bottom as string) || "auto"}
+                        onChange={(value) => UpdateStyle("bottom", value)}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
               <div className={styles.bg0}>
                 <div className={styles.bg0name}>Left</div>
                 <div className={styles.sizesiwrap}>
