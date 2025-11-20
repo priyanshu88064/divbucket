@@ -78,7 +78,7 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      if (state.dataMap[payload.parent].unit) return;
+      if (state.dataMap[payload.parent]?.unit) return;
       state.tree[payload.parent].push(Number(payload.child));
       state.tree[payload.child] = state.tree[payload.child] || [];
     },
