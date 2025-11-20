@@ -18,6 +18,11 @@ export function syncCSSPosition() {
         document.getElementById("node-root") as HTMLDivElement
       ).getBoundingClientRect();
 
+      console.log(
+        document.getElementById("node-root"),
+        rootNodePosition.current,
+      );
+
       const syncEntireTree = (id: number) => {
         syncPositionById(id);
         tree[id].map((child) => syncEntireTree(child));
@@ -45,7 +50,7 @@ export function syncCSSPosition() {
     let node = document.getElementById("node-" + id);
     if (!node || !rootNodePosition.current) return;
 
-    if (node.style.position === "fixed") {
+    if (node.style.position === "fixed" && rootNodePosition.current.top > 0) {
       node.style.transform = `translate(${Math.floor(rootNodePosition.current.left)}px, ${Math.floor(rootNodePosition.current.top)}px)`;
       node.style.width = `${Math.floor(rootNodePosition.current.width)}px`;
     }

@@ -18,7 +18,7 @@ export default function Playground() {
   );
   useShortcuts();
 
-  // very very bad temporary fix for syncing position 'fixed', need to find another way
+  // bad ;( bad bad temporary fix for syncing position 'fixed'
   syncCSSPosition();
 
   useEffect(() => {
