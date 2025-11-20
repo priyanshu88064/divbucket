@@ -50,8 +50,11 @@ export function syncCSSPosition() {
     let node = document.getElementById("node-" + id);
     if (!node || !rootNodePosition.current) return;
 
-    if (node.style.position === "fixed" && rootNodePosition.current.top > 0) {
-      node.style.transform = `translate(${Math.floor(rootNodePosition.current.left)}px, ${Math.floor(rootNodePosition.current.top)}px)`;
+    if (node.style.position === "fixed") {
+      if (rootNodePosition.current.top > 0)
+        node.style.transform = `translate(${Math.floor(rootNodePosition.current.left)}px, ${Math.floor(rootNodePosition.current.top)}px)`;
+      else
+        node.style.transform = `translateX(${Math.floor(rootNodePosition.current.left)}px)`;
       node.style.width = `${Math.floor(rootNodePosition.current.width)}px`;
     }
   };
