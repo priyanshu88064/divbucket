@@ -54,7 +54,7 @@ export default function NodeRenderer({
     id: type === "root" ? `node-root` : `node-${id}`,
     "data-id": id,
     "data-type": type,
-    style: { ...styleMap, ...dim },
+    style: { borderStyle: "none", ...styleMap, ...dim },
     onClick: (e: any) => {
       e.preventDefault();
       e.stopPropagation();

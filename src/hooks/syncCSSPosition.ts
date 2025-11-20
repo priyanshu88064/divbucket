@@ -18,11 +18,6 @@ export function syncCSSPosition() {
         document.getElementById("node-root") as HTMLDivElement
       ).getBoundingClientRect();
 
-      console.log(
-        document.getElementById("node-root"),
-        rootNodePosition.current,
-      );
-
       const syncEntireTree = (id: number) => {
         syncPositionById(id);
         tree[id].map((child) => syncEntireTree(child));
