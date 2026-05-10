@@ -16,14 +16,24 @@ import type { RootState } from "@core/state/store";
 import { useGenerateCode } from "@core/hooks/useGenerateCode";
 import { preview } from "@core/state/reducers/previewReducer";
 import { createPortal } from "react-dom";
+import {
+  detectCanvasViewportPreset,
+  resolveEffectiveViewportWidth,
+} from "@core/hooks/canvasSession";
 
 export default () => {
   const activePageId = useSelector(
     (state: RootState) => state.treeReducer.activePageId,
   );
+  const activeRequestedWidth = useSelector((state: RootState) => {
+    if (!activePageId) return "100%";
+    return state.treeReducer.nodeStyleMap[activePageId].default.width as
+      | string
+      | undefined;
+  });
   const [isCode, setIsCode] = useState(false);
-  const { generate } = useGenerateCode();
   const dispatch = useDispatch();
+  const activePreset = detectCanvasViewportPreset(activeRequestedWidth || "100%");
 
   return (
     <div className="bg-[#283037] text-white h-[30px] flex items-center justify-between border-b border-gray-600 z-[5]">
@@ -50,11 +60,12 @@ export default () => {
         <div
           onClick={() => {
             if (!activePageId) return;
-            const pageSrc = generate({
-              tab: activePageId,
-              isInternalStyleSheet: true,
-            }).html;
-            dispatch(preview({ pageSrc }));
+            dispatch(
+              preview({
+                pageId: activePageId,
+                viewportPreset: activePreset,
+              }),
+            );
           }}
           className={`px-5 py-1 mx-2 flex items-center gap-2 rounded-sm cursor-pointer border border-transparent hover:border-blue-400 active:bg-hoverblue`}
         >
@@ -183,25 +194,20 @@ const WidthBox = () => {
   const activePageId = useSelector(
     (state: RootState) => state.treeReducer.activePageId,
   );
-  const maxWidth = useSelector((state: RootState) =>
-    Math.floor(state.treeReducer.bgContentRect?.width - 8),
-  ); // 8 for resizebar
-  const width = useSelector((state: RootState) => {
-    if (!activePageId) return;
-    if (state.treeReducer.nodeStyleMap[activePageId].default.width === "100%")
-      return maxWidth;
-    return Math.min(
-      maxWidth,
-      Math.max(
-        350,
-        Number(
-          (
-            state.treeReducer.nodeStyleMap[activePageId].default.width as string
-          ).split("p")[0],
-        ),
-      ),
-    );
+  const availableWidth = useSelector((state: RootState) =>
+    Math.floor(state.treeReducer.bgContentRect?.width || 0),
+  );
+  const requestedWidth = useSelector((state: RootState) => {
+    if (!activePageId) return "100%";
+    return state.treeReducer.nodeStyleMap[activePageId].default.width as
+      | string
+      | undefined;
   });
+  const width = resolveEffectiveViewportWidth({
+    requestedWidth,
+    availableWidth,
+  });
+  const preset = detectCanvasViewportPreset(requestedWidth);
   const dispatch = useDispatch();
 
   if (!width) {
@@ -214,32 +220,34 @@ const WidthBox = () => {
         <div
           onClick={() => dispatch(updateRootWidth({ width: "425px" }))}
           title="mobile"
-          className={`${styles.d0} ${width <= 425 && styles.active}`}
+          className={`${styles.d0} ${preset === "mobile" && styles.active}`}
         >
           <FaMobileAlt size={12} />
         </div>
         <div
           onClick={() => dispatch(updateRootWidth({ width: "768px" }))}
           title="tablet"
-          className={`${styles.d0} ${width > 425 && width <= 768 && styles.active}`}
+          className={`${styles.d0} ${preset === "tablet" && styles.active}`}
         >
           <FaTabletAlt size={12} />
         </div>
         <div
           onClick={() => dispatch(updateRootWidth({ width: "100%" }))}
           title="PC"
-          className={`${styles.d0} ${width > 768 && styles.active}`}
+          className={`${styles.d0} ${preset === "desktop" && styles.active}`}
         >
           <FaLaptop size={13} />
         </div>
       </div>
       <div className={styles.width}>
         <div>
-          {width <= 425
+          {preset === "mobile"
             ? "Mobile"
-            : width > 425 && width <= 768
+            : preset === "tablet"
               ? "Tablet"
-              : "Laptop"}
+              : preset === "desktop"
+                ? "Laptop"
+                : "Custom"}
         </div>
         {width}px
       </div>

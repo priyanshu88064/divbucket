@@ -47,8 +47,8 @@ export default function ElementsTab() {
           {registryElementItems.map((item) => (
             <div
               key={`item-elements-${item.id}`}
-              draggable
-              data-type={item.id}
+              data-canvas-drag-source="palette"
+              data-canvas-template-type={item.id}
               className="flex-1 bg-[#333C46] text-[var(--text_0)] cursor-grab rounded-md shadow-lg py-4 flex gap-2 flex-col justify-center items-center border border-gray-600"
             >
               {item.icon}
@@ -66,8 +66,8 @@ export default function ElementsTab() {
           {registryLayoutItems.map((item) => (
             <div
               key={`item-layout-${item.id}`}
-              draggable
-              data-type={item.id}
+              data-canvas-drag-source="palette"
+              data-canvas-template-type={item.id}
               className="flex-1 bg-[#333C46] text-[var(--text_0)] cursor-grab rounded-md shadow-lg py-4 flex gap-2 flex-col justify-center items-center border border-gray-600"
             >
               {item.icon}

@@ -1,175 +1,403 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "@core/utils/Resizable/resizable.module.css";
 import type { AppDispatch } from "@core/state/store";
-import { createTemplate } from "@core/utils/template";
+import { createTemplate, instantiateTemplate } from "@core/utils/template";
 import { editorRegistry } from "@core/kernel/bootstrap";
 import { moveNode } from "@core/state/reducers/treeReducer";
 import { resolveCanvasPlacement } from "@core/editor/dragPlacement";
 import { canPlaceChildKindAtTarget } from "@core/editor/constraints";
 import { clearDragState, setDragState } from "./useDragState";
-import type { NodeKind } from "@core/types/document";
+import type { NodeKind, PresetId } from "@core/types/document";
 import { selectDocumentState } from "@core/state/selectors/treeSelectors";
 import { useRenderCounter } from "./useRenderCounter";
+import { resolveCanvasMode } from "@core/types/canvas";
+import { IFRAME_SURFACE_ID, LEGACY_SURFACE_ID } from "@core/types/canvas";
+import {
+  getSurfaceElementFromPoint,
+  getSurfaceWindow,
+  translateParentPointToSurfaceViewport,
+  translateSurfacePointToParentViewport,
+  translateSurfaceRectToParentViewport,
+} from "./useNodeMeasurements";
+import { setCanvasFocused } from "./canvasSession";
+
+interface DragPointerPoint {
+  x: number;
+  y: number;
+}
+
+type RuntimeSource =
+  | {
+      kind: "node";
+      nodeId: number;
+      label: string;
+      draggedKind: NodeKind | null;
+    }
+  | {
+      kind: "palette";
+      templateType: string;
+      label: string;
+      draggedKind: NodeKind | null;
+    };
+
+interface DragRuntimeState {
+  source: RuntimeSource;
+}
+
+interface DragSessionListeners {
+  parentMove: (event: MouseEvent) => void;
+  parentUp: (event: MouseEvent) => void;
+  iframeMove: ((event: MouseEvent) => void) | null;
+  iframeUp: ((event: MouseEvent) => void) | null;
+  iframeWindow: Window | null;
+}
 
 export function useDrag() {
   useRenderCounter("useDrag");
   const dispatch = useDispatch<AppDispatch>();
   const treeState = useSelector(selectDocumentState);
-  const draggedNodeRef = useRef<HTMLDivElement | null>(null);
-  const draggedWrapperRef = useRef<HTMLDivElement | null>(null);
-  const dragTargetRef = useRef<{
-    targetId: number;
-    placement: "before" | "after" | "inside";
-  } | null>(null);
+  const dragRuntimeRef = useRef<DragRuntimeState | null>(null);
+  const sessionListenersRef = useRef<DragSessionListeners | null>(null);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    const dragSource = (e.target as HTMLElement).closest(
-      "[data-id], [data-type]",
-    ) as HTMLDivElement | null;
-    if (!dragSource) return;
-    draggedNodeRef.current = dragSource;
-    setDragState({ isDragging: true });
+  const resolveDraggedKindForTemplate = (templateType: string) => {
+    const nodeDefinition = editorRegistry.getNodeType(templateType as NodeKind);
+    if (nodeDefinition) return templateType as NodeKind;
 
-    // dummy div for creating drag image
-    const draggedWrapper = document.createElement("div");
-    const draggedImage = document.createElement("div");
-    draggedWrapper.classList.add(styles.dragwrapper);
-    draggedImage.classList.add(styles.dragimage);
-    draggedImage.innerText = dragSource.textContent || "";
-    draggedWrapper.appendChild(draggedImage);
-    document.body.appendChild(draggedWrapper);
-    e.dataTransfer.setDragImage(draggedImage, -20, -20);
-
-    draggedWrapperRef.current = draggedWrapper;
+    try {
+      const template = instantiateTemplate({
+        type: templateType as PresetId,
+        treeState,
+        registry: editorRegistry,
+      });
+      return template.nodeRecordMap[template.rootId]?.type || null;
+    } catch {
+      return null;
+    }
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const resolveRuntimeSource = (
+    target: EventTarget | null,
+  ): RuntimeSource | null => {
+    if (!(target instanceof Element)) return null;
 
-    const targetElement = (e.target as HTMLElement).closest(
+    const paletteSource = target.closest(
+      "[data-canvas-drag-source='palette'][data-canvas-template-type]",
+    ) as HTMLElement | null;
+    if (paletteSource) {
+      const templateType = paletteSource.dataset.canvasTemplateType;
+      if (!templateType) return null;
+      return {
+        kind: "palette",
+        templateType,
+        label: (paletteSource.textContent || templateType).trim(),
+        draggedKind: resolveDraggedKindForTemplate(templateType),
+      };
+    }
+
+    const nodeSource = target.closest(
+      "[data-canvas-drag-source='node'][data-canvas-node-id]",
+    ) as HTMLElement | null;
+    if (nodeSource) {
+      const rawNodeId = nodeSource.dataset.canvasNodeId;
+      if (!rawNodeId) return null;
+      const nodeId = Number(rawNodeId);
+      const nodeRecord = treeState.nodeRecordMap[nodeId];
+      if (!nodeRecord) return null;
+      return {
+        kind: "node",
+        nodeId,
+        label: (nodeSource.textContent || nodeRecord.name || nodeRecord.type).trim(),
+        draggedKind: nodeRecord.type,
+      };
+    }
+
+    return null;
+  };
+
+  const getCanvasSurfaceId = () =>
+    resolveCanvasMode() === "iframe" ? IFRAME_SURFACE_ID : LEGACY_SURFACE_ID;
+
+  const resolveTargetAtPoint = ({
+    pointer,
+    source,
+  }: {
+    pointer: DragPointerPoint;
+    source: RuntimeSource;
+  }) => {
+    const draggedKind = source.draggedKind;
+    if (!draggedKind) return null;
+
+    const canvasSurfaceId = getCanvasSurfaceId();
+    const surfaceElement = getSurfaceElementFromPoint({
+      surfaceId: canvasSurfaceId,
+      parentPoint: pointer,
+    });
+    const targetElement = surfaceElement?.closest(
       "[data-id][data-type]",
     ) as HTMLElement | null;
     const targetId = targetElement?.getAttribute("data-id");
-    const targetType = targetElement?.getAttribute(
-      "data-type",
-    ) as NodeKind | null;
-    const draggedId = draggedNodeRef.current?.getAttribute("data-id");
-    const draggedType = draggedId
-      ? treeState.nodeRecordMap[Number(draggedId)]?.type
-      : (draggedNodeRef.current?.getAttribute("data-type") as NodeKind | null);
+    const targetType = targetElement?.getAttribute("data-type") as NodeKind | null;
+    const draggedNodeId = source.kind === "node" ? source.nodeId : null;
 
     if (
       !targetElement ||
       !targetId ||
       !targetType ||
-      !draggedType ||
-      draggedId === targetId
+      (draggedNodeId !== null && draggedNodeId === Number(targetId))
     ) {
-      dragTargetRef.current = null;
-      setDragState({ indicator: null });
-      return;
+      return null;
     }
 
-    const rect = targetElement.getBoundingClientRect();
+    const targetRect = targetElement.getBoundingClientRect();
+    const localPointer = translateParentPointToSurfaceViewport({
+      surfaceId: canvasSurfaceId,
+      point: pointer,
+    });
     const referenceNodeId = Number(targetId);
     const canDropInside = canPlaceChildKindAtTarget({
       state: treeState,
-      childKind: draggedType,
+      childKind: draggedKind,
       target: {
         referenceNodeId,
         placement: "inside",
       },
     });
+
     const resolved = resolveCanvasPlacement({
-      x: e.clientX,
-      y: e.clientY,
-      rect,
+      x: localPointer.x,
+      y: localPointer.y,
+      rect: targetRect,
       canDropInside,
       hideInsideIndicator: targetType === "core:root",
     });
 
-    if (
-      !canPlaceChildKindAtTarget({
-        state: treeState,
-        childKind: draggedType,
-        target: {
-          referenceNodeId,
-          placement: resolved.placement,
-        },
-      })
-    ) {
-      dragTargetRef.current = null;
-      setDragState({ indicator: null });
-      return;
-    }
+    const canPlaceAtResolvedTarget = canPlaceChildKindAtTarget({
+      state: treeState,
+      childKind: draggedKind,
+      target: {
+        referenceNodeId,
+        placement: resolved.placement,
+      },
+    });
+    if (!canPlaceAtResolvedTarget) return null;
 
-    dragTargetRef.current = {
-      targetId: referenceNodeId,
-      placement: resolved.placement,
-    };
-    const nextIndicator = resolved.indicator
-      ? { ...resolved.indicator, placement: resolved.placement }
+    const translatedIndicator = resolved.indicator
+      ? translateSurfaceRectToParentViewport({
+          surfaceId: canvasSurfaceId,
+          rect: resolved.indicator,
+        })
       : null;
-    setDragState({ indicator: nextIndicator });
+
+    return {
+      target: {
+        targetId: referenceNodeId,
+        placement: resolved.placement,
+      },
+      indicator: translatedIndicator
+        ? {
+            ...translatedIndicator,
+            placement: resolved.placement,
+          }
+        : null,
+    };
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const updateDragPointer = ({
+    pointer,
+    source,
+  }: {
+    pointer: DragPointerPoint;
+    source: RuntimeSource;
+  }) => {
+    const resolvedTarget = resolveTargetAtPoint({
+      pointer,
+      source,
+    });
+    setDragState({
+      isDragging: true,
+      source:
+        source.kind === "node"
+          ? {
+              kind: "node",
+              nodeId: source.nodeId,
+              label: source.label,
+            }
+          : {
+              kind: "palette",
+              templateType: source.templateType,
+              label: source.label,
+            },
+      pointer,
+      ghost: {
+        label: source.label,
+        x: pointer.x,
+        y: pointer.y,
+      },
+      target: resolvedTarget?.target || null,
+      indicator: resolvedTarget?.indicator || null,
+    });
+  };
+
+  const cleanupListeners = () => {
+    const listeners = sessionListenersRef.current;
+    if (!listeners) return;
+    window.removeEventListener("mousemove", listeners.parentMove);
+    window.removeEventListener("mouseup", listeners.parentUp);
+    if (
+      listeners.iframeWindow &&
+      listeners.iframeWindow !== window &&
+      listeners.iframeMove &&
+      listeners.iframeUp
+    ) {
+      listeners.iframeWindow.removeEventListener(
+        "mousemove",
+        listeners.iframeMove,
+      );
+      listeners.iframeWindow.removeEventListener("mouseup", listeners.iframeUp);
+    }
+    sessionListenersRef.current = null;
+  };
+
+  const cleanupDragSession = () => {
+    cleanupListeners();
+    dragRuntimeRef.current = null;
+    clearDragState();
+  };
+
+  const handlePointerDownCapture = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    if (dragRuntimeRef.current) cleanupDragSession();
+    const source = resolveRuntimeSource(e.target);
+    if (!source) return;
+
     e.preventDefault();
     e.stopPropagation();
-    if (!draggedNodeRef.current) return;
+    setCanvasFocused(getCanvasSurfaceId());
 
-    const dragTarget = dragTargetRef.current;
-    if (!dragTarget) {
-      cleanup();
-      return;
-    }
-    const draggedId =
-      draggedNodeRef.current.getAttribute("data-id") ||
-      createTemplate({
-        type: draggedNodeRef.current.getAttribute("data-type") as string,
+    dragRuntimeRef.current = {
+      source,
+    };
+
+    const startPoint = { x: e.clientX, y: e.clientY };
+    updateDragPointer({
+      pointer: startPoint,
+      source,
+    });
+
+    const handleMove = (event: MouseEvent) => {
+      const runtime = dragRuntimeRef.current;
+      if (!runtime) return;
+      updateDragPointer({
+        pointer: { x: event.clientX, y: event.clientY },
+        source: runtime.source,
+      });
+    };
+    const handleMoveFromIframe = (event: MouseEvent) => {
+      const runtime = dragRuntimeRef.current;
+      if (!runtime) return;
+      const parentPoint = translateSurfacePointToParentViewport({
+        surfaceId: IFRAME_SURFACE_ID,
+        point: {
+          x: event.clientX,
+          y: event.clientY,
+        },
+      });
+      updateDragPointer({
+        pointer: parentPoint,
+        source: runtime.source,
+      });
+    };
+    const commitDrop = (parentPoint: DragPointerPoint) => {
+      const runtime = dragRuntimeRef.current;
+      if (!runtime) {
+        cleanupDragSession();
+        return;
+      }
+      const target = resolveTargetAtPoint({
+        pointer: parentPoint,
+        source: runtime.source,
+      });
+      if (!target) {
+        cleanupDragSession();
+        return;
+      }
+
+      if (runtime.source.kind === "node") {
+        dispatch(
+          moveNode({
+            node: runtime.source.nodeId,
+            target: {
+              referenceNodeId: target.target.targetId,
+              placement: target.target.placement,
+            },
+          }),
+        );
+        cleanupDragSession();
+        return;
+      }
+
+      const createdNodeId = createTemplate({
+        type: runtime.source.templateType,
         dispatch,
         treeState,
         registry: editorRegistry,
       });
-
-    if (dragTarget.targetId === Number(draggedId)) return;
-
-    dispatch(
-      moveNode({
-        node: Number(draggedId),
-        target: {
-          referenceNodeId: dragTarget.targetId,
-          placement: dragTarget.placement,
+      if (createdNodeId !== target.target.targetId) {
+        dispatch(
+          moveNode({
+            node: createdNodeId,
+            target: {
+              referenceNodeId: target.target.targetId,
+              placement: target.target.placement,
+            },
+          }),
+        );
+      }
+      cleanupDragSession();
+    };
+    const handleUp = (event: MouseEvent) => {
+      event.preventDefault();
+      commitDrop({
+        x: event.clientX,
+        y: event.clientY,
+      });
+    };
+    const handleUpFromIframe = (event: MouseEvent) => {
+      const parentPoint = translateSurfacePointToParentViewport({
+        surfaceId: IFRAME_SURFACE_ID,
+        point: {
+          x: event.clientX,
+          y: event.clientY,
         },
-      }),
-    );
+      });
+      event.preventDefault();
+      commitDrop({
+        x: parentPoint.x,
+        y: parentPoint.y,
+      });
+    };
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleUp);
 
-    cleanup();
-  };
-
-  const handleDragLeave = () => {};
-
-  const handleDragEnd = () => {
-    cleanup();
-  };
-
-  const cleanup = () => {
-    draggedNodeRef.current = null;
-    if (draggedWrapperRef && draggedWrapperRef.current)
-      draggedWrapperRef.current.remove();
-    draggedWrapperRef.current = null;
-    dragTargetRef.current = null;
-    clearDragState();
+    const iframeWindow = getSurfaceWindow(IFRAME_SURFACE_ID);
+    let iframeMove: ((event: MouseEvent) => void) | null = null;
+    let iframeUp: ((event: MouseEvent) => void) | null = null;
+    if (iframeWindow && iframeWindow !== window) {
+      iframeMove = handleMoveFromIframe;
+      iframeUp = handleUpFromIframe;
+      iframeWindow.addEventListener("mousemove", handleMoveFromIframe);
+      iframeWindow.addEventListener("mouseup", handleUpFromIframe);
+    }
+    sessionListenersRef.current = {
+      parentMove: handleMove,
+      parentUp: handleUp,
+      iframeMove,
+      iframeUp,
+      iframeWindow: iframeWindow && iframeWindow !== window ? iframeWindow : null,
+    };
   };
 
   return {
-    handleDragStart,
-    handleDragEnd,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
+    handlePointerDownCapture,
   };
 }

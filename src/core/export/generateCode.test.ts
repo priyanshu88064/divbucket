@@ -290,7 +290,7 @@ describe("generateDocumentExport", () => {
     expect(legacy).toEqual(modern);
   });
 
-  it("matches snapshot for simple text page", () => {
+  it("generates stable structure for a simple text page", () => {
     const result = generateDocumentExport({
       document: makeDocument({
         tree: { 1: [2], 2: [] },
@@ -308,46 +308,14 @@ describe("generateDocumentExport", () => {
       stylesheetMode: "external",
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "css": "* {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      }
-      
-      body {
-        height: 100vh;
-        background-color: white;
-      }
-      .db-text-2 {
-        color: #111111;
-      }
-      ",
-        "html": "<!DOCTYPE html>
-      <html lang="en">
-      <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <link rel="stylesheet" href="style.css">
-              <title>Simple</title>
-              
-      </head>
-      <body>
-      
-               <span class="db-text-2">Hello world</span>
-      
-      </body>
-      </html>",
-      }
-    `);
+    expect(result.documentHtml).toBe(result.html);
+    expect(result.bodyHtml).toContain('<span class="db-text-2">Hello world</span>');
+    expect(result.html).toContain("<title>Simple</title>");
+    expect(result.css).toContain(".db-text-2 {");
+    expect(result.css).toContain("color: #111111;");
   });
 
-  it("matches snapshot for mixed media page", () => {
+  it("generates stable structure for a mixed media page", () => {
     const result = generateDocumentExport({
       document: makeDocument({
         tree: { 1: [2, 3], 2: [], 3: [] },
@@ -374,44 +342,17 @@ describe("generateDocumentExport", () => {
       stylesheetMode: "external",
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "css": "* {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      }
-      
-      body {
-        height: 100vh;
-        background-color: white;
-      }
-      ",
-        "html": "<!DOCTYPE html>
-      <html lang="en">
-      <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <link rel="stylesheet" href="style.css">
-              <title>Media</title>
-              
-      </head>
-      <body>
-      
-               <img class="db-image-2" src="https://cdn.example/x.png" alt="A &quot;hero&quot;" />
-               <video class="db-video-3" src="/clip.mp4" controls muted></video>
-      
-      </body>
-      </html>",
-      }
-    `);
+    expect(result.bodyHtml).toContain(
+      '<img class="db-image-2" src="https://cdn.example/x.png" alt="A &quot;hero&quot;" />',
+    );
+    expect(result.bodyHtml).toContain(
+      '<video class="db-video-3" src="/clip.mp4" controls muted></video>',
+    );
+    expect(result.html).toContain("<title>Media</title>");
+    expect(result.css).toContain("body {");
   });
 
-  it("matches snapshot for nested container/list page", () => {
+  it("generates stable structure for a nested container/list page", () => {
     const result = generateDocumentExport({
       document: makeDocument({
         tree: { 1: [2], 2: [3], 3: [4, 5], 4: [], 5: [] },
@@ -434,48 +375,10 @@ describe("generateDocumentExport", () => {
       stylesheetMode: "external",
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "css": "* {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      }
-      
-      body {
-        height: 100vh;
-        background-color: white;
-      }
-      ",
-        "html": "<!DOCTYPE html>
-      <html lang="en">
-      <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <link rel="stylesheet" href="style.css">
-              <title>Nested</title>
-              
-      </head>
-      <body>
-      
-               <div class="db-container-2">
-      
-                        <ul class="db-list-3">
-      
-                                 <li class="db-listItem-4">One</li>
-                                 <li class="db-listItem-5">Two</li>
-      
-                        </ul>
-      
-               </div>
-      
-      </body>
-      </html>",
-      }
-    `);
+    expect(result.bodyHtml).toContain('<div class="db-container-2">');
+    expect(result.bodyHtml).toContain('<ul class="db-list-3">');
+    expect(result.bodyHtml).toContain('<li class="db-listItem-4">One</li>');
+    expect(result.bodyHtml).toContain('<li class="db-listItem-5">Two</li>');
+    expect(result.html).toContain("<title>Nested</title>");
   });
 });

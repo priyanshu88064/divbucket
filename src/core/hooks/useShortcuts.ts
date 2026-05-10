@@ -1,35 +1,47 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { cut, copy, paste, duplicate } from "@core/state/reducers/treeReducer";
+import { cut, copy, duplicate, paste } from "@core/state/reducers/treeReducer";
+import { useCanvasFocusState } from "./canvasSession";
+import {
+  attachCanvasKeyboardListeners,
+  shouldHandleCanvasShortcut,
+} from "./canvasSession";
+import type { CanvasMode } from "@core/types/canvas";
+import { getCanvasKeyboardTargets } from "./canvasRuntime";
 
-export default function useShortcuts() {
-  const keyPressed = useRef<{
-    [key: string]: boolean;
-  }>({});
+export default function useShortcuts({
+  canvasMode = "legacy",
+  surfaceWindow,
+  surfaceDocument,
+}: {
+  canvasMode?: CanvasMode;
+  surfaceWindow?: Window | null;
+  surfaceDocument?: Document | null;
+} = {}) {
   const dispatch = useDispatch();
+  const { isCanvasFocused } = useCanvasFocusState();
 
   useEffect(() => {
-    const handlePress = (e: globalThis.KeyboardEvent) => {
-      if ((e.target as HTMLElement).tabIndex !== 1) return;
-      if (keyPressed.current["Control"]) {
-        e.preventDefault();
-        keyPressed.current = {};
-        if (e.key === "x") dispatch(cut());
-        if (e.key === "c") dispatch(copy());
-        if (e.key === "v") dispatch(paste());
-        if (e.key === "d") dispatch(duplicate());
-      }
-      keyPressed.current[e.key] = true;
-    };
-    const handleUp = (e: globalThis.KeyboardEvent) => {
-      delete keyPressed.current[e.key];
+    const handlePress = (event: KeyboardEvent) => {
+      if (!shouldHandleCanvasShortcut({ isCanvasFocused, event })) return;
+      const key = event.key.toLowerCase();
+      event.preventDefault();
+      if (key === "x") dispatch(cut());
+      if (key === "c") dispatch(copy());
+      if (key === "v") dispatch(paste());
+      if (key === "d") dispatch(duplicate());
     };
 
-    document.addEventListener("keydown", handlePress);
-    document.addEventListener("keyup", handleUp);
-    return () => {
-      document.removeEventListener("keydown", handlePress);
-      document.removeEventListener("keyup", handleUp);
-    };
-  }, []);
+    const handleUp = () => {};
+
+    return attachCanvasKeyboardListeners({
+      targets: getCanvasKeyboardTargets({
+        canvasMode,
+        surfaceWindow,
+        surfaceDocument,
+      }),
+      onKeyDown: handlePress,
+      onKeyUp: handleUp,
+    });
+  }, [canvasMode, dispatch, isCanvasFocused, surfaceDocument, surfaceWindow]);
 }

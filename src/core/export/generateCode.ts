@@ -9,18 +9,8 @@ import {
   type NodeStyleMap,
 } from "@core/types/document";
 import { editorRegistry } from "@core/kernel/bootstrap";
-
-const STR_CSS_INIT = `* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-`;
+import { PAGE_BASE_CSS } from "./pageBaseCss";
+import { assemblePageDocument } from "./pageDocumentShell";
 
 export const cssMap: { [key: string]: string } = {
   width: "width",
@@ -145,7 +135,7 @@ export const generateDocumentExport = ({
   const dataMap = document.nodeRecordMap;
   const styleMap = document.nodeStyleMap;
 
-  let css = STR_CSS_INIT;
+  let css = PAGE_BASE_CSS;
 
   const createDeclaration = (id: number, pseudoClass: CssState) => {
     const styles = styleMap[id]?.[pseudoClass];
@@ -225,27 +215,21 @@ export const generateDocumentExport = ({
   };
 
   const rootNode = dataMap[pageId];
-  const title = rootNode ? escapeText(rootNode.name) : "Document";
+  const title = rootNode ? rootNode.name : "Document";
   const body = renderNode(pageId, "");
-  const styleTag =
-    stylesheetMode === "internal"
-      ? `<style>
-${css}
-</style>`
-      : "";
+  const html = assemblePageDocument({
+    title,
+    bodyHtml: body,
+    stylesheetHref: stylesheetMode === "external" ? "style.css" : null,
+    inlineCss: stylesheetMode === "internal" ? css : null,
+  });
 
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <title>${title}</title>
-        ${styleTag}
-</head>
-${body}</html>`;
-
-  return { html, css };
+  return {
+    html,
+    documentHtml: html,
+    bodyHtml: body,
+    css,
+  };
 };
 
 export const generateCode = ({

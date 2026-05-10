@@ -23,7 +23,7 @@ const createState = (): RootState => ({
     pageOpenMap: { 1: true },
   },
   focusReducer: { tab: "0" },
-  previewReducer: { isOpen: false, pageSrc: "" },
+  previewReducer: { isOpen: false, pageId: null, viewportPreset: null },
 });
 
 describe("tree selectors", () => {

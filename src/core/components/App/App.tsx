@@ -16,12 +16,14 @@ import {
   mergeDocuments,
 } from "@core/document/loadDocument";
 import { amplifyDocument } from "@core/document/amplifyDocument";
+import useCanvasFocusGuards from "@core/hooks/useCanvasFocusGuards";
 
 export default () => {
   const isPreviewOpen = useSelector(
     (state: RootState) => state.previewReducer.isOpen,
   );
   const dispatch = useDispatch();
+  useCanvasFocusGuards();
 
   useEffect(() => {
     const initDefaultProject = async () => {

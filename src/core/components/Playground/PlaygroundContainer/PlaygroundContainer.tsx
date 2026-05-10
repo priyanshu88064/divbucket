@@ -9,21 +9,11 @@ import { useRenderCounter } from "@core/hooks/useRenderCounter";
 export default function PlaygroundContainer() {
   useRenderCounter("PlaygroundContainer");
   const activePageId = useSelector(selectActivePageId);
-  const {
-    handleDragStart,
-    handleDragEnd,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-  } = useDrag();
+  const { handlePointerDownCapture } = useDrag();
 
   return (
     <div
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-      onDragLeave={handleDragLeave}
-      onDragEnd={handleDragEnd}
+      onPointerDownCapture={handlePointerDownCapture}
       className="flex h-full w-full overflow-hidden bg-[var(--pg_bg)]"
     >
       <SideBar />
