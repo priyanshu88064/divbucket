@@ -49,7 +49,8 @@ describe("useGenerateCode", () => {
       },
       previewReducer: {
         isOpen: false,
-        pageSrc: "",
+        pageId: null,
+        viewportPreset: null,
       },
     };
 

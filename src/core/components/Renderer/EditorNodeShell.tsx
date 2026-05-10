@@ -8,22 +8,32 @@ import {
 } from "@core/state/reducers/treeReducer";
 import { useContextMenu } from "@core/hooks/useContextMenu";
 import { useResizer } from "@core/hooks/useResizer";
-import { registerNodeElement } from "@core/hooks/useNodeMeasurements";
+import {
+  registerNodeElement,
+  translateSurfacePointToParentViewport,
+} from "@core/hooks/useNodeMeasurements";
 import DocumentNodeView from "./DocumentNodeView";
+import type { EditorInteractionMode } from "@core/types/canvas";
+import { LEGACY_SURFACE_ID } from "@core/types/canvas";
 import {
   selectNodeDefaultStyleById,
   selectNodeRecordById,
 } from "@core/state/selectors/treeSelectors";
 import { useRenderCounter } from "@core/hooks/useRenderCounter";
+import { setCanvasFocused } from "@core/hooks/canvasSession";
 
 export interface EditorNodeShellProps {
   id: number;
   children?: React.ReactNode;
+  interactionMode?: EditorInteractionMode;
+  surfaceId?: string;
 }
 
 function EditorNodeShell({
   id,
   children,
+  interactionMode = "full-editor",
+  surfaceId = LEGACY_SURFACE_ID,
 }: EditorNodeShellProps) {
   useRenderCounter("EditorNodeShell");
   const dispatch = useDispatch();
@@ -34,13 +44,14 @@ function EditorNodeShell({
     selectNodeRecordById(state, id),
   );
 
-  const { dim, divRef, handleMouseDown } = useResizer({ id });
+  const { dim, divRef } = useResizer({ id });
   const { clicked, setClicked, points, setPoints } = useContextMenu();
+  const isInteractive = interactionMode === "full-editor";
 
   const type = nodeRecord.type;
 
   const registerElement = (nodeId: number, element: HTMLElement | null) => {
-    registerNodeElement(nodeId, element);
+    registerNodeElement(nodeId, element, surfaceId);
     divRef.current = element as HTMLDivElement | null;
   };
 
@@ -58,13 +69,23 @@ function EditorNodeShell({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        setCanvasFocused(surfaceId);
         dispatch(updateActiveNode({ id }));
       }}
       onContextMenu={(e) => {
+        if (!isInteractive) return;
         e.preventDefault();
         e.stopPropagation();
+        const translatedPoint = translateSurfacePointToParentViewport({
+          surfaceId,
+          point: {
+            x: e.clientX,
+            y: e.clientY,
+          },
+        });
         setClicked(true);
-        setPoints({ x: e.pageX, y: e.pageY });
+        setPoints(translatedPoint);
+        setCanvasFocused(surfaceId);
         dispatch(updateActiveNode({ id }));
       }}
       onMouseOver={(e) => {
@@ -82,15 +103,18 @@ function EditorNodeShell({
 
   if (type === "core:root") {
     return (
-      <div className="w-full flex justify-center overflow-hidden">
+      <div
+        className="w-full flex justify-center overflow-hidden"
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
         {pureNode}
 
-        <div
-          onMouseDown={(e) => handleMouseDown(e, 1)}
-          className="w-2 cursor-ew-resize bg-gray-600 hover:bg-gray-500 transition-[background]"
-        ></div>
-
-        {clicked && (
+        {isInteractive && clicked && (
           <ContextMenu id={id} points={points} setClicked={setClicked} />
         )}
       </div>
@@ -100,7 +124,7 @@ function EditorNodeShell({
   return (
     <>
       {pureNode}
-      {clicked && (
+      {isInteractive && clicked && (
         <ContextMenu id={id} points={points} setClicked={setClicked} />
       )}
     </>
