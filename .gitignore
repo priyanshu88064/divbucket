@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+feedback.txt
+work.txt
+microkernel.txt
 
 # Editor directories and files
 .vscode/*

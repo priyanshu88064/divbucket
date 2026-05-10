@@ -1,14 +1,21 @@
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "@core/kernel/bootstrap";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "@core/state/store";
 import { Analytics } from "@vercel/analytics/react";
-import Loader from "./components/Overlays/Loader/Loader";
+import Loader from "@core/components/Overlays/Loader/Loader";
 
-const App = lazy(() => import("./components/App/App"));
+const App = lazy(() => import("@app/App"));
 
-createRoot(document.getElementById("root") as HTMLElement).render(
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error('Missing root element: expected <div id="root"></div> in index.html');
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <Provider store={store}>
       <Suspense fallback={<Loader />}>
