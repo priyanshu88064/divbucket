@@ -63,6 +63,7 @@ function EditorNodeShell({
       id={id}
       type={type}
       style={{ ...styleMap, ...dim }}
+      record={nodeRecord}
       content={content}
       media={media}
       registerElement={registerElement}

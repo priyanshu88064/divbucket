@@ -1,0 +1,4 @@
+project_id = "cgbdfnxifdlefwfbhipv"
+
+[functions.health-check]
+verify_jwt = false

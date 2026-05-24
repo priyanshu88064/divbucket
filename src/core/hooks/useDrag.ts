@@ -8,7 +8,10 @@ import { resolveCanvasPlacement } from "@core/editor/dragPlacement";
 import { canPlaceChildKindAtTarget } from "@core/editor/constraints";
 import { clearDragState, setDragState } from "./useDragState";
 import type { NodeKind, PresetId } from "@core/types/document";
-import { selectDocumentState } from "@core/state/selectors/treeSelectors";
+import {
+  selectActivePageId,
+  selectDocumentState,
+} from "@core/state/selectors/treeSelectors";
 import { useRenderCounter } from "./useRenderCounter";
 import { resolveCanvasMode } from "@core/types/canvas";
 import { IFRAME_SURFACE_ID, LEGACY_SURFACE_ID } from "@core/types/canvas";
@@ -56,6 +59,7 @@ export function useDrag() {
   useRenderCounter("useDrag");
   const dispatch = useDispatch<AppDispatch>();
   const treeState = useSelector(selectDocumentState);
+  const activePageId = useSelector(selectActivePageId);
   const dragRuntimeRef = useRef<DragRuntimeState | null>(null);
   const sessionListenersRef = useRef<DragSessionListeners | null>(null);
 
@@ -139,13 +143,47 @@ export function useDrag() {
     const targetType = targetElement?.getAttribute("data-type") as NodeKind | null;
     const draggedNodeId = source.kind === "node" ? source.nodeId : null;
 
+    const resolveFallbackRootTarget = () => {
+      if (activePageId === null) return null;
+      if (draggedNodeId !== null && draggedNodeId === activePageId) return null;
+
+      const isLegacySurface = canvasSurfaceId === LEGACY_SURFACE_ID;
+      if (
+        isLegacySurface &&
+        (!surfaceElement ||
+          !(surfaceElement instanceof HTMLElement) ||
+          !surfaceElement.closest("#playground"))
+      ) {
+        return null;
+      }
+      if (!isLegacySurface && !surfaceElement) return null;
+
+      const canDropInsideActivePage = canPlaceChildKindAtTarget({
+        state: treeState,
+        childKind: draggedKind,
+        target: {
+          referenceNodeId: activePageId,
+          placement: "inside",
+        },
+      });
+      if (!canDropInsideActivePage) return null;
+
+      return {
+        target: {
+          targetId: activePageId,
+          placement: "inside" as const,
+        },
+        indicator: null,
+      };
+    };
+
     if (
       !targetElement ||
       !targetId ||
       !targetType ||
       (draggedNodeId !== null && draggedNodeId === Number(targetId))
     ) {
-      return null;
+      return resolveFallbackRootTarget();
     }
 
     const targetRect = targetElement.getBoundingClientRect();
@@ -179,7 +217,9 @@ export function useDrag() {
         placement: resolved.placement,
       },
     });
-    if (!canPlaceAtResolvedTarget) return null;
+    if (!canPlaceAtResolvedTarget) {
+      return resolveFallbackRootTarget();
+    }
 
     const translatedIndicator = resolved.indicator
       ? translateSurfaceRectToParentViewport({

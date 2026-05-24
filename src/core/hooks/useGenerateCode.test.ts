@@ -52,6 +52,15 @@ describe("useGenerateCode", () => {
         pageId: null,
         viewportPreset: null,
       },
+      workbenchReducer: {
+        leftDockOpen: true,
+        leftDockWidth: 296,
+        leftDockTool: "add",
+        rightDockOpen: true,
+        rightDockWidth: 320,
+        rightInspectorTab: "styles",
+        debugPanelOpen: false,
+      },
     };
 
     useSelectorMock.mockImplementation((selector: (s: RootState) => unknown) =>

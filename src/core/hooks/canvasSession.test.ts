@@ -76,9 +76,13 @@ describe("canvasSession helpers", () => {
     const event = {
       ctrlKey: true,
       metaKey: false,
+      shiftKey: false,
       key: "c",
       target: {} as EventTarget,
-    } as Pick<KeyboardEvent, "ctrlKey" | "metaKey" | "key" | "target">;
+    } as Pick<
+      KeyboardEvent,
+      "ctrlKey" | "metaKey" | "shiftKey" | "key" | "target"
+    >;
     expect(
       shouldHandleCanvasShortcut({
         isCanvasFocused: true,
@@ -91,5 +95,18 @@ describe("canvasSession helpers", () => {
         event,
       }),
     ).toBe(false);
+
+    expect(
+      shouldHandleCanvasShortcut({
+        isCanvasFocused: true,
+        event: { ...event, key: "z" },
+      }),
+    ).toBe(true);
+    expect(
+      shouldHandleCanvasShortcut({
+        isCanvasFocused: true,
+        event: { ...event, key: "y" },
+      }),
+    ).toBe(true);
   });
 });

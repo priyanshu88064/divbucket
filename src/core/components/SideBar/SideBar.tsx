@@ -1,65 +1,153 @@
 import { IoAddOutline, IoLayers } from "react-icons/io5";
-import { useState } from "react";
+import { useRef } from "react";
+import type { ReactNode } from "react";
 import Explorer from "./components/ExplorerTab";
 import ElementsTab from "./components/ElementsTab";
-import { VscDebug } from "react-icons/vsc";
 import StatsForNerds from "../StatsForNerds/StatsForNerds";
+import { LuPanelLeft, LuPanelLeftClose } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@core/state/store";
+import {
+  LEFT_DOCK_MAX_WIDTH,
+  LEFT_DOCK_MIN_WIDTH,
+  setLeftDockOpen,
+  setLeftDockTool,
+  setLeftDockWidth,
+  toggleLeftDockOpen,
+  type LeftDockTool,
+} from "@core/state/reducers/workbenchReducer";
 
-const tabList = [
+const tabList: Array<{
+  id: LeftDockTool;
+  label: string;
+  icon: ReactNode;
+}> = [
   {
-    id: 0,
+    id: "add",
+    label: "Add",
     icon: <IoAddOutline size={18} />,
   },
   {
-    id: 1,
+    id: "navigator",
+    label: "Navigator",
     icon: <IoLayers size={16} />,
   },
 ];
 
 export default () => {
-  const [tab, setTab] = useState<number | null>(0);
-  const [isStatsForNerds, setIsStatsForNerds] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const leftDockOpen = useSelector(
+    (state: RootState) => state.workbenchReducer.leftDockOpen,
+  );
+  const leftDockTool = useSelector(
+    (state: RootState) => state.workbenchReducer.leftDockTool,
+  );
+  const leftDockWidth = useSelector(
+    (state: RootState) => state.workbenchReducer.leftDockWidth,
+  );
+  const debugPanelOpen = useSelector(
+    (state: RootState) => state.workbenchReducer.debugPanelOpen,
+  );
+  const resizingRef = useRef(false);
 
-  const handleTabClick = (ind: number) => {
-    if (tab === ind) setTab(null);
-    else setTab(ind);
+  const handleTabClick = (tool: LeftDockTool) => {
+    if (!leftDockOpen) {
+      dispatch(setLeftDockOpen({ isOpen: true }));
+      dispatch(setLeftDockTool({ tool }));
+      return;
+    }
+    if (leftDockTool === tool) {
+      dispatch(toggleLeftDockOpen());
+      return;
+    }
+    dispatch(setLeftDockTool({ tool }));
+  };
+
+  const handleResizeStart = (event: React.PointerEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    resizingRef.current = true;
+    const startX = event.clientX;
+    const startWidth = leftDockWidth;
+
+    const onPointerMove = (moveEvent: PointerEvent) => {
+      if (!resizingRef.current) return;
+      const nextWidth = Math.min(
+        LEFT_DOCK_MAX_WIDTH,
+        Math.max(LEFT_DOCK_MIN_WIDTH, startWidth + (moveEvent.clientX - startX)),
+      );
+      dispatch(setLeftDockWidth({ width: nextWidth }));
+    };
+
+    const onPointerUp = () => {
+      resizingRef.current = false;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+    };
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
   };
 
   return (
     <>
-      <div className={`h-full text-white flex select-none relative z-[10]`}>
-        <div className="w-12 bg-[#1B2228] h-full p-2 flex flex-col gap-2 border-r border-gray-600">
-          {tabList.map((_tab, ind) => (
+      <div className="h-full text-white flex select-none relative z-[10] border-r border-[var(--wb_border)]">
+        <div className="w-14 bg-[var(--wb_surface_0)] h-full p-2 flex flex-col gap-2">
+          {tabList.map((toolTab) => (
             <div
-              key={"_tab-" + ind}
-              onClick={() => handleTabClick(ind)}
+              key={toolTab.id}
+              title={toolTab.label}
+              onClick={() => handleTabClick(toolTab.id)}
               className={`
-              flex items-center justify-center aspect-square rounded-md cursor-pointer [&>*]:text-gray-300 border border-transparent hover:border-blue-400 active:bg-hoverblue
-              ${tab === ind ? "bg-[#323A43] [&>*]:text-white" : ""}
+              flex items-center justify-center aspect-square rounded-md cursor-pointer border border-transparent
+              text-[var(--wb_text_muted)] hover:text-[var(--wb_text)] hover:border-[var(--wb_border_highlight)]
+              ${leftDockOpen && leftDockTool === toolTab.id ? "bg-[var(--wb_surface_2)] border-[var(--wb_border)] text-[var(--wb_text)]" : ""}
             `}
             >
-              {_tab.icon}
+              {toolTab.icon}
             </div>
           ))}
-          <div className="mt-auto">
-            <div
-              title="Stats for nerds"
-              onClick={() => setIsStatsForNerds((f) => !f)}
-              className={`flex items-center justify-center aspect-square rounded-md cursor-pointer [&>*]:text-white border border-transparent hover:border-blue-400 active:bg-hoverblue`}
-            >
-              <VscDebug size={20} />
-            </div>
+          <div
+            title={leftDockOpen ? "Collapse panel" : "Expand panel"}
+            onClick={() => dispatch(toggleLeftDockOpen())}
+            className="flex items-center justify-center aspect-square rounded-md cursor-pointer border border-transparent text-[var(--wb_text_muted)] hover:text-[var(--wb_text)] hover:border-[var(--wb_border_highlight)]"
+          >
+            {leftDockOpen ? (
+              <LuPanelLeftClose size={16} />
+            ) : (
+              <LuPanelLeft size={16} />
+            )}
           </div>
         </div>
-        {tab !== null && (
-          <div className="w-[250px] bg-[#283037] text-xs flex flex-col">
-            {tab === 0 ? <ElementsTab /> : tab == 1 ? <Explorer /> : <></>}
+
+        {leftDockOpen && (
+          <div
+            style={{ width: leftDockWidth }}
+            className="relative bg-[var(--wb_surface_1)] text-xs flex flex-col"
+          >
+            <div className="h-10 px-4 border-b border-[var(--wb_border)] flex items-center justify-between uppercase tracking-[0.08em] text-[10px] text-[var(--wb_text_muted)]">
+              <div>{leftDockTool === "add" ? "Add Elements" : "Navigator"}</div>
+              <button
+                onClick={() => dispatch(toggleLeftDockOpen())}
+                className="text-[var(--wb_text_muted)] hover:text-[var(--wb_text)]"
+                type="button"
+              >
+                <LuPanelLeftClose size={14} />
+              </button>
+            </div>
+            <div className="flex-1 min-h-0">
+              {leftDockTool === "add" ? <ElementsTab /> : <Explorer />}
+            </div>
+            <div
+              onPointerDown={handleResizeStart}
+              className="absolute top-0 right-0 h-full w-1 cursor-ew-resize bg-transparent hover:bg-[var(--wb_border_highlight)]"
+            />
           </div>
         )}
       </div>
 
       {/* place it somewhere better */}
-      {isStatsForNerds && <StatsForNerds />}
+      {debugPanelOpen && <StatsForNerds />}
     </>
   );
 };

@@ -19,6 +19,7 @@ export interface NodeRendererProps {
   id: number;
   type: NodeKind;
   style: CSSProperties;
+  record?: NodeRecord;
   content?: string;
   media?: {
     src?: string;

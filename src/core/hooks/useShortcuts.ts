@@ -1,6 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { cut, copy, duplicate, paste } from "@core/state/reducers/treeReducer";
+import {
+  cut,
+  copy,
+  duplicate,
+  paste,
+  redo,
+  undo,
+} from "@core/state/reducers/treeReducer";
 import { useCanvasFocusState } from "./canvasSession";
 import {
   attachCanvasKeyboardListeners,
@@ -30,6 +37,9 @@ export default function useShortcuts({
       if (key === "c") dispatch(copy());
       if (key === "v") dispatch(paste());
       if (key === "d") dispatch(duplicate());
+      if (key === "z" && event.shiftKey) dispatch(redo());
+      if (key === "z" && !event.shiftKey) dispatch(undo());
+      if (key === "y") dispatch(redo());
     };
 
     const handleUp = () => {};

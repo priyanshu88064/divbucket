@@ -106,13 +106,16 @@ export const shouldHandleCanvasShortcut = ({
   event,
 }: {
   isCanvasFocused: boolean;
-  event: Pick<KeyboardEvent, "ctrlKey" | "metaKey" | "key" | "target">;
+  event: Pick<
+    KeyboardEvent,
+    "ctrlKey" | "metaKey" | "shiftKey" | "key" | "target"
+  >;
 }) => {
   if (!isCanvasFocused) return false;
   if (!event.ctrlKey && !event.metaKey) return false;
   if (isEditableEventTarget(event.target as EventTarget)) return false;
   const key = event.key.toLowerCase();
-  return ["x", "c", "v", "d"].includes(key);
+  return ["x", "c", "v", "d", "z", "y"].includes(key);
 };
 
 const parsePx = (width: string | undefined | null) => {
@@ -140,7 +143,7 @@ export const resolveEffectiveViewportWidth = ({
   requestedWidth: string | undefined | null;
   availableWidth: number;
 }) => {
-  const safeAvailableWidth = Math.max(1, Math.floor(availableWidth));
+  const safeAvailableWidth = Math.max(0, Math.floor(availableWidth));
   if (requestedWidth === "100%") return safeAvailableWidth;
 
   const px = parsePx(requestedWidth);

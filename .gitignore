@@ -7,6 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.env*
+
+# Supabase
+supabase/branches
+supbase/.temp
+
+# dotenvx
+supabse/.env.keys
+supabase/.env.local
+supabase/.env.*.local
+
+
 node_modules
 dist
 dist-ssr

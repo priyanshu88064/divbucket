@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
+import { isDraft } from "immer";
 import type {
   BGContentRect,
   Clipboard,
@@ -49,7 +50,77 @@ const applyResult = <TValue>(
   }
 };
 
-const initialState: TreeState = {
+type TreeHistoryState = {
+  past: TreeState[];
+  future: TreeState[];
+};
+
+type TreeSliceState = TreeState & {
+  history?: TreeHistoryState;
+};
+
+const HISTORY_LIMIT = 100;
+
+const cloneValue = <TValue>(value: TValue): TValue => {
+  const source = isDraft(value) ? current(value) : value;
+  return structuredClone(source);
+};
+
+const getPresentSnapshot = (state: TreeState): TreeState => ({
+  pageIds: cloneValue(state.pageIds),
+  nodeChildrenMap: cloneValue(state.nodeChildrenMap),
+  activeNodeId: state.activeNodeId,
+  hoverNodeId: state.hoverNodeId,
+  activePageId: state.activePageId,
+  nodeStyleMap: cloneValue(state.nodeStyleMap),
+  nodeRecordMap: cloneValue(state.nodeRecordMap),
+  pageOpenMap: cloneValue(state.pageOpenMap),
+  bgContentRect: cloneValue(state.bgContentRect),
+  clipboard: cloneValue(state.clipboard),
+  cssState: state.cssState,
+});
+
+const restoreSnapshot = (state: TreeState, snapshot: TreeState) => {
+  state.pageIds = snapshot.pageIds;
+  state.nodeChildrenMap = snapshot.nodeChildrenMap;
+  state.nodeRecordMap = snapshot.nodeRecordMap;
+  state.nodeStyleMap = snapshot.nodeStyleMap;
+  state.pageOpenMap = snapshot.pageOpenMap;
+  state.activeNodeId = snapshot.activeNodeId;
+  state.hoverNodeId = snapshot.hoverNodeId;
+  state.activePageId = snapshot.activePageId;
+  state.bgContentRect = snapshot.bgContentRect;
+  state.clipboard = snapshot.clipboard;
+  state.cssState = snapshot.cssState;
+};
+
+const ensureHistory = (state: TreeSliceState): TreeHistoryState => {
+  if (!state.history) {
+    state.history = { past: [], future: [] };
+  }
+  return state.history;
+};
+
+const remember = (state: TreeSliceState, snapshot: TreeState) => {
+  const history = ensureHistory(state);
+  history.past.push(snapshot);
+  if (history.past.length > HISTORY_LIMIT) {
+    history.past.splice(0, history.past.length - HISTORY_LIMIT);
+  }
+  history.future = [];
+};
+
+const withHistory = (state: TreeSliceState, apply: () => void) => {
+  const before = getPresentSnapshot(state);
+  apply();
+  const after = getPresentSnapshot(state);
+  if (JSON.stringify(before) === JSON.stringify(after)) {
+    return;
+  }
+  remember(state, before);
+};
+
+const initialState: TreeSliceState = {
   pageIds: [],
   nodeChildrenMap: {},
   activeNodeId: null,
@@ -69,6 +140,10 @@ const initialState: TreeState = {
     copy: null,
   },
   cssState: "default",
+  history: {
+    past: [],
+    future: [],
+  },
 };
 
 const treeSlice = createSlice({
@@ -86,7 +161,9 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      applyResult(state, editorService.insertNode(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.insertNode(state, payload));
+      });
     },
     addTemplate: (
       state,
@@ -101,26 +178,19 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      applyResult(state, editorService.insertPreset(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.insertPreset(state, payload));
 
-      for (const pageId of state.pageIds) {
-        if (state.pageOpenMap[pageId] === undefined) {
-          state.pageOpenMap[pageId] = true;
+        for (const pageId of state.pageIds) {
+          if (state.pageOpenMap[pageId] === undefined) {
+            state.pageOpenMap[pageId] = true;
+          }
         }
-      }
+      });
     },
     addDocument: (state, { payload }: { payload: TreeState }) => {
-      state.pageIds = payload.pageIds;
-      state.nodeChildrenMap = payload.nodeChildrenMap;
-      state.nodeRecordMap = payload.nodeRecordMap;
-      state.nodeStyleMap = payload.nodeStyleMap;
-      state.pageOpenMap = payload.pageOpenMap;
-      state.activeNodeId = payload.activeNodeId;
-      state.hoverNodeId = payload.hoverNodeId;
-      state.activePageId = payload.activePageId;
-      state.bgContentRect = payload.bgContentRect;
-      state.clipboard = payload.clipboard;
-      state.cssState = payload.cssState;
+      restoreSnapshot(state, payload);
+      state.history = { past: [], future: [] };
     },
     deleteNode: (
       state,
@@ -132,7 +202,9 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      applyResult(state, editorService.deleteNode(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.deleteNode(state, payload));
+      });
     },
     deleteFromParent: (
       state,
@@ -144,7 +216,9 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      applyResult(state, editorService.deleteFromParent(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.deleteFromParent(state, payload));
+      });
     },
     updateActiveNode: (
       state,
@@ -195,12 +269,14 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      state.pageOpenMap[payload.pageId] = payload.isOpen;
-      if (payload.pageId !== state.activePageId) return;
-      state.activePageId =
-        state.nodeChildrenMap[-1].filter((tab) => state.pageOpenMap[tab])[0] ||
-        null;
-      state.activeNodeId = state.activePageId;
+      withHistory(state, () => {
+        state.pageOpenMap[payload.pageId] = payload.isOpen;
+        if (payload.pageId !== state.activePageId) return;
+        state.activePageId =
+          state.nodeChildrenMap[-1].filter((tab) => state.pageOpenMap[tab])[0] ||
+          null;
+        state.activeNodeId = state.activePageId;
+      });
     },
     updateStyleMap: (
       state,
@@ -208,13 +284,17 @@ const treeSlice = createSlice({
         payload,
       }: { payload: { id: number; style: CSSProperties; cssState: CssState } },
     ) => {
-      applyResult(state, editorService.updateNodeStyle(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.updateNodeStyle(state, payload));
+      });
     },
     updateDataMap: (
       state,
       { payload }: { payload: { id: number; data: NodeRecord } },
     ) => {
-      applyResult(state, editorService.updateNodeRecord(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.updateNodeRecord(state, payload));
+      });
     },
     updateRootWidth: (
       state,
@@ -226,9 +306,11 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      if (state.activePageId) {
-        state.nodeStyleMap[state.activePageId].default.width = payload.width;
-      }
+      withHistory(state, () => {
+        if (state.activePageId) {
+          state.nodeStyleMap[state.activePageId].default.width = payload.width;
+        }
+      });
     },
     updateBgContentRect: (
       state,
@@ -253,10 +335,14 @@ const treeSlice = createSlice({
       applyResult(state, editorService.updateClipboard(state, payload));
     },
     paste: (state) => {
-      applyResult(state, editorService.pasteNode(state));
+      withHistory(state, () => {
+        applyResult(state, editorService.pasteNode(state));
+      });
     },
     duplicate: (state) => {
-      applyResult(state, editorService.duplicateNode(state));
+      withHistory(state, () => {
+        applyResult(state, editorService.duplicateNode(state));
+      });
     },
     revealParent: (state) => {
       applyResult(state, editorService.selectParent(state));
@@ -272,7 +358,9 @@ const treeSlice = createSlice({
         };
       },
     ) => {
-      applyResult(state, editorService.moveNode(state, payload));
+      withHistory(state, () => {
+        applyResult(state, editorService.moveNode(state, payload));
+      });
     },
     splice: (
       state,
@@ -290,13 +378,15 @@ const treeSlice = createSlice({
         referenceNodeId: payload.referenceNode,
         placement: placementFromPos(payload.pos),
       };
-      applyResult(
-        state,
-        editorService.moveNode(state, {
-          node: payload.node,
-          target,
-        }),
-      );
+      withHistory(state, () => {
+        applyResult(
+          state,
+          editorService.moveNode(state, {
+            node: payload.node,
+            target,
+          }),
+        );
+      });
     },
     moveItem: (
       state,
@@ -314,16 +404,20 @@ const treeSlice = createSlice({
         referenceNodeId: toNumericId(payload.referenceNode),
         placement: placementFromPos(payload.pos),
       };
-      applyResult(
-        state,
-        editorService.moveNode(state, {
-          node: toNumericId(payload.node),
-          target,
-        }),
-      );
+      withHistory(state, () => {
+        applyResult(
+          state,
+          editorService.moveNode(state, {
+            node: toNumericId(payload.node),
+            target,
+          }),
+        );
+      });
     },
     cut: (state) => {
-      applyResult(state, editorService.cutNode(state));
+      withHistory(state, () => {
+        applyResult(state, editorService.cutNode(state));
+      });
     },
     copy: (state) => {
       applyResult(state, editorService.copyNode(state));
@@ -333,6 +427,20 @@ const treeSlice = createSlice({
       { payload }: { payload: { cssState: CssState } },
     ) => {
       state.cssState = payload.cssState;
+    },
+    undo: (state) => {
+      const history = ensureHistory(state);
+      const previous = history.past.pop();
+      if (!previous) return;
+      history.future.push(getPresentSnapshot(state));
+      restoreSnapshot(state, previous);
+    },
+    redo: (state) => {
+      const history = ensureHistory(state);
+      const next = history.future.pop();
+      if (!next) return;
+      history.past.push(getPresentSnapshot(state));
+      restoreSnapshot(state, next);
     },
   },
 });
@@ -360,6 +468,8 @@ export const {
   updateCssState,
   updatePageOpenStatus,
   addDocument,
+  undo,
+  redo,
 } = treeSlice.actions;
 
 export default treeSlice.reducer;

@@ -1,5 +1,6 @@
 import { createElement } from "react";
 import type { NodeRendererProps } from "@core/kernel/types";
+import { coerceInputPayload } from "../input/payload";
 
 const withCommonProps = (props: NodeRendererProps) => ({
   id: props.type === "core:root" ? "node-root" : `node-${props.id}`,
@@ -53,4 +54,28 @@ export const renderVideoNode = (props: NodeRendererProps) =>
     loop: props.media?.loop,
     muted: props.media?.muted,
     controls: props.media?.controls,
+  });
+
+export const renderInputNode = (props: NodeRendererProps) => {
+  const payload = props.record ? coerceInputPayload(props.record) : null;
+
+  return createElement("input", {
+    ...withCommonProps(props),
+    ref: (element: HTMLInputElement | null) =>
+      props.registerElement?.(props.id, element),
+    type: payload?.inputType || "text",
+    placeholder: payload?.placeholder || "",
+    value: payload?.value || "",
+    name: payload?.name || undefined,
+    required: payload?.required || false,
+    disabled: payload?.disabled || false,
+    onChange: () => undefined,
+  });
+};
+
+export const renderDividerNode = (props: NodeRendererProps) =>
+  createElement("hr", {
+    ...withCommonProps(props),
+    ref: (element: HTMLHRElement | null) =>
+      props.registerElement?.(props.id, element),
   });

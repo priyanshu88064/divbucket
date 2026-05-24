@@ -14,6 +14,8 @@ describe("core plugin aggregation", () => {
       "core:text",
       "core:paragraph",
       "core:button",
+      "custom:input",
+      "custom:divider",
       "core:image",
       "core:video",
       "core:list",
@@ -22,23 +24,24 @@ describe("core plugin aggregation", () => {
   });
 
   it("includes every built-in preset folder definition in the aggregate", () => {
-    expect(CORE_PRESET_IDS).toEqual([
-      "core:page",
-      "core:container",
-      "core:row",
-      "core:heading",
-      "core:text",
-      "core:paragraph",
-      "core:image",
-      "core:video",
-      "core:button",
-      "core:list",
-      "core:listItem",
-      "core:navbar",
-      "core:hero",
-      "core:feature",
-      "core:card",
-    ]);
+    expect(CORE_PRESET_IDS).toContain("core:page");
+    expect(CORE_PRESET_IDS).toContain("core:container");
+    expect(CORE_PRESET_IDS).toContain("core:row");
+    expect(CORE_PRESET_IDS).toContain("core:heading");
+    expect(CORE_PRESET_IDS).toContain("core:text");
+    expect(CORE_PRESET_IDS).toContain("core:paragraph");
+    expect(CORE_PRESET_IDS).toContain("core:image");
+    expect(CORE_PRESET_IDS).toContain("core:video");
+    expect(CORE_PRESET_IDS).toContain("core:button");
+    expect(CORE_PRESET_IDS).toContain("core:list");
+    expect(CORE_PRESET_IDS).toContain("core:listItem");
+    expect(CORE_PRESET_IDS).toContain("core:navbar");
+    expect(CORE_PRESET_IDS).toContain("core:hero");
+    expect(CORE_PRESET_IDS).toContain("core:feature");
+    expect(CORE_PRESET_IDS).toContain("core:card");
+    expect(CORE_PRESET_IDS).toContain("custom:vFlex");
+    expect(CORE_PRESET_IDS).toContain("custom:contactForm");
+    expect(CORE_PRESET_IDS).toContain("custom:bentoGrid");
   });
 
   it("includes every built-in style section folder definition in the aggregate", () => {

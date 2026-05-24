@@ -10,18 +10,10 @@
 }
 
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
+  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 15% -20%, #2f3f56 0%, transparent 48%),
+    radial-gradient(circle at 85% 0%, #263246 0%, transparent 40%), #0f141a;
+  color: #dde4eb;
 }
 
 :root {
@@ -34,6 +26,18 @@ body {
   --resizeblue: #c800ff;
   --hoverblue: #15539e;
   --gradient: linear-gradient(to right, #493240, #ff0099);
+  --wb_workspace: #131920;
+  --wb_canvas_bg: #0f141a;
+  --wb_canvas_bar: #151d26;
+  --wb_surface_0: #19222d;
+  --wb_surface_1: #202b37;
+  --wb_surface_2: #2b3949;
+  --wb_border: #344454;
+  --wb_border_highlight: #4f89c2;
+  --wb_text: #deebf7;
+  --wb_text_muted: #9fb1c6;
+  --wb_text_dim: #7f95ab;
+  --wb_accent: #ff9e3d;
 }
 
 ::-webkit-scrollbar {

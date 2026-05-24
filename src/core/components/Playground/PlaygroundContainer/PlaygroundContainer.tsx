@@ -14,7 +14,7 @@ export default function PlaygroundContainer() {
   return (
     <div
       onPointerDownCapture={handlePointerDownCapture}
-      className="flex h-full w-full overflow-hidden bg-[var(--pg_bg)]"
+      className="flex h-full w-full overflow-hidden bg-[var(--wb_workspace)]"
     >
       <SideBar />
       {activePageId && <Playground />}

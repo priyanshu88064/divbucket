@@ -2,6 +2,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import type { CssState } from "@core/types/document";
 
+const EMPTY_NUMBER_ARRAY: number[] = [];
+const EMPTY_STYLE_OBJECT = {};
+
 export const selectTreeState = (state: RootState) => state.treeReducer;
 
 export const selectDocumentState = createSelector(
@@ -46,12 +49,16 @@ export const selectPageIds = (state: RootState) => state.treeReducer.pageIds;
 export const selectPageOpenMap = (state: RootState) =>
   state.treeReducer.pageOpenMap;
 export const selectClipboard = (state: RootState) => state.treeReducer.clipboard;
+export const selectCanUndo = (state: RootState) =>
+  Boolean(state.treeReducer.history?.past.length);
+export const selectCanRedo = (state: RootState) =>
+  Boolean(state.treeReducer.history?.future.length);
 
 export const selectTabs = (state: RootState) =>
-  state.treeReducer.nodeChildrenMap[-1] || [];
+  state.treeReducer.nodeChildrenMap[-1] || EMPTY_NUMBER_ARRAY;
 
 export const selectNodeChildrenById = (state: RootState, nodeId: number) =>
-  state.treeReducer.nodeChildrenMap[nodeId] || [];
+  state.treeReducer.nodeChildrenMap[nodeId] || EMPTY_NUMBER_ARRAY;
 
 export const selectNodeRecordById = (state: RootState, nodeId: number) =>
   state.treeReducer.nodeRecordMap[nodeId];
@@ -60,13 +67,13 @@ export const selectNodeStyleById = (state: RootState, nodeId: number) =>
   state.treeReducer.nodeStyleMap[nodeId];
 
 export const selectNodeDefaultStyleById = (state: RootState, nodeId: number) =>
-  state.treeReducer.nodeStyleMap[nodeId]?.default || {};
+  state.treeReducer.nodeStyleMap[nodeId]?.default || EMPTY_STYLE_OBJECT;
 
 export const selectNodeStyleByIdAndState = (
   state: RootState,
   nodeId: number,
   cssState: CssState,
-) => state.treeReducer.nodeStyleMap[nodeId]?.[cssState] || {};
+) => state.treeReducer.nodeStyleMap[nodeId]?.[cssState] || EMPTY_STYLE_OBJECT;
 
 export const selectRootNames = createSelector(
   (state: RootState) => state.treeReducer.nodeRecordMap,

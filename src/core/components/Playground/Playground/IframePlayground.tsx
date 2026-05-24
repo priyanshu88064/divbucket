@@ -96,17 +96,17 @@ export default function IframePlayground({
   return (
     <div
       id="playground"
-      className="flex-[1] flex flex-col overflow-hidden"
+      className="flex-[1] flex flex-col overflow-hidden bg-white"
       onPointerDown={() => setCanvasFocused(IFRAME_SURFACE_ID)}
     >
       <div
         id="wrapper_1"
         ref={setWrapperElement}
-        className="flex-[1] flex flex-col overflow-hidden"
+        className="flex-[1] flex flex-col overflow-hidden px-5 pt-5 pb-0 md:px-6 md:pt-6 md:pb-0"
       >
         <div
           id="wrapper_2"
-          className="relative z-[1] flex-[1] flex justify-center overflow-hidden"
+          className="relative z-[1] flex min-h-full flex-[1] justify-center overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.2)]"
         >
           <iframe
             ref={setIframeElement}

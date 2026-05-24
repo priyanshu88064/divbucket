@@ -2,8 +2,10 @@ import type { NodeKind } from "@core/types/document";
 import type { EditorPlugin, NodeTypeDefinition } from "@core/kernel/types";
 import { buttonNodeDefinition } from "./button/definition";
 import { containerNodeDefinition } from "./container/definition";
+import { dividerNodeDefinition } from "./divider/definition";
 import { headingNodeDefinition } from "./heading/definition";
 import { imageNodeDefinition } from "./image/definition";
+import { inputNodeDefinition } from "./input/definition";
 import { listItemNodeDefinition } from "./listItem/definition";
 import { listNodeDefinition } from "./list/definition";
 import { paragraphNodeDefinition } from "./paragraph/definition";
@@ -20,6 +22,8 @@ export const CORE_NODE_DEFINITIONS: NodeTypeDefinition[] = [
   textNodeDefinition,
   paragraphNodeDefinition,
   buttonNodeDefinition,
+  inputNodeDefinition,
+  dividerNodeDefinition,
   imageNodeDefinition,
   videoNodeDefinition,
   listNodeDefinition,

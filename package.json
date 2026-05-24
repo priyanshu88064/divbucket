@@ -10,10 +10,16 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "test": "vitest run",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "supabase:link": "npx supabase link --project-ref cgbdfnxifdlefwfbhipv",
+    "supabase:migration:new": "npx supabase migration new",
+    "supabase:function:new": "npx supabase functions new",
+    "supabase:db:push": "npx supabase db push",
+    "supabase:function:deploy": "npx supabase functions deploy"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
+    "@supabase/supabase-js": "^2.106.1",
     "@tailwindcss/vite": "^4.1.11",
     "@vercel/analytics": "^1.5.0",
     "react": "^18.3.1",

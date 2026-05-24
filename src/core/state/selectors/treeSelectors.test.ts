@@ -24,6 +24,15 @@ const createState = (): RootState => ({
   },
   focusReducer: { tab: "0" },
   previewReducer: { isOpen: false, pageId: null, viewportPreset: null },
+  workbenchReducer: {
+    leftDockOpen: true,
+    leftDockWidth: 296,
+    leftDockTool: "add",
+    rightDockOpen: true,
+    rightDockWidth: 320,
+    rightInspectorTab: "styles",
+    debugPanelOpen: false,
+  },
 });
 
 describe("tree selectors", () => {

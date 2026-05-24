@@ -51,16 +51,16 @@ export default function LegacyPlayground({
       id="playground"
       ref={setPlaygroundElement}
       onPointerDown={() => setCanvasFocused(LEGACY_SURFACE_ID)}
-      className="flex-[1] flex flex-col overflow-hidden"
+      className="flex-[1] flex flex-col overflow-hidden bg-white"
     >
       <div
         id="wrapper_1"
         ref={setWrapperElement}
-        className={`flex-[1] flex flex-col overflow-scroll ${styles.scroller}`}
+        className={`flex-[1] flex flex-col overflow-auto px-5 pt-5 pb-0 md:px-6 md:pt-6 md:pb-0 ${styles.scroller}`}
       >
         <div
           id="wrapper_2"
-          className="relative z-[1] flex-[1] flex justify-center"
+          className="relative z-[1] flex min-h-full flex-[1] justify-center overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.2)]"
         >
           <PageTree
             rootId={activePageId}

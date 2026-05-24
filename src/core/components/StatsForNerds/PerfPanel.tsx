@@ -22,14 +22,14 @@ export default function PerfPanel() {
           <div className="text-gray-400">No samples yet</div>
         ) : (
           entries.map(([name, count]) => (
-            <>
-              <div key={`${name}-name`} className="text-gray-300 truncate">
+            <div key={name} className="contents">
+              <div className="text-gray-300 truncate">
                 {name}
               </div>
-              <div key={`${name}-count`} className="text-orange-300 text-right">
+              <div className="text-orange-300 text-right">
                 {count}
               </div>
-            </>
+            </div>
           ))
         )}
       </div>
