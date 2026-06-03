@@ -9,11 +9,15 @@ import { IFRAME_SURFACE_ID } from "@core/types/canvas";
 import NodeOverlays from "../../Overlays/NodeOverlays/NodeOverlays";
 import { PageTree } from "./PageTree";
 import { useIframeCanvas } from "./useIframeCanvas";
-import { setCanvasFocused } from "@core/hooks/canvasSession";
+import {
+  isEditableEventTarget,
+  setCanvasFocused,
+} from "@core/hooks/canvasSession";
 import { resolveEffectiveViewportWidth } from "@core/hooks/canvasSession";
 import { selectNodeDefaultStyleById } from "@core/state/selectors/treeSelectors";
 import type { RootState } from "@core/state/store";
 import useShortcuts from "@core/hooks/useShortcuts";
+import { useInlineTextEditActions } from "@core/hooks/useInlineTextEditActions";
 
 export default function IframePlayground({
   activePageId,
@@ -26,6 +30,7 @@ export default function IframePlayground({
     null,
   );
   const [availableWidth, setAvailableWidth] = useState(0);
+  const { commitEditing } = useInlineTextEditActions();
   const requestedRootWidth = useSelector((state: RootState) =>
     selectNodeDefaultStyleById(state, activePageId).width as
       | string
@@ -50,7 +55,10 @@ export default function IframePlayground({
     const contentDocument = canvasState.contentDocument;
     if (!contentDocument) return;
 
-    const onPointerDown = () => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (!isEditableEventTarget(event.target)) {
+        commitEditing();
+      }
       setCanvasFocused(IFRAME_SURFACE_ID);
     };
 
@@ -58,7 +66,7 @@ export default function IframePlayground({
     return () => {
       contentDocument.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [canvasState.contentDocument]);
+  }, [canvasState.contentDocument, commitEditing]);
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
@@ -97,7 +105,12 @@ export default function IframePlayground({
     <div
       id="playground"
       className="wb-canvas-grid-bg flex-[1] flex flex-col overflow-hidden"
-      onPointerDown={() => setCanvasFocused(IFRAME_SURFACE_ID)}
+      onPointerDown={(event) => {
+        if (!isEditableEventTarget(event.target)) {
+          commitEditing();
+        }
+        setCanvasFocused(IFRAME_SURFACE_ID);
+      }}
     >
       <div
         id="wrapper_1"

@@ -7,8 +7,12 @@ import { useMeasurementSync } from "@core/hooks/useNodeMeasurements";
 import { useRenderCounter } from "@core/hooks/useRenderCounter";
 import { PageTree } from "./PageTree";
 import { LEGACY_SURFACE_ID } from "@core/types/canvas";
-import { setCanvasFocused } from "@core/hooks/canvasSession";
+import {
+  isEditableEventTarget,
+  setCanvasFocused,
+} from "@core/hooks/canvasSession";
 import useShortcuts from "@core/hooks/useShortcuts";
+import { useInlineTextEditActions } from "@core/hooks/useInlineTextEditActions";
 
 export default function LegacyPlayground({
   activePageId,
@@ -23,6 +27,7 @@ export default function LegacyPlayground({
   );
   const [playgroundElement, setPlaygroundElement] =
     useState<HTMLDivElement | null>(null);
+  const { commitEditing } = useInlineTextEditActions();
 
   useMeasurementSync({
     surfaceId: LEGACY_SURFACE_ID,
@@ -50,7 +55,12 @@ export default function LegacyPlayground({
     <div
       id="playground"
       ref={setPlaygroundElement}
-      onPointerDown={() => setCanvasFocused(LEGACY_SURFACE_ID)}
+      onPointerDown={(event) => {
+        if (!isEditableEventTarget(event.target)) {
+          commitEditing();
+        }
+        setCanvasFocused(LEGACY_SURFACE_ID);
+      }}
       className="wb-canvas-grid-bg flex-[1] flex flex-col overflow-hidden"
     >
       <div

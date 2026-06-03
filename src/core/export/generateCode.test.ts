@@ -206,6 +206,18 @@ describe("generateDocumentExport", () => {
     );
   });
 
+  it("preserves multiline content with html line breaks", () => {
+    const result = runGenerate({
+      child: {
+        type: "core:paragraph",
+        name: "Body",
+        content: "Line one\nLine two\n\nLine four",
+      },
+    });
+
+    expect(result.html).toContain("Line one<br />Line two<br /><br />Line four");
+  });
+
   it("omits undefined/empty media attributes and emits truthy video flags only", () => {
     const imageResult = runGenerate({
       child: {

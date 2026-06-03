@@ -271,3 +271,7 @@ export interface TreeState extends EditorSessionState {
   nodeRecordMap: NodeRecordMap;
   nodeStyleMap: NodeStyleMap;
 }
+
+export const isContentNodeRecord = (
+  record: NodeRecord,
+): record is CoreContentNodeRecord => "content" in record;

@@ -4,6 +4,7 @@ import { coerceInputPayload } from "../input/payload";
 import { coerceIconPayload } from "../icon/payload";
 import IconGlyph from "../icon/IconGlyph";
 import { DEFAULT_ICON_ID } from "../icon/catalog";
+import { renderPlainTextContent } from "@core/utils/inlineText";
 
 const withCommonProps = (props: NodeRendererProps) => ({
   id: props.type === "core:root" ? "node-root" : `node-${props.id}`,
@@ -11,6 +12,7 @@ const withCommonProps = (props: NodeRendererProps) => ({
   "data-type": props.type,
   style: { borderStyle: "none", ...props.style },
   onClick: props.onClick,
+  onDoubleClick: props.onDoubleClick,
   onContextMenu: props.onContextMenu,
   onMouseOver: props.onMouseOver,
   onMouseLeave: props.onMouseLeave,
@@ -31,11 +33,34 @@ export const renderTextNode = (props: NodeRendererProps) =>
   createElement(
     "div",
     {
+      key: `${props.id}-${props.isInlineEditing ? "editing" : "readonly"}`,
       ...withCommonProps(props),
       ref: (element: HTMLDivElement | null) =>
         props.registerElement?.(props.id, element),
+      ...(props.isInlineEditing
+        ? {
+            contentEditable: true,
+            suppressContentEditableWarning: true,
+            ref: (element: HTMLDivElement | null) => {
+              props.registerElement?.(props.id, element);
+              if (props.inlineEditorRef) {
+                props.inlineEditorRef.current = element;
+              }
+            },
+            onInput: props.onInlineInput,
+            onBlur: props.onInlineBlur,
+            onKeyDown: props.onInlineKeyDown,
+            onPaste: props.onInlinePaste,
+            style: {
+              borderStyle: "none",
+              whiteSpace: "pre-wrap",
+              outline: "none",
+              ...props.style,
+            },
+          }
+        : null),
     },
-    props.content,
+    props.isInlineEditing ? undefined : renderPlainTextContent(props.content),
   );
 
 export const renderImageNode = (props: NodeRendererProps) =>

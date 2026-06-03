@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { TreeState } from "@core/types/document";
+import type {
+  CoreContentNodeRecord,
+  TreeState,
+} from "@core/types/document";
 import treeReducer, {
   addDocument,
   cut,
@@ -8,6 +11,7 @@ import treeReducer, {
   undo,
   updateActiveNode,
   updateBgContentRect,
+  updateDataMap,
   updateHoverNodeId,
   updateStyleMap,
 } from "./treeReducer";
@@ -146,5 +150,34 @@ describe("treeReducer history", () => {
     state = treeReducer(state, undo());
     expect(state.nodeChildrenMap[1]).toEqual([2]);
     expect(state.clipboard.cut).toBeNull();
+  });
+
+  it("records a single undo step for committed content updates", () => {
+    let state = treeReducer(undefined, addDocument(createTreeState()));
+    const updatedTextNode: CoreContentNodeRecord = {
+      ...(state.nodeRecordMap[2] as CoreContentNodeRecord),
+      content: "updated copy",
+    };
+    state = treeReducer(
+      state,
+      updateDataMap({
+        id: 2,
+        data: updatedTextNode,
+      }),
+    );
+
+    expect(state.nodeRecordMap[2]).toEqual({
+      type: "core:text",
+      name: "Text 1",
+      content: "updated copy",
+    });
+    expect(state.history?.past.length).toBe(1);
+
+    state = treeReducer(state, undo());
+    expect(state.nodeRecordMap[2]).toEqual({
+      type: "core:text",
+      name: "Text 1",
+      content: "hello",
+    });
   });
 });

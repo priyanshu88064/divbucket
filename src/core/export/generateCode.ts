@@ -104,6 +104,9 @@ const escapeText = (value: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 
+const escapeTextWithLineBreaks = (value: string) =>
+  escapeText(value).replaceAll("\n", "<br />");
+
 const escapeAttribute = (value: string) => escapeText(value);
 
 const appendAttribute = (attrs: string[], key: string, value: unknown) => {
@@ -214,7 +217,7 @@ export const generateDocumentExport = ({
     const attrSegment = attrs.length ? ` ${attrs.join(" ")}` : "";
     const content =
       "content" in record && typeof record.content === "string"
-        ? escapeText(record.content)
+        ? escapeTextWithLineBreaks(record.content)
         : "";
     const innerHtml = exportDefinition?.getInnerHtml?.(record) || "";
 

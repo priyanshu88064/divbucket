@@ -14,6 +14,7 @@ describe("core plugin aggregation", () => {
       "core:text",
       "core:paragraph",
       "core:button",
+      "custom:icon",
       "custom:input",
       "custom:divider",
       "core:image",
@@ -33,6 +34,7 @@ describe("core plugin aggregation", () => {
     expect(CORE_PRESET_IDS).toContain("core:image");
     expect(CORE_PRESET_IDS).toContain("core:video");
     expect(CORE_PRESET_IDS).toContain("core:button");
+    expect(CORE_PRESET_IDS).toContain("custom:icon");
     expect(CORE_PRESET_IDS).toContain("core:list");
     expect(CORE_PRESET_IDS).toContain("core:listItem");
     expect(CORE_PRESET_IDS).toContain("core:navbar");

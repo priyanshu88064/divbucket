@@ -14,10 +14,18 @@ function DocumentNodeView({
   media,
   children,
   onClick,
+  onDoubleClick,
   onContextMenu,
   onMouseOver,
   onMouseLeave,
   registerElement,
+  isInlineEditing,
+  inlineDraftContent,
+  inlineEditorRef,
+  onInlineInput,
+  onInlineBlur,
+  onInlineKeyDown,
+  onInlinePaste,
 }: DocumentNodeViewProps) {
   useRenderCounter("DocumentNodeView");
   const definition = editorRegistry.getNodeType(type);
@@ -34,10 +42,18 @@ function DocumentNodeView({
     media,
     children,
     onClick,
+    onDoubleClick,
     onContextMenu,
     onMouseOver,
     onMouseLeave,
     registerElement,
+    isInlineEditing,
+    inlineDraftContent,
+    inlineEditorRef,
+    onInlineInput,
+    onInlineBlur,
+    onInlineKeyDown,
+    onInlinePaste,
   });
 }
 

@@ -1,6 +1,10 @@
 import type {
+  ClipboardEvent,
   CSSProperties,
   ComponentType,
+  FormEvent,
+  KeyboardEvent,
+  MutableRefObject,
   MouseEvent,
   ReactNode,
 } from "react";
@@ -31,10 +35,18 @@ export interface NodeRendererProps {
   };
   children?: ReactNode;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
+  onDoubleClick?: (e: MouseEvent<HTMLElement>) => void;
   onContextMenu?: (e: MouseEvent<HTMLElement>) => void;
   onMouseOver?: (e: MouseEvent<HTMLElement>) => void;
   onMouseLeave?: (e: MouseEvent<HTMLElement>) => void;
   registerElement?: (id: number, element: HTMLElement | null) => void;
+  isInlineEditing?: boolean;
+  inlineDraftContent?: string;
+  inlineEditorRef?: MutableRefObject<HTMLElement | null>;
+  onInlineInput?: (e: FormEvent<HTMLElement>) => void;
+  onInlineBlur?: (e: FormEvent<HTMLElement>) => void;
+  onInlineKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
+  onInlinePaste?: (e: ClipboardEvent<HTMLElement>) => void;
 }
 
 export interface NodeSidebarDefinition {

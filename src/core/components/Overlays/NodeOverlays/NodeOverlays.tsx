@@ -13,11 +13,32 @@ import {
 } from "@core/state/selectors/treeSelectors";
 import { useRenderCounter } from "@core/hooks/useRenderCounter";
 import { setCanvasFocused } from "@core/hooks/canvasSession";
+import { isContentNodeRecord, isCoreContentNodeKind } from "@core/types/document";
+import { useInlineTextEditState } from "@core/hooks/inlineTextEditSession";
+import { useInlineTextEditActions } from "@core/hooks/useInlineTextEditActions";
+import { useEffect } from "react";
 
 export default function NodeOverlays() {
   useRenderCounter("NodeOverlays");
   const activeNodeId = useSelector(selectActiveNodeId);
   const { isDragging, indicator, ghost } = useDragState();
+  const inlineTextEditState = useInlineTextEditState();
+  const editingNodeRecord = useSelector((state: RootState) =>
+    inlineTextEditState.editingNodeId
+      ? selectNodeRecordById(state, inlineTextEditState.editingNodeId)
+      : null,
+  );
+  const { cancelEditing } = useInlineTextEditActions();
+
+  useEffect(() => {
+    if (inlineTextEditState.editingNodeId && !editingNodeRecord) {
+      cancelEditing();
+    }
+  }, [
+    cancelEditing,
+    editingNodeRecord,
+    inlineTextEditState.editingNodeId,
+  ]);
 
   return (
     <>
@@ -53,56 +74,71 @@ export default function NodeOverlays() {
 const Infobar = ({ activeNodeId }: { activeNodeId: number }) => {
   useRenderCounter("NodeOverlayInfobar");
   const dispatch = useDispatch();
-  const type = useSelector((state: RootState) =>
-    selectNodeRecordById(state, activeNodeId)?.type,
-  );
-  const name = useSelector((state: RootState) =>
-    selectNodeRecordById(state, activeNodeId)?.name,
+  const nodeRecord = useSelector((state: RootState) =>
+    selectNodeRecordById(state, activeNodeId),
   );
   const position = useNodeRect(activeNodeId);
+  const inlineTextEditState = useInlineTextEditState();
+  const { startEditing } = useInlineTextEditActions();
 
-  if (type === "core:root" || !position) return <></>;
+  if (!nodeRecord || nodeRecord.type === "core:root" || !position) return <></>;
+
+  const isInlineEditingNode = inlineTextEditState.editingNodeId === activeNodeId;
+  const showActions = !isInlineEditingNode;
+  const surfaceId = getNodeSurfaceId(activeNodeId);
 
   return (
     <>
-      <div
-        style={{
-          top: position.top,
-          left: position.left,
-        }}
-        className={`flex gap-1 fixed z-[4] -translate-y-[120%] [&>div]:bg-[#aa00d9]`}
-      >
-        <div className="flex items-center justify-center gap-1 p-0.5 px-2 text-white text-[11px] rounded-xs">
-          {GetIconOfType(type, 10)}
-          {name || type}
-        </div>
+      {showActions && (
         <div
-          title="edit"
-          onClick={() => {
-            setCanvasFocused(getNodeSurfaceId(activeNodeId));
-            dispatch(changeTab({ tab: "11" }));
+          style={{
+            top: position.top,
+            left: position.left,
           }}
-          className="flex items-center px-2 cursor-pointer rounded-xs"
+          className={`flex gap-1 fixed z-[4] -translate-y-[120%] [&>div]:bg-[#aa00d9]`}
         >
-          <MdOutlineEdit size={10} color="white" />
+          <div className="flex items-center justify-center gap-1 p-0.5 px-2 text-white text-[11px] rounded-xs">
+            {GetIconOfType(nodeRecord.type, 10)}
+            {nodeRecord.name || nodeRecord.type}
+          </div>
+          <div
+            title="edit"
+            onClick={() => {
+              setCanvasFocused(surfaceId);
+              if (isCoreContentNodeKind(nodeRecord.type) && isContentNodeRecord(nodeRecord)) {
+                startEditing({
+                  nodeId: activeNodeId,
+                  surfaceId,
+                  initialContent: nodeRecord.content,
+                });
+                return;
+              }
+              dispatch(changeTab({ tab: "11" }));
+            }}
+            className="flex items-center px-2 cursor-pointer rounded-xs"
+          >
+            <MdOutlineEdit size={10} color="white" />
+          </div>
+          <div
+            data-canvas-drag-source="node"
+            data-canvas-node-id={activeNodeId}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              setCanvasFocused(surfaceId);
+            }}
+            style={{ borderRight: "none", cursor: "grab" }}
+            className="px-2 flex items-center rounded-xs cursor-grab"
+          >
+            <RiDragMove2Fill size={12} color="white" />
+          </div>
         </div>
-        <div
-          data-canvas-drag-source="node"
-          data-canvas-node-id={activeNodeId}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            setCanvasFocused(getNodeSurfaceId(activeNodeId));
-          }}
-          style={{ borderRight: "none", cursor: "grab" }}
-          className="px-2 flex items-center rounded-xs cursor-grab"
-        >
-          <RiDragMove2Fill size={12} color="white" />
-        </div>
-      </div>
-      <OutlineOverlay
-        rect={position}
-        className="pointer-events-none fixed z-[2] border-2 border-[var(--resizeblue)]"
-      />
+      )}
+      {!isInlineEditingNode && (
+        <OutlineOverlay
+          rect={position}
+          className="pointer-events-none fixed z-[2] border-2 border-[var(--resizeblue)]"
+        />
+      )}
     </>
   );
 };

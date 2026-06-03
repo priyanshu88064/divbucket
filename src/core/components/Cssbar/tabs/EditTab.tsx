@@ -7,6 +7,7 @@ import { FaParagraph } from "react-icons/fa6";
 import styles from "../cssbar.module.css";
 import { FaLink } from "react-icons/fa";
 import CheckBox from "@shared/ui/inputs/CheckBox";
+import { useInlineTextEditState } from "@core/hooks/inlineTextEditSession";
 
 type ContentNodeRecord = Extract<NodeRecord, { content: string }>;
 type MediaNodeRecord = Extract<NodeRecord, { media: { src: string } }>;
@@ -30,6 +31,7 @@ const hasField = (fields: NodeEditFieldKey[], fieldKey: NodeEditFieldKey) =>
   fields.includes(fieldKey);
 
 export default function EditTab({
+  id,
   focus,
   nodeDefinition,
   draftRecord,
@@ -37,6 +39,8 @@ export default function EditTab({
   commitDraftRecord,
 }: EditPanelProps) {
   const fields = nodeDefinition.edit?.fields || [];
+  const inlineTextEditState = useInlineTextEditState();
+  const isInlineEditingContent = inlineTextEditState.editingNodeId === id;
   if (!fields.length) {
     return null;
   }
@@ -88,6 +92,7 @@ export default function EditTab({
           <textarea
             value={draftRecord.content}
             className={`${styles.e0i} ${styles.e0tarea}`}
+            disabled={isInlineEditingContent}
             onBlur={() => commitDraftRecord()}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
@@ -108,6 +113,11 @@ export default function EditTab({
             }}
             onFocus={(e) => e.target.select()}
           />
+          {isInlineEditingContent && (
+            <div className="text-[10px] text-[var(--wb_text_dim)]">
+              Editing on canvas
+            </div>
+          )}
         </div>
       )}
 

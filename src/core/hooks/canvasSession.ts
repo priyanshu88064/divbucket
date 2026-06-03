@@ -64,8 +64,14 @@ export const isEditableEventTarget = (
   target: EventTarget | null | undefined,
 ) => {
   if (typeof Element === "undefined") return false;
-  if (!(target instanceof Element)) return false;
-  const editableHost = target.closest(
+  const element =
+    target instanceof Element
+      ? target
+      : target instanceof Node
+        ? target.parentElement
+        : null;
+  if (!element) return false;
+  const editableHost = element.closest(
     "input, textarea, select, [contenteditable='true']",
   );
   return Boolean(editableHost);
