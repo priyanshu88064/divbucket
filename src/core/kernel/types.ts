@@ -71,6 +71,7 @@ export interface NodeExportDefinition {
   getAttributes?: (
     record: NodeRecord,
   ) => Record<string, NodeExportAttributeValue>;
+  getInnerHtml?: (record: NodeRecord) => string;
 }
 
 export interface NodeTypeDefinition<K extends NodeKind = NodeKind> {
@@ -125,11 +126,35 @@ export interface EditPanelDefinition {
   component: ComponentType<EditPanelProps>;
 }
 
+export type PaletteLauncherTrigger = "click" | "hover";
+export type PaletteLauncherSurface = "inline" | "popover";
+export type PaletteLauncherPlacement = "right-center" | "right-start";
+
+export interface PaletteLauncherRenderProps {
+  open: boolean;
+  close: () => void;
+}
+
+export interface PaletteLauncherDefinition {
+  id: string;
+  label: string;
+  group: string;
+  order: number;
+  trigger: PaletteLauncherTrigger;
+  surface?: PaletteLauncherSurface;
+  placement?: PaletteLauncherPlacement;
+  offset?: number;
+  icon: () => ReactNode;
+  searchTokens?: string[];
+  renderPanel: (props: PaletteLauncherRenderProps) => ReactNode;
+}
+
 export interface EditorPluginApi {
   registerNodeType: (definition: NodeTypeDefinition) => void;
   registerPreset: (definition: PresetDefinition) => void;
   registerStyleSection: (definition: StyleSectionDefinition) => void;
   registerEditPanel: (definition: EditPanelDefinition) => void;
+  registerPaletteLauncher: (definition: PaletteLauncherDefinition) => void;
 }
 
 export interface EditorPlugin {
@@ -147,6 +172,8 @@ export interface EditorRegistry {
   listPresets: () => PresetDefinition[];
   getStyleSection: (id: string) => StyleSectionDefinition | undefined;
   getEditPanel: (id: string) => EditPanelDefinition | undefined;
+  getPaletteLauncher: (id: string) => PaletteLauncherDefinition | undefined;
   listStyleSections: () => StyleSectionDefinition[];
   listEditPanels: () => EditPanelDefinition[];
+  listPaletteLaunchers: () => PaletteLauncherDefinition[];
 }

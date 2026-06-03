@@ -1,6 +1,9 @@
 import { createElement } from "react";
 import type { NodeRendererProps } from "@core/kernel/types";
 import { coerceInputPayload } from "../input/payload";
+import { coerceIconPayload } from "../icon/payload";
+import IconGlyph from "../icon/IconGlyph";
+import { DEFAULT_ICON_ID } from "../icon/catalog";
 
 const withCommonProps = (props: NodeRendererProps) => ({
   id: props.type === "core:root" ? "node-root" : `node-${props.id}`,
@@ -79,3 +82,20 @@ export const renderDividerNode = (props: NodeRendererProps) =>
     ref: (element: HTMLHRElement | null) =>
       props.registerElement?.(props.id, element),
   });
+
+export const renderIconNode = (props: NodeRendererProps) => {
+  const payload = props.record ? coerceIconPayload(props.record) : null;
+  const iconId = payload?.iconId;
+
+  return createElement(
+    "div",
+    {
+      ...withCommonProps(props),
+      ref: (element: HTMLDivElement | null) =>
+        props.registerElement?.(props.id, element),
+    },
+    createElement(IconGlyph, {
+      iconId: iconId || DEFAULT_ICON_ID,
+    }),
+  );
+};

@@ -51,7 +51,7 @@ export default function LegacyPlayground({
       id="playground"
       ref={setPlaygroundElement}
       onPointerDown={() => setCanvasFocused(LEGACY_SURFACE_ID)}
-      className="flex-[1] flex flex-col overflow-hidden bg-white"
+      className="wb-canvas-grid-bg flex-[1] flex flex-col overflow-hidden"
     >
       <div
         id="wrapper_1"
@@ -60,7 +60,7 @@ export default function LegacyPlayground({
       >
         <div
           id="wrapper_2"
-          className="relative z-[1] flex min-h-full flex-[1] justify-center overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.2)]"
+          className="relative z-[1] flex min-h-full flex-[1] justify-center overflow-hidden"
         >
           <PageTree
             rootId={activePageId}

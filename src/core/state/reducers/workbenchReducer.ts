@@ -13,7 +13,7 @@ export type WorkbenchState = {
   debugPanelOpen: boolean;
 };
 
-const LEFT_DOCK_MIN_WIDTH = 248;
+const LEFT_DOCK_MIN_WIDTH = 220;
 const LEFT_DOCK_MAX_WIDTH = 360;
 const RIGHT_DOCK_MIN_WIDTH = 280;
 const RIGHT_DOCK_MAX_WIDTH = 420;
@@ -30,7 +30,7 @@ const clampWidth = ({
 
 const initialState: WorkbenchState = {
   leftDockOpen: true,
-  leftDockWidth: 296,
+  leftDockWidth: 256,
   leftDockTool: "add",
   rightDockOpen: true,
   rightDockWidth: 350,

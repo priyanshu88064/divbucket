@@ -62,7 +62,6 @@ export default function EditTab({
       {hasField(fields, "name") && (
         <div
           className={`${styles.e0} ${styles.e0flex} ${focus === "2" ? styles.edittab : ""}`}
-          style={{ marginTop: "10px" }}
         >
           <input
             autoFocus={focus === "2"}
@@ -84,7 +83,7 @@ export default function EditTab({
       {hasField(fields, "content") && isContentNodeRecord(draftRecord) && (
         <div className={`${styles.e0} ${styles.e0flexcol}`}>
           <div className={styles.e00}>
-            Content <FaParagraph />
+            Content <FaParagraph size={11} />
           </div>
           <textarea
             value={draftRecord.content}

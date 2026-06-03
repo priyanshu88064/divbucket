@@ -20,6 +20,7 @@ export const cssMap: { [key: string]: string } = {
   maxHeight: "max-height",
   minHeight: "min-height",
   display: "display",
+  flex: "flex",
   flexDirection: "flex-direction",
   justifyContent: "justify-content",
   alignItems: "align-items",
@@ -43,6 +44,8 @@ export const cssMap: { [key: string]: string } = {
   backgroundSize: "background-size",
   opacity: "opacity",
   color: "color",
+  lineHeight: "line-height",
+  whiteSpace: "white-space",
   fontWeight: "font-weight",
   fontSize: "font-size",
   fontFamily: "font-family",
@@ -61,12 +64,22 @@ export const cssMap: { [key: string]: string } = {
   borderStyle: "border-style",
   borderColor: "border-color",
   borderRadius: "border-radius",
+  border: "border",
+  borderTop: "border-top",
+  borderRight: "border-right",
+  borderBottom: "border-bottom",
+  borderLeft: "border-left",
+  borderTopLeftRadius: "border-top-left-radius",
+  borderTopRightRadius: "border-top-right-radius",
+  borderBottomLeftRadius: "border-bottom-left-radius",
+  borderBottomRightRadius: "border-bottom-right-radius",
   position: "position",
   top: "top",
   right: "right",
   bottom: "bottom",
   left: "left",
   zIndex: "z-index",
+  overflow: "overflow",
   overflowX: "overflow-x",
   overflowY: "overflow-y",
   boxShadow: "box-shadow",
@@ -74,6 +87,7 @@ export const cssMap: { [key: string]: string } = {
   translate: "translate",
   scale: "scale",
   rotate: "rotate",
+  transformOrigin: "transform-origin",
   cursor: "cursor",
   transition: "transition",
 };
@@ -202,9 +216,11 @@ export const generateDocumentExport = ({
       "content" in record && typeof record.content === "string"
         ? escapeText(record.content)
         : "";
+    const innerHtml = exportDefinition?.getInnerHtml?.(record) || "";
 
     let html = `${spacing}<${tagName}${attrSegment}>`;
     if (childIds.length) html += "\n\n";
+    if (innerHtml) html += innerHtml;
     if (content) html += content;
     for (const childId of childIds) {
       html += renderNode(childId, spacing + "         ");

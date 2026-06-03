@@ -7,6 +7,7 @@ import {
   selectCssState,
 } from "@core/state/selectors/treeSelectors";
 import { useRenderCounter } from "@core/hooks/useRenderCounter";
+import styles from "../../cssbar.module.css";
 
 export default function CssTab() {
   useRenderCounter("CssTab");
@@ -16,22 +17,22 @@ export default function CssTab() {
 
   return (
     <>
-      <div className="p-2 py-4 mb-4">
-        <div>State</div>
-        <div className="flex bg-[#333C46] mt-4 rounded-full overflow-hidden border border-gray-600 shadow-md cursor-pointer text-center">
+      <div className={styles.cssTabPanel}>
+        <div className={styles.stateTitle}>State</div>
+        <div className={styles.stateSwitch}>
           {["default", "hover", "active"].map((state, ind) => (
-            <div
+            <button
               key={"state" + ind}
+              type="button"
               onClick={() =>
                 dispatch(updateCssState({ cssState: state as CssState }))
               }
-              className={`
-                  flex-1 p-2 py-1 border border-transparent hover:border-blue-400 active:bg-hoverblue rounded-full
-                  ${cssState === state ? "bg-hoverblue text-white" : "text-gray-300"}
-                `}
+              className={`${styles.stateButton} ${
+                cssState === state ? styles.stateButtonActive : ""
+              }`}
             >
               {state}
-            </div>
+            </button>
           ))}
         </div>
       </div>

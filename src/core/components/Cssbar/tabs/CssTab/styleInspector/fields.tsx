@@ -14,6 +14,56 @@ import {
 import type { StyleInspectorContext } from "./types";
 
 const BG_OPTIONS = ["Auto", "Solid", "URL", "Custom"] as const;
+const BORDER_STYLES = new Set([
+  "none",
+  "hidden",
+  "dotted",
+  "dashed",
+  "solid",
+  "double",
+  "groove",
+  "ridge",
+  "inset",
+  "outset",
+]);
+
+const parseBorderShorthand = (value?: string) => {
+  if (!value) {
+    return {
+      width: undefined,
+      style: undefined,
+      color: undefined,
+    };
+  }
+
+  const parts = value.trim().split(/\s+/);
+  const styleIndex = parts.findIndex((part) =>
+    BORDER_STYLES.has(part.toLowerCase()),
+  );
+
+  if (styleIndex === -1) {
+    return {
+      width: undefined,
+      style: undefined,
+      color: undefined,
+    };
+  }
+
+  const width = parts.slice(0, styleIndex).join(" ") || undefined;
+  const style = parts[styleIndex] || undefined;
+  const color = parts.slice(styleIndex + 1).join(" ") || undefined;
+
+  return { width, style, color };
+};
+
+const resolveBorderParts = (style: StyleInspectorContext["style"]) => {
+  const parsed = parseBorderShorthand(style.border as string | undefined);
+  return {
+    width: (style.borderWidth as string | undefined) || parsed.width,
+    style: (style.borderStyle as string | undefined) || parsed.style,
+    color: (style.borderColor as string | undefined) || parsed.color,
+  };
+};
 
 const toSpacingPair = (value?: string, fallback = "0"): [string, string] => {
   const [first, second] = (value || `${fallback} ${fallback}`).split(" ");
@@ -89,21 +139,25 @@ export const FlexCompositeField = ({ ctx }: { ctx: StyleInspectorContext }) => {
       </div>
       <div className={styles.dic2}>
         <div className={styles.dic20}>
-          <div style={{ color: "var(--text_0)" }} className={styles.c1101}>
-            Gap:
+          <div className={styles.inputLabelInline}>
+            Gap
           </div>
-          <TextInput
-            value={(ctx.style.gap as string) || "auto"}
-            onChange={(value) => ctx.patchStyle({ gap: value })}
+          <div className={styles.flexGapInput}>
+            <TextInput
+              value={(ctx.style.gap as string) || "auto"}
+              onChange={(value) => ctx.patchStyle({ gap: value })}
+            />
+          </div>
+        </div>
+        <div className={styles.flexWrapControl}>
+          <CheckBox
+            name={"flex-wrap"}
+            checked={ctx.style.flexWrap === "wrap"}
+            onChange={(e) =>
+              ctx.patchStyle({ flexWrap: e.target.checked ? "wrap" : "nowrap" })
+            }
           />
         </div>
-        <CheckBox
-          name={"flexwrap"}
-          checked={ctx.style.flexWrap === "wrap"}
-          onChange={(e) =>
-            ctx.patchStyle({ flexWrap: e.target.checked ? "wrap" : "nowrap" })
-          }
-        />
       </div>
     </>
   );
@@ -163,7 +217,7 @@ export const SpacingCompositeField = ({
           </div>
         </div>
       ))}
-      <div className="flex gap-2 pt-2">
+      <div className={styles.axisLinkRow}>
         <CheckBox
           name="Link X"
           checked={linkMode === "x" || linkMode === "all"}
@@ -562,18 +616,19 @@ export const BorderWidthCompositeField = ({
 }: {
   ctx: StyleInspectorContext;
 }) => {
+  const border = resolveBorderParts(ctx.style);
   return (
     <>
       <div className={styles.bg0}>
         <div className={styles.bg0name}>Border-Width</div>
         <div className="ml-auto w-[100px] flex items-center gap-1 rounded-[5px]">
           <TextInput
-            value={(ctx.style.borderWidth as string) || "0"}
+            value={border.width || "0"}
             units={["0", "1px", "2px", "3px", "4px"]}
             onChange={(value) => ctx.patchStyle({ borderWidth: value })}
           />
           <Colorpicker
-            value={(ctx.style.borderColor as string) || "#000000"}
+            value={border.color || "#000000"}
             onChange={(value) => ctx.patchStyle({ borderColor: value })}
           />
         </div>
@@ -601,6 +656,27 @@ export const BorderWidthCompositeField = ({
         </div>
       ))}
     </>
+  );
+};
+
+export const BorderStyleField = ({
+  ctx,
+}: {
+  ctx: StyleInspectorContext;
+}) => {
+  const border = resolveBorderParts(ctx.style);
+  return (
+    <div className={styles.bg0}>
+      <div className={styles.bg0name}>Border-Style</div>
+      <div className={styles.sizesiwrap}>
+        <TextInput
+          value={border.style || "none"}
+          units={["none", "solid", "dotted", "dashed", "double", "groove"]}
+          onChange={(next) => ctx.patchStyle({ borderStyle: next })}
+          isSelectOnly={true}
+        />
+      </div>
+    </div>
   );
 };
 

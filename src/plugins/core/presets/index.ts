@@ -9,6 +9,7 @@ import { featurePresetDefinition } from "./feature/definition";
 import { headingPresetDefinition } from "./heading/definition";
 import { heroPresetDefinition } from "./hero/definition";
 import { imagePresetDefinition } from "./image/definition";
+import { iconPresetDefinition } from "./icon/definition";
 import { inputPresetDefinition } from "./input/definition";
 import { listItemPresetDefinition } from "./listItem/definition";
 import { listPresetDefinition } from "./list/definition";
@@ -30,6 +31,7 @@ export const CORE_PRESET_DEFINITIONS: PresetDefinition[] = [
   imagePresetDefinition,
   videoPresetDefinition,
   buttonPresetDefinition,
+  iconPresetDefinition,
   inputPresetDefinition,
   dividerPresetDefinition,
   listPresetDefinition,

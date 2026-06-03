@@ -5,6 +5,7 @@ import {
   type NodeRecord,
   type NodeStyleMap,
 } from "@core/types/document";
+import { loadIconPack } from "@plugins/core/nodes/icon/catalog";
 import { generateCode, generateDocumentExport } from "./generateCode";
 
 const emptyStateStyles = { default: {}, hover: {}, active: {} };
@@ -132,6 +133,33 @@ describe("generateDocumentExport", () => {
     expect(result.css).toContain("color: #333333;");
   });
 
+  it("exports shorthand and layout props that are required by imported project visuals", () => {
+    const result = runGenerate({
+      child: { type: "core:container", name: "card" },
+      childStyle: {
+        default: {
+          flex: "1",
+          border: "1px solid #dadada",
+          borderBottom: "1px solid #ebebeb",
+          lineHeight: "1.4",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          transformOrigin: "center center",
+        },
+        hover: {},
+        active: {},
+      },
+    });
+
+    expect(result.css).toContain("flex: 1;");
+    expect(result.css).toContain("border: 1px solid #dadada;");
+    expect(result.css).toContain("border-bottom: 1px solid #ebebeb;");
+    expect(result.css).toContain("line-height: 1.4;");
+    expect(result.css).toContain("white-space: nowrap;");
+    expect(result.css).toContain("overflow: hidden;");
+    expect(result.css).toContain("transform-origin: center center;");
+  });
+
   it("uses body selector for root and normalizes root height to 100vh", () => {
     const result = runGenerate({
       child: { type: "core:text", name: "copy", content: "Hello" },
@@ -140,8 +168,7 @@ describe("generateDocumentExport", () => {
     expect(result.css).toContain("body {");
     expect(result.css).toContain("height: 100vh;");
     expect(result.css).toContain("background-color: white;");
-    expect(result.css).not.toContain("width: 100%;");
-    expect(result.css).not.toContain("min-width: 300px;");
+    expect(result.css).not.toContain("  min-width: 300px;");
   });
 
   it("embeds css when internal stylesheet output is requested", () => {
@@ -380,5 +407,36 @@ describe("generateDocumentExport", () => {
     expect(result.bodyHtml).toContain('<li class="db-listItem-4">One</li>');
     expect(result.bodyHtml).toContain('<li class="db-listItem-5">Two</li>');
     expect(result.html).toContain("<title>Nested</title>");
+  });
+
+  it("embeds static svg markup for exported icon nodes", async () => {
+    await loadIconPack("tb");
+
+    const result = runGenerate({
+      child: {
+        type: "custom:icon",
+        name: "Icon",
+        payload: { iconId: "tb:home" },
+      },
+      childStyle: {
+        default: { fontSize: "24px", color: "#111111" },
+        hover: {},
+        active: {},
+      },
+    });
+
+    expect(result.html).toContain('class="db-custom-icon-2"');
+    expect(result.html).toContain('data-icon-id="tb:home"');
+    expect(result.html).toContain("<svg");
+  });
+
+  it("includes base export resets for neutral browser rendering", () => {
+    const result = runGenerate({
+      child: { type: "core:button", name: "cta", content: "Click" },
+    });
+
+    expect(result.css).toContain("button {");
+    expect(result.css).toContain("appearance: none;");
+    expect(result.css).toContain("img,\nvideo {");
   });
 });

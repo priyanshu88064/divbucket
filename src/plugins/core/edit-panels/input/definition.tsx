@@ -44,7 +44,6 @@ export const inputEditPanelDefinition: EditPanelDefinition = {
       <div className={`${focus === "1" ? styles.edittab : ""}`}>
         <div
           className={`${styles.e0} ${styles.e0flex} ${focus === "2" ? styles.edittab : ""}`}
-          style={{ marginTop: "10px" }}
         >
           <input
             autoFocus={focus === "2"}

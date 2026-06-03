@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCss3, FaHome, FaImage, FaRegSquare, FaVideo } from "react-icons/fa";
-import { LuHeading1, LuPanelRight, LuPanelRightClose } from "react-icons/lu";
+import { LuHeading1, LuPanelRight } from "react-icons/lu";
 import { IoText } from "react-icons/io5";
 import { BsTextParagraph } from "react-icons/bs";
 import { changeTab } from "@core/state/reducers/focusReducer";
@@ -57,7 +57,7 @@ const inspectorTabs: Array<{
     icon: <MdOutlineEdit size={14} />,
   },
 ];
-const RIGHT_DOCK_WIDTH_PX = 350;
+const RIGHT_DOCK_WIDTH_PX = 280;
 
 export default function Cssbar() {
   const tab = useSelector((state: RootState) => state.focusReducer.tab);
@@ -113,14 +113,6 @@ export default function Cssbar() {
                 <div className="text-[var(--wb_text_dim)] text-[12px]">Inspector</div>
               )}
             </div>
-            <button
-              title="Collapse inspector"
-              onClick={() => dispatch(toggleRightDockOpen())}
-              className="text-[var(--wb_text_muted)] hover:text-[var(--wb_text)]"
-              type="button"
-            >
-              <LuPanelRightClose size={14} />
-            </button>
           </div>
 
           <div className="h-10 px-2 border-b border-[var(--wb_border)] flex items-center gap-1">

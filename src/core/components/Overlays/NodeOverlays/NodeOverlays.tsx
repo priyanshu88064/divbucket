@@ -111,12 +111,15 @@ const HoverBar = () => {
   useRenderCounter("NodeOverlayHoverBar");
   const hoverNodeId = useSelector(selectHoverNodeId);
   const activeNodeId = useSelector(selectActiveNodeId);
+  const hoverNodeType = useSelector((state: RootState) =>
+    hoverNodeId ? selectNodeRecordById(state, hoverNodeId)?.type : null,
+  );
 
   const position = useNodeRect(hoverNodeId);
 
   return (
     <>
-      {activeNodeId !== hoverNodeId && position && (
+      {hoverNodeType !== "core:root" && activeNodeId !== hoverNodeId && position && (
         <OutlineOverlay
           rect={position}
           className="pointer-events-none fixed z-[2] border border-[var(--resizeblue)]"

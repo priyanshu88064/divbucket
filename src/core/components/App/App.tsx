@@ -28,6 +28,8 @@ export default () => {
   useEffect(() => {
     const initDefaultProject = async () => {
       const rawProjects = await Promise.all([
+        fetch("/projects/linkedin.json").then((res) => res.json()),
+        fetch("/projects/amazon.json").then((res) => res.json()),
         fetch("/projects/witcher.json").then((res) => res.json()),
         fetch("/projects/divbucket.json").then((res) => res.json()),
         fetch("/projects/needhelp.json").then((res) => res.json()),

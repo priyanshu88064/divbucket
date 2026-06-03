@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { RootState } from "@core/state/store";
 import { useSelector } from "react-redux";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
+import styles from "./cssbar.module.css";
 
 // mapping of unsupported props to a node type
 const propBlackList: { [key: string]: string[] } = {
@@ -42,26 +43,27 @@ export default function Wrap({
   return (
     <>
       {!propBlackList[type]?.includes(title) && (
-        <div className="text-[var(--text_0)] cursor-default border-b border-[var(--gray_border)]">
-          <div
-            className="flex items-center justify-between select-none"
+        <section className={styles.sectionWrap}>
+          <button
+            type="button"
+            className={`${styles.sectionHeader} ${isActive ? styles.sectionHeaderOpen : ""}`}
             onClick={() => setIsActive((f) => !f)}
           >
-            <div className="p-[10px] py-4 cursor-pointer">{title}</div>
-            <div className="p-[10px]">
+            <div className={styles.sectionTitle}>{title}</div>
+            <div className={styles.sectionChevron}>
               {!heading ? (
                 isActive ? (
-                  <MdKeyboardArrowDown className="cursor-pointer text-[13px]" />
+                  <MdKeyboardArrowDown className="text-[14px]" />
                 ) : (
-                  <MdKeyboardArrowRight className="cursor-pointer text-[13px]" />
+                  <MdKeyboardArrowRight className="text-[14px]" />
                 )
               ) : (
                 ""
               )}
             </div>
-          </div>
-          {isActive && children}
-        </div>
+          </button>
+          {isActive && <div className={styles.sectionBody}>{children}</div>}
+        </section>
       )}
     </>
   );

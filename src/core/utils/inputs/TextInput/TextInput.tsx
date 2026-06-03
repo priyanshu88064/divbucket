@@ -18,12 +18,12 @@ export default ({
   }, [value]);
 
   return (
-    <div className="relative bg-[#1B2228] rounded-xs text-[var(--text_0)] flex gap-1 w-full">
+    <div className="relative w-full rounded-md border border-[var(--wb_border)] bg-[var(--wb_surface_0)] text-[var(--wb_text)] transition-colors focus-within:border-[var(--wb_border_highlight)]">
       <input
         value={val}
         className={`
-          peer w-full flex-[1] p-[6px] pr-0 z-0 outline-none
-          ${val === "auto" ? "text-gray-500" : ""}
+          peer z-0 w-full bg-transparent px-2 py-[5px] text-[12px] leading-4 outline-none
+          ${val === "auto" ? "text-[var(--wb_text_dim)]" : "text-[var(--wb_text)]"}
         `}
         onChange={(e) => setVal(e.target.value)}
         onBlur={() => onChange(val)}
@@ -34,14 +34,14 @@ export default ({
         readOnly={isSelectOnly}
       />
       {units && units.length && (
-        <div className="z-[1] absolute hidden peer-focus:block w-full max-h-[150px] bottom-0 translate-y-full bg-black overflow-y-scroll text-[var(--text_0)]">
+        <div className="absolute bottom-0 z-[3] hidden max-h-[170px] w-full translate-y-full overflow-y-auto rounded-md border border-[var(--wb_border)] bg-[var(--wb_surface_0)] py-1 text-[12px] text-[var(--wb_text)] shadow-lg shadow-black/40 peer-focus:block">
           {units.map((unit) => (
             <div
               onMouseDown={() => {
                 setVal(unit);
               }}
               key={unit}
-              className="p-[5px] hover:bg-[var(--hoverblue)]"
+              className="cursor-pointer px-2 py-[5px] hover:bg-[var(--wb_surface_2)]"
             >
               {unit}
             </div>

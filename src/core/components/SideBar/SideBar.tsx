@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Explorer from "./components/ExplorerTab";
 import ElementsTab from "./components/ElementsTab";
 import StatsForNerds from "../StatsForNerds/StatsForNerds";
-import { LuPanelLeft, LuPanelLeftClose } from "react-icons/lu";
+import { LuPanelLeftClose } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@core/state/store";
 import {
@@ -92,14 +92,14 @@ export default () => {
   return (
     <>
       <div className="h-full text-white flex select-none relative z-[10] border-r border-[var(--wb_border)]">
-        <div className="w-14 bg-[var(--wb_surface_0)] h-full p-2 flex flex-col gap-2">
+        <div className="w-10 bg-[var(--wb_surface_0)] h-full p-1 flex flex-col gap-1">
           {tabList.map((toolTab) => (
             <div
               key={toolTab.id}
               title={toolTab.label}
               onClick={() => handleTabClick(toolTab.id)}
               className={`
-              flex items-center justify-center aspect-square rounded-md cursor-pointer border border-transparent
+              flex items-center justify-center h-8 w-8 rounded-sm cursor-pointer border border-transparent
               text-[var(--wb_text_muted)] hover:text-[var(--wb_text)] hover:border-[var(--wb_border_highlight)]
               ${leftDockOpen && leftDockTool === toolTab.id ? "bg-[var(--wb_surface_2)] border-[var(--wb_border)] text-[var(--wb_text)]" : ""}
             `}
@@ -107,17 +107,6 @@ export default () => {
               {toolTab.icon}
             </div>
           ))}
-          <div
-            title={leftDockOpen ? "Collapse panel" : "Expand panel"}
-            onClick={() => dispatch(toggleLeftDockOpen())}
-            className="flex items-center justify-center aspect-square rounded-md cursor-pointer border border-transparent text-[var(--wb_text_muted)] hover:text-[var(--wb_text)] hover:border-[var(--wb_border_highlight)]"
-          >
-            {leftDockOpen ? (
-              <LuPanelLeftClose size={16} />
-            ) : (
-              <LuPanelLeft size={16} />
-            )}
-          </div>
         </div>
 
         {leftDockOpen && (

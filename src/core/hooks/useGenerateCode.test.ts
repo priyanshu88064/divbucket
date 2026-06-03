@@ -10,6 +10,16 @@ vi.mock("react-redux", () => ({
   useSelector: useSelectorMock,
 }));
 
+vi.mock("react", async () => {
+  const actual = await vi.importActual<typeof import("react")>("react");
+  return {
+    ...actual,
+    useEffect: (effect: () => void | (() => void)) => {
+      effect();
+    },
+  };
+});
+
 describe("useGenerateCode", () => {
   beforeEach(() => {
     useSelectorMock.mockReset();

@@ -6,7 +6,7 @@ import workbenchReducer, {
   type WorkbenchState,
 } from "./reducers/workbenchReducer";
 
-const WORKBENCH_STORAGE_KEY = "divbucket.workbench.v1";
+const WORKBENCH_STORAGE_KEY = "divbucket.workbench.v2";
 
 const parseWorkbenchState = (raw: string | null): WorkbenchState | null => {
   if (!raw) return null;

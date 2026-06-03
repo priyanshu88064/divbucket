@@ -4,6 +4,7 @@ import { buttonNodeDefinition } from "./button/definition";
 import { containerNodeDefinition } from "./container/definition";
 import { dividerNodeDefinition } from "./divider/definition";
 import { headingNodeDefinition } from "./heading/definition";
+import { iconNodeDefinition } from "./icon/definition";
 import { imageNodeDefinition } from "./image/definition";
 import { inputNodeDefinition } from "./input/definition";
 import { listItemNodeDefinition } from "./listItem/definition";
@@ -22,6 +23,7 @@ export const CORE_NODE_DEFINITIONS: NodeTypeDefinition[] = [
   textNodeDefinition,
   paragraphNodeDefinition,
   buttonNodeDefinition,
+  iconNodeDefinition,
   inputNodeDefinition,
   dividerNodeDefinition,
   imageNodeDefinition,

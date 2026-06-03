@@ -1,0 +1,3392 @@
+{
+  "version": 2,
+  "metadata": {
+    "title": "Amazon Product Page"
+  },
+  "pageIds": [
+    1
+  ],
+  "nodeChildrenMap": {
+    "1": [
+      2,
+      32,
+      47,
+      57
+    ],
+    "2": [
+      3,
+      6,
+      11,
+      17,
+      21,
+      26,
+      29
+    ],
+    "3": [
+      4,
+      5
+    ],
+    "4": [],
+    "5": [],
+    "6": [
+      7,
+      10
+    ],
+    "7": [
+      8,
+      9
+    ],
+    "8": [],
+    "9": [],
+    "10": [],
+    "11": [
+      12,
+      14,
+      15
+    ],
+    "12": [
+      13
+    ],
+    "13": [],
+    "14": [],
+    "15": [
+      16
+    ],
+    "16": [],
+    "17": [
+      18,
+      19,
+      20
+    ],
+    "18": [],
+    "19": [],
+    "20": [],
+    "21": [
+      22,
+      23
+    ],
+    "22": [],
+    "23": [
+      24,
+      25
+    ],
+    "24": [],
+    "25": [],
+    "26": [
+      27,
+      28
+    ],
+    "27": [],
+    "28": [],
+    "29": [
+      30,
+      31
+    ],
+    "30": [],
+    "31": [],
+    "32": [
+      33,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "33": [
+      34,
+      35
+    ],
+    "34": [],
+    "35": [],
+    "36": [],
+    "37": [],
+    "38": [],
+    "39": [],
+    "40": [],
+    "41": [],
+    "42": [],
+    "43": [],
+    "44": [],
+    "45": [],
+    "46": [],
+    "47": [
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56
+    ],
+    "48": [],
+    "49": [],
+    "50": [],
+    "51": [],
+    "52": [],
+    "53": [],
+    "54": [],
+    "55": [],
+    "56": [],
+    "57": [
+      58,
+      59
+    ],
+    "58": [],
+    "59": [
+      60,
+      79,
+      144
+    ],
+    "60": [
+      61,
+      76
+    ],
+    "61": [
+      62,
+      64,
+      66,
+      68,
+      70,
+      72,
+      74
+    ],
+    "62": [
+      63
+    ],
+    "63": [],
+    "64": [
+      65
+    ],
+    "65": [],
+    "66": [
+      67
+    ],
+    "67": [],
+    "68": [
+      69
+    ],
+    "69": [],
+    "70": [
+      71
+    ],
+    "71": [],
+    "72": [
+      73
+    ],
+    "73": [],
+    "74": [
+      75
+    ],
+    "75": [],
+    "76": [
+      77,
+      78,
+      180
+    ],
+    "77": [],
+    "78": [],
+    "79": [
+      80,
+      81,
+      82,
+      93,
+      94,
+      95,
+      96,
+      97,
+      100,
+      101,
+      102,
+      103,
+      104,
+      107,
+      124,
+      127,
+      128
+    ],
+    "80": [],
+    "81": [],
+    "82": [
+      83,
+      84,
+      90,
+      91,
+      92
+    ],
+    "83": [],
+    "84": [
+      85,
+      86,
+      87,
+      88,
+      89
+    ],
+    "85": [],
+    "86": [],
+    "87": [],
+    "88": [],
+    "89": [],
+    "90": [],
+    "91": [],
+    "92": [],
+    "93": [],
+    "94": [],
+    "95": [],
+    "96": [],
+    "97": [
+      98,
+      99
+    ],
+    "98": [],
+    "99": [],
+    "100": [],
+    "101": [],
+    "102": [],
+    "103": [],
+    "104": [
+      105,
+      106
+    ],
+    "105": [],
+    "106": [],
+    "107": [
+      108,
+      112,
+      116,
+      120
+    ],
+    "108": [
+      109,
+      110,
+      111
+    ],
+    "109": [],
+    "110": [],
+    "111": [],
+    "112": [
+      113,
+      114,
+      115
+    ],
+    "113": [],
+    "114": [],
+    "115": [],
+    "116": [
+      117,
+      118,
+      119
+    ],
+    "117": [],
+    "118": [],
+    "119": [],
+    "120": [
+      121,
+      122,
+      123
+    ],
+    "121": [],
+    "122": [],
+    "123": [],
+    "124": [
+      125,
+      126
+    ],
+    "125": [],
+    "126": [],
+    "127": [],
+    "128": [
+      129,
+      132,
+      135,
+      138,
+      141
+    ],
+    "129": [
+      130,
+      131
+    ],
+    "130": [],
+    "131": [],
+    "132": [
+      133,
+      134
+    ],
+    "133": [],
+    "134": [],
+    "135": [
+      136,
+      137
+    ],
+    "136": [],
+    "137": [],
+    "138": [
+      139,
+      140
+    ],
+    "139": [],
+    "140": [],
+    "141": [
+      142,
+      143
+    ],
+    "142": [],
+    "143": [],
+    "144": [
+      145,
+      146,
+      147,
+      148,
+      151,
+      152,
+      155,
+      156,
+      157,
+      170,
+      171,
+      174,
+      177
+    ],
+    "145": [],
+    "146": [],
+    "147": [],
+    "148": [
+      149,
+      150
+    ],
+    "149": [],
+    "150": [],
+    "151": [],
+    "152": [
+      153,
+      154
+    ],
+    "153": [],
+    "154": [],
+    "155": [],
+    "156": [],
+    "157": [
+      158,
+      161,
+      164,
+      167
+    ],
+    "158": [
+      159,
+      160
+    ],
+    "159": [],
+    "160": [],
+    "161": [
+      162,
+      163
+    ],
+    "162": [],
+    "163": [],
+    "164": [
+      165,
+      166
+    ],
+    "165": [],
+    "166": [],
+    "167": [
+      168,
+      169
+    ],
+    "168": [],
+    "169": [],
+    "170": [],
+    "171": [
+      172,
+      173
+    ],
+    "172": [],
+    "173": [],
+    "174": [
+      175,
+      176
+    ],
+    "175": [],
+    "176": [],
+    "177": [
+      187,
+      179,
+      190
+    ],
+    "178": [],
+    "179": [],
+    "180": [
+      181,
+      182
+    ],
+    "181": [],
+    "182": [
+      183,
+      184,
+      185,
+      186
+    ],
+    "183": [],
+    "184": [],
+    "185": [],
+    "186": [],
+    "187": [
+      188,
+      189
+    ],
+    "188": [],
+    "189": [],
+    "190": [],
+    "-1": [
+      1
+    ]
+  },
+  "nodeRecordMap": {
+    "1": {
+      "name": "Amazon Product Page",
+      "type": "core:root"
+    },
+    "2": {
+      "name": "Top Header",
+      "type": "core:row"
+    },
+    "3": {
+      "name": "Brand Wrap",
+      "type": "core:row"
+    },
+    "4": {
+      "name": "Amazon Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:brand-amazon"
+      }
+    },
+    "5": {
+      "name": "Amazon Domain",
+      "type": "core:text",
+      "content": "amazon.in"
+    },
+    "6": {
+      "name": "Deliver Wrap",
+      "type": "core:container"
+    },
+    "7": {
+      "name": "Deliver Row",
+      "type": "core:row"
+    },
+    "8": {
+      "name": "Location Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:map-pin"
+      }
+    },
+    "9": {
+      "name": "Deliver To Label",
+      "type": "core:text",
+      "content": "Deliver to Priyanshu"
+    },
+    "10": {
+      "name": "Deliver Location",
+      "type": "core:text",
+      "content": "Roorkee 247666"
+    },
+    "11": {
+      "name": "Search Wrap",
+      "type": "core:row"
+    },
+    "12": {
+      "name": "Category Select",
+      "type": "core:row"
+    },
+    "13": {
+      "name": "Category Text",
+      "type": "core:text",
+      "content": "All"
+    },
+    "14": {
+      "name": "Search Input Placeholder",
+      "type": "core:text",
+      "content": "vxe+r1"
+    },
+    "15": {
+      "name": "Search Button",
+      "type": "core:row"
+    },
+    "16": {
+      "name": "Search Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:search"
+      }
+    },
+    "17": {
+      "name": "Language Wrap",
+      "type": "core:row"
+    },
+    "18": {
+      "name": "Flag",
+      "type": "core:text",
+      "content": "IN"
+    },
+    "19": {
+      "name": "Language",
+      "type": "core:text",
+      "content": "EN"
+    },
+    "20": {
+      "name": "Language Caret",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:chevron-down"
+      }
+    },
+    "21": {
+      "name": "Account Wrap",
+      "type": "core:container"
+    },
+    "22": {
+      "name": "Hello User",
+      "type": "core:text",
+      "content": "Hello, p"
+    },
+    "23": {
+      "name": "Account Row",
+      "type": "core:row"
+    },
+    "24": {
+      "name": "Account Label",
+      "type": "core:text",
+      "content": "Account & Lists"
+    },
+    "25": {
+      "name": "Account Caret",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:chevron-down"
+      }
+    },
+    "26": {
+      "name": "Returns Wrap",
+      "type": "core:container"
+    },
+    "27": {
+      "name": "Returns Label",
+      "type": "core:text",
+      "content": "Returns"
+    },
+    "28": {
+      "name": "Orders Label",
+      "type": "core:text",
+      "content": "& Orders"
+    },
+    "29": {
+      "name": "Cart Wrap",
+      "type": "core:row"
+    },
+    "30": {
+      "name": "Cart Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:shopping-cart"
+      }
+    },
+    "31": {
+      "name": "Cart Label",
+      "type": "core:text",
+      "content": "Cart"
+    },
+    "32": {
+      "name": "Main Nav Row",
+      "type": "core:row"
+    },
+    "33": {
+      "name": "All Menu",
+      "type": "core:row"
+    },
+    "34": {
+      "name": "Menu Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:menu-2"
+      }
+    },
+    "35": {
+      "name": "All Menu Label",
+      "type": "core:text",
+      "content": "All"
+    },
+    "36": {
+      "name": "Nav Item 1",
+      "type": "core:text",
+      "content": "Rufus"
+    },
+    "37": {
+      "name": "Nav Item 2",
+      "type": "core:text",
+      "content": "Fresh"
+    },
+    "38": {
+      "name": "Nav Item 3",
+      "type": "core:text",
+      "content": "Amazon Pay"
+    },
+    "39": {
+      "name": "Nav Item 4",
+      "type": "core:text",
+      "content": "MX Player"
+    },
+    "40": {
+      "name": "Nav Item 5",
+      "type": "core:text",
+      "content": "Sell"
+    },
+    "41": {
+      "name": "Nav Item 6",
+      "type": "core:text",
+      "content": "Gift Cards"
+    },
+    "42": {
+      "name": "Nav Item 7",
+      "type": "core:text",
+      "content": "Gift Ideas"
+    },
+    "43": {
+      "name": "Nav Item 8",
+      "type": "core:text",
+      "content": "Buy Again"
+    },
+    "44": {
+      "name": "Nav Item 9",
+      "type": "core:text",
+      "content": "Prime"
+    },
+    "45": {
+      "name": "Nav Item 10",
+      "type": "core:text",
+      "content": "Today's Deals"
+    },
+    "46": {
+      "name": "Nav Item 11",
+      "type": "core:text",
+      "content": "Books"
+    },
+    "47": {
+      "name": "Department Row",
+      "type": "core:row"
+    },
+    "48": {
+      "name": "Department Root",
+      "type": "core:text",
+      "content": "Electronics"
+    },
+    "49": {
+      "name": "Department Item 1",
+      "type": "core:text",
+      "content": "Mobiles & Accessories"
+    },
+    "50": {
+      "name": "Department Item 2",
+      "type": "core:text",
+      "content": "Laptops & Accessories"
+    },
+    "51": {
+      "name": "Department Item 3",
+      "type": "core:text",
+      "content": "TV & Home Entertainment"
+    },
+    "52": {
+      "name": "Department Item 4",
+      "type": "core:text",
+      "content": "Audio"
+    },
+    "53": {
+      "name": "Department Item 5",
+      "type": "core:text",
+      "content": "Cameras"
+    },
+    "54": {
+      "name": "Department Item 6",
+      "type": "core:text",
+      "content": "Computer Peripherals"
+    },
+    "55": {
+      "name": "Department Item 7",
+      "type": "core:text",
+      "content": "Smart Technology"
+    },
+    "56": {
+      "name": "Department Item 8",
+      "type": "core:text",
+      "content": "Office & Stationery"
+    },
+    "57": {
+      "name": "Page Body",
+      "type": "core:container"
+    },
+    "58": {
+      "name": "Breadcrumb",
+      "type": "core:text",
+      "content": "Computers & Accessories > Accessories & Peripherals > PC Gaming Peripherals > Gaming Mice"
+    },
+    "59": {
+      "name": "Product Row",
+      "type": "core:row"
+    },
+    "60": {
+      "name": "Gallery Wrap",
+      "type": "core:row"
+    },
+    "61": {
+      "name": "Thumbnails Column",
+      "type": "core:container"
+    },
+    "62": {
+      "name": "Thumb 1",
+      "type": "core:container"
+    },
+    "63": {
+      "name": "Thumb 1 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/61HIJnrPojL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "64": {
+      "name": "Thumb 2",
+      "type": "core:container"
+    },
+    "65": {
+      "name": "Thumb 2 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/81flVkZ7yuL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "66": {
+      "name": "Thumb 3",
+      "type": "core:container"
+    },
+    "67": {
+      "name": "Thumb 3 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/91le3ABEnoL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "68": {
+      "name": "Thumb 4",
+      "type": "core:container"
+    },
+    "69": {
+      "name": "Thumb 4 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/71nQqmA52sL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "70": {
+      "name": "Thumb 5",
+      "type": "core:container"
+    },
+    "71": {
+      "name": "Thumb 5 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/71NwSUeSDQL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "72": {
+      "name": "Thumb 6",
+      "type": "core:container"
+    },
+    "73": {
+      "name": "Thumb 6 Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/81flVkZ7yuL._SL1500_.jpg",
+        "alt": "thumbnail"
+      }
+    },
+    "74": {
+      "name": "Thumb More",
+      "type": "core:container"
+    },
+    "75": {
+      "name": "Thumb More Label",
+      "type": "core:text",
+      "content": "2+"
+    },
+    "76": {
+      "name": "Main Image Wrap",
+      "type": "core:container"
+    },
+    "77": {
+      "name": "Main Product Image",
+      "type": "core:image",
+      "media": {
+        "src": "https://m.media-amazon.com/images/I/61HIJnrPojL._SL1500_.jpg",
+        "alt": "main product"
+      }
+    },
+    "78": {
+      "name": "Main Image Hint",
+      "type": "core:text",
+      "content": "Click to see full view"
+    },
+    "79": {
+      "name": "Details Column",
+      "type": "core:container"
+    },
+    "80": {
+      "name": "Product Title",
+      "type": "core:paragraph",
+      "content": "Razer Bluetooth DeathAdder V2 X Hyper Speed: Award-Winning Ergonomic Design with 14000 DPI - Ultra-Fast Hyper Speed Wireless Ergonomic Gaming Mouse - 235hr Battery Life - RZ01-04130100-R3A1, Black"
+    },
+    "81": {
+      "name": "Store Link",
+      "type": "core:text",
+      "content": "Visit the Razer Store"
+    },
+    "82": {
+      "name": "Rating Row",
+      "type": "core:row"
+    },
+    "83": {
+      "name": "Rating Text",
+      "type": "core:text",
+      "content": "4.3"
+    },
+    "84": {
+      "name": "Stars Row",
+      "type": "core:row"
+    },
+    "85": {
+      "name": "Star 1",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:star-filled"
+      }
+    },
+    "86": {
+      "name": "Star 2",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:star-filled"
+      }
+    },
+    "87": {
+      "name": "Star 3",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:star-filled"
+      }
+    },
+    "88": {
+      "name": "Star 4",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:star-filled"
+      }
+    },
+    "89": {
+      "name": "Star 5",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:star-filled"
+      }
+    },
+    "90": {
+      "name": "Review Count",
+      "type": "core:text",
+      "content": "(1,192)"
+    },
+    "91": {
+      "name": "Rating Divider",
+      "type": "core:text",
+      "content": "|"
+    },
+    "92": {
+      "name": "Search In Page",
+      "type": "core:text",
+      "content": "Search this page"
+    },
+    "93": {
+      "name": "Choice Badge",
+      "type": "core:text",
+      "content": "Amazon's Choice"
+    },
+    "94": {
+      "name": "Bought Count",
+      "type": "core:text",
+      "content": "400+ bought in past month"
+    },
+    "95": {
+      "name": "Divider",
+      "type": "core:container"
+    },
+    "96": {
+      "name": "Deal Tag",
+      "type": "core:text",
+      "content": "Limited time deal"
+    },
+    "97": {
+      "name": "Price Row",
+      "type": "core:row"
+    },
+    "98": {
+      "name": "Discount Percent",
+      "type": "core:text",
+      "content": "-81%"
+    },
+    "99": {
+      "name": "Price Value",
+      "type": "core:text",
+      "content": "Rs. 2,795"
+    },
+    "100": {
+      "name": "MRP",
+      "type": "core:text",
+      "content": "M.R.P: Rs. 14,999"
+    },
+    "101": {
+      "name": "Extra Offer",
+      "type": "core:text",
+      "content": "Save Rs. 51 extra using 510 Details"
+    },
+    "102": {
+      "name": "Tax Info",
+      "type": "core:text",
+      "content": "Inclusive of all taxes"
+    },
+    "103": {
+      "name": "EMI Info",
+      "type": "core:text",
+      "content": "EMI starts at Rs. 98. No Cost EMI available EMI options"
+    },
+    "104": {
+      "name": "Offers Header",
+      "type": "core:row"
+    },
+    "105": {
+      "name": "Offers Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:circle-plus"
+      }
+    },
+    "106": {
+      "name": "Offers Label",
+      "type": "core:text",
+      "content": "Offers"
+    },
+    "107": {
+      "name": "Offers Row",
+      "type": "core:row"
+    },
+    "108": {
+      "name": "Offer Card 1",
+      "type": "core:container"
+    },
+    "109": {
+      "name": "Offer Title 1",
+      "type": "core:text",
+      "content": "Cashback"
+    },
+    "110": {
+      "name": "Offer Body 1",
+      "type": "core:text",
+      "content": "Upto Rs. 83.00 cashback as Amazon Pay Balance when..."
+    },
+    "111": {
+      "name": "Offer Link 1",
+      "type": "core:text",
+      "content": "2 offers >"
+    },
+    "112": {
+      "name": "Offer Card 2",
+      "type": "core:container"
+    },
+    "113": {
+      "name": "Offer Title 2",
+      "type": "core:text",
+      "content": "No Cost EMI"
+    },
+    "114": {
+      "name": "Offer Body 2",
+      "type": "core:text",
+      "content": "Upto Rs. 90.65 EMI interest savings on Amazon Pay ICICI..."
+    },
+    "115": {
+      "name": "Offer Link 2",
+      "type": "core:text",
+      "content": "2 offers >"
+    },
+    "116": {
+      "name": "Offer Card 3",
+      "type": "core:container"
+    },
+    "117": {
+      "name": "Offer Title 3",
+      "type": "core:text",
+      "content": "Bank Offer"
+    },
+    "118": {
+      "name": "Offer Body 3",
+      "type": "core:text",
+      "content": "Upto Rs. 400.00 discount on select Credit Cards, SBI D..."
+    },
+    "119": {
+      "name": "Offer Link 3",
+      "type": "core:text",
+      "content": "3 offers >"
+    },
+    "120": {
+      "name": "Offer Card 4",
+      "type": "core:container"
+    },
+    "121": {
+      "name": "Offer Title 4",
+      "type": "core:text",
+      "content": "Partner Offers"
+    },
+    "122": {
+      "name": "Offer Body 4",
+      "type": "core:text",
+      "content": "Buy 3 Get 20% Off. View products"
+    },
+    "123": {
+      "name": "Offer Link 4",
+      "type": "core:text",
+      "content": "2 offers >"
+    },
+    "124": {
+      "name": "Earn Banner",
+      "type": "core:row"
+    },
+    "125": {
+      "name": "Earn Text",
+      "type": "core:text",
+      "content": "Earn 838 worth Rs. 83.8 on this item"
+    },
+    "126": {
+      "name": "Earn Caret",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:chevron-right"
+      }
+    },
+    "127": {
+      "name": "About Item Heading",
+      "type": "core:text",
+      "content": "About this item"
+    },
+    "128": {
+      "name": "About List",
+      "type": "core:container"
+    },
+    "129": {
+      "name": "Bullet Row 1",
+      "type": "core:row"
+    },
+    "130": {
+      "name": "Bullet Dot 1",
+      "type": "core:text",
+      "content": "-"
+    },
+    "131": {
+      "name": "Bullet Text 1",
+      "type": "core:text",
+      "content": "Award-Winning Ergonomic Design trusted by over 13 million fans worldwide."
+    },
+    "132": {
+      "name": "Bullet Row 2",
+      "type": "core:row"
+    },
+    "133": {
+      "name": "Bullet Dot 2",
+      "type": "core:text",
+      "content": "-"
+    },
+    "134": {
+      "name": "Bullet Text 2",
+      "type": "core:text",
+      "content": "Ultra-Fast Razer HyperSpeed Wireless with ultra-low latency connection."
+    },
+    "135": {
+      "name": "Bullet Row 3",
+      "type": "core:row"
+    },
+    "136": {
+      "name": "Bullet Dot 3",
+      "type": "core:text",
+      "content": "-"
+    },
+    "137": {
+      "name": "Bullet Text 3",
+      "type": "core:text",
+      "content": "Long battery life: up to 235 hours on HyperSpeed Wireless."
+    },
+    "138": {
+      "name": "Bullet Row 4",
+      "type": "core:row"
+    },
+    "139": {
+      "name": "Bullet Dot 4",
+      "type": "core:text",
+      "content": "-"
+    },
+    "140": {
+      "name": "Bullet Text 4",
+      "type": "core:text",
+      "content": "Razer Mechanical Mouse Switches Gen-2 for crisp and consistent execution."
+    },
+    "141": {
+      "name": "Bullet Row 5",
+      "type": "core:row"
+    },
+    "142": {
+      "name": "Bullet Dot 5",
+      "type": "core:text",
+      "content": "-"
+    },
+    "143": {
+      "name": "Bullet Text 5",
+      "type": "core:text",
+      "content": "Razer 5G Advanced 14K DPI Optical Sensor for pixel-precise aim."
+    },
+    "144": {
+      "name": "Buy Box",
+      "type": "core:container"
+    },
+    "145": {
+      "name": "Buy Box Price",
+      "type": "core:text",
+      "content": "Rs. 2,795.00"
+    },
+    "146": {
+      "name": "Fulfilled Label",
+      "type": "core:text",
+      "content": "Fulfilled"
+    },
+    "147": {
+      "name": "Delivery Info",
+      "type": "core:paragraph",
+      "content": "FREE delivery Wednesday, 3 June. Order within 14 hrs 49 mins. Details"
+    },
+    "148": {
+      "name": "Buy Location",
+      "type": "core:row"
+    },
+    "149": {
+      "name": "Buy Location Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:map-pin"
+      }
+    },
+    "150": {
+      "name": "Buy Location Text",
+      "type": "core:text",
+      "content": "Deliver to Priyanshu - Roorkee 247666"
+    },
+    "151": {
+      "name": "Stock Label",
+      "type": "core:text",
+      "content": "In stock"
+    },
+    "152": {
+      "name": "Quantity Selector",
+      "type": "core:row"
+    },
+    "153": {
+      "name": "Quantity Text",
+      "type": "core:text",
+      "content": "Quantity: 1"
+    },
+    "154": {
+      "name": "Quantity Caret",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:chevron-down"
+      }
+    },
+    "155": {
+      "name": "Add To Cart",
+      "type": "core:button",
+      "content": "Add to cart"
+    },
+    "156": {
+      "name": "Buy Now",
+      "type": "core:button",
+      "content": "Buy Now"
+    },
+    "157": {
+      "name": "Meta Lines",
+      "type": "core:container"
+    },
+    "158": {
+      "name": "Meta Row 1",
+      "type": "core:row"
+    },
+    "159": {
+      "name": "Meta Label 1",
+      "type": "core:text",
+      "content": "Ships from"
+    },
+    "160": {
+      "name": "Meta Value 1",
+      "type": "core:text",
+      "content": "Amazon"
+    },
+    "161": {
+      "name": "Meta Row 2",
+      "type": "core:row"
+    },
+    "162": {
+      "name": "Meta Label 2",
+      "type": "core:text",
+      "content": "Sold by"
+    },
+    "163": {
+      "name": "Meta Value 2",
+      "type": "core:text",
+      "content": "Clicktech Retail Private Ltd"
+    },
+    "164": {
+      "name": "Meta Row 3",
+      "type": "core:row"
+    },
+    "165": {
+      "name": "Meta Label 3",
+      "type": "core:text",
+      "content": "Gift options"
+    },
+    "166": {
+      "name": "Meta Value 3",
+      "type": "core:text",
+      "content": "Available at checkout"
+    },
+    "167": {
+      "name": "Meta Row 4",
+      "type": "core:row"
+    },
+    "168": {
+      "name": "Meta Label 4",
+      "type": "core:text",
+      "content": "Payment"
+    },
+    "169": {
+      "name": "Meta Value 4",
+      "type": "core:text",
+      "content": "Secure transaction"
+    },
+    "170": {
+      "name": "Protection Heading",
+      "type": "core:text",
+      "content": "Add a Protection Plan:"
+    },
+    "171": {
+      "name": "Warranty Row",
+      "type": "core:row"
+    },
+    "172": {
+      "name": "Warranty Checkbox",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:square"
+      }
+    },
+    "173": {
+      "name": "Warranty Text",
+      "type": "core:text",
+      "content": "Extended Warranty for Rs. 355.00"
+    },
+    "174": {
+      "name": "Wishlist Row",
+      "type": "core:row"
+    },
+    "175": {
+      "name": "Wishlist Label",
+      "type": "core:text",
+      "content": "Add to Wish List"
+    },
+    "176": {
+      "name": "Wishlist Caret",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:chevron-down"
+      }
+    },
+    "177": {
+      "name": "Business Card",
+      "type": "core:container"
+    },
+    "178": {
+      "name": "Business Heading",
+      "type": "core:text",
+      "content": "amazon business"
+    },
+    "179": {
+      "name": "Business Text",
+      "type": "core:text",
+      "content": "Save up to 15% on this product with business pricing and GST input tax credit"
+    },
+    "180": {
+      "name": "Ask Rufus Block",
+      "type": "core:container"
+    },
+    "181": {
+      "name": "Ask Rufus Heading",
+      "type": "core:text",
+      "content": "Ask Rufus"
+    },
+    "182": {
+      "name": "Ask Rufus Chips",
+      "type": "core:row"
+    },
+    "183": {
+      "name": "Rufus Chip 1",
+      "type": "core:text",
+      "content": "What devices is it compatible with?"
+    },
+    "184": {
+      "name": "Rufus Chip 2",
+      "type": "core:text",
+      "content": "Does it have customisable buttons?"
+    },
+    "185": {
+      "name": "Rufus Chip 3",
+      "type": "core:text",
+      "content": "Is it easy to set up?"
+    },
+    "186": {
+      "name": "Rufus Chip 4",
+      "type": "core:text",
+      "content": "Ask something else"
+    },
+    "187": {
+      "name": "Business Brand Row",
+      "type": "core:row"
+    },
+    "188": {
+      "name": "Business Amazon Icon",
+      "type": "custom:icon",
+      "payload": {
+        "iconId": "tb:brand-amazon"
+      }
+    },
+    "189": {
+      "name": "Business Brand Text",
+      "type": "core:text",
+      "content": "business"
+    },
+    "190": {
+      "name": "Business CTA Button",
+      "type": "core:button",
+      "content": "Create a free account"
+    }
+  },
+  "nodeStyleMap": {
+    "1": {
+      "default": {
+        "width": "100%",
+        "minHeight": "100%",
+        "backgroundColor": "#ffffff",
+        "color": "#0f1111",
+        "fontFamily": "Arial, sans-serif"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "2": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "12px",
+        "height": "60px",
+        "paddingLeft": "18px",
+        "paddingRight": "18px",
+        "backgroundColor": "#131a22",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "3": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px",
+        "width": "150px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "4": {
+      "default": {
+        "width": "fit-content",
+        "height": "fit-content",
+        "display": "inline-flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "fontSize": "22px",
+        "color": "#ff9900",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "5": {
+      "default": {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "letterSpacing": "-0.2px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "6": {
+      "default": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "minWidth": "130px",
+        "gap": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "7": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "8": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "9": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#cbd5e1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "10": {
+      "default": {
+        "fontSize": "13px",
+        "fontWeight": "700",
+        "color": "#ffffff",
+        "marginLeft": "20px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "11": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "flex": "1",
+        "minWidth": "380px",
+        "maxWidth": "760px",
+        "height": "40px",
+        "borderRadius": "8px",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "12": {
+      "default": {
+        "width": "54px",
+        "height": "100%",
+        "backgroundColor": "#e5e7eb",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "borderRight": "1px solid #d1d5db"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "13": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#374151"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "14": {
+      "default": {
+        "flex": "1",
+        "fontSize": "14px",
+        "color": "#111827",
+        "paddingLeft": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "15": {
+      "default": {
+        "width": "46px",
+        "height": "100%",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "backgroundColor": "#fbbf24"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "16": {
+      "default": {
+        "fontSize": "15px",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "17": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px",
+        "minWidth": "58px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "18": {
+      "default": {
+        "fontSize": "13px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "19": {
+      "default": {
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "20": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#d1d5db"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "21": {
+      "default": {
+        "display": "flex",
+        "flexDirection": "column",
+        "minWidth": "145px",
+        "gap": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "22": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "23": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "4px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "24": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#ffffff",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "25": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#d1d5db"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "26": {
+      "default": {
+        "display": "flex",
+        "flexDirection": "column",
+        "minWidth": "100px",
+        "gap": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "27": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "28": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#ffffff",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "29": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-end",
+        "gap": "6px",
+        "minWidth": "70px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "30": {
+      "default": {
+        "fontSize": "22px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "31": {
+      "default": {
+        "fontSize": "13px",
+        "fontWeight": "700",
+        "color": "#ffffff",
+        "marginBottom": "1px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "32": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "18px",
+        "height": "40px",
+        "paddingLeft": "18px",
+        "paddingRight": "18px",
+        "backgroundColor": "#232f3e",
+        "color": "#ffffff",
+        "overflow": "hidden"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "33": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "34": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "35": {
+      "default": {
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "color": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "36": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#111827",
+        "whiteSpace": "nowrap",
+        "backgroundColor": "#ffffff",
+        "borderRadius": "999px",
+        "paddingTop": "2px",
+        "paddingBottom": "2px",
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "37": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "38": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "39": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "40": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "41": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "42": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "43": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "44": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "45": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "46": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#ffffff",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "47": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "30px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px",
+        "height": "48px",
+        "borderBottom": "1px solid #e5e7eb",
+        "overflow": "hidden"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "48": {
+      "default": {
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "color": "#0f172a",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "49": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "50": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "51": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "52": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "53": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "54": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "55": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "56": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#374151",
+        "whiteSpace": "nowrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "57": {
+      "default": {
+        "width": "100%",
+        "backgroundColor": "#ffffff",
+        "paddingBottom": "24px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "58": {
+      "default": {
+        "width": "1240px",
+        "maxWidth": "calc(100% - 36px)",
+        "marginLeft": "auto",
+        "marginRight": "auto",
+        "marginTop": "12px",
+        "fontSize": "12px",
+        "color": "#4b5563"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "59": {
+      "default": {
+        "width": "1240px",
+        "maxWidth": "calc(100% - 36px)",
+        "marginLeft": "auto",
+        "marginRight": "auto",
+        "marginTop": "18px",
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "26px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "60": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "14px",
+        "width": "460px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "61": {
+      "default": {
+        "width": "42px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "62": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "63": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "64": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "65": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "66": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "67": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "68": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "69": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "70": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "71": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "72": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #60a5fa",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "73": {
+      "default": {
+        "width": "100%",
+        "height": "100%",
+        "objectFit": "cover",
+        "backgroundColor": "#f3f4f6"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "74": {
+      "default": {
+        "width": "40px",
+        "height": "40px",
+        "border": "1px solid #9ca3af",
+        "borderRadius": "10px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "overflow": "hidden",
+        "backgroundColor": "#ffffff"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "75": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#6b7280"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "76": {
+      "default": {
+        "width": "404px",
+        "minHeight": "580px",
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "center",
+        "gap": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "77": {
+      "default": {
+        "width": "360px",
+        "height": "430px",
+        "objectFit": "contain",
+        "backgroundColor": "#f8fafc",
+        "border": "1px solid #e5e7eb",
+        "borderRadius": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "78": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#2563eb"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "79": {
+      "default": {
+        "width": "500px",
+        "display": "flex",
+        "flexDirection": "column"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "80": {
+      "default": {
+        "fontSize": "23px",
+        "lineHeight": "1.25",
+        "color": "#0f172a",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "81": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#2563eb",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "82": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "8px",
+        "flexWrap": "wrap",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "83": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#0f172a",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "84": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "85": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "86": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "87": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "88": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "89": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "90": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#2563eb"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "91": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#9ca3af"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "92": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#2563eb"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "93": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "color": "#ffffff",
+        "backgroundColor": "#1f2937",
+        "borderRadius": "4px",
+        "paddingTop": "3px",
+        "paddingBottom": "3px",
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "marginBottom": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "94": {
+      "default": {
+        "fontSize": "13px",
+        "fontWeight": "700",
+        "color": "#1f2937",
+        "marginBottom": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "95": {
+      "default": {
+        "width": "100%",
+        "height": "1px",
+        "backgroundColor": "#e5e7eb",
+        "marginBottom": "14px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "96": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "11px",
+        "fontWeight": "700",
+        "color": "#ffffff",
+        "backgroundColor": "#be123c",
+        "borderRadius": "6px",
+        "paddingTop": "4px",
+        "paddingBottom": "4px",
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "97": {
+      "default": {
+        "display": "flex",
+        "alignItems": "baseline",
+        "gap": "10px",
+        "marginBottom": "4px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "98": {
+      "default": {
+        "fontSize": "36px",
+        "color": "#dc2626"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "99": {
+      "default": {
+        "fontSize": "45px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "100": {
+      "default": {
+        "fontSize": "12px",
+        "textDecoration": "line-through",
+        "color": "#6b7280",
+        "marginBottom": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "101": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#1f2937",
+        "fontWeight": "700",
+        "marginBottom": "4px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "102": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#1f2937",
+        "marginBottom": "4px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "103": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#0f172a",
+        "fontWeight": "700",
+        "marginBottom": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "104": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "8px",
+        "marginBottom": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "105": {
+      "default": {
+        "fontSize": "14px",
+        "color": "#f59e0b"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "106": {
+      "default": {
+        "fontSize": "15px",
+        "color": "#1f2937",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "107": {
+      "default": {
+        "display": "flex",
+        "gap": "6px",
+        "marginBottom": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "108": {
+      "default": {
+        "width": "112px",
+        "minHeight": "86px",
+        "border": "1px solid #d1d5db",
+        "borderRadius": "6px",
+        "paddingTop": "8px",
+        "paddingBottom": "8px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "109": {
+      "default": {
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "110": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#374151",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "111": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#2563eb",
+        "marginTop": "auto"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "112": {
+      "default": {
+        "width": "112px",
+        "minHeight": "86px",
+        "border": "1px solid #d1d5db",
+        "borderRadius": "6px",
+        "paddingTop": "8px",
+        "paddingBottom": "8px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "113": {
+      "default": {
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "114": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#374151",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "115": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#2563eb",
+        "marginTop": "auto"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "116": {
+      "default": {
+        "width": "112px",
+        "minHeight": "86px",
+        "border": "1px solid #d1d5db",
+        "borderRadius": "6px",
+        "paddingTop": "8px",
+        "paddingBottom": "8px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "117": {
+      "default": {
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "118": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#374151",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "119": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#2563eb",
+        "marginTop": "auto"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "120": {
+      "default": {
+        "width": "112px",
+        "minHeight": "86px",
+        "border": "1px solid #d1d5db",
+        "borderRadius": "6px",
+        "paddingTop": "8px",
+        "paddingBottom": "8px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "121": {
+      "default": {
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "122": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#374151",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "123": {
+      "default": {
+        "fontSize": "8px",
+        "color": "#2563eb",
+        "marginTop": "auto"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "124": {
+      "default": {
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "border": "1px solid #d1d5db",
+        "borderRadius": "10px",
+        "paddingTop": "8px",
+        "paddingBottom": "8px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "marginBottom": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "125": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#111827",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "126": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "127": {
+      "default": {
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "color": "#111827",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "128": {
+      "default": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "129": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "130": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "131": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#1f2937",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "132": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "133": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "134": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#1f2937",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "135": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "136": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "137": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#1f2937",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "138": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "139": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "140": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#1f2937",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "141": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "142": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "143": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#1f2937",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "144": {
+      "default": {
+        "width": "244px",
+        "border": "1px solid #cfd4db",
+        "borderRadius": "8px",
+        "paddingTop": "12px",
+        "paddingBottom": "12px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "10px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "145": {
+      "default": {
+        "fontSize": "42px",
+        "color": "#111827",
+        "lineHeight": "1",
+        "fontWeight": "500"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "146": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "backgroundColor": "#374151",
+        "color": "#ffffff",
+        "borderRadius": "4px",
+        "paddingTop": "2px",
+        "paddingBottom": "2px",
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "fontWeight": "700"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "147": {
+      "default": {
+        "fontSize": "11px",
+        "lineHeight": "1.4",
+        "color": "#0f172a"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "148": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "149": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#334155"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "150": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#2563eb"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "151": {
+      "default": {
+        "fontSize": "13px",
+        "color": "#0f9d58",
+        "fontWeight": "500",
+        "marginTop": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "152": {
+      "default": {
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "border": "1px solid #9ca3af",
+        "borderRadius": "9px",
+        "paddingTop": "7px",
+        "paddingBottom": "7px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "marginBottom": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "153": {
+      "default": {
+        "fontSize": "12px",
+        "color": "#1f2937"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "154": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#4b5563"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "155": {
+      "default": {
+        "width": "100%",
+        "border": "0",
+        "borderRadius": "999px",
+        "backgroundColor": "#facc15",
+        "color": "#111827",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "paddingTop": "0",
+        "paddingBottom": "0",
+        "cursor": "pointer",
+        "minHeight": "30px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "textAlign": "center",
+        "lineHeight": "1",
+        "textDecoration": "none",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "156": {
+      "default": {
+        "width": "100%",
+        "border": "0",
+        "borderRadius": "999px",
+        "backgroundColor": "#f59e0b",
+        "color": "#111827",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "paddingTop": "0",
+        "paddingBottom": "0",
+        "cursor": "pointer",
+        "minHeight": "30px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "textAlign": "center",
+        "lineHeight": "1",
+        "textDecoration": "none",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "157": {
+      "default": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "5px",
+        "marginTop": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "158": {
+      "default": {
+        "display": "flex",
+        "gap": "6px",
+        "alignItems": "flex-start"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "159": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#4b5563",
+        "width": "70px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "160": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#2563eb",
+        "flex": "1",
+        "lineHeight": "1.3"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "161": {
+      "default": {
+        "display": "flex",
+        "gap": "6px",
+        "alignItems": "flex-start"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "162": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#4b5563",
+        "width": "70px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "163": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#2563eb",
+        "flex": "1",
+        "lineHeight": "1.3"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "164": {
+      "default": {
+        "display": "flex",
+        "gap": "6px",
+        "alignItems": "flex-start"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "165": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#4b5563",
+        "width": "70px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "166": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#2563eb",
+        "flex": "1",
+        "lineHeight": "1.3"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "167": {
+      "default": {
+        "display": "flex",
+        "gap": "6px",
+        "alignItems": "flex-start"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "168": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#4b5563",
+        "width": "70px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "169": {
+      "default": {
+        "fontSize": "9px",
+        "color": "#2563eb",
+        "flex": "1",
+        "lineHeight": "1.3"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "170": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#111827",
+        "fontWeight": "700",
+        "marginTop": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "171": {
+      "default": {
+        "display": "flex",
+        "alignItems": "flex-start",
+        "gap": "8px",
+        "marginBottom": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "172": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#374151",
+        "marginTop": "3px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "173": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#2563eb",
+        "lineHeight": "1.3",
+        "flex": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "174": {
+      "default": {
+        "width": "100%",
+        "border": "1px solid #9ca3af",
+        "borderRadius": "8px",
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "paddingLeft": "10px",
+        "paddingRight": "10px",
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "marginTop": "2px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "175": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#1f2937"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "176": {
+      "default": {
+        "fontSize": "10px",
+        "color": "#4b5563"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "177": {
+      "default": {
+        "marginTop": "8px",
+        "border": "1px solid #cfd4db",
+        "borderRadius": "8px",
+        "paddingTop": "12px",
+        "paddingBottom": "12px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "178": {
+      "default": {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "color": "#f97316",
+        "display": "none"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "179": {
+      "default": {
+        "fontSize": "11px",
+        "color": "#111827",
+        "lineHeight": "1.35"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "180": {
+      "default": {
+        "width": "100%",
+        "marginTop": "8px",
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "181": {
+      "default": {
+        "fontSize": "11px",
+        "fontWeight": "700",
+        "color": "#111827"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "182": {
+      "default": {
+        "display": "flex",
+        "gap": "8px",
+        "flexWrap": "wrap"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "183": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "color": "#1d4f91",
+        "backgroundColor": "#dbeafe",
+        "borderRadius": "999px",
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "184": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "color": "#1d4f91",
+        "backgroundColor": "#dbeafe",
+        "borderRadius": "999px",
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "185": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "color": "#1d4f91",
+        "backgroundColor": "#dbeafe",
+        "borderRadius": "999px",
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "186": {
+      "default": {
+        "width": "fit-content",
+        "fontSize": "10px",
+        "color": "#ffffff",
+        "backgroundColor": "#1d4f91",
+        "borderRadius": "999px",
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "paddingLeft": "12px",
+        "paddingRight": "12px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "187": {
+      "default": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "188": {
+      "default": {
+        "fontSize": "18px",
+        "color": "#111827",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "189": {
+      "default": {
+        "fontSize": "15px",
+        "color": "#f97316",
+        "fontWeight": "700",
+        "lineHeight": "1"
+      },
+      "hover": {},
+      "active": {}
+    },
+    "190": {
+      "default": {
+        "width": "100%",
+        "minHeight": "32px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "textAlign": "center",
+        "lineHeight": "1",
+        "textDecoration": "none",
+        "border": "1px solid #9ca3af",
+        "borderRadius": "8px",
+        "backgroundColor": "#ffffff",
+        "color": "#111827",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "paddingTop": "0",
+        "paddingBottom": "0",
+        "paddingLeft": "12px",
+        "paddingRight": "12px",
+        "cursor": "pointer",
+        "marginTop": "4px"
+      },
+      "hover": {},
+      "active": {}
+    }
+  }
+}

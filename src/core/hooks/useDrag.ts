@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "@core/state/store";
 import { createTemplate, instantiateTemplate } from "@core/utils/template";
 import { editorRegistry } from "@core/kernel/bootstrap";
-import { moveNode } from "@core/state/reducers/treeReducer";
+import { moveNode, updateDataMap } from "@core/state/reducers/treeReducer";
 import { resolveCanvasPlacement } from "@core/editor/dragPlacement";
 import { canPlaceChildKindAtTarget } from "@core/editor/constraints";
 import { clearDragState, setDragState } from "./useDragState";
-import type { NodeKind, PresetId } from "@core/types/document";
+import type { NodeKind, NodeRecord, PresetId } from "@core/types/document";
 import {
   selectActivePageId,
   selectDocumentState,
@@ -41,6 +41,10 @@ type RuntimeSource =
       templateType: string;
       label: string;
       draggedKind: NodeKind | null;
+      iconPayload: {
+        iconId: string;
+        iconLabel?: string;
+      } | null;
     };
 
 interface DragRuntimeState {
@@ -54,6 +58,8 @@ interface DragSessionListeners {
   iframeUp: ((event: MouseEvent) => void) | null;
   iframeWindow: Window | null;
 }
+
+const DRAG_START_DISTANCE_PX = 5;
 
 export function useDrag() {
   useRenderCounter("useDrag");
@@ -90,11 +96,14 @@ export function useDrag() {
     if (paletteSource) {
       const templateType = paletteSource.dataset.canvasTemplateType;
       if (!templateType) return null;
+      const iconId = paletteSource.dataset.canvasIconId;
+      const iconLabel = paletteSource.dataset.canvasIconLabel;
       return {
         kind: "palette",
         templateType,
         label: (paletteSource.textContent || templateType).trim(),
         draggedKind: resolveDraggedKindForTemplate(templateType),
+        iconPayload: iconId ? { iconId, iconLabel } : null,
       };
     }
 
@@ -120,6 +129,32 @@ export function useDrag() {
 
   const getCanvasSurfaceId = () =>
     resolveCanvasMode() === "iframe" ? IFRAME_SURFACE_ID : LEGACY_SURFACE_ID;
+
+  const patchCreatedRecordFromSource = ({
+    source,
+    record,
+  }: {
+    source: Extract<RuntimeSource, { kind: "palette" }>;
+    record: NodeRecord;
+  }): NodeRecord => {
+    if (!source.iconPayload || record.type !== "custom:icon") {
+      return record;
+    }
+
+    const previousPayload =
+      record.payload && typeof record.payload === "object"
+        ? record.payload
+        : {};
+
+    return {
+      ...record,
+      name: source.iconPayload.iconLabel || source.label || record.name,
+      payload: {
+        ...previousPayload,
+        iconId: source.iconPayload.iconId,
+      },
+    };
+  };
 
   const resolveTargetAtPoint = ({
     pointer,
@@ -312,29 +347,64 @@ export function useDrag() {
 
     e.preventDefault();
     e.stopPropagation();
-    setCanvasFocused(getCanvasSurfaceId());
 
     dragRuntimeRef.current = {
       source,
     };
 
     const startPoint = { x: e.clientX, y: e.clientY };
-    updateDragPointer({
-      pointer: startPoint,
-      source,
-    });
+    let hasStartedDrag = false;
+
+    const hasCrossedDragThreshold = (point: DragPointerPoint) => {
+      const deltaX = point.x - startPoint.x;
+      const deltaY = point.y - startPoint.y;
+      return Math.hypot(deltaX, deltaY) >= DRAG_START_DISTANCE_PX;
+    };
+
+    const startDragIfNeeded = ({
+      pointer,
+      runtime,
+    }: {
+      pointer: DragPointerPoint;
+      runtime: DragRuntimeState;
+    }) => {
+      if (hasStartedDrag || !hasCrossedDragThreshold(pointer)) {
+        return;
+      }
+
+      hasStartedDrag = true;
+      setCanvasFocused(getCanvasSurfaceId());
+      updateDragPointer({
+        pointer,
+        source: runtime.source,
+      });
+    };
 
     const handleMove = (event: MouseEvent) => {
       const runtime = dragRuntimeRef.current;
       if (!runtime) return;
+      if ((event.buttons & 1) !== 1) {
+        cleanupDragSession();
+        return;
+      }
+      const pointer = { x: event.clientX, y: event.clientY };
+      startDragIfNeeded({
+        pointer,
+        runtime,
+      });
+      if (!hasStartedDrag) return;
       updateDragPointer({
-        pointer: { x: event.clientX, y: event.clientY },
+        pointer,
         source: runtime.source,
       });
     };
     const handleMoveFromIframe = (event: MouseEvent) => {
       const runtime = dragRuntimeRef.current;
       if (!runtime) return;
+      if ((event.buttons & 1) !== 1) {
+        cleanupDragSession();
+        return;
+      }
       const parentPoint = translateSurfacePointToParentViewport({
         surfaceId: IFRAME_SURFACE_ID,
         point: {
@@ -342,6 +412,11 @@ export function useDrag() {
           y: event.clientY,
         },
       });
+      startDragIfNeeded({
+        pointer: parentPoint,
+        runtime,
+      });
+      if (!hasStartedDrag) return;
       updateDragPointer({
         pointer: parentPoint,
         source: runtime.source,
@@ -382,6 +457,22 @@ export function useDrag() {
         treeState,
         registry: editorRegistry,
       });
+      if (runtime.source.iconPayload) {
+        const createdNodeDefinition = editorRegistry.getNodeType("custom:icon");
+        if (createdNodeDefinition) {
+          const createdRecord = createdNodeDefinition.createRecord();
+          const patchedRecord = patchCreatedRecordFromSource({
+            source: runtime.source,
+            record: createdRecord,
+          });
+          dispatch(
+            updateDataMap({
+              id: createdNodeId,
+              data: patchedRecord,
+            }),
+          );
+        }
+      }
       if (createdNodeId !== target.target.targetId) {
         dispatch(
           moveNode({
@@ -396,6 +487,10 @@ export function useDrag() {
       cleanupDragSession();
     };
     const handleUp = (event: MouseEvent) => {
+      if (!hasStartedDrag) {
+        cleanupDragSession();
+        return;
+      }
       event.preventDefault();
       commitDrop({
         x: event.clientX,
@@ -403,6 +498,10 @@ export function useDrag() {
       });
     };
     const handleUpFromIframe = (event: MouseEvent) => {
+      if (!hasStartedDrag) {
+        cleanupDragSession();
+        return;
+      }
       const parentPoint = translateSurfacePointToParentViewport({
         surfaceId: IFRAME_SURFACE_ID,
         point: {

@@ -3,6 +3,7 @@ import type {
   EditorPluginApi,
   EditorRegistry,
   NodeTypeDefinition,
+  PaletteLauncherDefinition,
   PresetDefinition,
   StyleSectionDefinition,
 } from "./types";
@@ -22,6 +23,8 @@ export class InMemoryEditorRegistry implements EditorRegistry, EditorPluginApi {
   private readonly styleSectionOrder: string[] = [];
   private readonly editPanels = new Map<string, EditPanelDefinition>();
   private readonly editPanelOrder: string[] = [];
+  private readonly paletteLaunchers = new Map<string, PaletteLauncherDefinition>();
+  private readonly paletteLauncherOrder: string[] = [];
 
   registerNodeType(definition: NodeTypeDefinition) {
     if (this.nodes.has(definition.kind)) {
@@ -55,6 +58,14 @@ export class InMemoryEditorRegistry implements EditorRegistry, EditorPluginApi {
     this.editPanelOrder.push(definition.id);
   }
 
+  registerPaletteLauncher(definition: PaletteLauncherDefinition) {
+    if (this.paletteLaunchers.has(definition.id)) {
+      throwDuplicateError("palette launcher id", definition.id);
+    }
+    this.paletteLaunchers.set(definition.id, definition);
+    this.paletteLauncherOrder.push(definition.id);
+  }
+
   getNodeType(kind: NodeKind) {
     return this.nodes.get(kind);
   }
@@ -83,6 +94,10 @@ export class InMemoryEditorRegistry implements EditorRegistry, EditorPluginApi {
     return this.editPanels.get(id);
   }
 
+  getPaletteLauncher(id: string) {
+    return this.paletteLaunchers.get(id);
+  }
+
   listStyleSections() {
     return this.styleSectionOrder
       .map((id) => this.styleSections.get(id))
@@ -93,6 +108,14 @@ export class InMemoryEditorRegistry implements EditorRegistry, EditorPluginApi {
     return this.editPanelOrder
       .map((id) => this.editPanels.get(id))
       .filter((panel): panel is EditPanelDefinition => Boolean(panel));
+  }
+
+  listPaletteLaunchers() {
+    return this.paletteLauncherOrder
+      .map((id) => this.paletteLaunchers.get(id))
+      .filter(
+        (launcher): launcher is PaletteLauncherDefinition => Boolean(launcher),
+      );
   }
 }
 
